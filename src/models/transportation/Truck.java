@@ -8,4 +8,16 @@ public class Truck extends Transporter
 
     }
 
+    @Override
+    public void issueUpgrade()
+    {
+
+    }
+
+    @Override
+    public void upgrade()
+    {
+
+    }
+
 }

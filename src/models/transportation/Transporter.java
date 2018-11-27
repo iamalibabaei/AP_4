@@ -1,13 +1,13 @@
 package models.transportation;
 
 import models.Item;
+import models.interfaces.Upgradable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Transporter
+public abstract class Transporter implements Upgradable
 {
-    int Capacity, Speed, level;
+    int capacity, speed, level;
     private HashMap<Item, Integer> list;
 
     public abstract void go();
