@@ -1,6 +1,7 @@
 package models.map;
 
 import models.Entity;
+
 import models.interfaces.Storable;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class Cell
 
     public ArrayList<Storable> getStorables()
     {
-        return null;
+
     }
 
     public void moveAnimals()

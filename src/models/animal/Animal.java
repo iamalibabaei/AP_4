@@ -1,14 +1,17 @@
 package models.animal;
 
 import models.Entity;
-
+import models.map.Map;
 public abstract class Animal extends Entity
 {
     protected Entity target;
 
-    public Animal()
+    protected Map map;
+
+    public Animal(Map map)
     {
         target = null;
+        this.map = map;
     }
 
     public abstract void setTarget();

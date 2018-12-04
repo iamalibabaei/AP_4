@@ -1,7 +1,7 @@
 package models.map;
 
 import models.interfaces.Storable;
-
+import models.map.Cell;
 import java.util.ArrayList;
 
 public class Map
