@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Map
 {
+    ////
     public static final int WIDTH = 20, HEIGHT = 20;
     private Cell[][] cells = new Cell[WIDTH][HEIGHT];
 
