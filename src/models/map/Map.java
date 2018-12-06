@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Map
 {
-    public static final int WIDTH = 0, HEIGHT = 0;
+    public static final int WIDTH = 20, HEIGHT = 20;
     private Cell[][] cells = new Cell[WIDTH][HEIGHT];
 
     public ArrayList<Storable> getStorables(int x, int y)
@@ -21,15 +21,29 @@ public class Map
 
     public void handleCollisions()
     {
+        for (Cell[] rowCell : cells) {
+            for (Cell cell : rowCell) {
+                cell.handleCollisions();
+            }
+        }
     }
 
     public void moveAnimals()
     {
-
+        for (Cell[] rowCell : cells) {
+            for (Cell cell : rowCell) {
+                cell.moveAnimals();
+            }
+        }
     }
 
     public void cage(int x, int y)
     {
+        cells[x][y].cage();
+    }
+
+    public Cell getCell(int x, int y) {
+        return cells[x][y];
     }
 
 }

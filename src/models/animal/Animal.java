@@ -18,6 +18,7 @@ public abstract class Animal extends Entity
 
     public abstract int getSellMoney();
 
+    //age target == null randomWalk
     public void move()
     {
 
