@@ -41,7 +41,7 @@ public class Truck extends Transporter
     public void upgrade()
     {
         this.level ++;
-        this.speed--;
+        this.speed --;
         this.capacity =(int) (this.capacity * 1.5);
     }
 

@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 public class Cell
 {
-    //TODO chaman ro vared nakardim :)
+    private int grass = 0;
+    private static final int MAX_GRASS = 10;
     private ArrayList<Entity> entities;
 
     public ArrayList<Entity> getEntities() {
@@ -68,6 +69,13 @@ public class Cell
 
     public void addEntity(Entity entity) {
         entities.add(entity);
+    }
+
+    public void plant(){
+        grass += 5;
+        if (grass > MAX_GRASS) {
+            grass = MAX_GRASS;
+        }
     }
 
 }

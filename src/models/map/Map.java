@@ -52,4 +52,8 @@ public class Map
         cells[x][y].addEntity(entity);
     }
 
+    public void plant(int x, int y) {
+        cells[x][y].plant();
+    }
+
 }
