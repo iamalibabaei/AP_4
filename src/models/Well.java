@@ -28,12 +28,6 @@ public class Well implements Upgradable
     }
 
     @Override
-    public void issueUpgrade()
-    {
-
-    }
-
-    @Override
     public void upgrade()
     {
 

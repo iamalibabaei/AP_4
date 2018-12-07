@@ -10,18 +10,11 @@ public class Workshop implements Upgradable
     private HashMap<Item, Integer> requirements;
     private int level;
     private Task task;
-    boolean isUpgrading;
+
+        
 
     @Override
-    public void issueUpgrade()
-    {
+    public void upgrade() {
 
     }
-
-    @Override
-    public void upgrade()
-    {
-
-    }
-
 }

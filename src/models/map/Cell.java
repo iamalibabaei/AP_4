@@ -66,4 +66,8 @@ public class Cell
         }
     }
 
+    public void addEntity(Entity entity) {
+        entities.add(entity);
+    }
+
 }

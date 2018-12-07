@@ -10,7 +10,8 @@ public class WildAnimal extends Animal implements Storable
 
     private final int SELL_MONEY, OCCUPATION_SPACE;//150.25
     private TypeOfAnimal typeOfAnimal;
-    enum TypeOfAnimal { LION, BEAR }
+
+    public enum TypeOfAnimal { LION, BEAR }
 
 
     public WildAnimal(Map map, TypeOfAnimal typeOfAnimal)
