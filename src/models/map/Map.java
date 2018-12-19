@@ -8,7 +8,13 @@ import java.util.ArrayList;
 public class Map
 {
     public static final int WIDTH = 20, HEIGHT = 20;
+
+    public Cell[][] getCells() {
+        return cells;
+    }
+
     private Cell[][] cells = new Cell[WIDTH][HEIGHT];
+
 
     public ArrayList<Storable> getStorables(int x, int y)
     {

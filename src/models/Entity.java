@@ -9,10 +9,7 @@ public abstract class Entity
         return x;
     }
 
-    public void setX(int x)
-    {
-        this.x = x;
-    }
+    public void setX(int x) { this.x = x; }
 
     public int getY()
     {
