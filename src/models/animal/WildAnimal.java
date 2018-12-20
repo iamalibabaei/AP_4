@@ -27,7 +27,6 @@ public class WildAnimal extends Animal implements Storable
             this.OCCUPATION_SPACE = 20;
         }
 
-
     }
 
     enum Status

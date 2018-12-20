@@ -1,6 +1,7 @@
 package models.transportation;
 
 import models.Entity;
+import models.Item;
 import models.interfaces.Storable;
 import models.map.Map;
 
@@ -28,9 +29,10 @@ public class Helicopter extends Transporter
     public void turn() {
         arriveToFarm --;
         if (arriveToFarm == 0) {
-            for (Storable key : list.keySet()) {
-                for (int i = 0; i < list.get(key); i++) {
-                    map.addToMap((Entity) key);
+            for (Item.Type itemType : list.keySet()) {
+
+                for (int i = 0; i < list.get(itemType); i++) {
+                    map.addToMap(Item.Type.TYPE_INDEXED(itemType.getType()));
                 }
             }
             isWorking = false;
@@ -45,5 +47,4 @@ public class Helicopter extends Transporter
         this.speed--;
         this.capacity =(int) (this.capacity * 1.5);
     }
-
 }

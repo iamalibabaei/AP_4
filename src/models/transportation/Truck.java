@@ -1,5 +1,6 @@
 package models.transportation;
 
+import models.Item;
 import models.interfaces.Storable;
 
 public class Truck extends Transporter
@@ -25,15 +26,15 @@ public class Truck extends Transporter
         arriveToFarm -= 1;
         if (arriveToFarm == 0) {
             int money = 0;
-            for (Storable key : list.keySet())
+            for (Item.Type itemType : list.keySet())
             {
-                int elementsell = key.getSellMoney();
-                elementsell = elementsell * list.get(key);
+                int elementsell = ((Storable) Item.Type.TYPE_INDEXED(itemType.getType())).getSellMoney();
+                elementsell = elementsell * list.get(itemType);
                 money += elementsell;
             }
             list.clear();
             isWorking = false;
-            //TODO parsa mayad pule (money) ro be pule kol ezafe koni
+            //TODO pule (money) ro be pule kol ezafe konim
         }
     }
 
