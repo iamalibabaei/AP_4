@@ -2,10 +2,11 @@ package models.workshop;
 
 import models.Item;
 import models.Warehouse;
+import models.exceptions.IsWorkingException;
+import models.exceptions.NotINWarehouseException;
 import models.interfaces.Upgradable;
 import models.map.Cell;
 
-import java.util.HashMap;
 public class Workshop implements Upgradable
 {
 
@@ -17,7 +18,8 @@ public class Workshop implements Upgradable
     private Cell cell;//this is the cell where it puts the result items
 
     public Workshop(int workingTime, int timeToReturnProduct, int maxNumOfInput, double factorOfOutput,
-                    Item.Type input, Item.Type output, Warehouse warehouse, boolean isWorking, Cell cell) {
+                    Item.Type input, Item.Type output, Warehouse warehouse, boolean isWorking, Cell cell)
+    {
         this.workingTime = workingTime;
         this.timeToReturnProduct = timeToReturnProduct;
         this.maxNumOfInput = maxNumOfInput;
@@ -29,13 +31,14 @@ public class Workshop implements Upgradable
         this.cell = cell;
     }
 
-    public void goToWork() throws IsWorkingException, NotINWarehouse{
+    public void goToWork() throws IsWorkingException, NotINWarehouseException
+    {
         if (!isWorking) {
             throw new IsWorkingException();
         }
 
         if (warehouse.isAvailable(input)) {
-            throw new NotINWarehouse();
+            throw new NotINWarehouseException();
         }
 
         isWorking = true;
@@ -44,8 +47,8 @@ public class Workshop implements Upgradable
         numberOfOutputs = factorOfOutput * numberOfInputs < 1 ? 1: (int)( factorOfOutput * numberOfInputs);
     }
 
-
-    public void turn() {
+    public void turn()
+    {
         timeToReturnProduct--;
         if (timeToReturnProduct == 0) {
             isWorking = false;
@@ -54,31 +57,19 @@ public class Workshop implements Upgradable
         }
     }
 
-    private void returnProduct() {
+    private void returnProduct()
+    {
         for (int i = numberOfOutputs ; i > 0 ; i --) {
             cell.getEntities().add(Item.Type.TYPE_INDEXED(output.getType()));
         }
     }
-        
 
     @Override
-    public void upgrade() {
+    public void upgrade()
+    {
         level++;
         factorOfOutput = factorOfOutput * 1.5;
         workingTime = (int)(workingTime * 0.8);
         maxNumOfInput += 2;
-    }
-}
-
-class IsWorkingException extends Exception{
-    public IsWorkingException() {
-        super("workshop is busy now");
-    }
-}
-
-class NotINWarehouse extends Exception
-{
-    public NotINWarehouse() {
-        super("there is no source in warehouse");
     }
 }

@@ -1,8 +1,7 @@
 package models.transportation;
 
-import models.Entity;
+import models.exceptions.MaxlevelException;
 import models.Item;
-import models.interfaces.Storable;
 import models.map.Map;
 
 public class Helicopter extends Transporter
@@ -11,7 +10,7 @@ public class Helicopter extends Transporter
     public Helicopter(Map map) {
         this.capacity = 25;
         this.speed = 12;
-        this.level = 1;
+        this.level = 0;
         this.map = map;
     }
 
@@ -41,10 +40,13 @@ public class Helicopter extends Transporter
     }
 
     @Override
-    public void upgrade()
+    public void upgrade() throws MaxlevelException
     {
         this.level ++;
-        this.speed--;
+        if (level == 4) {
+            throw new MaxlevelException();
+        }
+        this.speed = this.speed - 3;
         this.capacity =(int) (this.capacity * 1.5);
     }
 }

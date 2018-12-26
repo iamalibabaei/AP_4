@@ -1,14 +1,15 @@
 package models.transportation;
 
+import models.exceptions.MaxlevelException;
 import models.Item;
 import models.interfaces.Storable;
 
 public class Truck extends Transporter
 {
     public Truck() {
-        this.capacity = 50;
-        this.speed = 8;
-        this.level = 1;
+        this.capacity = 40;
+        this.speed = 20;
+        this.level = 0;
     }
 
     @Override
@@ -39,11 +40,16 @@ public class Truck extends Transporter
     }
 
     @Override
-    public void upgrade()
+    public void upgrade() throws MaxlevelException
     {
         this.level ++;
-        this.speed --;
-        this.capacity =(int) (this.capacity * 1.5);
+        if (level == 4) {
+            throw new MaxlevelException();
+        }
+        this.speed = (4 - level) * 5;
+        this.capacity = 20 * (level + 2);
     }
 
 }
+
+
