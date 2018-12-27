@@ -10,27 +10,30 @@ public abstract class Transporter implements Upgradable
 {
     int capacity, speed, level, arriveToFarm;//speed = arriving to destination per turn
     protected boolean isWorking = false;
-    protected HashMap<Storable, Integer> list;
+    protected HashMap<Item.Type, Integer> list;
 
-    public boolean addToList(Storable storable, int number) {
+    public boolean addToList(Item.Type itemType, int number) {
         if (isWorking) {
             return false;
         }
-        if (this.capacity - this.usedCapacity() < number * storable.getOccupationSpace() ) {
+        if (this.capacity - this.usedCapacity() <
+                number * ((Storable) Item.Type.TYPE_INDEXED(itemType.getType())).getOccupationSpace()) {
             return false;
         }
-        //TODO inja age 2 ta egg ezafe konim egg ha ba ham afrgh mikonn vli fek nkonm tasiri dashte bashe to ravande kar
-        //hala ye chek konim badan
-        list.put(storable, number);
+        if (list.containsKey(itemType)) {
+            list.put(itemType, number + list.get(itemType));
+        } else {
+            list.put(itemType, number);
+        }
         return true;
     }
     
     public int usedCapacity() {
         int usedCapacity = 0;
-        for (Storable key : list.keySet())
+        for (Item.Type itemType : list.keySet())
         {
-            int elementOccupation = key.getOccupationSpace();
-            elementOccupation = elementOccupation * list.get(key);
+            int elementOccupation =((Storable) Item.Type.TYPE_INDEXED(itemType.getType())).getOccupationSpace();
+            elementOccupation = elementOccupation * list.get(itemType);
             usedCapacity += elementOccupation;
         }
         return usedCapacity;
