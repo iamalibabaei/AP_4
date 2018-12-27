@@ -29,7 +29,7 @@ public class WildAnimal extends Animal implements Storable
 
     }
 
-    enum Status
+    public enum Status
     {
         NOT_CAGED(0), HARDLY_CAGED(1), AVERAGELY_CAGED(2), ALMOST_CAGED(3), CAGED(4);
 
@@ -47,6 +47,10 @@ public class WildAnimal extends Animal implements Storable
         public static Status[] STATUS_INDEXED = new Status[] { NOT_CAGED, HARDLY_CAGED, AVERAGELY_CAGED, ALMOST_CAGED, CAGED };
     }
 
+    public Status getState() {
+        return state;
+    }
+
     public boolean cage()
     {
         //if the animal is caged returns false
@@ -60,7 +64,8 @@ public class WildAnimal extends Animal implements Storable
     @Override
     public void collide(Entity entity)
     {
-        if (! (entity instanceof Dog || entity instanceof WildAnimal)) {
+
+        if ((this.state != Status.CAGED) && (! (entity instanceof Dog || entity instanceof WildAnimal))) {
             map.getCell(x, y).getEntities().remove(entity);
         }
     }
@@ -83,4 +88,10 @@ public class WildAnimal extends Animal implements Storable
         return OCCUPATION_SPACE;
     }
 
+    @Override
+    public void move() {
+        if (this.state != Status.CAGED) {
+            super.move();
+        }
+    }
 }

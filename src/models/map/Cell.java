@@ -2,6 +2,7 @@ package models.map;
 
 import models.Entity;
 
+import models.Item;
 import models.animal.Animal;
 import models.animal.WildAnimal;
 import models.interfaces.Storable;
@@ -31,17 +32,21 @@ public class Cell
         }
     }
 
-    public void removeAll(ArrayList<Storable> stored)
+    public void removeAll(ArrayList<Entity> stored)
     {
         entities.removeAll(stored);
     }
 
-    public ArrayList<Storable> getStorables()
+    public ArrayList<Entity> getStorables()
     {
-        ArrayList<Storable> storables = new ArrayList<>();
+        ArrayList<Entity> storables = new ArrayList<>();
         for (Entity entity : entities) {
-            if (entity instanceof Storable) {
-                storables.add((Storable) entity);
+            if (entity instanceof WildAnimal) {
+                if (((WildAnimal)entity).getState() == WildAnimal.Status.CAGED) {
+                    storables.add(entity);
+                }
+            } else if (entity instanceof Item) {
+                storables.add(entity);
             }
         }
         return storables;
@@ -61,9 +66,9 @@ public class Cell
         outer : for (Entity entity : entities) {
             if (entity instanceof WildAnimal) {
                 if (((WildAnimal) entity).cage()) {
-                    break outer;
+                    break;
                 } else {
-                    continue outer;
+                    continue;
                 }
             }
         }
