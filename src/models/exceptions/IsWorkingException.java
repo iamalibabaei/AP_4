@@ -1,6 +1,6 @@
 package models.exceptions;
 
-public class IsWorkingException extends Exception
+public class IsWorkingException extends RuntimeException
 {
     public IsWorkingException() {
         super("workshop is busy now");

@@ -1,39 +1,88 @@
 package models;
 
-import java.util.HashMap;
+import models.exceptions.AlreadyAtMaxLevelException;
+import models.exceptions.ItemNotInWarehouseException;
+import models.exceptions.NotEnoughSpaceException;
+import models.interfaces.Upgradable;
 
-public class Warehouse
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class Warehouse implements Upgradable
 {
-    private int level, capacity, usedCapacity;
+    public static final int[] CAPACITY = {50, 150, 300, 600}, UPGRADE_COST = {200, 250, 300};
+    public static final int MAX_LEVEL = 3;
+    private int level, remainingCapacity;
     private HashMap<Item.Type, Integer> items;
 
-    public boolean remove(Item.Type item, int num)
+    public Warehouse()
     {
-        return false;
+        level = 0;
+        items = new HashMap<>();
+        remainingCapacity = CAPACITY[level];
     }
 
-    public boolean isAvailable(Item.Type item, int num)
+    public void remove(Item.Type item, int count) throws ItemNotInWarehouseException
     {
-        return false;
+        int freedSpace = Item.getOccupationSpace(item) * count;
+        int currentCount = items.get(item);
+        if (currentCount < count)
+            throw new ItemNotInWarehouseException();
+        remainingCapacity += freedSpace;
+        items.put(item, currentCount - count);
     }
-    public boolean isAvailable(Item.Type item) { return false; }
 
-    public boolean store(Entity entity)
+    public void store(HashMap<Item.Type, Integer> items) throws NotEnoughSpaceException
     {
-        return false;
+        // todo knapp-sack algorithm
+        AtomicBoolean enoughSpaceForOneItem = new AtomicBoolean(false);
+        for (HashMap.Entry<Item.Type, Integer> entry : items.entrySet())
+        {
+            enoughSpaceForOneItem.set(true);
+            int requiredCapacity = entry.getValue() * Item.getOccupationSpace(entry.getKey());
+            if (remainingCapacity > requiredCapacity)
+            {
+                remainingCapacity -= requiredCapacity;
+                Integer newValue = this.items.getOrDefault(entry.getKey(), 0) + entry.getValue();
+                this.items.replace(entry.getKey(), newValue);
+                this.items.putIfAbsent(entry.getKey(), newValue);
+            }
+        }
+        if (!enoughSpaceForOneItem.get())
+        {
+            throw new NotEnoughSpaceException();
+        }
     }
 
-    private int remainingCapacity()
+    private int computeSpace(HashMap<Item.Type, Integer> items)
     {
-        return 0;
+        AtomicInteger ret = new AtomicInteger();
+        for (HashMap.Entry<Item.Type, Integer> entry : items.entrySet())
+        {
+            ret.addAndGet(Item.getOccupationSpace(entry.getKey()) * entry.getValue());
+        }
+        return ret.get();
     }
 
-    //this method is for workshop, it gives the maximum number of type workshop wants
-    //for example if there is 3 egg in warehouse getItemToWorkshop(EGG,5) returns 3  and decreases 3 egg from warehouse
-    public int getItemToWorkshop(Item.Type item, int num) {
-        return 0;
+    @Override
+    public void upgrade() throws AlreadyAtMaxLevelException
+    {
+        if (level == MAX_LEVEL)
+        {
+            throw new AlreadyAtMaxLevelException();
+        }
+        level++;
     }
 
-
+    @Override
+    public int getUpgradeCost() throws AlreadyAtMaxLevelException
+    {
+        if (level == MAX_LEVEL)
+        {
+            throw new AlreadyAtMaxLevelException();
+        }
+        return UPGRADE_COST[level];
+    }
 
 }
