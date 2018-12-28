@@ -5,14 +5,21 @@ public abstract class Entity
     protected int x, y;
     protected boolean exists;
 
+    public Entity(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+        exists = true;
+    }
+
     public boolean Exists()
     {
         return exists;
     }
 
-    public void setExists(boolean exists)
+    public void die()
     {
-        this.exists = exists;
+        this.exists = false;
     }
 
     public int getX()
@@ -20,7 +27,10 @@ public abstract class Entity
         return x;
     }
 
-    public void setX(int x) { this.x = x; }
+    public void setX(int x)
+    {
+        this.x = x;
+    }
 
     public int getY()
     {
@@ -31,7 +41,5 @@ public abstract class Entity
     {
         this.y = y;
     }
-
-    public abstract int getOccupationSpace();
 
 }
