@@ -1,50 +1,33 @@
 package models;
 
-public class Item extends Entity implements Storable
+public class Item extends Entity
 {
-    private final int SELL_MONEY, OCCUPATION_SPACE;
     Type type;
 
-    public Item(Type type)
+    public Item(int x, int y, Type type)
     {
+        super(x, y);
         this.type = type;
-        this.SELL_MONEY = 0;
-        this.OCCUPATION_SPACE = 0;
-    }
-
-    @Override
-    public int getSellMoney() {
-        return 0;
-    }
-
-    @Override
-    public int getOccupationSpace()
-    {
-        return 0;
     }
 
     public enum Type
     {
-        //todo inja bayad puste shir va khers ham ezafe shavad
-        // chon vaqti mikhayim puste shir befrushim miad az in ja gheimato mohasebe mikone
-        EGG(0), MILK(1), WOOL(2), EGG_POWDER(3), COOKIE(4), CAKE(5);
-        private final int type;
+        EGG(1, 20, 10), MILK(10, 2000, 1000),
+        WOOL(5, 200, 100), DRIED_EGG(4, 100, 50),
+        CAKE(5, 200, 100), CAGED_LION(20, 150, 150),
+        CAGED_GRIZZLY(7, 80, 80), FLOUR(2, 20, 10),
+        SEWING(3, 300, 150), FABRIC(6, 400, 300),
+        PLUME(2, 200, 100), FLOURY_CAKE(6, 400, 200),
+        CARNIVAL_DRESS(8, 1400, 1300);
 
-        Type(int status)
+        public final int occupiedSpace, buyCost, sellMoney;
+
+        Type(int occupiedSpace, int buyCost, int sellMoney)
         {
-            this.type = status;
+            this.occupiedSpace = occupiedSpace;
+            this.buyCost = buyCost;
+            this.sellMoney = sellMoney;
         }
-
-        public int getType() {
-            return type;
-        }
-        public static Entity TYPE_INDEXED(int num) {
-            Entity[] entitys = new Entity[] { new Item(EGG)
-                            , new Item(MILK), new Item(WOOL), new Item(EGG_POWDER), new Item(COOKIE), new Item(CAKE) };
-            return entitys[num];
-        }
-
-        public static Type[] ITEM_INDEXED = new Type[] { EGG, MILK, WOOL, EGG_POWDER, COOKIE, CAKE };
     }
 
 }
