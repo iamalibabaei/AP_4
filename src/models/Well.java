@@ -1,36 +1,71 @@
 package models;
 
+import models.exceptions.AlreadyAtMaxLevelException;
+import models.exceptions.InsufficientResourcesException;
+import models.exceptions.IsWorkingException;
+import models.interfaces.Countdown;
 import models.interfaces.Upgradable;
 
-public class Well implements Upgradable
+public class Well implements Upgradable, Countdown
 {
-    public static final int BASE_CAPACITY = 0, CAPACITY_UPGRADE_INCREASE = 0, BASE_REFILL_TIME = 0;
-    boolean isRefilling;
-    private int capacity;
-    private int usedCapacity;
-    private int refillTime;
-    private int refillFinishTime;
+    public static final int[] CAPACITY = {5, 7, 10}, REFILL_COST = {19, 17, 15}, REFILL_TIME = {3, 4, 3};
+    public static final int[] UPGRADE_COST = {250, 500};
+    public static final int MAX_LEVEL = 2;
+    private boolean isRefilling;
+    private int level, remainingWater, timer;
 
-    public Well(int capacity)
+    public void putGrass() throws InsufficientResourcesException
     {
-        this.capacity = capacity;
+        if (remainingWater == 0)
+            throw new InsufficientResourcesException();
+        remainingWater--;
+    }
+
+    public Well()
+    {
         isRefilling = false;
+        level = 0;
     }
 
-    public void issueRefill(int time)
+    public void issueRefill() throws IsWorkingException
     {
-
-    }
-
-    private void refill(int time)
-    {
-
+        if (isRefilling)
+            throw new IsWorkingException();
+        isRefilling = true;
+        timer = REFILL_TIME[level];
     }
 
     @Override
-    public void upgrade()
+    public void upgrade() throws AlreadyAtMaxLevelException
     {
+        if (level == MAX_LEVEL)
+            throw new AlreadyAtMaxLevelException();
+        level++;
+    }
 
+    @Override
+    public int getUpgradeCost() throws AlreadyAtMaxLevelException
+    {
+        if (level == MAX_LEVEL)
+            throw new AlreadyAtMaxLevelException();
+        return UPGRADE_COST[level];
+    }
+
+    @Override
+    public void countdown()
+    {
+        if (isRefilling)
+        {
+            timer--;
+            if (timer == 0)
+                refill();
+        }
+    }
+
+    private void refill()
+    {
+        isRefilling = false;
+        remainingWater = CAPACITY[level];
     }
 
 }

@@ -1,5 +1,5 @@
 package models.exceptions;
 
-public class InsufficientResourcesException extends Exception
+public class InsufficientResourcesException extends RuntimeException
 {
 }
