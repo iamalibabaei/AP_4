@@ -3,6 +3,17 @@ package models;
 public abstract class Entity
 {
     protected int x, y;
+    protected boolean exists;
+
+    public boolean Exists()
+    {
+        return exists;
+    }
+
+    public void setExists(boolean exists)
+    {
+        this.exists = exists;
+    }
 
     public int getX()
     {

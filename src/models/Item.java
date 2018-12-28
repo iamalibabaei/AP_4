@@ -1,7 +1,5 @@
 package models;
 
-import models.interfaces.Storable;
-
 public class Item extends Entity implements Storable
 {
     private final int SELL_MONEY, OCCUPATION_SPACE;

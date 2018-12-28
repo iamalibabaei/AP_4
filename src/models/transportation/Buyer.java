@@ -2,14 +2,16 @@ package models.transportation;
 
 import models.exceptions.MaxlevelException;
 import models.Item;
-import models.interfaces.Storable;
+import models.map.Map;
 
-public class Truck extends Transporter
+public class Buyer extends Transporter
 {
-    public Truck() {
-        this.capacity = 40;
-        this.speed = 20;
+    private Map map;
+    public Buyer(Map map) {
+        this.capacity = 25;
+        this.speed = 12;
         this.level = 0;
+        this.map = map;
     }
 
     @Override
@@ -24,18 +26,16 @@ public class Truck extends Transporter
 
     @Override
     public void turn() {
-        arriveToFarm -= 1;
+        arriveToFarm --;
         if (arriveToFarm == 0) {
-            int money = 0;
-            for (Item.Type itemType : list.keySet())
-            {
-                int elementsell = ((Storable) Item.Type.TYPE_INDEXED(itemType.getType())).getSellMoney();
-                elementsell = elementsell * list.get(itemType);
-                money += elementsell;
+            for (Item.Type itemType : list.keySet()) {
+
+                for (int i = 0; i < list.get(itemType); i++) {
+                    map.addToMap(Item.Type.TYPE_INDEXED(itemType.getType()));
+                }
             }
-            list.clear();
             isWorking = false;
-            //TODO pule (money) ro be pule kol ezafe konim
+            list.clear();
         }
     }
 
@@ -46,10 +46,7 @@ public class Truck extends Transporter
         if (level == 4) {
             throw new MaxlevelException();
         }
-        this.speed = (4 - level) * 5;
-        this.capacity = 20 * (level + 2);
+        this.speed = this.speed - 3;
+        this.capacity =(int) (this.capacity * 1.5);
     }
-
 }
-
-

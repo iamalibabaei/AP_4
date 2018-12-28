@@ -1,7 +1,6 @@
 package models.animal;
 
 import models.Entity;
-import models.interfaces.Storable;
 import models.map.Map;
 
 public class WildAnimal extends Animal implements Storable

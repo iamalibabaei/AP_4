@@ -1,8 +1,7 @@
 package models.map;
 
 import models.Entity;
-import models.interfaces.Storable;
-import models.map.Cell;
+
 import java.util.ArrayList;
 
 public class Map
@@ -15,7 +14,7 @@ public class Map
         return cells[x][y].getStorables();
     }
 
-    public void removeItems(int x, int y, ArrayList<Storable> stored)
+    void removeItems(int x, int y, ArrayList<Storable> stored)
     {
         cells[x][y].removeAll(stored);
     }

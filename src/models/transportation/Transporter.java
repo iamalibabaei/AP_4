@@ -1,7 +1,6 @@
 package models.transportation;
 
 import models.Item;
-import models.interfaces.Storable;
 import models.interfaces.Upgradable;
 
 import java.util.HashMap;

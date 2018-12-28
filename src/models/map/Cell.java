@@ -5,10 +5,8 @@ import models.Entity;
 import models.Item;
 import models.animal.Animal;
 import models.animal.WildAnimal;
-import models.interfaces.Storable;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Cell
 {
