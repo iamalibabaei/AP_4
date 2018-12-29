@@ -7,48 +7,37 @@ import models.exceptions.IsWorkingException;
 import models.exceptions.ItemNotInWarehouseException;
 import models.interfaces.Upgradable;
 import models.map.Cell;
+import models.map.Map;
 
 import java.util.HashMap;
 
 public class
 Workshop implements Upgradable
 {
-    private Type type;
-
+    private int x, y;//place off cell where it returns products
     private int level = 1, maxProductionNum = 1, maxWorkingTime = 15,timeToReturnProduct = -1;
     private int productionNum;
     private Warehouse warehouse;
     private boolean isWorking = false;
     private Cell cell;//this is the cell where it puts the result items
+    private final int buildCost;
+    private final Item.Type input1, input2, output;
 
 
-    public enum Type
-    {
-        EGG_POWDER_PLANT(100, Item.Type.EGG, null, Item.Type.DRIED_EGG),
-        COOKIE_BAKERY(200, Item.Type.DRIED_EGG, null, Item.Type.CAKE),
-        CAKE_BAKERY(300, Item.Type.CAKE, Item.Type.FLOUR, Item.Type.FLOURY_CAKE),
-        SPINNERY(1000, Item.Type.WOOL, null, Item.Type.SEWING),
-        WEAVING_FACTORY(1500, Item.Type.SEWING, null, Item.Type.FABRIC),
-        SEWING_FACTORY(2000, Item.Type.FABRIC, Item.Type.PLUME, Item.Type.CARNIVAL_DRESS);
-
-        public final int buildCost;
-        public final Item.Type input1, input2, output;
-
-        Type(int buildCost, Item.Type input1, Item.Type input2, Item.Type output) {
-            this.buildCost = buildCost;
-            this.input1 = input1;
-            this.input2 = input2;
-            this.output = output;
-        }
+    public Workshop(int x, int y,int buildCost, Item.Type input1, Item.Type input2, Item.Type output) {
+        this.x = x;
+        this.y = y;
+        this.buildCost = buildCost;
+        this.input1 = input1;
+        this.input2 = input2;
+        this.output = output;
     }
 
-
-    public Workshop(Type type, Warehouse warehouse, Cell cell)
-    {
-        this.type = type;
+    public void getMapAndWarehose(Map map, Warehouse warehouse) {
+        this.cell = map.getCell(x, y);
         this.warehouse = warehouse;
-        this.cell = cell;
     }
+
 
     public void goToWork() throws IsWorkingException, ItemNotInWarehouseException
     {
@@ -57,9 +46,9 @@ Workshop implements Upgradable
         }
 
         HashMap<Item.Type , Integer> base = new HashMap<>();
-        base.put(type.input1, maxProductionNum);
-        if (type.input2 != null) {
-            base.put(type.input2, maxProductionNum);
+        base.put(input1, maxProductionNum);
+        if (input2 != null) {
+            base.put(input2, maxProductionNum);
         }
 
         int inputNumbers = warehouse.moveToWorkshop(base, 1).get();
@@ -84,7 +73,7 @@ Workshop implements Upgradable
     private void returnProduct()
     {
         for (int i = 0; i < productionNum; i++) {
-            cell.addEntity(new Item(cell.getX(), cell.getY(), this.type.output));
+            cell.addEntity(new Item(cell.getX(), cell.getY(), output));
         }
     }
 
@@ -106,7 +95,7 @@ Workshop implements Upgradable
         if (level == 4) {
             throw new AlreadyAtMaxLevelException();
         }
-        int cost = this.type.buildCost;
+        int cost = buildCost;
         for(int i = 0; i < level; i++) {
             cost += 100;
         }
