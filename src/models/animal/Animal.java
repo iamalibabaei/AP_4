@@ -8,15 +8,14 @@ public abstract class Animal extends Entity
 
     protected Map map;
 
-    public Animal(Map map)
+    public Animal(int x, int y, Map map)
     {
+        super(x, y);
         target = null;
         this.map = map;
     }
 
     public abstract void setTarget();
-
-    public abstract int getSellMoney();
 
     //if (target == null) randomWalk
     public void move()
