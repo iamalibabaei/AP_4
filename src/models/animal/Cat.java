@@ -19,9 +19,9 @@ public class Cat extends Animal implements Buyable, Upgradable
     private HashMap<Item.Type, Integer> items = new HashMap();
     private Warehouse warehouse = new Warehouse();
 
-    public Cat(Map map)
+    public Cat(int x, int y, Map map)
     {
-        super(map);
+        super(x, y, map);
     }
 
     @Override

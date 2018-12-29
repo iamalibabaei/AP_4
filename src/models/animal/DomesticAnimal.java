@@ -22,9 +22,9 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
         HEN, SHEEP, COW
     }
 
-     public DomesticAnimal(Map map, TypeOfAnimal typeOfAnimal)
+     public DomesticAnimal(int x, int y, Map map, TypeOfAnimal typeOfAnimal)
     {
-        super(map);
+        super(x, y, map);
         if (typeOfAnimal == TypeOfAnimal.HEN){
             this.BUY_COST = 100;
         }
