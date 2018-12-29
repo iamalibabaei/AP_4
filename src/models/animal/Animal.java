@@ -24,7 +24,7 @@ public abstract class Animal extends Entity implements Time
         }
     }
 
-    public Animal(int x, int y, Type type, Map map)
+    Animal(int x, int y, Type type, Map map)
     {
         super(x, y);
         target = null;
@@ -66,6 +66,7 @@ public abstract class Animal extends Entity implements Time
     public abstract void collide(Entity entity);
 
     public void nextTurn(){
+        setTarget();
         move();
     }
 
