@@ -1,16 +1,23 @@
 package models.animal;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import models.Entity;
 import models.Item;
+import models.Warehouse;
+import models.exceptions.AlreadyAtMaxLevelException;
 import models.interfaces.Buyable;
+import models.interfaces.Upgradable;
 import models.map.Cell;
 import models.map.Map;
 
-public class Cat extends Animal implements Buyable
+import java.util.HashMap;
+
+public class Cat extends Animal implements Buyable, Upgradable
 {
-    public static final int BUY_COST = 2500, SELL_MONEY = 0, OCCUPATION_SPACE = 0;
+    public static final int BUY_COST = 2500;
+    public static final int MAX_LEVEL = 2, UPGRADE_COST = 200;
     private static int level;
+    private HashMap<Item.Type, Integer> items = new HashMap();
+    private Warehouse warehouse = new Warehouse();
 
     public Cat(Map map)
     {
@@ -34,18 +41,15 @@ public class Cat extends Animal implements Buyable
     }
 
     @Override
-    public int getSellMoney()
-    {
-        return SELL_MONEY;
-    }
-
-    @Override
     public void collide(Entity entity)
     {
-        if (entity instanceof Item){
-            super.map.getCell(entity.getX(), entity.getY()).getStorables();
-            super.map.getCell(entity.getX(), entity.getY()).getEntities().remove(entity);
+        for (Entity entity1 : super.map.getCell(entity.getX(), entity.getY()).getEntities()){
+            if (entity1 instanceof Item){
+                items.put(entity1, 1);
+            }
         }
+        warehouse.store(items);
+        setTarget();
     }
 
     @Override
@@ -54,15 +58,17 @@ public class Cat extends Animal implements Buyable
         return BUY_COST;
     }
 
-    @Override
-    public int getOccupationSpace()
-    {
-        return OCCUPATION_SPACE;
-    }
-
     public void upgrade()
     {
         level++;
+    }
+
+    @Override
+    public int getUpgradeCost() throws AlreadyAtMaxLevelException
+    {
+        if (level == MAX_LEVEL)
+            throw new AlreadyAtMaxLevelException();
+        return UPGRADE_COST;
     }
 
 }
