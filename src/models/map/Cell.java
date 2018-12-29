@@ -73,7 +73,7 @@ public class Cell
         ArrayList<Entity> storables = new ArrayList<>();
         for (Entity entity : entities) {
             if (entity instanceof WildAnimal) {
-                if (((WildAnimal)entity).getState() == WildAnimal.Status.CAGED) {
+                if (((WildAnimal)entity).getState() == WildAnimal.State.CAGED) {
                     storables.add(entity);
                 }
             } else if (entity instanceof Item) {
