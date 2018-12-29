@@ -8,6 +8,8 @@ import models.exceptions.ItemNotInWarehouseException;
 import models.interfaces.Upgradable;
 import models.map.Cell;
 
+import java.util.HashMap;
+
 public class
 Workshop implements Upgradable
 {
@@ -54,7 +56,13 @@ Workshop implements Upgradable
             throw new IsWorkingException();
         }
 
-        int inputNumbers = 0;//TODO its min of (level,items in warehose)
+        HashMap<Item.Type , Integer> base = new HashMap<>();
+        base.put(type.input1, maxProductionNum);
+        if (type.input2 != null) {
+            base.put(type.input2, maxProductionNum);
+        }
+
+        int inputNumbers = warehouse.moveToWorkshop(base, 1).get();
         if (inputNumbers == 0) {
             throw new ItemNotInWarehouseException();
         }
