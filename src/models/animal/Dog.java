@@ -9,9 +9,9 @@ public class Dog extends Animal implements Buyable
 {
     private static final int BUY_COST = 2600;
 
-    public Dog(int x, int y, Map map)
+    public Dog(int x, int y, Animal.Type type, Map map)
     {
-        super(x, y, map);
+        super(x, y, type, map);
     }
 
     @Override

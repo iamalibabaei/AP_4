@@ -8,15 +8,28 @@ import java.util.Random;
 
 public abstract class Animal extends Entity implements Time
 {
-    protected Entity target;
-
+    Entity target;
+    protected Type type;
     protected Map map;
 
-    public Animal(int x, int y, Map map)
+    public enum Type
+    {
+        CAT("cat"), DOG("dog"), LION("lion"), BEAR("bear"), SHEEP("sheep"), HEN("hen"), COW("cow");
+
+        public String NAME;
+
+        Type(String NAME)
+        {
+            this.NAME = NAME;
+        }
+    }
+
+    public Animal(int x, int y, Type type, Map map)
     {
         super(x, y);
         target = null;
         this.map = map;
+        this.type = type;
     }
 
     public abstract void setTarget();

@@ -7,7 +7,6 @@ public class WildAnimal extends Animal
 {
     private State state;
 
-    private Type type;
 
     @Override
     public void nextTurn() {
@@ -15,14 +14,11 @@ public class WildAnimal extends Animal
         setTarget();
     }
 
-    public enum Type { LION, BEAR }
 
-
-    public WildAnimal(int x, int y, Map map, Type typeOfAnimal)
+    public WildAnimal(int x, int y, Map map, Animal.Type type)
     {
-        super(x, y, map);
+        super(x, y, type, map);
         state = State.NOT_CAGED;
-        this.type= typeOfAnimal;
     }
 
     public enum State

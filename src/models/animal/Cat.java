@@ -14,15 +14,14 @@ public class Cat extends Animal implements Buyable, Upgradable
 {
     private static final int BUY_COST = 2500;
     private static final int MAX_LEVEL = 1, UPGRADE_COST = 200;
-    private int level;
+    private static int level;
     private HashMap<Item.Type, Integer> items = new HashMap();
     private Warehouse warehouse;
 
-    public Cat(int x, int y, Map map, Warehouse warehouse, int level)
+    public Cat(int x, int y, Animal.Type type, Map map, Warehouse warehouse)
     {
-        super(x, y, map);
+        super(x, y, type, map);
         this.warehouse = warehouse;
-        this.level = level;
     }
 
     @Override
