@@ -9,10 +9,11 @@ import models.map.Map;
 
 public class Buyer extends Transporter
 {
+    int[] upgradeCostList = {400, 800, 1600};
     private Map map;
     public Buyer(Map map) {
         this.capacity = 25;
-        this.speed = 12;
+        this.MaxtimeToArriveToFarm = 12;
         this.level = 0;
         this.map = map;
     }
@@ -23,11 +24,11 @@ public class Buyer extends Transporter
             throw new IsWorkingException();
         }
         isWorking = true;
-        arriveToFarm = speed;
+        arriveToFarm = MaxtimeToArriveToFarm;
     }
 
     @Override
-    public void turn() {
+    public void countdown() {
         arriveToFarm --;
         if (arriveToFarm == 0) {
             for (Item.Type itemType : list.keySet()) {
@@ -49,16 +50,15 @@ public class Buyer extends Transporter
             throw new AlreadyAtMaxLevelException();
         }
         this.level ++;
-        this.speed = this.speed - 3;
+        this.MaxtimeToArriveToFarm = this.MaxtimeToArriveToFarm - 3;
         this.capacity =(int) (this.capacity * 1.5);
     }
 
     @Override
     public int getUpgradeCost() throws AlreadyAtMaxLevelException {
-        int[] costList = {400, 800, 1600};
         if (level == 3) {
             throw new AlreadyAtMaxLevelException();
         }
-        return costList[level];
+        return upgradeCostList[level];
     }
 }
