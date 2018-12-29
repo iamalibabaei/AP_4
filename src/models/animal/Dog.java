@@ -18,11 +18,13 @@ public class Dog extends Animal implements Buyable
     public void setTarget()
     {
         super.target = null;
-        for (Cell[] cells: super.map.getCells()) {
+
+        outer : for (Cell[] cells: super.map.getCells()) {
             for (Cell cell: cells) {
                 for (Entity entity : cell.getEntities()) {
                     if (entity instanceof WildAnimal){
                         super.target = entity;
+                        break outer;
                     }
                 }
             }
