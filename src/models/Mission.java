@@ -17,10 +17,12 @@ public class Mission
     boolean dog,cat;
 
     public Mission(int money, HashMap<DomesticAnimal.Type, Integer> animalObjectives,
-                   HashMap<Item.Type, Integer> itemObjective) {
+                   HashMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat) {
         this.money = money;
         this.animalObjectives = animalObjectives;
         ItemObjective = itemObjective;
+        this.dog = dog;
+        this.cat = cat;
     }
 
     public Mission(Game game) {
