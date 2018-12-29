@@ -5,7 +5,7 @@ import models.map.Map;
 
 public class WildAnimal extends Animal
 {
-    protected State state;
+    private State state;
 
     private Type typeOfAnimal;
 
@@ -61,18 +61,6 @@ public class WildAnimal extends Animal
     public void setTarget()
     {
         this.target = null;
-    }
-
-    public int getSellMoney()
-    {
-
-        if (typeOfAnimal == Type.LION) {
-            return 150;
-        } else {
-            return  100;
-
-
-        }
     }
 
     @Override
