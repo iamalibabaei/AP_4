@@ -12,9 +12,9 @@ public class WildAnimal extends Animal
     public enum TypeOfAnimal { LION, BEAR }
 
 
-    public WildAnimal(Map map, TypeOfAnimal typeOfAnimal)
+    public WildAnimal(int x, int y, Map map, TypeOfAnimal typeOfAnimal)
     {
-        super(map);
+        super(x, y, map);
         state = Status.NOT_CAGED;
         this.typeOfAnimal = typeOfAnimal;
     }
@@ -67,7 +67,6 @@ public class WildAnimal extends Animal
         this.target = null;
     }
 
-    @Override
     public int getSellMoney()
     {
 
