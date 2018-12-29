@@ -12,8 +12,8 @@ import java.util.HashMap;
 
 public class Cat extends Animal implements Buyable, Upgradable
 {
-    public static final int BUY_COST = 2500;
-    public static final int MAX_LEVEL = 2, UPGRADE_COST = 200;
+    private static final int BUY_COST = 2500;
+    private static final int MAX_LEVEL = 2, UPGRADE_COST = 200;
     private static int level;
     private HashMap<Item.Type, Integer> items = new HashMap();
     private Warehouse warehouse = new Warehouse();
