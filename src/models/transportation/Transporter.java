@@ -7,6 +7,7 @@ import models.interfaces.Upgradable;
 
 import java.util.HashMap;
 
+
 public abstract class Transporter implements Upgradable
 {
     int capacity, speed, level, arriveToFarm;//speed = arriving to destination per turn
@@ -38,7 +39,7 @@ public abstract class Transporter implements Upgradable
         return usedCapacity;
     }
     
-    public abstract void go() throws Exception;
+    public abstract void go() throws IsWorkingException;
 
     public abstract void turn();
 
