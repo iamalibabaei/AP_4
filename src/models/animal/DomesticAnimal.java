@@ -41,29 +41,33 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
 
         if (!isHungry){
             saturatedRate--;
-            if (saturatedRate <= 5){
+            if (saturatedRate <= 10){
                 produce();
                 isHungry = true;
             }
         }
     }
 
-    public void produce()
+    private void produce()
     {
-        Item item;
-        map.getCell(x, y).addEntity(item = new Item(x, y, type.PRODUCT));
+
+        map.getCell(x, y).addEntity(new Item(x, y, type.PRODUCT));
     }
 
     @Override
     public void setTarget()
     {
         if (isHungry){
+            int dist = 1000;
             for (Cell[] cells : map.getCells()){
                 for (Cell cell : cells){
                     if (cell.getGrass() > 0){
-                        target.setX(cell.getX());
-                        target.setY(cell.getY());
-                        return;
+                        int dist1 = Math.abs(this.x - cell.getX()) + Math.abs(this.y - cell.getY());
+                        if (dist1 < dist) {
+                            dist = dist1;
+                            target.setX(cell.getX());
+                            target.setY(cell.getY());
+                        }
                     }
                 }
             }
@@ -78,13 +82,15 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
     public void collide(Entity entity)
     {
         if (isHungry) {
-            map.getCell(entity.getX(), entity.getY()).eatGrass();
-            saturatedRate++;
-            if (saturatedRate >= MAX_SATURATED_RATE){
-                isHungry = false;
-            }
-            if (map.getCell(entity.getX(), entity.getY()).getGrass() <= 0){
+            if (map.getCell(entity.getX(), entity.getY()).getGrass() > 0){
+                map.getCell(entity.getX(), entity.getY()).eatGrass();
+                saturatedRate++;
+                if (saturatedRate >= MAX_SATURATED_RATE){
+                    isHungry = false;
+                }
+                if (map.getCell(entity.getX(), entity.getY()).getGrass() <= 0){
                 setTarget();
+                }
             }
         }
         setTarget();
