@@ -88,9 +88,6 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
                 if (saturatedRate >= MAX_SATURATED_RATE){
                     isHungry = false;
                 }
-                if (map.getCell(entity.getX(), entity.getY()).getGrass() <= 0){
-                setTarget();
-                }
             }
         }
         setTarget();
