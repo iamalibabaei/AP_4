@@ -9,9 +9,9 @@ import models.map.Map;
 
 public class DomesticAnimal extends Animal implements Buyable, Countdown
 {
-    private static final int MAX_HUNGER_RATE = 20;
-    private static int hungerRate = MAX_HUNGER_RATE / 2;
-    private static boolean isProducing = false, isHungry = true;
+    public static final int MAX_HUNGER_RATE = 20;
+    private int hungerRate = MAX_HUNGER_RATE / 2;
+    private boolean isProducing = false, isHungry = true;
 
     private Type type;
 
