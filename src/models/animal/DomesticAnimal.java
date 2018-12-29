@@ -41,7 +41,7 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
 
         if (!isHungry){
             saturatedRate--;
-            if (saturatedRate <= 10){
+            if (saturatedRate <= MAX_SATURATED_RATE / 2){
                 produce();
                 isHungry = true;
             }
@@ -57,6 +57,7 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
     @Override
     public void setTarget()
     {
+        target = null;
         if (isHungry){
             int dist = 1000;
             for (Cell[] cells : map.getCells()){
@@ -71,10 +72,12 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
                     }
                 }
             }
-        }
-        else {
-             target = null;
-
+            if (target == null){
+                saturatedRate--;
+            }
+            if (saturatedRate <= 0){
+                this.die();
+            }
         }
     }
 
