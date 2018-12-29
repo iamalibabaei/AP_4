@@ -1,8 +1,11 @@
+
 package models.transportation;
 
-import models.exceptions.MaxlevelException;
+import models.exceptions.AlreadyAtMaxLevelException;
+import models.exceptions.IsWorkingException;
 import models.Item;
 import models.map.Map;
+
 
 public class Buyer extends Transporter
 {
@@ -15,10 +18,10 @@ public class Buyer extends Transporter
     }
 
     @Override
-    public void go() throws Exception
+    public void go() throws IsWorkingException
     {
         if (isWorking) {
-            throw new Exception("truck is not in the farm");
+            throw new IsWorkingException();
         }
         isWorking = true;
         arriveToFarm = speed;
@@ -29,9 +32,10 @@ public class Buyer extends Transporter
         arriveToFarm --;
         if (arriveToFarm == 0) {
             for (Item.Type itemType : list.keySet()) {
-
                 for (int i = 0; i < list.get(itemType); i++) {
-                    map.addToMap(Item.Type.TYPE_INDEXED(itemType.getType()));
+                    int x = (int)(Math.random() * 20), y = (int)(Math.random() * 20);
+                    Item item = new Item(x, y, itemType);
+                    map.addToMap(item);
                 }
             }
             isWorking = false;
@@ -40,13 +44,22 @@ public class Buyer extends Transporter
     }
 
     @Override
-    public void upgrade() throws MaxlevelException
+    public void upgrade() throws AlreadyAtMaxLevelException
     {
-        this.level ++;
-        if (level == 4) {
-            throw new MaxlevelException();
+        if (level == 3) {
+            throw new AlreadyAtMaxLevelException();
         }
+        this.level ++;
         this.speed = this.speed - 3;
         this.capacity =(int) (this.capacity * 1.5);
+    }
+
+    @Override
+    public int getUpgradeCost() throws AlreadyAtMaxLevelException {
+        int[] costList = {400, 800, 1600};
+        if (level == 3) {
+            throw new AlreadyAtMaxLevelException();
+        }
+        return costList[level];
     }
 }

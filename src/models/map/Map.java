@@ -9,12 +9,16 @@ public class Map
     public static final int WIDTH = 30, HEIGHT = 30;
     private Cell[][] cells = new Cell[WIDTH][HEIGHT];
 
-    public ArrayList<Storable> getStorables(int x, int y)
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public ArrayList<Entity> getStorables(int x, int y)
     {
         return cells[x][y].getStorables();
     }
 
-    void removeItems(int x, int y, ArrayList<Storable> stored)
+    void removeItems(int x, int y, ArrayList<Entity> stored)
     {
         cells[x][y].removeAll(stored);
     }
@@ -46,9 +50,9 @@ public class Map
         return cells[x][y];
     }
 
+
     public void addToMap(Entity entity) {
-        int x = (int)(Math.random() * 20), y = (int)(Math.random() * 20);
-        cells[x][y].addEntity(entity);
+        cells[entity.getX()][entity.getY()].addEntity(entity);
     }
 
     public void plant(int x, int y) {

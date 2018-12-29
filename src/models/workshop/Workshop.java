@@ -2,49 +2,65 @@ package models.workshop;
 
 import models.Item;
 import models.Warehouse;
+import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.IsWorkingException;
-import models.exceptions.NotINWarehouseException;
+import models.exceptions.ItemNotInWarehouseException;
 import models.interfaces.Upgradable;
 import models.map.Cell;
 
-public class Workshop implements Upgradable
+public class
+Workshop implements Upgradable
 {
+    private Type type;
 
-    private int level = 0, workingTime, timeToReturnProduct = 0, numberOfInputs, numberOfOutputs, maxNumOfInput;
-    double factorOfOutput;
-    private final Item.Type input, output;
+    private int level = 1, maxProductionNum = 1, maxWorkingTime = 15,timeToReturnProduct = -1;
+    private int productionNum;
     private Warehouse warehouse;
     private boolean isWorking = false;
     private Cell cell;//this is the cell where it puts the result items
 
-    public Workshop(int workingTime, int timeToReturnProduct, int maxNumOfInput, double factorOfOutput,
-                    Item.Type input, Item.Type output, Warehouse warehouse, boolean isWorking, Cell cell)
+
+    public enum Type
     {
-        this.workingTime = workingTime;
-        this.timeToReturnProduct = timeToReturnProduct;
-        this.maxNumOfInput = maxNumOfInput;
-        this.factorOfOutput = factorOfOutput;
-        this.input = input;
-        this.output = output;
+        EGG_POWDER_PLANT(100, Item.Type.EGG, null, Item.Type.DRIED_EGG),
+        COOKIE_BAKERY(200, Item.Type.DRIED_EGG, null, Item.Type.CAKE),
+        CAKE_BAKERY(300, Item.Type.CAKE, Item.Type.FLOUR, Item.Type.FLOURY_CAKE),
+        SPINNERY(1000, Item.Type.WOOL, null, Item.Type.SEWING),
+        WEAVING_FACTORY(1500, Item.Type.SEWING, null, Item.Type.FABRIC),
+        SEWING_FACTORY(2000, Item.Type.FABRIC, Item.Type.PLUME, Item.Type.CARNIVAL_DRESS);
+
+        public final int buildCost;
+        public final Item.Type input1, input2, output;
+
+        Type(int buildCost, Item.Type input1, Item.Type input2, Item.Type output) {
+            this.buildCost = buildCost;
+            this.input1 = input1;
+            this.input2 = input2;
+            this.output = output;
+        }
+    }
+
+
+    public Workshop(Type type, Warehouse warehouse, Cell cell)
+    {
+        this.type = type;
         this.warehouse = warehouse;
-        this.isWorking = isWorking;
         this.cell = cell;
     }
 
-    public void goToWork() throws IsWorkingException, NotINWarehouseException
+    public void goToWork() throws IsWorkingException, ItemNotInWarehouseException
     {
         if (!isWorking) {
             throw new IsWorkingException();
         }
 
-        if (warehouse.isAvailable(input)) {
-            throw new NotINWarehouseException();
+        int inputNumbers = 0;//TODO its min of (level,items in warehose)
+        if (inputNumbers == 0) {
+            throw new ItemNotInWarehouseException();
         }
-
         isWorking = true;
-        timeToReturnProduct = workingTime;
-        numberOfInputs = warehouse.getItemToWorkshop(input, maxNumOfInput);
-        numberOfOutputs = factorOfOutput * numberOfInputs < 1 ? 1: (int)( factorOfOutput * numberOfInputs);
+        timeToReturnProduct = maxWorkingTime;
+        productionNum = inputNumbers;
     }
 
     public void turn()
@@ -59,17 +75,33 @@ public class Workshop implements Upgradable
 
     private void returnProduct()
     {
-        for (int i = numberOfOutputs ; i > 0 ; i --) {
-            cell.getEntities().add(Item.Type.TYPE_INDEXED(output.getType()));
+        for (int i = 0; i < productionNum; i++) {
+            cell.addEntity(new Item(cell.getX(), cell.getY(), this.type.output));
         }
     }
 
     @Override
     public void upgrade()
     {
+        if (level == 5) {
+            throw new AlreadyAtMaxLevelException();
+        }
         level++;
-        factorOfOutput = factorOfOutput * 1.5;
-        workingTime = (int)(workingTime * 0.8);
-        maxNumOfInput += 2;
+        int[] maxWorkingTimeList = {15, 14, 13, 11,8};
+        maxWorkingTime = maxWorkingTimeList[level - 1];
+        maxProductionNum = level;
+
+    }
+
+    @Override
+    public int getUpgradeCost() throws AlreadyAtMaxLevelException {
+        if (level == 4) {
+            throw new AlreadyAtMaxLevelException();
+        }
+        int cost = this.type.buildCost;
+        for(int i = 0; i < level; i++) {
+            cost += 100;
+        }
+        return cost;
     }
 }

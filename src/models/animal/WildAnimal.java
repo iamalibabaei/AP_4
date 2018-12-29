@@ -3,11 +3,10 @@ package models.animal;
 import models.Entity;
 import models.map.Map;
 
-public class WildAnimal extends Animal implements Storable
+public class WildAnimal extends Animal
 {
     protected Status state;
 
-    private final int SELL_MONEY, OCCUPATION_SPACE;//150.25
     private TypeOfAnimal typeOfAnimal;
 
     public enum TypeOfAnimal { LION, BEAR }
@@ -18,14 +17,6 @@ public class WildAnimal extends Animal implements Storable
         super(map);
         state = Status.NOT_CAGED;
         this.typeOfAnimal = typeOfAnimal;
-        if (typeOfAnimal == TypeOfAnimal.LION) {
-            this.SELL_MONEY = 150;
-            this.OCCUPATION_SPACE = 25;
-        } else {
-            this.SELL_MONEY = 100;
-            this.OCCUPATION_SPACE = 20;
-        }
-
     }
 
     public enum Status
@@ -65,7 +56,8 @@ public class WildAnimal extends Animal implements Storable
     {
 
         if ((this.state != Status.CAGED) && (! (entity instanceof Dog || entity instanceof WildAnimal))) {
-            map.getCell(x, y).getEntities().remove(entity);
+
+            entity.die();
         }
     }
 
@@ -78,13 +70,14 @@ public class WildAnimal extends Animal implements Storable
     @Override
     public int getSellMoney()
     {
-        return SELL_MONEY;
-    }
 
-    @Override
-    public int getOccupationSpace()
-    {
-        return OCCUPATION_SPACE;
+        if (typeOfAnimal == TypeOfAnimal.LION) {
+            return 150;
+        } else {
+            return  100;
+
+
+        }
     }
 
     @Override
