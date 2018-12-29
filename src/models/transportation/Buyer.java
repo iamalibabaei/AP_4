@@ -17,7 +17,6 @@ public class Buyer extends Transporter
         this.map = map;
     }
 
-    @Override
     public void go() throws IsWorkingException
     {
         if (isWorking) {
