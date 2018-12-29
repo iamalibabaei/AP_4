@@ -6,7 +6,6 @@ import models.interfaces.Buyable;
 import models.interfaces.Countdown;
 import models.map.Cell;
 import models.map.Map;
-import sun.awt.SunToolkit;
 
 public class DomesticAnimal extends Animal implements Buyable, Countdown
 {
@@ -15,23 +14,23 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
     private static final int MAX_HUNGER_RATE = 20;
     private boolean isProducing, isHungry;
 
-    private TypeOfAnimal typeOfAnimal;
+    private Type type;
 
-    public enum TypeOfAnimal
+    public enum Type
     {
         HEN, SHEEP, COW
     }
 
-     public DomesticAnimal(int x, int y, Map map, TypeOfAnimal typeOfAnimal)
+     public DomesticAnimal(int x, int y, Map map, Type type)
     {
         super(x, y, map);
-        if (typeOfAnimal == TypeOfAnimal.HEN){
+        if (type == Type.HEN){
             this.BUY_COST = 100;
         }
-        else if (typeOfAnimal == TypeOfAnimal.SHEEP){
+        else if (type == Type.SHEEP){
             this.BUY_COST = 1000;
         }
-        else if (typeOfAnimal == TypeOfAnimal.COW){
+        else if (type == Type.COW){
             this.BUY_COST = 10000;
         }
     }
@@ -49,10 +48,10 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
 
     public Item.Type produce()
     {
-        if (typeOfAnimal == TypeOfAnimal.HEN){ return Item.Type.EGG;}
+        if (type == Type.HEN){ return Item.Type.EGG;}
         else
 
-            if (typeOfAnimal == TypeOfAnimal.SHEEP){ return Item.Type.FABRIC;}
+            if (type == Type.SHEEP){ return Item.Type.FABRIC;}
             else
 
                 return Item.Type.MILK;
@@ -66,11 +65,12 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
             target = null;
         }
         else {
-            for (Cell[] cells : super.map.getCells()){
+             outer : for (Cell[] cells : super.map.getCells()){
                 for (Cell cell : cells){
                     if (cell.getGrass() > 0){
                         super.target.setX(cell.getX());
                         super.target.setY(cell.getY());
+                        break outer;
                     }
                 }
             }
