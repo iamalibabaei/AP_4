@@ -9,11 +9,11 @@ import models.map.Map;
 
 public class Buyer extends Transporter
 {
-    int[] upgradeCostList = {400, 800, 1600};
     private Map map;
     public Buyer(Map map) {
+        super(new int[]{400, 800, 1600}, 3, 1.5);
         this.capacity = 25;
-        this.MaxtimeToArriveToFarm = 12;
+        this.maxtimeToArriveToFarm = 12;
         this.level = 0;
         this.map = map;
     }
@@ -24,7 +24,7 @@ public class Buyer extends Transporter
             throw new IsWorkingException();
         }
         isWorking = true;
-        arriveToFarm = MaxtimeToArriveToFarm;
+        arriveToFarm = maxtimeToArriveToFarm;
     }
 
     @Override
@@ -50,8 +50,8 @@ public class Buyer extends Transporter
             throw new AlreadyAtMaxLevelException();
         }
         this.level ++;
-        this.MaxtimeToArriveToFarm = this.MaxtimeToArriveToFarm - 3;
-        this.capacity =(int) (this.capacity * 1.5);
+        this.maxtimeToArriveToFarm = this.maxtimeToArriveToFarm - UPGRADE_SPEED_BOOST;
+        this.capacity =(int) (this.capacity * UPGRADE_CAPACITY_INCREACE);
     }
 
     @Override
@@ -59,6 +59,6 @@ public class Buyer extends Transporter
         if (level == 3) {
             throw new AlreadyAtMaxLevelException();
         }
-        return upgradeCostList[level];
+        return UPGRADE_COST_LIST[level];
     }
 }

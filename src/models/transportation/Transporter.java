@@ -11,12 +11,23 @@ import java.util.HashMap;
 
 public abstract class Transporter implements Upgradable, Countdown
 {
-    int capacity, MaxtimeToArriveToFarm, level, arriveToFarm;//MaxtimeToArriveToFarm = arriving to destination per turn
+    protected final int[] UPGRADE_COST_LIST;
+    protected final int UPGRADE_SPEED_BOOST;
+    protected final double UPGRADE_CAPACITY_INCREACE;
+
+    int capacity, maxtimeToArriveToFarm, level, arriveToFarm;//maxtimeToArriveToFarm = arriving to destination per turn
     protected boolean isWorking = false;
+
+    public Transporter(int[] UPGRADE_COST_LIST, int UPGRADE_SPEED_BOOST, double UPGRADE_CAPACITY_INCREACE) {
+        this.UPGRADE_COST_LIST = UPGRADE_COST_LIST;
+        this.UPGRADE_SPEED_BOOST = UPGRADE_SPEED_BOOST;
+        this.UPGRADE_CAPACITY_INCREACE = UPGRADE_CAPACITY_INCREACE;
+    }
 
     protected HashMap<Item.Type, Integer> list;
 
     public void addToList(Item.Type itemType, int number) throws IsWorkingException, NotEnoughSpaceException {
+        // todo double-click feature
         if (isWorking) {
             throw new IsWorkingException();
         }

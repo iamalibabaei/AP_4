@@ -5,10 +5,10 @@ import models.exceptions.IsWorkingException;
 
 public class Seller extends Transporter
 {
-    int[] costList = {150, 500, 1000};
     public Seller() {
+        super(new int[]{150, 500, 1000}, 5, 20);
         this.capacity = 40;
-        this.MaxtimeToArriveToFarm = 20;
+        this.maxtimeToArriveToFarm = 20;
         this.level = 0;
     }
 
@@ -19,7 +19,7 @@ public class Seller extends Transporter
             throw new IsWorkingException();
         }
         isWorking = true;
-        arriveToFarm = MaxtimeToArriveToFarm;
+        arriveToFarm = maxtimeToArriveToFarm;
     }
 
     @Override
@@ -46,8 +46,8 @@ public class Seller extends Transporter
             throw new AlreadyAtMaxLevelException();
         }
         this.level ++;
-        this.MaxtimeToArriveToFarm = (4 - level) * 5;
-        this.capacity = 20 * (level + 2);
+        this.maxtimeToArriveToFarm = maxtimeToArriveToFarm - UPGRADE_SPEED_BOOST;
+        this.capacity = (int)UPGRADE_CAPACITY_INCREACE * (level + 2);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Seller extends Transporter
         if (level == 3) {
             throw new AlreadyAtMaxLevelException();
         }
-        return costList[level];
+        return UPGRADE_COST_LIST[level];
 
     }
 
