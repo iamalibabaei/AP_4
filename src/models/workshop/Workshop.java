@@ -5,31 +5,33 @@ import models.Warehouse;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.IsWorkingException;
 import models.exceptions.ItemNotInWarehouseException;
+import models.interfaces.Time;
 import models.interfaces.Upgradable;
 import models.map.Cell;
 import models.map.Map;
 
 import java.util.HashMap;
 
-public class Workshop implements Upgradable
+public class
+Workshop implements Upgradable, Time
 {
     private int x, y;//place off cell where it returns products
-    private int level = 1, maxProductionNum = 1, maxWorkingTime = 15,timeToReturnProduct = -1;
+    private int level = 1, maxProductionNum , maxWorkingTime = 15,timeToReturnProduct = -1;
     private int productionNum;
     private Warehouse warehouse;
     private boolean isWorking = false;
     private Cell cell;//this is the cell where it puts the result items
     private final int buildCost;
-    private final Item.Type input1, input2, output;
+    private final HashMap<Item.Type, Integer> inputs, outputs;
 
 
-    public Workshop(int x, int y,int buildCost, Item.Type input1, Item.Type input2, Item.Type output) {
+    public Workshop(int x, int y,int buildCost, HashMap<Item.Type, Integer> inputs, HashMap<Item.Type, Integer> outputs, int maxProductionNum) {
         this.x = x;
         this.y = y;
         this.buildCost = buildCost;
-        this.input1 = input1;
-        this.input2 = input2;
-        this.output = output;
+        this.inputs = inputs;
+        this.outputs = outputs;
+        this.maxProductionNum = maxProductionNum;/* for game factors equals 1*/
     }
 
     public void getMapAndWarehose(Map map, Warehouse warehouse) {
@@ -44,13 +46,7 @@ public class Workshop implements Upgradable
             throw new IsWorkingException();
         }
 
-        HashMap<Item.Type , Integer> base = new HashMap<>();
-        base.put(input1, maxProductionNum);
-        if (input2 != null) {
-            base.put(input2, maxProductionNum);
-        }
-
-        int inputNumbers = warehouse.moveToWorkshop(base, 1).get();
+        int inputNumbers = warehouse.moveToWorkshop(inputs, maxProductionNum).get();
         if (inputNumbers == 0) {
             throw new ItemNotInWarehouseException();
         }
@@ -59,8 +55,8 @@ public class Workshop implements Upgradable
         productionNum = inputNumbers;
     }
 
-    public void turn()
-    {
+    @Override
+    public void nextTurn() {
         timeToReturnProduct--;
         if (timeToReturnProduct == 0) {
             isWorking = false;
@@ -71,8 +67,10 @@ public class Workshop implements Upgradable
 
     private void returnProduct()
     {
-        for (int i = 0; i < productionNum; i++) {
-            cell.addEntity(new Item(cell.getX(), cell.getY(), output));
+        for(Item.Type entry : outputs.keySet()) {
+            for (int i = 0; i < productionNum; i++) {
+                cell.addEntity(new Item(x, y, entry));
+            }
         }
     }
 
@@ -85,7 +83,7 @@ public class Workshop implements Upgradable
         level++;
         int[] maxWorkingTimeList = {15, 14, 13, 11,8};
         maxWorkingTime = maxWorkingTimeList[level - 1];
-        maxProductionNum = level;
+        maxProductionNum ++;
 
     }
 
@@ -100,4 +98,5 @@ public class Workshop implements Upgradable
         }
         return cost;
     }
+
 }

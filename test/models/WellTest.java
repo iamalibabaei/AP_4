@@ -10,7 +10,7 @@ class WellTest
     private Well well = new Well();
 
     @Test
-    public void shouldNotUpgradeBeyondLevel2()
+    void shouldNotUpgradeBeyondLevel2()
     {
         assertThrows(AlreadyAtMaxLevelException.class,
                 () ->
