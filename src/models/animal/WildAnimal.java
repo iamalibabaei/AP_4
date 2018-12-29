@@ -51,8 +51,7 @@ public class WildAnimal extends Animal
     public void collide(Entity entity)
     {
 
-        if ((this.state != State.CAGED) && (! (entity instanceof Dog || entity instanceof WildAnimal))) {
-
+        if ((this.state != State.CAGED) && ! (entity instanceof WildAnimal)) {
             entity.die();
         }
     }
