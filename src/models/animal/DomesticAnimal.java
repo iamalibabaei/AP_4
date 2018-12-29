@@ -21,7 +21,7 @@ public class DomesticAnimal extends Animal implements Buyable, Time
 
     public DomesticAnimal(int x, int y, Map map, Type type)
     {
-        super(x, y, map);
+        super(x, y, Animal.Type.valueOf(type.toString()), map);
         this.type = type;
     }
 
@@ -54,17 +54,25 @@ public class DomesticAnimal extends Animal implements Buyable, Time
 
     public enum Type
     {
-        HEN(100, Item.Type.EGG),
-        SHEEP(1000, Item.Type.FABRIC),
-        COW(10000, Item.Type.MILK);
+        HEN(100, Item.Type.EGG, "hen"),
+        SHEEP(1000, Item.Type.FABRIC, "sheep"),
+        COW(10000, Item.Type.MILK, "cow");
 
         public final int BUY_COST;
         public final Item.Type PRODUCT;
+        public final String NAME;
 
-        Type(int BUY_COST, Item.Type item)
+        Type(int BUY_COST, Item.Type item, String name)
         {
             this.BUY_COST = BUY_COST;
             this.PRODUCT = item;
+            this.NAME = name;
+        }
+
+        @Override
+        public String toString()
+        {
+            return NAME.toUpperCase();
         }
     }
 
