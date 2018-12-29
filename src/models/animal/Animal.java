@@ -16,8 +16,6 @@ public abstract class Animal extends Entity
 
     public abstract void setTarget();
 
-    public abstract int getSellMoney();
-
     //if (target == null) randomWalk
     public void move()
     {
