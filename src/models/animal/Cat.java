@@ -8,7 +8,6 @@ import models.interfaces.Buyable;
 import models.interfaces.Upgradable;
 import models.map.Cell;
 import models.map.Map;
-
 import java.util.HashMap;
 
 public class Cat extends Animal implements Buyable, Upgradable
@@ -29,11 +28,30 @@ public class Cat extends Animal implements Buyable, Upgradable
     {
         super.target = null;
 
-        for (Cell[] cells: super.map.getCells()) {
-            for (Cell cell: cells) {
-                for (Entity entity : cell.getEntities()) {
-                    if (entity instanceof Item){
-                        super.target = entity;
+        if (level == 1){
+            outer : for (Cell[] cells: super.map.getCells()) {
+                for (Cell cell: cells) {
+                    for (Entity entity : cell.getEntities()) {
+                        if (entity instanceof Item){
+                            super.target = entity;
+                            break outer;
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            int dist = 1000;
+            for (Cell[] cells: super.map.getCells()) {
+                for (Cell cell: cells) {
+                    for (Entity entity : cell.getEntities()) {
+                        if (entity instanceof Item){
+                            int dist1 = Math.abs(this.getX() - this.target.getX()) + Math.abs(this.getY() - this.target.getY());
+                            if (dist1 < dist) {
+                                dist = dist1;
+                                super.target = entity;
+                            }
+                        }
                     }
                 }
             }
@@ -58,11 +76,13 @@ public class Cat extends Animal implements Buyable, Upgradable
         return BUY_COST;
     }
 
-    public void upgrade()
+    @Override
+    public void upgrade() throws AlreadyAtMaxLevelException
     {
+        if (level == MAX_LEVEL)
+            throw new AlreadyAtMaxLevelException();
         level++;
     }
-
     @Override
     public int getUpgradeCost() throws AlreadyAtMaxLevelException
     {
