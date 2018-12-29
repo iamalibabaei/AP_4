@@ -2,12 +2,17 @@ package models;
 
 public class Item extends Entity
 {
-    Type type;
+    private Type type;
 
     public Item(int x, int y, Type type)
     {
         super(x, y);
         this.type = type;
+    }
+
+    public Type getType()
+    {
+        return type;
     }
 
     public enum Type
@@ -20,13 +25,13 @@ public class Item extends Entity
         PLUME(2, 200, 100), FLOURY_CAKE(6, 400, 200),
         CARNIVAL_DRESS(8, 1400, 1300);
 
-        public final int occupiedSpace, buyCost, sellMoney;
+        public final int OCCUPIED_SPACE, BUY_COST, SELL_MONEY;
 
-        Type(int occupiedSpace, int buyCost, int sellMoney)
+        Type(int OCCUPIED_SPACE, int BUY_COST, int SELL_MONEY)
         {
-            this.occupiedSpace = occupiedSpace;
-            this.buyCost = buyCost;
-            this.sellMoney = sellMoney;
+            this.OCCUPIED_SPACE = OCCUPIED_SPACE;
+            this.BUY_COST = BUY_COST;
+            this.SELL_MONEY = SELL_MONEY;
         }
     }
 
