@@ -3,10 +3,10 @@ package models;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
-import models.interfaces.Countdown;
+import models.interfaces.Time;
 import models.interfaces.Upgradable;
 
-public class Well implements Upgradable, Countdown
+public class Well implements Upgradable, Time
 {
     public static final int[] CAPACITY = {5, 7, 10}, REFILL_COST = {19, 17, 15}, REFILL_TIME = {3, 4, 3};
     public static final int[] UPGRADE_COST = {250, 500};
@@ -52,7 +52,7 @@ public class Well implements Upgradable, Countdown
     }
 
     @Override
-    public void countdown()
+    public void nextTurn()
     {
         if (isRefilling)
         {

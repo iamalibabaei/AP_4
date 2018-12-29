@@ -3,13 +3,13 @@ package models.transportation;
 import models.Item;
 import models.exceptions.IsWorkingException;
 import models.exceptions.NotEnoughSpaceException;
-import models.interfaces.Countdown;
+import models.interfaces.Time;
 import models.interfaces.Upgradable;
 
 import java.util.HashMap;
 
 
-public abstract class Transporter implements Upgradable, Countdown
+public abstract class Transporter implements Upgradable, Time
 {
     protected final int[] UPGRADE_COST_LIST;
     protected final int UPGRADE_SPEED_BOOST;
@@ -54,5 +54,5 @@ public abstract class Transporter implements Upgradable, Countdown
     public abstract void go() throws IsWorkingException;
 
     @Override
-    public abstract void countdown();
+    public abstract void nextTurn();
 }

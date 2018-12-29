@@ -23,7 +23,7 @@ public class Seller extends Transporter
     }
 
     @Override
-    public void countdown() {
+    public void nextTurn() {
         arriveToFarm -= 1;
         if (arriveToFarm == 0) {
             int money = 0;

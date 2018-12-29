@@ -3,11 +3,11 @@ package models.animal;
 import models.Entity;
 import models.Item;
 import models.interfaces.Buyable;
-import models.interfaces.Countdown;
+import models.interfaces.Time;
 import models.map.Cell;
 import models.map.Map;
 
-public class DomesticAnimal extends Animal implements Buyable, Countdown
+public class DomesticAnimal extends Animal implements Buyable, Time
 {
     public static final int MAX_SATURATION_RATE = 20;
     private int saturationRate = MAX_SATURATION_RATE / 2;
@@ -22,7 +22,7 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
     }
 
     @Override
-    public void countdown()
+    public void nextTurn()
     {
         if (saturationRate <= 0)
         {

@@ -7,7 +7,7 @@ public class WildAnimal extends Animal
 {
     private State state;
 
-    private Type typeOfAnimal;
+    private Type type;
 
     public enum Type { LION, BEAR }
 
@@ -16,7 +16,7 @@ public class WildAnimal extends Animal
     {
         super(x, y, map);
         state = State.NOT_CAGED;
-        this.typeOfAnimal = typeOfAnimal;
+        this.type= typeOfAnimal;
     }
 
     public enum State

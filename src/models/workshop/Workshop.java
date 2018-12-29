@@ -11,8 +11,7 @@ import models.map.Map;
 
 import java.util.HashMap;
 
-public class
-Workshop implements Upgradable
+public class Workshop implements Upgradable
 {
     private int x, y;//place off cell where it returns products
     private int level = 1, maxProductionNum = 1, maxWorkingTime = 15,timeToReturnProduct = -1;

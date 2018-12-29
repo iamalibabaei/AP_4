@@ -1,24 +1,35 @@
 package models;
 
-import models.animal.Animal;
+import models.map.Map;
+import models.transportation.Buyer;
+import models.workshop.Workshop;
+
+import java.util.ArrayList;
 
 public class Game
 {
-    private static Game game;
-    private int money, time;
+    public static final int MAX_WORKSHOPS = 6, MAP_SIZE = 30;
+    private static Game ourInstance = new Game();
+    private Map map;
+    private Warehouse warehouse;
+    private Well well;
+    private Buyer truck;
+    private ArrayList<Workshop> workshops;
+    private Mission mission;
+    private int wildAnimalsInMap;
+
+    public static Game getInstance()
+    {
+        return ourInstance;
+    }
 
     private Game()
     {
+        map = new Map();
+        warehouse = new Warehouse();
+        well = new Well();
+        workshops = new ArrayList<>();
     }
 
-    public Game getInstance()
-    {
-        return game;
-    }
-
-    public void addAnimal(Animal.Type type)
-    {
-
-    }
 
 }

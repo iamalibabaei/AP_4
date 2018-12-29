@@ -28,7 +28,7 @@ public class Buyer extends Transporter
     }
 
     @Override
-    public void countdown() {
+    public void nextTurn() {
         arriveToFarm --;
         if (arriveToFarm == 0) {
             for (Item.Type itemType : list.keySet()) {
