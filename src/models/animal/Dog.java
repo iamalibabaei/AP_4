@@ -41,10 +41,10 @@ public class Dog extends Animal implements Buyable
         if (entity instanceof WildAnimal) {
             super.map.getCell(entity.getX(), entity.getY()).getEntities().remove(entity);
             super.map.getCell(entity.getX(), entity.getY()).getEntities().remove(this);
+            setTarget();
         }
     }
 
-    @Override
     public int getOccupationSpace()
     {
         return OCCUPATION_SPACE;
