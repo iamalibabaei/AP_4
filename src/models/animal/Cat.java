@@ -13,14 +13,16 @@ import java.util.HashMap;
 public class Cat extends Animal implements Buyable, Upgradable
 {
     private static final int BUY_COST = 2500;
-    private static final int MAX_LEVEL = 2, UPGRADE_COST = 200;
-    private static int level;
+    private static final int MAX_LEVEL = 1, UPGRADE_COST = 200;
+    private int level;
     private HashMap<Item.Type, Integer> items = new HashMap();
-    private Warehouse warehouse = new Warehouse();
+    private Warehouse warehouse;
 
-    public Cat(int x, int y, Map map)
+    public Cat(int x, int y, Map map, Warehouse warehouse, int level)
     {
         super(x, y, map);
+        this.warehouse = warehouse;
+        this.level = level;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class Cat extends Animal implements Buyable, Upgradable
     {
         super.target = null;
 
-        if (level == 1){
+        if (level == 0){
             outer : for (Cell[] cells: super.map.getCells()) {
                 for (Cell cell: cells) {
                     for (Entity entity : cell.getEntities()) {
@@ -46,7 +48,7 @@ public class Cat extends Animal implements Buyable, Upgradable
                 for (Cell cell: cells) {
                     for (Entity entity : cell.getEntities()) {
                         if (entity instanceof Item){
-                            int dist1 = Math.abs(this.getX() - this.target.getX()) + Math.abs(this.getY() - this.target.getY());
+                            int dist1 = Math.abs(this.x - this.target.getX()) + Math.abs(this.y - this.target.getY());
                             if (dist1 < dist) {
                                 dist = dist1;
                                 super.target = entity;
@@ -61,13 +63,19 @@ public class Cat extends Animal implements Buyable, Upgradable
     @Override
     public void collide(Entity entity)
     {
-        for (Entity entity1 : super.map.getCell(entity.getX(), entity.getY()).getEntities()){
-            if (entity1 instanceof Item){
-                items.put(entity1, 1);
+        for (Entity entity1 : map.getCell(entity.getX(), entity.getY()).getEntities()) {
+            if (entity1 instanceof Item) {
+                if (items.containsKey(((Item) entity1).getType())){
+                    int num = items.get(((Item) entity1).getType()) + 1;
+                    items.put(((Item) entity1).getType(), num);
+                }
+                else {
+                    items.put(((Item) entity1).getType(), 1);
+                }
+                entity1.die();
             }
         }
         warehouse.store(items);
-        setTarget();
     }
 
     @Override
