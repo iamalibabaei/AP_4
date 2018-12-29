@@ -25,7 +25,8 @@ Workshop implements Upgradable, Time
     private final HashMap<Item.Type, Integer> inputs, outputs;
 
 
-    public Workshop(int x, int y,int buildCost, HashMap<Item.Type, Integer> inputs, HashMap<Item.Type, Integer> outputs, int maxProductionNum) {
+    public Workshop(int x, int y,int buildCost, HashMap<Item.Type, Integer> inputs,
+                    HashMap<Item.Type, Integer> outputs, int maxProductionNum) {
         this.x = x;
         this.y = y;
         this.buildCost = buildCost;

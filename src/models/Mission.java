@@ -33,7 +33,7 @@ public class Mission
     {
         boolean hasDog = false, hasCat = false;
         int gameMoney = game.getMoney();
-        Map map = game.getMap;
+        Map map = game.getMap();
         HashMap<DomesticAnimal.Type, Integer> animalCurrentState = new HashMap<>();
         HashMap<Item.Type, Integer> ItemCurentState = new HashMap<>();
         for (Cell[] cells: map.getCells()) {
@@ -49,11 +49,11 @@ public class Mission
 
                     }
                     if (entity instanceof DomesticAnimal) {
-                        if (animalCurrentState.containsKey(((DomesticAnimal) entity).getType)) {
-                            animalCurrentState.put(((DomesticAnimal) entity).getType,
-                                    animalCurrentState.get(((DomesticAnimal) entity).getType) + 1);
+                        if (animalCurrentState.containsKey(((DomesticAnimal) entity).getType())) {
+                            animalCurrentState.put(((DomesticAnimal) entity).getType(),
+                                    animalCurrentState.get(((DomesticAnimal) entity).getType()) + 1);
                         } else {
-                            animalCurrentState.put(((DomesticAnimal) entity).getType, 1);
+                            animalCurrentState.put(((DomesticAnimal) entity).getType(), 1);
                         }
                     }
                     if (entity instanceof Dog) {
