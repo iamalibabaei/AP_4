@@ -99,4 +99,9 @@ public class Cat extends Animal implements Buyable, Upgradable
         return UPGRADE_COST;
     }
 
+    @Override
+    public void nextTurn() {
+        super.nextTurn();
+        if (target == null) setTarget();
+    }
 }

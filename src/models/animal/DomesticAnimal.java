@@ -13,6 +13,10 @@ public class DomesticAnimal extends Animal implements Buyable, Time
     private int saturationRate = MAX_SATURATION_RATE / 2;
     private boolean isHungry = true;
 
+    public Type getType() {
+        return type;
+    }
+
     private Type type;
 
     public DomesticAnimal(int x, int y, Map map, Type type)
@@ -34,6 +38,7 @@ public class DomesticAnimal extends Animal implements Buyable, Time
             produce();
             isHungry = true;
         }
+        super.nextTurn();
     }
 
     private void produce()

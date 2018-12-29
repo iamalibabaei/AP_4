@@ -7,7 +7,7 @@ import models.map.Map;
 
 public class Dog extends Animal implements Buyable
 {
-    public static final int BUY_COST = 2600;
+    private static final int BUY_COST = 2600;
 
     public Dog(int x, int y, Map map)
     {
@@ -17,14 +17,14 @@ public class Dog extends Animal implements Buyable
     @Override
     public void setTarget()
     {
-        super.target = null;
+        target = null;
 
-        outer : for (Cell[] cells: super.map.getCells()) {
+        for (Cell[] cells: map.getCells()) {
             for (Cell cell: cells) {
                 for (Entity entity : cell.getEntities()) {
                     if (entity instanceof WildAnimal){
-                        super.target = entity;
-                        break outer;
+                        target = entity;
+                        return;
                     }
                 }
             }
@@ -36,7 +36,6 @@ public class Dog extends Animal implements Buyable
     {
         if (entity instanceof WildAnimal) {
             entity.die();
-            this.die();
             setTarget();
         }
     }
@@ -47,4 +46,9 @@ public class Dog extends Animal implements Buyable
         return BUY_COST;
     }
 
+    @Override
+    public void nextTurn() {
+        super.nextTurn();
+        if (target == null) setTarget();
+    }
 }

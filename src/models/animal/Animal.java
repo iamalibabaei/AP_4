@@ -1,11 +1,12 @@
 package models.animal;
 
 import models.Entity;
+import models.interfaces.Time;
 import models.map.Map;
 
 import java.util.Random;
 
-public abstract class Animal extends Entity
+public abstract class Animal extends Entity implements Time
 {
     protected Entity target;
 
@@ -50,5 +51,9 @@ public abstract class Animal extends Entity
     }
 
     public abstract void collide(Entity entity);
+
+    public void nextTurn(){
+        move();
+    }
 
 }

@@ -9,6 +9,12 @@ public class WildAnimal extends Animal
 
     private Type type;
 
+    @Override
+    public void nextTurn() {
+        move();
+        setTarget();
+    }
+
     public enum Type { LION, BEAR }
 
 
