@@ -11,7 +11,7 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
 {
     public static final int MAX_SATURATED_RATE = 20;
     private int saturatedRate = MAX_SATURATED_RATE / 2;
-    private boolean isProducing = false, isHungry = true;
+    private boolean isHungry = true;
 
     private Type type;
 
@@ -22,11 +22,11 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
         COW(10000, Item.Type.MILK);
 
         public final int BUY_COST;
-        public final Item.Type production;
+        public final Item.Type PRODUCT;
 
         Type(int BUY_COST, Item.Type item) {
             this.BUY_COST = BUY_COST;
-            this.production = item;
+            this.PRODUCT = item;
         }
     }
 
@@ -39,30 +39,30 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
     @Override
     public void countdown() {
 
-        if (isProducing){
+        if (!isHungry){
             saturatedRate--;
             if (saturatedRate <= 5){
                 produce();
-                isProducing = false;
                 isHungry = true;
             }
         }
     }
 
-    public Item.Type produce()
+    public void produce()
     {
-        return type.production;
+        Item item;
+        map.getCell(x, y).addEntity(item = new Item(x, y, type.PRODUCT));
     }
 
     @Override
     public void setTarget()
     {
-        if (!(isProducing) || isHungry){
-            for (Cell[] cells : super.map.getCells()){
+        if (isHungry){
+            for (Cell[] cells : map.getCells()){
                 for (Cell cell : cells){
                     if (cell.getGrass() > 0){
-                        super.target.setX(cell.getX());
-                        super.target.setY(cell.getY());
+                        target.setX(cell.getX());
+                        target.setY(cell.getY());
                         return;
                     }
                 }
@@ -81,7 +81,6 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
             map.getCell(entity.getX(), entity.getY()).eatGrass();
             saturatedRate++;
             if (saturatedRate >= MAX_SATURATED_RATE){
-                isProducing = true;
                 isHungry = false;
             }
             if (map.getCell(entity.getX(), entity.getY()).getGrass() <= 0){
