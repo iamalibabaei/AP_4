@@ -10,6 +10,7 @@ public class Game
 {
     public static final int MAX_WORKSHOPS = 6, MAP_SIZE = 30;
     private static Game ourInstance = new Game();
+    private int money;
     private Map map;
     private Warehouse warehouse;
     private Well well;
@@ -21,6 +22,14 @@ public class Game
     public static Game getInstance()
     {
         return ourInstance;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public int getMoney() {
+        return money;
     }
 
     private Game()
