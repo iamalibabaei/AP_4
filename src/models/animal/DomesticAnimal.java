@@ -9,8 +9,8 @@ import models.map.Map;
 
 public class DomesticAnimal extends Animal implements Buyable, Countdown
 {
-    public static final int MAX_HUNGER_RATE = 20;
-    private int hungerRate = MAX_HUNGER_RATE / 2;
+    public static final int MAX_SATURATED_RATE = 20;
+    private int saturatedRate = MAX_SATURATED_RATE / 2;
     private boolean isProducing = false, isHungry = true;
 
     private Type type;
@@ -40,8 +40,8 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
     public void countdown() {
 
         if (isProducing){
-            hungerRate--;
-            if (hungerRate <= 5){
+            saturatedRate--;
+            if (saturatedRate <= 5){
                 produce();
                 isProducing = false;
                 isHungry = true;
@@ -79,8 +79,8 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
     {
         if (isHungry) {
             map.getCell(entity.getX(), entity.getY()).eatGrass();
-            hungerRate++;
-            if (hungerRate >= MAX_HUNGER_RATE){
+            saturatedRate++;
+            if (saturatedRate >= MAX_SATURATED_RATE){
                 isProducing = true;
                 isHungry = false;
             }
