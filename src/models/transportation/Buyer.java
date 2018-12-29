@@ -11,8 +11,9 @@ public class Buyer extends Transporter
 {
     private Map map;
     public Buyer(Map map) {
+        super(new int[]{400, 800, 1600}, 3, 1.5);
         this.capacity = 25;
-        this.speed = 12;
+        this.maxtimeToArriveToFarm = 12;
         this.level = 0;
         this.map = map;
     }
@@ -23,11 +24,11 @@ public class Buyer extends Transporter
             throw new IsWorkingException();
         }
         isWorking = true;
-        arriveToFarm = speed;
+        arriveToFarm = maxtimeToArriveToFarm;
     }
 
     @Override
-    public void turn() {
+    public void countdown() {
         arriveToFarm --;
         if (arriveToFarm == 0) {
             for (Item.Type itemType : list.keySet()) {
@@ -49,16 +50,15 @@ public class Buyer extends Transporter
             throw new AlreadyAtMaxLevelException();
         }
         this.level ++;
-        this.speed = this.speed - 3;
-        this.capacity =(int) (this.capacity * 1.5);
+        this.maxtimeToArriveToFarm = this.maxtimeToArriveToFarm - UPGRADE_SPEED_BOOST;
+        this.capacity =(int) (this.capacity * UPGRADE_CAPACITY_INCREACE);
     }
 
     @Override
     public int getUpgradeCost() throws AlreadyAtMaxLevelException {
-        int[] costList = {400, 800, 1600};
         if (level == 3) {
             throw new AlreadyAtMaxLevelException();
         }
-        return costList[level];
+        return UPGRADE_COST_LIST[level];
     }
 }

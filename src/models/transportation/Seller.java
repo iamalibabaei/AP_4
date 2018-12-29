@@ -6,8 +6,9 @@ import models.exceptions.IsWorkingException;
 public class Seller extends Transporter
 {
     public Seller() {
+        super(new int[]{150, 500, 1000}, 5, 20);
         this.capacity = 40;
-        this.speed = 20;
+        this.maxtimeToArriveToFarm = 20;
         this.level = 0;
     }
 
@@ -18,11 +19,11 @@ public class Seller extends Transporter
             throw new IsWorkingException();
         }
         isWorking = true;
-        arriveToFarm = speed;
+        arriveToFarm = maxtimeToArriveToFarm;
     }
 
     @Override
-    public void turn() {
+    public void countdown() {
         arriveToFarm -= 1;
         if (arriveToFarm == 0) {
             int money = 0;
@@ -45,8 +46,8 @@ public class Seller extends Transporter
             throw new AlreadyAtMaxLevelException();
         }
         this.level ++;
-        this.speed = (4 - level) * 5;
-        this.capacity = 20 * (level + 2);
+        this.maxtimeToArriveToFarm = maxtimeToArriveToFarm - UPGRADE_SPEED_BOOST;
+        this.capacity = (int)UPGRADE_CAPACITY_INCREACE * (level + 2);
     }
 
     @Override
@@ -54,8 +55,7 @@ public class Seller extends Transporter
         if (level == 3) {
             throw new AlreadyAtMaxLevelException();
         }
-        int[] costList = {150, 500, 1000};
-        return costList[level];
+        return UPGRADE_COST_LIST[level];
 
     }
 
