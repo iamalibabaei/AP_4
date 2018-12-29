@@ -8,7 +8,7 @@ public abstract class Animal extends Entity
 
     protected Map map;
 
-    public Animal(int x, int y)
+    public Animal(int x, int y, Map map)
     {
         super(x, y);
         target = null;
