@@ -35,8 +35,8 @@ public class Dog extends Animal implements Buyable
     public void collide(Entity entity)
     {
         if (entity instanceof WildAnimal) {
-            super.map.getCell(entity.getX(), entity.getY()).getEntities().remove(entity);
-            super.map.getCell(entity.getX(), entity.getY()).getEntities().remove(this);
+            entity.die();
+            this.die();
             setTarget();
         }
     }
