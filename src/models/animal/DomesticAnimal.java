@@ -45,6 +45,13 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
                 produce();
                 isHungry = true;
             }
+        }else {
+            if (target == null){
+                saturatedRate--;
+            }
+            if (saturatedRate <= 0){
+                this.die();
+            }
         }
     }
 
@@ -71,12 +78,6 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
                         }
                     }
                 }
-            }
-            if (target == null){
-                saturatedRate--;
-            }
-            if (saturatedRate <= 0){
-                this.die();
             }
         }
     }
