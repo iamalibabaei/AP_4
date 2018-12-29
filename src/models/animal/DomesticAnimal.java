@@ -9,30 +9,31 @@ import models.map.Map;
 
 public class DomesticAnimal extends Animal implements Buyable, Countdown
 {
-    private static int hungerRate = 10;
-    private int BUY_COST;
     private static final int MAX_HUNGER_RATE = 20;
-    private boolean isProducing, isHungry;
+    private static int hungerRate = MAX_HUNGER_RATE / 2;
+    private static boolean isProducing = false, isHungry = true;
 
     private Type type;
 
     public enum Type
     {
-        HEN, SHEEP, COW
+        HEN(100, Item.Type.EGG),
+        SHEEP(1000, Item.Type.FABRIC),
+        COW(10000, Item.Type.MILK);
+
+        public final int BUY_COST;
+        public final Item.Type production;
+
+        Type(int BUY_COST, Item.Type item) {
+            this.BUY_COST = BUY_COST;
+            this.production = item;
+        }
     }
 
      public DomesticAnimal(int x, int y, Map map, Type type)
     {
         super(x, y, map);
-        if (type == Type.HEN){
-            this.BUY_COST = 100;
-        }
-        else if (type == Type.SHEEP){
-            this.BUY_COST = 1000;
-        }
-        else if (type == Type.COW){
-            this.BUY_COST = 10000;
-        }
+        this.type = type;
     }
 
     @Override
@@ -42,52 +43,48 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
             hungerRate--;
             if (hungerRate <= 5){
                 produce();
+                isProducing = false;
+                isHungry = true;
             }
         }
     }
 
     public Item.Type produce()
     {
-        if (type == Type.HEN){ return Item.Type.EGG;}
-        else
-
-            if (type == Type.SHEEP){ return Item.Type.FABRIC;}
-            else
-
-                return Item.Type.MILK;
+        return type.production;
     }
 
     @Override
     public void setTarget()
     {
-        target = null;
-        if (isProducing || !(isHungry)){
-            target = null;
-        }
-        else {
-             outer : for (Cell[] cells : super.map.getCells()){
+        if (!(isProducing) || isHungry){
+            for (Cell[] cells : super.map.getCells()){
                 for (Cell cell : cells){
                     if (cell.getGrass() > 0){
                         super.target.setX(cell.getX());
                         super.target.setY(cell.getY());
-                        break outer;
+                        return;
                     }
                 }
             }
+        }
+        else {
+             target = null;
+
         }
     }
 
     @Override
     public void collide(Entity entity)
     {
-        while (isHungry) {
-            super.map.getCell(entity.getX(), entity.getY()).eatGrass();
+        if (isHungry) {
+            map.getCell(entity.getX(), entity.getY()).eatGrass();
             hungerRate++;
             if (hungerRate >= MAX_HUNGER_RATE){
                 isProducing = true;
                 isHungry = false;
             }
-            if (super.map.getCell(entity.getX(), entity.getY()).getGrass() <= 0){
+            if (map.getCell(entity.getX(), entity.getY()).getGrass() <= 0){
                 setTarget();
             }
         }
@@ -97,7 +94,7 @@ public class DomesticAnimal extends Animal implements Buyable, Countdown
     @Override
     public int getBuyCost()
     {
-        return BUY_COST;
+        return type.BUY_COST;
     }
 
 }
