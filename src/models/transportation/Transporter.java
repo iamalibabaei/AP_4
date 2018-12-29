@@ -3,14 +3,15 @@ package models.transportation;
 import models.Item;
 import models.exceptions.IsWorkingException;
 import models.exceptions.NotEnoughSpaceException;
+import models.interfaces.Countdown;
 import models.interfaces.Upgradable;
 
 import java.util.HashMap;
 
 
-public abstract class Transporter implements Upgradable
+public abstract class Transporter implements Upgradable, Countdown
 {
-    int capacity, speed, level, arriveToFarm;//speed = arriving to destination per turn
+    int capacity, MaxtimeToArriveToFarm, level, arriveToFarm;//MaxtimeToArriveToFarm = arriving to destination per turn
     protected boolean isWorking = false;
 
     protected HashMap<Item.Type, Integer> list;
@@ -41,6 +42,6 @@ public abstract class Transporter implements Upgradable
     
     public abstract void go() throws IsWorkingException;
 
-    public abstract void turn();
-
+    @Override
+    public abstract void countdown();
 }
