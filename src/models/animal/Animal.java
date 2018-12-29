@@ -25,21 +25,26 @@ public abstract class Animal extends Entity
     {
         if (target == null){
             Random random = new Random();
-            this.setX(this.getX() + random.nextInt(3 ) - 1);
-            this.setY(this.getY() + random.nextInt(3 ) - 1);
+            this.x += (random.nextInt(3 ) - 1);
+            this.y += (random.nextInt(3 ) - 1);
+
+            if (this.x < 0) { this.x += random.nextInt(2) + 2; }
+            if (this.y < 0) { this.y += random.nextInt(2) + 2; }
+            if (this.x > map.WIDTH) { this.x -= random.nextInt(2) + 2;}
+            if (this.y > map.HEIGHT) { this.y -= random.nextInt(2) + 2;}
         }
         else {
-            if (this.getX() < this.target.getX()){
-                this.setX(this.getX() + 1);
+            if (this.x < this.target.getX()){
+                this.x++;
             }
-            else if (this.getX() > this.target.getX()){
-                this.setX(this.getX() - 1);
+            else if (this.x > this.target.getX()){
+                this.x--;
             }
-            if (this.getY() < this.target.getY()){
-                this.setY(this.getY() + 1);
+            if (this.y < this.target.getY()){
+                this.y++;
             }
-            else if (this.getY() > this.target.getY()){
-                this.setY(this.getY() - 1);
+            else if (this.y > this.target.getY()){
+                this.y--;
             }
         }
     }
