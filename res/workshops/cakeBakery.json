@@ -1,0 +1,1 @@
+{"x":2,"y":28,"level":1,"maxProductionNum":1,"maxWorkingTime":15,"timeToReturnProduct":-1,"productionNum":0,"isWorking":false,"buildCost":300,"inputs":{"CAKE":1,"FLOUR":1},"outputs":{"FLOURY_CAKE":1}}
