@@ -29,7 +29,7 @@ public class Seller extends Transporter
 
             for (Item.Type itemType : list.keySet())
             {
-                int elementsell = itemType.sellMoney * list.get(itemType);
+                int elementsell = itemType.SELL_MONEY * list.get(itemType);
                 money += elementsell;
             }
             list.clear();

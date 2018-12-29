@@ -18,7 +18,7 @@ public abstract class Transporter implements Upgradable
         if (isWorking) {
             throw new IsWorkingException();
         }
-        if (this.capacity - this.usedCapacity() < itemType.occupiedSpace * number) {
+        if (this.capacity - this.usedCapacity() < itemType.OCCUPIED_SPACE * number) {
             throw new NotEnoughSpaceException();
         }
         if (list.containsKey(itemType)) {
@@ -32,7 +32,7 @@ public abstract class Transporter implements Upgradable
         int usedCapacity = 0;
         for (Item.Type itemType : list.keySet())
         {
-            int elementOccupation = itemType.occupiedSpace * list.get(itemType);
+            int elementOccupation = itemType.OCCUPIED_SPACE * list.get(itemType);
             usedCapacity += elementOccupation;
         }
         return usedCapacity;
