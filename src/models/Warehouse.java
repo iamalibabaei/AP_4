@@ -1,6 +1,7 @@
 package models;
 
 import models.exceptions.AlreadyAtMaxLevelException;
+import models.exceptions.InsufficientResourcesException;
 import models.exceptions.ItemNotInWarehouseException;
 import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Upgradable;
@@ -23,14 +24,33 @@ public class Warehouse implements Upgradable
         remainingCapacity = CAPACITY[level];
     }
 
-    public void remove(Item.Type item, int count) throws ItemNotInWarehouseException
+    public void moveToSeller(Item.Type item, int count) throws ItemNotInWarehouseException
     {
-        int freedSpace = Item.getOccupationSpace(item) * count;
+        int freedSpace = item.OCCUPIED_SPACE * count;
         int currentCount = items.get(item);
         if (currentCount < count)
             throw new ItemNotInWarehouseException();
         remainingCapacity += freedSpace;
         items.put(item, currentCount - count);
+    }
+
+    public AtomicInteger moveToWorkshop(HashMap<Item.Type, Integer> base, int maxCoefficient) throws InsufficientResourcesException
+    {
+        AtomicInteger maxResourceAvailable = new AtomicInteger(999);
+        for (Item.Type type : base.keySet())
+        {
+            int maxResource = items.getOrDefault(type, 0) / base.get(type);
+            maxResourceAvailable.set(Math.min(maxResourceAvailable.get(), maxResource));
+        }
+        if (maxResourceAvailable.get() == 0)
+            throw new InsufficientResourcesException();
+        maxResourceAvailable.set(Math.min(maxResourceAvailable.get(), maxCoefficient));
+        for (Item.Type type : base.keySet())
+        {
+            Integer newValue = this.items.get(type) - base.get(type) * maxResourceAvailable.get();
+            this.items.replace(type, newValue);
+        }
+        return maxResourceAvailable;
     }
 
     public void store(HashMap<Item.Type, Integer> items) throws NotEnoughSpaceException
@@ -40,7 +60,7 @@ public class Warehouse implements Upgradable
         for (HashMap.Entry<Item.Type, Integer> entry : items.entrySet())
         {
             enoughSpaceForOneItem.set(true);
-            int requiredCapacity = entry.getValue() * Item.getOccupationSpace(entry.getKey());
+            int requiredCapacity = entry.getValue() * entry.getKey().OCCUPIED_SPACE;
             if (remainingCapacity > requiredCapacity)
             {
                 remainingCapacity -= requiredCapacity;
@@ -60,7 +80,7 @@ public class Warehouse implements Upgradable
         AtomicInteger ret = new AtomicInteger();
         for (HashMap.Entry<Item.Type, Integer> entry : items.entrySet())
         {
-            ret.addAndGet(Item.getOccupationSpace(entry.getKey()) * entry.getValue());
+            ret.addAndGet(entry.getKey().OCCUPIED_SPACE * entry.getValue());
         }
         return ret.get();
     }
