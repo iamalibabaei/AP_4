@@ -32,8 +32,8 @@ public class Mission
     public boolean isAccomplished()
     {
         boolean hasDog = false, hasCat = false;
-        int gameMoney = 0;// game.getMoney();
-        Map map = null;// game.getMap;
+        int gameMoney = game.getMoney();
+        Map map = game.getMap;
         HashMap<DomesticAnimal.Type, Integer> animalCurrentState = new HashMap<>();
         HashMap<Item.Type, Integer> ItemCurentState = new HashMap<>();
         for (Cell[] cells: map.getCells()) {
