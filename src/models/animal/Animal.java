@@ -28,8 +28,8 @@ public abstract class Animal extends Entity
             this.x += (random.nextInt(3 ) - 1);
             this.y += (random.nextInt(3 ) - 1);
 
-            if (this.x < 0) { this.x += random.nextInt(2) + 2; }
-            if (this.y < 0) { this.y += random.nextInt(2) + 2; }
+            if (this.x < 0) { this.x += random.nextInt(2) + 1; }
+            if (this.y < 0) { this.y += random.nextInt(2) + 1; }
             if (this.x > map.WIDTH) { this.x -= random.nextInt(2) + 1;}
             if (this.y > map.HEIGHT) { this.y -= random.nextInt(2) + 1;}
         }
@@ -50,10 +50,5 @@ public abstract class Animal extends Entity
     }
 
     public abstract void collide(Entity entity);
-
-    public enum Type
-    {
-        DOG, CAT, SHEEP, HEN, COW, BEAR, LION;
-    }
 
 }
