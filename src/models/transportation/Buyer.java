@@ -33,7 +33,7 @@ public class Buyer extends Transporter
         if (arriveToFarm == 0) {
             for (Item.Type itemType : list.keySet()) {
                 for (int i = 0; i < list.get(itemType); i++) {
-                    int x = (int)(Math.random() * 20), y = (int)(Math.random() * 20);
+                    int x = (int)(Math.random() * 30), y = (int)(Math.random() * 30);
                     Item item = new Item(x, y, itemType);
                     map.addToMap(item);
                 }

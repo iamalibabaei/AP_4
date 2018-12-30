@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class
 Workshop implements Upgradable, Time
 {
+    String name;
     private int x, y;//place off cell where it returns products
     private int level = 1, maxProductionNum , maxWorkingTime = 15,timeToReturnProduct = -1;
     private int productionNum;
@@ -33,6 +34,16 @@ Workshop implements Upgradable, Time
         this.inputs = inputs;
         this.outputs = outputs;
         this.maxProductionNum = maxProductionNum;/* for game factors equals 1*/
+    }
+
+    //TODO name be constructor vasl she + json files
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void getMapAndWarehose(Map map, Warehouse warehouse) {

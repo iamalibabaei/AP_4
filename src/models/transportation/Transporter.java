@@ -79,4 +79,8 @@ public abstract class Transporter implements Upgradable, Time
 
     @Override
     public abstract void nextTurn();
+
+    public void clearStash() {
+        list.clear();
+    }
 }

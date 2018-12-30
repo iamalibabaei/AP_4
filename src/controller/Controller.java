@@ -1,10 +1,16 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import models.Game;
 import models.Mission;
 import models.animal.Animal;
+import models.animal.DomesticAnimal;
 import models.exceptions.*;
+import models.workshop.Workshop;
 import view.View;
+
+import java.io.*;
 
 public class Controller
 {
@@ -24,18 +30,17 @@ public class Controller
         return controller;
     }
 
-    public void buy(String parameter)
-    {
+    public void buy(String parameter) throws NotEnoughMoney {
         if (parameter.equals("helicopter"))
         {
-            // todo buy helicopter
+            game.buyHelicopter();
             return;
         }
-        for (Animal.Type animal : Animal.Type.values())
+        for (DomesticAnimal.Type animal : DomesticAnimal.Type.values())
         {
             if (animal.NAME.equals(parameter))
             {
-                // todo buy animal
+                game.buy(animal);
                 return;
             }
         }
@@ -44,81 +49,98 @@ public class Controller
 
     public void pickUp(int x, int y)
     {
-        // todo if out of bounds
-        throw new IndexOutOfBoundsException();
-        // todo pickup
+        if (x > 29 || x < 0 || y > 29 || y < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        game.pickUp(x, y);
     }
 
     public void cage(int x, int y)
     {
-        // todo if out of bounds
-        throw new IndexOutOfBoundsException();
-        // todo cage
+        if (x > 29 || x < 0 || y > 29 || y < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        game.cage(x, y);
 
     }
 
     public void plant(int x, int y)
     {
-        // todo if out of bounds
-        throw new IndexOutOfBoundsException();
-        // todo plant
+        if (x > 29 || x < 0 || y > 29 || y < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        game.plant(x, y);
 
     }
 
     public void refillWell()
     {
-
+        game.refillWell();
     }
 
     public void startWorkshop(String workshopName)
     {
-
+        game.startWorkShop(workshopName);
     }
 
     public void upgrade(String parameter)
     {
+        game.upgrade(parameter);
+    }
+
+    public void loadGame(String gamePath) throws FileNotFoundException {
+        Gson gson = new Gson();
+        JsonReader reader = new JsonReader(new FileReader(gamePath));
+        game = gson.fromJson(reader, Game.class);
 
     }
 
-    public void loadGame(String gamePath)
-    {
+    public void saveGame(String gamePath) throws IOException {
 
+        // Writing to a file
+        File file=new File(gamePath);
+        file.createNewFile();
+        FileWriter fileWriter = new FileWriter(file);
+        Gson gson = new Gson();
+
+
+        fileWriter.write(gson.toJson(gamePath));
+        fileWriter.flush();
+        fileWriter.close();
     }
 
-    public void saveGame(String gamePath)
+    public void loadCustom(String path) throws FileNotFoundException // just adds workShop
     {
+        Gson gson = new Gson();
+        JsonReader reader = new JsonReader(new FileReader(path));
+        Workshop workshop = gson.fromJson(reader, Workshop.class);
 
-    }
-
-    public void loadCustom(String path)
-    {
-
-    }
-
-    public void print(String parameter)
-    {
-
-
+        game.addWorkshop(workshop);
     }
 
     public void nextTurn(int nTurn)
     {
-
+        for (int i = 0; i < nTurn; i++) {
+            game.turn();
+        }
     }
 
     public void clearStash(String transporterName)
     {
-
+        game.clearStash(transporterName);
     }
 
     public void addToStash(String transporterName, String itemName, int count)
     {
-
+        game.addToStash(transporterName, itemName, count);
     }
 
     public void sendTransporter(String transporterName)
     {
-
+        game.sendTransporter(transporterName);
     }
 
     public void startGame()
