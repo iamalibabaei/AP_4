@@ -1,6 +1,7 @@
 package controller;
 
 import models.Game;
+import models.Mission;
 import models.animal.Animal;
 import models.exceptions.*;
 import view.View;
@@ -10,6 +11,7 @@ public class Controller
     private static Controller controller = new Controller();
     private View view;
     private Game game;
+    Mission mission;
 
     private Controller()
     {
@@ -121,6 +123,8 @@ public class Controller
 
     public void startGame()
     {
+        mission = view.getMission();
+
         while (true)
         {
             try

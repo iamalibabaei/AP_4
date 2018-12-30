@@ -1,7 +1,13 @@
 package view;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import controller.Controller;
+import models.Mission;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -87,6 +93,21 @@ public class View
 
     public void printLevel()
     {
+    }
+
+    public Mission getMission() {
+        System.out.println("selecet your mission level");
+        Gson gson = new Gson();
+        String missionPath = "res/missions/mission" + scanner.next() + ".json";
+
+        try {
+            JsonReader reader = new JsonReader(new FileReader(missionPath));
+            Mission mission = gson.fromJson(reader, Mission.class);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
