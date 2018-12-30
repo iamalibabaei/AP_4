@@ -4,6 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import controller.Controller;
 import models.Mission;
+import models.Warehouse;
+import models.Well;
+import models.transportation.Buyer;
+import models.transportation.Seller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -72,23 +76,43 @@ public class View
 
     }
 
-    public void printWarehouse()
+    public void printWarehouse(Warehouse warehouse)
     {
-
+        System.out.println("Level: " + warehouse.getLevel());
+        System.out.println("Capacity: " + warehouse.CAPACITY[warehouse.getLevel()]);
+        System.out.println("Remaining capacity: " + warehouse.getRemainingCapacity());
+        System.out.println("Item lists:" + warehouse.getItems());
     }
 
-    public void printWell()
+    public void printWell(Well well)
     {
+        System.out.println("Level: " + well.getLevel());
+        System.out.println("Capacity: " + Well.CAPACITY[well.getLevel()]);
+        if (well.isRefilling()){
+            System.out.println("Remaining water: " + well.getRemainingWater());
+        }
     }
 
-    public void printTruck()
+    public void printTruck(Seller truck)
     {
-
+        System.out.println("Level: " + truck.getLevel());
+        System.out.println("Capacity: " + truck.getCapacity());
+        System.out.println("Maximum time to arrive: " + truck.getMaxtimeToArriveToFarm() + " turns");
+        System.out.println("Item lists: " + truck.getList());
+        if (truck.isWorking()){
+            System.out.println("Remaining time to arrive): " + truck.getArriveToFarm() + "turn(s)");
+        }
     }
 
-    public void printHelicopter()
+    public void printHelicopter(Buyer helicopter)
     {
-
+        System.out.println("Level: " + helicopter.getLevel());
+        System.out.println("Capacity: " + helicopter.getCapacity());
+        System.out.println("Maximum time to arrive: " + helicopter.getMaxtimeToArriveToFarm() + " turns");
+        System.out.println("Item lists: " + helicopter.getList());
+        if (helicopter.isWorking()){
+            System.out.println("Remaining time to arrive): " + helicopter.getArriveToFarm() + "turn(s)");
+        }
     }
 
     public void printLevel()
