@@ -14,6 +14,18 @@ public class Well implements Upgradable, Time
     private boolean isRefilling;
     private int level, remainingWater, timer;
 
+    public boolean isRefilling() {
+        return isRefilling;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getRemainingWater() {
+        return remainingWater;
+    }
+
     public void putGrass() throws InsufficientResourcesException
     {
         if (remainingWater == 0)

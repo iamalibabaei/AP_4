@@ -18,6 +18,26 @@ public abstract class Transporter implements Upgradable, Time
     int capacity, maxtimeToArriveToFarm, level, arriveToFarm;//maxtimeToArriveToFarm = arriving to destination per turn
     protected boolean isWorking = false;
 
+    public boolean isWorking() {
+        return isWorking;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getMaxtimeToArriveToFarm() {
+        return maxtimeToArriveToFarm;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public int getArriveToFarm() {
+        return arriveToFarm;
+    }
+
     public Transporter(int[] UPGRADE_COST_LIST, int UPGRADE_SPEED_BOOST, double UPGRADE_CAPACITY_INCREACE) {
         this.UPGRADE_COST_LIST = UPGRADE_COST_LIST;
         this.UPGRADE_SPEED_BOOST = UPGRADE_SPEED_BOOST;
@@ -25,6 +45,10 @@ public abstract class Transporter implements Upgradable, Time
     }
 
     protected HashMap<Item.Type, Integer> list;
+
+    public HashMap<Item.Type, Integer> getList() {
+        return list;
+    }
 
     public void addToList(Item.Type itemType, int number) throws IsWorkingException, NotEnoughSpaceException {
         // todo double-click feature

@@ -17,6 +17,18 @@ public class Warehouse implements Upgradable
     private int level, remainingCapacity;
     private HashMap<Item.Type, Integer> items;
 
+    public int getLevel() {
+        return level;
+    }
+
+    public int getRemainingCapacity() {
+        return remainingCapacity;
+    }
+
+    public HashMap<Item.Type, Integer> getItems() {
+        return items;
+    }
+
     public Warehouse()
     {
         level = 0;
