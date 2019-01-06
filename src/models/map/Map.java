@@ -4,6 +4,8 @@ import models.Entity;
 
 import java.util.ArrayList;
 
+// todo iterator cell
+
 public class Map
 {
     public static final int WIDTH = 30, HEIGHT = 30;

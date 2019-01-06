@@ -1,13 +1,20 @@
 package models;
 
 import models.exceptions.AlreadyAtMaxLevelException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class WellTest
 {
-    private Well well = new Well();
+    private Well well;
+
+    @BeforeAll
+    void setUp()
+    {
+        well = new Well();
+    }
 
     @Test
     void shouldNotUpgradeBeyondLevel2()
