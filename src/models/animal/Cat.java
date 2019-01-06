@@ -15,7 +15,6 @@ public class Cat extends Animal implements Buyable, Upgradable
     private static final int BUY_COST = 2500;
     private static final int MAX_LEVEL = 1, UPGRADE_COST = 200;
     private static int level;
-    private HashMap<Item.Type, Integer> items = new HashMap();
     private Warehouse warehouse;
 
     public Cat(int x, int y, Animal.Type type, Map map, Warehouse warehouse)
@@ -30,12 +29,12 @@ public class Cat extends Animal implements Buyable, Upgradable
         super.target = null;
 
         if (level == 0){
-            outer : for (Cell[] cells: super.map.getCells()) {
+            for (Cell[] cells: map.getCells()) {
                 for (Cell cell: cells) {
                     for (Entity entity : cell.getEntities()) {
                         if (entity instanceof Item){
-                            super.target = entity;
-                            break outer;
+                            target = entity;
+                            return;
                         }
                     }
                 }
@@ -43,14 +42,14 @@ public class Cat extends Animal implements Buyable, Upgradable
         }
         else {
             int dist = 1000;
-            for (Cell[] cells: super.map.getCells()) {
+            for (Cell[] cells: map.getCells()) {
                 for (Cell cell: cells) {
                     for (Entity entity : cell.getEntities()) {
                         if (entity instanceof Item){
-                            int dist1 = Math.abs(this.x - this.target.getX()) + Math.abs(this.y - this.target.getY());
+                            int dist1 = Math.abs(x - target.getX()) + Math.abs(y - target.getY());
                             if (dist1 < dist) {
                                 dist = dist1;
-                                super.target = entity;
+                                target = entity;
                             }
                         }
                     }
@@ -62,7 +61,9 @@ public class Cat extends Animal implements Buyable, Upgradable
     @Override
     public void collide(Entity entity)
     {
-        for (Entity entity1 : map.getCell(entity.getX(), entity.getY()).getEntities()) {
+        HashMap<Item.Type, Integer> items = new HashMap<>();
+
+        for (Entity entity1 : map.getCell(x, y).getEntities()) {
             if (entity1 instanceof Item) {
                 if (items.containsKey(((Item) entity1).getType())){
                     int num = items.get(((Item) entity1).getType()) + 1;
@@ -74,7 +75,14 @@ public class Cat extends Animal implements Buyable, Upgradable
                 entity1.die();
             }
         }
-        warehouse.store(items);
+
+        items = warehouse.store(items);
+
+        for (Item.Type item : items.keySet()) {
+            for (int i = 0; i < items.get(item); i++) {
+                map.addToMap(new Item(x, y, item));
+            }
+        }
     }
 
     @Override
@@ -98,9 +106,9 @@ public class Cat extends Animal implements Buyable, Upgradable
         return UPGRADE_COST;
     }
 
+
     @Override
     public void nextTurn() {
         super.nextTurn();
-        if (target == null) setTarget();
     }
 }
