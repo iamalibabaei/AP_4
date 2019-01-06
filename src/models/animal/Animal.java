@@ -65,6 +65,7 @@ public abstract class Animal extends Entity implements Time
 
     public abstract void collide(Entity entity);
 
+    @Override
     public void nextTurn(){
         setTarget();
         move();
