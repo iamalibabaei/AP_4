@@ -10,10 +10,11 @@ import models.map.Cell;
 import models.map.Map;
 import java.util.HashMap;
 
+// todo cat upgrade
+
 public class Cat extends Animal implements Buyable, Upgradable
 {
-    private static final int BUY_COST = 2500;
-    private static final int MAX_LEVEL = 1, UPGRADE_COST = 200;
+    private static final int BUY_COST = 2500, MAX_LEVEL = 1, UPGRADE_COST = 200;
     private static int level;
     private Warehouse warehouse;
 
@@ -105,7 +106,6 @@ public class Cat extends Animal implements Buyable, Upgradable
             throw new AlreadyAtMaxLevelException();
         return UPGRADE_COST;
     }
-
 
     @Override
     public void nextTurn() {

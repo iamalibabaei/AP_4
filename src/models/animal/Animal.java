@@ -32,38 +32,40 @@ public abstract class Animal extends Entity implements Time
         this.type = type;
     }
 
-    public abstract void setTarget();
+    public void setTarget() // default move is random
+    {
+        target = null;
+    }
+    public abstract void collide(Entity entity);
 
     //if (target == null) randomWalk
     public void move()
     {
         if (target == null){
             Random random = new Random();
-            this.x += (random.nextInt(3 ) - 1);
-            this.y += (random.nextInt(3 ) - 1);
+            x += (random.nextInt(3 ) - 1);
+            y += (random.nextInt(3 ) - 1);
 
-            if (this.x < 0) { this.x += random.nextInt(2) + 1; }
-            if (this.y < 0) { this.y += random.nextInt(2) + 1; }
-            if (this.x > map.WIDTH) { this.x -= random.nextInt(2) + 1;}
-            if (this.y > map.HEIGHT) { this.y -= random.nextInt(2) + 1;}
+            if (x < 0) { x += random.nextInt(2) + 1; }
+            if (y < 0) { y += random.nextInt(2) + 1; }
+            if (x > map.WIDTH) { x -= random.nextInt(2) + 1;}
+            if (y > map.HEIGHT) { y -= random.nextInt(2) + 1;}
         }
         else {
-            if (this.x < this.target.getX()){
-                this.x++;
+            if (x < target.getX()){
+                x++;
             }
-            else if (this.x > this.target.getX()){
-                this.x--;
+            else if (x > target.getX()){
+                x--;
             }
-            if (this.y < this.target.getY()){
-                this.y++;
+            if (y < target.getY()){
+                y++;
             }
-            else if (this.y > this.target.getY()){
-                this.y--;
+            else if (y > target.getY()){
+                y--;
             }
         }
     }
-
-    public abstract void collide(Entity entity);
 
     @Override
     public void nextTurn(){

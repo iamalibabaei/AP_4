@@ -5,6 +5,8 @@ import models.interfaces.Buyable;
 import models.map.Cell;
 import models.map.Map;
 
+// todo dog upgrade
+
 public class Dog extends Animal implements Buyable
 {
     private static final int BUY_COST = 2600;

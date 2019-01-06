@@ -9,19 +9,20 @@ import models.map.Map;
 
 public class DomesticAnimal extends Animal implements Buyable, Time
 {
-    public static final int MAX_SATURATION_RATE = 20;
-    private int saturationRate = MAX_SATURATION_RATE / 2;
-    private boolean isHungry = true;
+    private static final int MAX_SATURATION_RATE = 20;
+    private int saturationRate;
+    private boolean isHungry;
+    private Type type;
 
     public Type getType() {
         return type;
     }
 
-    private Type type;
-
     public DomesticAnimal(int x, int y, Map map, Type type)
     {
         super(x, y, Animal.Type.valueOf(type.toString()), map);
+        saturationRate = MAX_SATURATION_RATE / 2;
+        isHungry = true;
         this.type = type;
     }
 
@@ -29,7 +30,7 @@ public class DomesticAnimal extends Animal implements Buyable, Time
     @Override
     public void nextTurn()
     {
-        if (saturationRate <= 0)
+        if (saturationRate == 0)
         {
             this.die();
         }
@@ -119,6 +120,5 @@ public class DomesticAnimal extends Animal implements Buyable, Time
             }
         }
     }
-
 
 }

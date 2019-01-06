@@ -3,17 +3,11 @@ package models.animal;
 import models.Entity;
 import models.map.Map;
 
+// todo upgrade cage
+
 public class WildAnimal extends Animal
 {
     private State state;
-
-
-    @Override
-    public void nextTurn() {
-        move();
-        setTarget();
-    }
-
 
     public WildAnimal(int x, int y, Map map, Animal.Type type)
     {
@@ -23,15 +17,7 @@ public class WildAnimal extends Animal
 
     public enum State
     {
-        NOT_CAGED(0), HARDLY_CAGED(1), AVERAGELY_CAGED(2), ALMOST_CAGED(3), CAGED(4);
-
-        private final int status;
-
-        State(int status)
-        {
-            this.status = status;
-        }
-
+        NOT_CAGED, HARDLY_CAGED, AVERAGELY_CAGED, ALMOST_CAGED, CAGED;
     }
 
     public State getState() {
@@ -45,28 +31,21 @@ public class WildAnimal extends Animal
             return false;
         }
 
-        this.state = State.values()[this.state.status + 1];
+        this.state = State.values()[this.state.ordinal() + 1];
         return true;
     }
 
     @Override
     public void collide(Entity entity)
     {
-
-        if ((this.state != State.CAGED) && ! (entity instanceof WildAnimal)) {
+        if (state != State.CAGED && !(entity instanceof WildAnimal)) {
             entity.die();
         }
     }
 
     @Override
-    public void setTarget()
-    {
-        this.target = null;
-    }
-
-    @Override
     public void move() {
-        if (this.state != State.CAGED) {
+        if (state != State.CAGED) {
             super.move();
         }
     }
