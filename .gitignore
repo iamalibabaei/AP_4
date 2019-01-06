@@ -2,7 +2,6 @@
 *.xlsx
 *.xlsx#
 bin/
-lib/
 .idea/workspace.xml
 .idea/project.iml
 Textures/
