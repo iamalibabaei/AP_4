@@ -25,7 +25,7 @@ public class Dog extends Animal implements Buyable
             for (Cell cell: cells) {
                 for (Entity entity : cell.getEntities()) {
                     if (entity instanceof WildAnimal){
-                        target = entity;
+                        target = entity.getPoint();
                         return;
                     }
                 }

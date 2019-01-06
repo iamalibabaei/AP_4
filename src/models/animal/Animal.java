@@ -1,6 +1,7 @@
 package models.animal;
 
 import models.Entity;
+import models.Point;
 import models.interfaces.Time;
 import models.map.Map;
 
@@ -8,7 +9,7 @@ import java.util.Random;
 
 public abstract class Animal extends Entity implements Time
 {
-    Entity target;
+    Point target;
     protected Type type;
     protected Map map;
 
@@ -43,33 +44,33 @@ public abstract class Animal extends Entity implements Time
     {
         if (target == null){
             Random random = new Random();
-            x += (random.nextInt(3 ) - 1);
-            y += (random.nextInt(3 ) - 1);
+            this.setX(this.getX()  + (random.nextInt(3 ) - 1));
+            this.setY(this.getY()  + (random.nextInt(3 ) - 1));
 
-            if (x < 0) { x += random.nextInt(2) + 1; }
-            if (y < 0) { y += random.nextInt(2) + 1; }
-            if (x > map.WIDTH) { x -= random.nextInt(2) + 1;}
-            if (y > map.HEIGHT) { y -= random.nextInt(2) + 1;}
+            if (this.getX() < 0) {this.setX(this.getX() + random.nextInt(2) + 1); }
+            if (this.getY() < 0) {this.setY(this.getY() + random.nextInt(2) + 1); }
+            if (this.getX() > map.WIDTH) { this.setX(this.getX() - random.nextInt(2) + 1); }
+            if (this.getY() > map.HEIGHT) {this.setY(this.getY() - random.nextInt(2) + 1); }
         }
         else {
-            if (x < target.getX()){
-                x++;
+            if (this.getX()  < target.getX()){
+                this.setX(this.getX() + 1);
             }
-            else if (x > target.getX()){
-                x--;
+            else if (this.getX()  > target.getX()){
+                this.setX(this.getX() - 1);
             }
-            if (y < target.getY()){
-                y++;
+            if (this.getY() < target.getY()){
+                this.setY(this.getY() + 1);
             }
-            else if (y > target.getY()){
-                y--;
+            else if (this.getY() > target.getY()){
+                this.setY(this.getY() - 1);
             }
         }
     }
 
     @Override
     public void nextTurn(){
-        setTarget();
+            setTarget();
         move();
     }
 

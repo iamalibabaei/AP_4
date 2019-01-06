@@ -34,7 +34,7 @@ public class Cat extends Animal implements Buyable, Upgradable
                 for (Cell cell: cells) {
                     for (Entity entity : cell.getEntities()) {
                         if (entity instanceof Item){
-                            target = entity;
+                            target = entity.getPoint();
                             return;
                         }
                     }
@@ -47,10 +47,10 @@ public class Cat extends Animal implements Buyable, Upgradable
                 for (Cell cell: cells) {
                     for (Entity entity : cell.getEntities()) {
                         if (entity instanceof Item){
-                            int dist1 = Math.abs(x - target.getX()) + Math.abs(y - target.getY());
+                            int dist1 = Math.abs(this.getX() - target.getX()) + Math.abs(this.getY() - target.getY());
                             if (dist1 < dist) {
                                 dist = dist1;
-                                target = entity;
+                                target = entity.getPoint();
                             }
                         }
                     }
@@ -64,7 +64,7 @@ public class Cat extends Animal implements Buyable, Upgradable
     {
         HashMap<Item.Type, Integer> items = new HashMap<>();
 
-        for (Entity entity1 : map.getCell(x, y).getEntities()) {
+        for (Entity entity1 : map.getCell(this.getX(), this.getY()).getEntities()) {
             if (entity1 instanceof Item) {
                 if (items.containsKey(((Item) entity1).getType())){
                     int num = items.get(((Item) entity1).getType()) + 1;
@@ -81,7 +81,7 @@ public class Cat extends Animal implements Buyable, Upgradable
 
         for (Item.Type item : items.keySet()) {
             for (int i = 0; i < items.get(item); i++) {
-                map.addToMap(new Item(x, y, item));
+                map.addToMap(new Item(this.getX(), this.getY(), item));
             }
         }
     }

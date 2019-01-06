@@ -1,6 +1,7 @@
 package models.map;
 
 import models.Entity;
+import models.exceptions.AlreadyAtMaxLevelException;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,12 @@ public class Map
 
 
     public void addToMap(Entity entity) {
+        if (cells == null) {
+            throw new AlreadyAtMaxLevelException();
+        }
+        if (entity == null){
+            throw new AlreadyAtMaxLevelException();
+        }
         cells[entity.getX()][entity.getY()].addEntity(entity);
     }
 

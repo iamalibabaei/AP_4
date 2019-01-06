@@ -2,6 +2,7 @@ package models.animal;
 
 import models.Entity;
 import models.Item;
+import models.Point;
 import models.interfaces.Buyable;
 import models.interfaces.Time;
 import models.map.Cell;
@@ -45,7 +46,7 @@ public class DomesticAnimal extends Animal implements Buyable, Time
 
     private void produce()
     {
-        map.getCell(x, y).addEntity(new Item(x, y, type.PRODUCT));
+        map.getCell(this.getX(), this.getY()).addEntity(new Item(this.getX(), this.getY(), type.PRODUCT));
     }
 
     @Override
@@ -82,16 +83,18 @@ public class DomesticAnimal extends Animal implements Buyable, Time
     public void setTarget()
     {
         target = null;
+
         if (isHungry)
         {
             int dist = 1000;
+            target = new Point(-1,-1);
             for (Cell[] cells : map.getCells())
             {
                 for (Cell cell : cells)
                 {
                     if (cell.getGrass() > 0)
                     {
-                        int dist1 = Math.abs(this.x - cell.getX()) + Math.abs(this.y - cell.getY());
+                        int dist1 = Math.abs(this.getX() - cell.getX()) + Math.abs(this.getY() - cell.getY());
                         if (dist1 < dist)
                         {
                             dist = dist1;
@@ -101,6 +104,9 @@ public class DomesticAnimal extends Animal implements Buyable, Time
                     }
                 }
             }
+            if (target.getX() == -1){
+                target = null;
+            }
         }
     }
 
@@ -109,9 +115,9 @@ public class DomesticAnimal extends Animal implements Buyable, Time
     {
         if (isHungry)
         {
-            if (map.getCell(x, y).getGrass() > 0)
+            if (map.getCell(this.getX(), this.getY()).getGrass() > 0)
             {
-                map.getCell(x, y).eatGrass();
+                map.getCell(this.getX(), this.getY()).eatGrass();
                 saturationRate++;
                 if (saturationRate == MAX_SATURATION_RATE)
                 {

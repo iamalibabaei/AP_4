@@ -94,12 +94,10 @@ public class Cell
 
     public void cage()
     {
-        outer : for (Entity entity : entities) {
+        for (Entity entity : entities) {
             if (entity instanceof WildAnimal) {
                 if (((WildAnimal) entity).cage()) {
                     break;
-                } else {
-                    continue;
                 }
             }
         }

@@ -2,13 +2,13 @@ package models;
 
 public abstract class Entity
 {
-    protected int x, y;
+
+    protected Point point;
     protected boolean exists;
 
     public Entity(int x, int y)
     {
-        this.x = x;
-        this.y = y;
+        this.point = new Point(x, y);
         exists = true;
     }
 
@@ -24,22 +24,26 @@ public abstract class Entity
 
     public int getX()
     {
-        return x;
+        return point.getX();
     }
 
     public void setX(int x)
     {
-        this.x = x;
+        this.point.setX(x);
     }
 
     public int getY()
     {
-        return y;
+        return point.getY();
     }
 
     public void setY(int y)
     {
-        this.y = y;
+        this.point.setY(y);
+    }
+
+    public Point getPoint() {
+        return point;
     }
 
 }
