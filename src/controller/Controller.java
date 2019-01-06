@@ -3,10 +3,12 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import models.Game;
+import models.Item;
 import models.Mission;
 import models.animal.Animal;
 import models.animal.DomesticAnimal;
 import models.exceptions.*;
+import models.map.Map;
 import models.workshop.Workshop;
 import view.View;
 
@@ -31,12 +33,7 @@ public class Controller
     }
 
     public void buy(String parameter) throws NotEnoughMoney {
-        if (parameter.equals("helicopter"))
-        {
-            game.buyHelicopter();
-            return;
-        }
-        for (DomesticAnimal.Type animal : DomesticAnimal.Type.values())
+        for (Animal.Type animal : Animal.Type.values())
         {
             if (animal.NAME.equals(parameter))
             {
@@ -49,7 +46,7 @@ public class Controller
 
     public void pickUp(int x, int y)
     {
-        if (x > 29 || x < 0 || y > 29 || y < 0) {
+        if (x >= Map.WIDTH || x < 0 || y >= Map.HEIGHT || y < 0) {
             throw new IndexOutOfBoundsException();
         }
 
@@ -58,7 +55,7 @@ public class Controller
 
     public void cage(int x, int y)
     {
-        if (x > 29 || x < 0 || y > 29 || y < 0) {
+        if (x >= Map.WIDTH || x < 0 || y >= Map.HEIGHT || y < 0) {
             throw new IndexOutOfBoundsException();
         }
 
@@ -68,7 +65,7 @@ public class Controller
 
     public void plant(int x, int y)
     {
-        if (x > 29 || x < 0 || y > 29 || y < 0) {
+        if (x >= Map.WIDTH || x < 0 || y >= Map.HEIGHT  || y < 0) {
             throw new IndexOutOfBoundsException();
         }
 
@@ -171,6 +168,10 @@ public class Controller
                 view.handleNotEnoughSpaceException();
             }
         }
+    }
+
+    public void loadMap(String mapName){
+        //todo loading maps frpm gson
     }
 
 }
