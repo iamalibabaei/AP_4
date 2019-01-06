@@ -36,7 +36,6 @@ public class Dog extends Animal implements Buyable
     {
         if (entity instanceof WildAnimal) {
             entity.die();
-            setTarget();
         }
     }
 
@@ -46,9 +45,9 @@ public class Dog extends Animal implements Buyable
         return BUY_COST;
     }
 
+
     @Override
     public void nextTurn() {
         super.nextTurn();
-        if (target == null) setTarget();
     }
 }
