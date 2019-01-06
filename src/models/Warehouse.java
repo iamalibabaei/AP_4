@@ -65,7 +65,7 @@ public class Warehouse implements Upgradable
         return maxResourceAvailable;
     }
 
-    public void store(HashMap<Item.Type, Integer> items) throws NotEnoughSpaceException
+    public HashMap<Item.Type, Integer> store(HashMap<Item.Type, Integer> items) throws NotEnoughSpaceException
     {
         // todo knapp-sack algorithm
         AtomicBoolean enoughSpaceForOneItem = new AtomicBoolean(false);
@@ -85,6 +85,7 @@ public class Warehouse implements Upgradable
         {
             throw new NotEnoughSpaceException();
         }
+        return null;
     }
 
     private int computeSpace(HashMap<Item.Type, Integer> items)
