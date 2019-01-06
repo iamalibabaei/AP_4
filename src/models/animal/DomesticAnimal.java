@@ -25,6 +25,7 @@ public class DomesticAnimal extends Animal implements Buyable, Time
         this.type = type;
     }
 
+
     @Override
     public void nextTurn()
     {
@@ -107,17 +108,16 @@ public class DomesticAnimal extends Animal implements Buyable, Time
     {
         if (isHungry)
         {
-            if (map.getCell(entity.getX(), entity.getY()).getGrass() > 0)
+            if (map.getCell(x, y).getGrass() > 0)
             {
-                map.getCell(entity.getX(), entity.getY()).eatGrass();
+                map.getCell(x, y).eatGrass();
                 saturationRate++;
-                if (saturationRate >= MAX_SATURATION_RATE)
+                if (saturationRate == MAX_SATURATION_RATE)
                 {
                     isHungry = false;
                 }
             }
         }
-        setTarget();
     }
 
 
