@@ -30,4 +30,16 @@ public class Point
         this.y = y;
     }
 
+    public Point normalize(Point point){
+        double length = Math.sqrt(point.getX() * point.getX() + point.getY() * point.getY());
+        point.setX(point.getX() / length);
+        point.setY(point.getY() / length);
+        return point;
+    }
+
+    public double distance(Point point1){
+        double distance = Math.sqrt(Math.pow(point1.getX() - this.getX(), 2) + Math.pow(point1.getY() - this.getY(), 2));
+        return distance;
+    }
+
 }
