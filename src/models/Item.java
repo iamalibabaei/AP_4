@@ -4,7 +4,7 @@ public class Item extends Entity
 {
     private Type type;
 
-    public Item(int x, int y, Type type)
+    public Item(double x, double y, Type type)
     {
         super(x, y);
         this.type = type;

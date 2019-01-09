@@ -1,9 +1,7 @@
 package models;
 
 import models.animal.*;
-import models.exceptions.IsWorkingException;
-import models.exceptions.ItemNotInWarehouseException;
-import models.exceptions.NotEnoughMoney;
+import models.exceptions.InsufficientResourcesException;
 import models.map.Cell;
 import models.map.Map;
 import models.transportation.Buyer;
@@ -48,33 +46,56 @@ public class Game
         this.money = money;
     }
 
+    public  Warehouse getWarehouse() {
+        return warehouse;
+    }
 
-    public void addDomesticAnimal(DomesticAnimal animal) throws NotEnoughMoney {
+    public Well getWell() {
+        return well;
+    }
+
+    public Mission getMission() {
+        return mission;
+    }
+
+    public Buyer getTruck() {
+        return truck;
+    }
+
+    public Seller getHelicopter() {
+        return helicopter;
+    }
+
+    public ArrayList<Workshop> getWorkshops() {
+        return workshops;
+    }
+
+    public void addDomesticAnimal(DomesticAnimal animal) throws InsufficientResourcesException {
         if (money >= animal.getBuyCost()) {
             map.addToMap(animal);
             money -= animal.getBuyCost();
             return;
         }
-        throw new NotEnoughMoney();
+        throw new InsufficientResourcesException();
 
     }
 
-    public void addCat(Cat cat) throws NotEnoughMoney {
+    public void addCat(Cat cat) throws InsufficientResourcesException {
         if (money >= cat.getBuyCost()) {
             map.addToMap(cat);
             money -= cat.getBuyCost();
             return;
         }
-        throw new NotEnoughMoney();
+        throw new InsufficientResourcesException();
     }
 
-    public void addDog(Dog dog) throws NotEnoughMoney {
+    public void addDog(Dog dog) throws InsufficientResourcesException {
         if (money >= dog.getBuyCost()) {
             map.addToMap(dog);
             money -= dog.getBuyCost();
             return;
         }
-        throw new NotEnoughMoney();
+        throw new InsufficientResourcesException();
 
     }
 
@@ -183,9 +204,9 @@ public class Game
         System.out.println("no helicopter");
     }
 
-    public void buy(DomesticAnimal.Type animalType) throws NotEnoughMoney {
+    public void buy(DomesticAnimal.Type animalType) throws InsufficientResourcesException {
         if (animalType.BUY_COST > money) {
-            throw new  NotEnoughMoney();
+            throw new  InsufficientResourcesException();
         }
         int x = (int)(Math.random() * 30), y = (int)(Math.random() * 30);
         DomesticAnimal domesticAnimal = new DomesticAnimal(x, y, map, animalType);
