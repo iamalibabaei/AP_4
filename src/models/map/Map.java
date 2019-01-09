@@ -1,71 +1,111 @@
 package models.map;
 
 import models.Entity;
-import models.exceptions.AlreadyAtMaxLevelException;
+import models.Grass;
+import models.Item;
+import models.animal.*;
+import models.interfaces.Time;
+
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-// todo iterator cell
 
-public class Map
+public class Map implements Time
 {
-    public static final int WIDTH = 30, HEIGHT = 30;
-    private Cell[][] cells = new Cell[WIDTH][HEIGHT];
+    public static final double ROUND = 1.0;//distance to the point to cage animals
+    private ArrayList<Animal> animals;
+    private ArrayList<Grass> grasses;
+    private ArrayList<Item> items;
 
-    public Cell[][] getCells() {
-        return cells;
+
+    public Map() {
+        animals = new ArrayList<>();
+        grasses = new ArrayList<>();
+        items = new ArrayList<>();
     }
 
-    public ArrayList<Entity> getStorables(int x, int y)
-    {
-        return cells[x][y].getStorables();
+    public ArrayList<Animal> getAnimals() {
+        return animals;
     }
 
-    void removeItems(int x, int y, ArrayList<Entity> stored)
-    {
-        cells[x][y].removeAll(stored);
+    public ArrayList<Grass> getGrasses() {
+        return grasses;
     }
 
-    public void handleCollisions()
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public void removeItems(ArrayList<Entity> removedEntities)
     {
-        for (Cell[] rowCell : cells) {
-            for (Cell cell : rowCell) {
-                cell.handleCollisions();
+        animals.removeAll(removedEntities);
+    }
+
+    public void cage(double x, double y)
+    {
+        for (Animal animal : animals) {
+            double distance = Math.sqrt(Math.pow((animal.getX() - x), 2) + Math.pow(animal.getY() - y, 2));
+            if (distance <= ROUND) {
+                if (animal instanceof WildAnimal) {
+                    ((WildAnimal) animal).cage();
+                }
             }
         }
     }
-
-    public void moveAnimals()
-    {
-        for (Cell[] rowCell : cells) {
-            for (Cell cell : rowCell) {
-                cell.moveAnimals();
-            }
-        }
-    }
-
-    public void cage(int x, int y)
-    {
-        cells[x][y].cage();
-    }
-
-    public Cell getCell(int x, int y) {
-        return cells[x][y];
-    }
-
 
     public void addToMap(Entity entity) {
-        if (cells == null) {
-            throw new AlreadyAtMaxLevelException();
+        if (entity instanceof Animal) {
+            animals.add((Animal) entity);
         }
-        if (entity == null){
-            throw new AlreadyAtMaxLevelException();
+        if (entity instanceof Item) {
+            items.add((Item) entity);
         }
-        cells[entity.getX()][entity.getY()].addEntity(entity);
     }
 
     public void plant(int x, int y) {
-        cells[x][y].plant();
+        grasses.add(new Grass(x, y));
+    }
+
+    @Override
+    public void nextTurn() {
+        moveAnimals();
+        handleCollisions();
+    }
+
+    private void handleCollisions()
+    {
+        for (Animal collider: animals) {
+            for (Animal animal : animals) {
+                collider.collide(animal);
+            }
+            for (Item item : items) {
+                collider.collide(item);
+            }
+        }
+
+        Iterator<Animal> animalIterator = animals.iterator();
+        while (animalIterator.hasNext()) {
+            Animal animal = animalIterator.next();
+            if (!animal.Exists()) {
+                animals.remove(animal);
+            }
+        }
+
+        Iterator<Item> itemIterator = items.iterator();
+        while (itemIterator.hasNext()) {
+            Item item = itemIterator.next();
+            if (!item.Exists()) {
+                items.remove(item);
+            }
+        }
+    }
+
+    private void moveAnimals()
+    {
+        for (Animal animal : animals) {
+            animal.move();
+        }
     }
 
 }
