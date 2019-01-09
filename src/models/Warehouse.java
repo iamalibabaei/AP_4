@@ -2,7 +2,6 @@ package models;
 
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.InsufficientResourcesException;
-import models.exceptions.ItemNotInWarehouseException;
 import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Upgradable;
 
@@ -36,12 +35,12 @@ public class Warehouse implements Upgradable
         remainingCapacity = CAPACITY[level];
     }
 
-    public void moveToSeller(Item.Type item, int count) throws ItemNotInWarehouseException
+    public void moveToSeller(Item.Type item, int count) throws InsufficientResourcesException
     {
         int freedSpace = item.OCCUPIED_SPACE * count;
         int currentCount = items.get(item);
         if (currentCount < count)
-            throw new ItemNotInWarehouseException();
+            throw new InsufficientResourcesException();
         remainingCapacity += freedSpace;
         items.put(item, currentCount - count);
     }

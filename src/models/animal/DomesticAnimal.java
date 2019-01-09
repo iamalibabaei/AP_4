@@ -5,7 +5,6 @@ import models.Item;
 import models.Point;
 import models.interfaces.Buyable;
 import models.interfaces.Time;
-import models.map.Cell;
 import models.map.Map;
 
 public class DomesticAnimal extends Animal implements Buyable, Time

@@ -2,7 +2,6 @@ package models.animal;
 
 import models.Entity;
 import models.interfaces.Buyable;
-import models.map.Cell;
 import models.map.Map;
 
 // todo dog upgrade
