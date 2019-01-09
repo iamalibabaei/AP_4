@@ -3,12 +3,10 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import models.Game;
-import models.Item;
+import models.Map;
 import models.Mission;
 import models.animal.Animal;
-import models.animal.DomesticAnimal;
 import models.exceptions.*;
-import models.map.Map;
 import models.workshop.Workshop;
 import view.View;
 
@@ -32,7 +30,7 @@ public class Controller
         return controller;
     }
 
-    public void buy(String parameter) throws NotEnoughMoney {
+    public void buy(String parameter) throws InsufficientResourcesException {
         for (Animal.Type animal : Animal.Type.values())
         {
             if (animal.NAME.equals(parameter))
@@ -166,6 +164,11 @@ public class Controller
             } catch (NotEnoughSpaceException e)
             {
                 view.handleNotEnoughSpaceException();
+            } catch (FileNotFoundException e)
+            {
+                view.handleFileNotFoundException();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
