@@ -1,11 +1,8 @@
-package models.map;
+package models;
 
-import models.Entity;
-import models.Grass;
-import models.Item;
-import models.animal.*;
+import models.animal.Animal;
+import models.animal.WildAnimal;
 import models.interfaces.Time;
-
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,21 +16,25 @@ public class Map implements Time
     private ArrayList<Item> items;
 
 
-    public Map() {
+    public Map()
+    {
         animals = new ArrayList<>();
         grasses = new ArrayList<>();
         items = new ArrayList<>();
     }
 
-    public ArrayList<Animal> getAnimals() {
+    public ArrayList<Animal> getAnimals()
+    {
         return animals;
     }
 
-    public ArrayList<Grass> getGrasses() {
+    public ArrayList<Grass> getGrasses()
+    {
         return grasses;
     }
 
-    public ArrayList<Item> getItems() {
+    public ArrayList<Item> getItems()
+    {
         return items;
     }
 
@@ -44,67 +45,83 @@ public class Map implements Time
 
     public void cage(double x, double y)
     {
-        for (Animal animal : animals) {
+        for (Animal animal : animals)
+        {
             double distance = Math.sqrt(Math.pow((animal.getX() - x), 2) + Math.pow(animal.getY() - y, 2));
-            if (distance <= ROUND) {
-                if (animal instanceof WildAnimal) {
+            if (distance <= ROUND)
+            {
+                if (animal instanceof WildAnimal)
+                {
                     ((WildAnimal) animal).cage();
                 }
             }
         }
     }
 
-    public void addToMap(Entity entity) {
-        if (entity instanceof Animal) {
+    public void addToMap(Entity entity)
+    {
+        if (entity instanceof Animal)
+        {
             animals.add((Animal) entity);
         }
-        if (entity instanceof Item) {
+        if (entity instanceof Item)
+        {
             items.add((Item) entity);
         }
     }
 
-    public void plant(int x, int y) {
+    public void plant(int x, int y)
+    {
         grasses.add(new Grass(x, y));
     }
 
     @Override
-    public void nextTurn() {
+    public void nextTurn()
+    {
         moveAnimals();
         handleCollisions();
     }
 
+    private void moveAnimals()
+    {
+        for (Animal animal : animals)
+        {
+            animal.move();
+        }
+    }
+
     private void handleCollisions()
     {
-        for (Animal collider: animals) {
-            for (Animal animal : animals) {
+        for (Animal collider : animals)
+        {
+            for (Animal animal : animals)
+            {
                 collider.collide(animal);
             }
-            for (Item item : items) {
+            for (Item item : items)
+            {
                 collider.collide(item);
             }
         }
 
         Iterator<Animal> animalIterator = animals.iterator();
-        while (animalIterator.hasNext()) {
+        while (animalIterator.hasNext())
+        {
             Animal animal = animalIterator.next();
-            if (!animal.Exists()) {
+            if (!animal.Exists())
+            {
                 animals.remove(animal);
             }
         }
 
         Iterator<Item> itemIterator = items.iterator();
-        while (itemIterator.hasNext()) {
+        while (itemIterator.hasNext())
+        {
             Item item = itemIterator.next();
-            if (!item.Exists()) {
+            if (!item.Exists())
+            {
                 items.remove(item);
             }
-        }
-    }
-
-    private void moveAnimals()
-    {
-        for (Animal animal : animals) {
-            animal.move();
         }
     }
 
