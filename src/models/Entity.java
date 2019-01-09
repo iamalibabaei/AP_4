@@ -1,49 +1,33 @@
 package models;
 
-public abstract class Entity
-{
+public abstract class Entity {
     protected Point coordinates;
     protected boolean exists;
 
-    public Entity(double x, double y)
-    {
+    public Entity(double x, double y) {
         coordinates.setX(x);
         coordinates.setY(y);
         exists = true;
     }
 
-    public double getX()
-    {
-        return coordinates.getX();
+    public void setCoordinates(Point coordinates) {
+        this.coordinates = coordinates;
     }
 
-    public void setX(double x)
-    {
-        coordinates.setX(x);
+    public Point getCoordinates() {
+
+        return coordinates;
     }
 
-    public double getY()
-    {
-        return coordinates.getY();
-    }
-
-    public void setY(double y)
-    {
-        coordinates.setY(y);
-    }
-
-    public void setExists(boolean exists)
-    {
+    public void setExists(boolean exists) {
         this.exists = exists;
     }
 
-    public boolean Exists()
-    {
+    public boolean Exists() {
         return exists;
     }
 
-    public void die()
-    {
+    public void die() {
         this.exists = false;
     }
 
