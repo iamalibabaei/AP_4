@@ -9,13 +9,13 @@ import models.interfaces.Upgradable;
 import java.util.HashMap;
 
 
-public abstract class Transporter implements Upgradable, Time
-{
+public abstract class Transporter implements Upgradable, Time {
     protected final int[] UPGRADE_COST_LIST;
     protected final int UPGRADE_SPEED_BOOST;
-    protected final double UPGRADE_CAPACITY_INCREACE;
+    protected final int UPGRADE_CAPACITY_INCREASE;
+    protected HashMap<Item.Type, Integer> list;
 
-    int capacity, maxtimeToArriveToFarm, level, arriveToFarm;//maxtimeToArriveToFarm = arriving to destination per turn
+    int capacity, timeToArrive, level, remainTimeToArrive;//timeToArrive = arriving to destination per turn
     protected boolean isWorking = false;
 
     public boolean isWorking() {
@@ -26,25 +26,24 @@ public abstract class Transporter implements Upgradable, Time
         return level;
     }
 
-    public int getMaxtimeToArriveToFarm() {
-        return maxtimeToArriveToFarm;
+    public int getTimeToArrive() {
+        return timeToArrive;
     }
 
     public int getCapacity() {
         return capacity;
     }
 
-    public int getArriveToFarm() {
-        return arriveToFarm;
+    public int getRemainTimeToArrive() {
+        return remainTimeToArrive;
     }
 
-    public Transporter(int[] UPGRADE_COST_LIST, int UPGRADE_SPEED_BOOST, double UPGRADE_CAPACITY_INCREACE) {
+    public Transporter(int[] UPGRADE_COST_LIST, int UPGRADE_SPEED_BOOST, int UPGRADE_CAPACITY_INCREASE) {
         this.UPGRADE_COST_LIST = UPGRADE_COST_LIST;
         this.UPGRADE_SPEED_BOOST = UPGRADE_SPEED_BOOST;
-        this.UPGRADE_CAPACITY_INCREACE = UPGRADE_CAPACITY_INCREACE;
+        this.UPGRADE_CAPACITY_INCREASE = UPGRADE_CAPACITY_INCREASE;
     }
 
-    protected HashMap<Item.Type, Integer> list;
 
     public HashMap<Item.Type, Integer> getList() {
         return list;
@@ -64,17 +63,16 @@ public abstract class Transporter implements Upgradable, Time
             list.put(itemType, number);
         }
     }
-    
-    public int usedCapacity() {
+
+    private int usedCapacity() {
         int usedCapacity = 0;
-        for (Item.Type itemType : list.keySet())
-        {
+        for (Item.Type itemType : list.keySet()) {
             int elementOccupation = itemType.OCCUPIED_SPACE * list.get(itemType);
             usedCapacity += elementOccupation;
         }
         return usedCapacity;
     }
-    
+
     public abstract void go() throws IsWorkingException;
 
     @Override
