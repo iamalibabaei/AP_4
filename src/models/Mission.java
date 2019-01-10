@@ -15,6 +15,14 @@ public class Mission
     HashMap<Item.Type, Integer> ItemObjective;
     boolean dog,cat;
 
+    public int getMoney() {
+        return money;
+    }
+
+    public HashMap<DomesticAnimal.Type, Integer> getAnimalObjectives() {
+        return animalObjectives;
+    }
+
     public Mission(int money, HashMap<DomesticAnimal.Type, Integer> animalObjectives,
                    HashMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat) {
         this.money = money;
