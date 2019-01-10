@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Game
 {
     public static final int MAX_WORKSHOPS = 6, MAP_SIZE = 30;
+    public static final double RADIUS = 0.2;
     private static Game ourInstance = new Game();
     private int money = 50;
     private Map map;
