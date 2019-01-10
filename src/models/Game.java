@@ -7,7 +7,6 @@ import models.map.Map;
 import models.transportation.Buyer;
 import models.transportation.Seller;
 import models.transportation.Transporter;
-import models.workshop.Workshop;
 
 import java.util.ArrayList;
 

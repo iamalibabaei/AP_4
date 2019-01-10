@@ -7,7 +7,7 @@ import models.Map;
 import models.Mission;
 import models.animal.Animal;
 import models.exceptions.*;
-import models.workshop.Workshop;
+import models.Workshop;
 import view.View;
 
 import java.io.*;

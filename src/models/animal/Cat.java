@@ -2,12 +2,12 @@ package models.animal;
 
 import models.Entity;
 import models.Item;
-import models.Map;
 import models.Warehouse;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.interfaces.Buyable;
 import models.interfaces.Upgradable;
 
+import models.Map;
 import java.util.HashMap;
 
 // todo cat upgrade

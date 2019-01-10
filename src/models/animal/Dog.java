@@ -3,6 +3,7 @@ package models.animal;
 import models.Entity;
 import models.Map;
 import models.interfaces.Buyable;
+import models.Map;
 
 // todo dog upgrade
 

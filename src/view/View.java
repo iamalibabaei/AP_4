@@ -7,7 +7,7 @@ import models.*;
 import models.animal.Animal;
 import models.animal.DomesticAnimal;
 import models.Map;
-import models.workshop.Workshop;
+import models.Workshop;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
