@@ -156,7 +156,7 @@ public class View {
         for (Animal.Type animal : Animal.Type.values()) {
             int count = 0;
             for (Animal animal1 : Game.getInstance().getMap().getAnimals()) {
-                if (animal.equals(animal1.getType())) {
+                if (animal.equals(animal1.type)) {
                     count++;
                 }
             }
@@ -220,7 +220,7 @@ public class View {
         for (DomesticAnimal.Type animal : Game.getInstance().getMission().getAnimalObjectives().keySet()) {
             int count = 0;
             for (Animal animal1 : Game.getInstance().getMap().getAnimals()) {
-                if (animal.equals(animal1.getType())) {
+                if (animal.equals(animal1.type)) {
                     count++;
                 }
             }
