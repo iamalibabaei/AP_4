@@ -1,7 +1,7 @@
 package models.animal;
 
 import models.Entity;
-import models.map.Map;
+import models.Map;
 
 // todo upgrade cage
 
@@ -9,7 +9,7 @@ public class WildAnimal extends Animal
 {
     private State state;
 
-    public WildAnimal(int x, int y, Map map, Animal.Type type)
+    public WildAnimal(double x, double y, Map map, Animal.Type type)
     {
         super(x, y, type, map);
         state = State.NOT_CAGED;

@@ -1,9 +1,8 @@
 package models.animal;
 
 import models.Entity;
+import models.Map;
 import models.interfaces.Buyable;
-import models.map.Cell;
-import models.map.Map;
 
 // todo dog upgrade
 
@@ -11,7 +10,7 @@ public class Dog extends Animal implements Buyable
 {
     private static final int BUY_COST = 2600;
 
-    public Dog(int x, int y, Animal.Type type, Map map)
+    public Dog(double x, double y, Animal.Type type, Map map)
     {
         super(x, y, type, map);
     }
@@ -21,14 +20,10 @@ public class Dog extends Animal implements Buyable
     {
         target = null;
 
-        for (Cell[] cells: map.getCells()) {
-            for (Cell cell: cells) {
-                for (Entity entity : cell.getEntities()) {
-                    if (entity instanceof WildAnimal){
-                        target = entity.getPoint();
-                        return;
-                    }
-                }
+        for (Animal animal: map.getAnimals()) {
+            if (animal instanceof WildAnimal){
+                target.setX(animal.getCoordinates().getX());
+                target.setY(animal.getCoordinates().getY());
             }
         }
     }
