@@ -84,6 +84,9 @@ public class Map implements Time {
             for (Item item : items) {
                 collider.collide(item);
             }
+            for (Grass grass : grasses) {
+                collider.collide(grass);
+            }
         }
 
         Iterator<Animal> animalIterator = animals.iterator();

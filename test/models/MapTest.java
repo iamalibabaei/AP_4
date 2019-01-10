@@ -1,8 +1,8 @@
-package models.map;
+package models;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CellTest
+class MapTest
 {
 
 }
