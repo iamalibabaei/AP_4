@@ -25,8 +25,19 @@ Workshop implements Upgradable, Time
     private final int buildCost;
     private final HashMap<Item.Type, Integer> inputs, outputs;
 
+    public int getLevel() {
+        return level;
+    }
 
-    public Workshop(int x, int y,int buildCost, HashMap<Item.Type, Integer> inputs,
+    public int getTimeToReturnProduct() {
+        return timeToReturnProduct;
+    }
+
+    public boolean isWorking() {
+        return isWorking;
+    }
+
+    public Workshop(int x, int y, int buildCost, HashMap<Item.Type, Integer> inputs,
                     HashMap<Item.Type, Integer> outputs, int maxProductionNum) {
         this.x = x;
         this.y = y;
