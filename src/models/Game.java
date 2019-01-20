@@ -1,9 +1,10 @@
 package models;
 
-import models.animal.*;
+import models.animal.Animal;
+import models.animal.Cat;
+import models.animal.Dog;
+import models.animal.DomesticAnimal;
 import models.exceptions.InsufficientResourcesException;
-import models.map.Cell;
-import models.map.Map;
 import models.transportation.Buyer;
 import models.transportation.Seller;
 import models.transportation.Transporter;
@@ -114,7 +115,7 @@ public class Game
         mission = new Mission(ourInstance);
 
 
-        map.handleCollisions();
+//        map.handleCollisions();
 
         well.nextTurn();
         truck.nextTurn();
@@ -122,24 +123,27 @@ public class Game
         for (Workshop workshop : workshops) {
             workshop.nextTurn();
         }
-        for (Cell[] cells: map.getCells()) {
-            for (Cell cell: cells) {
-                for (Entity entity : cell.getEntities()) {
-                    if (entity instanceof Animal){
-                        ((Animal) entity).nextTurn();
-                    }
-
-                }
-
-            }
-
+//        for (Cell[] cells: map.getCells()) {
+//            for (Cell cell: cells) {
+//                for (Entity entity : cell.getEntities()) {
+//                    if (entity instanceof Animal){
+//                        ((Animal) entity).nextTurn();
+//                    }
+//
+//                }
+//
+//            }
+//
+//        }
+        for (Animal animal : map.getAnimals()) {
+            animal.nextTurn();
         }
     }
 
 
 
-    public void cage(int x, int y) {
-        map.getCell(x, y).cage();
+    public void cage(double x, double y) {
+        map.cage(x, y);
     }
 
     public void startWorkShop(String workshopName) {
