@@ -8,7 +8,7 @@ public class Grass extends Entity
         grass = 0;
     }
 
-    public void eatgrass(){
+    public void eatGrass(){
         grass--;
 
     }
