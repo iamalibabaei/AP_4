@@ -10,7 +10,9 @@ public class Grass extends Entity
 
     public void eatGrass(){
         grass--;
-
+        if (grass == 0) {
+            this.setExists(false);
+        }
     }
 
     public final static int MAX_GRASS = 10;

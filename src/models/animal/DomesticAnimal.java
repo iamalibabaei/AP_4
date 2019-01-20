@@ -87,12 +87,10 @@ public class DomesticAnimal extends Animal implements Buyable, Time {
     @Override
     public void collide(Entity entity) {
         if (isHungry) {
-            if (this.getCoordinates().collidesWith(entity.getCoordinates())){
-                if (){
-
-                }
+            if (entity instanceof Grass){
+                ((Grass) entity).eatGrass();
             }
         }
-        }
-
     }
+
+}
