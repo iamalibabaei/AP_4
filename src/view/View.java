@@ -139,7 +139,7 @@ public class View {
             System.out.println("Workshop name: " + workshop.getName());
             System.out.println("Workshop level: " + workshop.getLevel());
             if (workshop.isWorking()) {
-                System.out.println("Time to finish: " + workshop.getTimeToReturnProduct() + " turn(s)");
+                System.out.println("Time to finish: " + workshop.getProductionRemainingTime() + " turn(s)");
             } else {
                 System.out.println("Workshop is free");
             }

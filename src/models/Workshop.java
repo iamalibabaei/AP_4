@@ -14,6 +14,11 @@ Workshop implements Upgradable, Time {
     String name;
     private final Point outputPlace;
     private static final int[] PRODUCTION_TIME = {15, 14, 13, 11, 8};
+
+    public int getLevel() {
+        return level;
+    }
+
     private int level, maxProductionFactor, productionTime, productionRemainingTime;
     private int productionFactor;
     private Warehouse warehouse;
@@ -21,6 +26,15 @@ Workshop implements Upgradable, Time {
     private final int buildCost;
     private final HashMap<Item.Type, Integer> inputs, outputs;
     private Map map;
+
+    public int getProductionRemainingTime() {
+        return productionRemainingTime;
+    }
+
+    public boolean isWorking() {
+
+        return isWorking;
+    }
 
     public Workshop(String name, double outputX, double outputY, int maxProductionFactor, int productionFactor,
                     int buildCost, HashMap<Item.Type, Integer> inputs, HashMap<Item.Type, Integer> outputs) {

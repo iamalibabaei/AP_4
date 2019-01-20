@@ -60,7 +60,7 @@ public class Map implements Time {
         }
     }
 
-    public void plant(int x, int y) {
+    public void plant(double x, double y) {
         grasses.add(new Grass(x, y));
     }
 
