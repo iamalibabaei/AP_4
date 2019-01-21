@@ -1,5 +1,6 @@
 package models;
 
+import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Time;
 import models.objects.Entity;
 import models.objects.Grass;
@@ -58,8 +59,8 @@ public class Map implements Time
     {
         for (Animal animal : animals)
         {
-            double distance = Math.sqrt(Math.pow((animal.getCoordinates().getX() - x), 2)
-                    + Math.pow(animal.getCoordinates().getY() - y, 2));
+            double distance = Math.sqrt(Math.pow((animal.getCoordinates().getX() - point.getX()), 2)
+                    + Math.pow(animal.getCoordinates().getY() - point.getY(), 2));
             if (distance <= ROUND)
             {
                 if (animal instanceof WildAnimal)
@@ -90,8 +91,7 @@ public class Map implements Time
     }
 
     @Override
-    public void nextTurn()
-    {
+    public void nextTurn() throws NotEnoughSpaceException {
         moveAnimals();
         handleCollisions();
     }
@@ -104,8 +104,7 @@ public class Map implements Time
         }
     }
 
-    private void handleCollisions()
-    {
+    private void handleCollisions() throws NotEnoughSpaceException {
         for (Animal collider : animals)
         {
             for (Animal animal : animals)

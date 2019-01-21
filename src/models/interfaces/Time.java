@@ -1,6 +1,8 @@
 package models.interfaces;
 
+import models.exceptions.NotEnoughSpaceException;
+
 public interface Time
 {
-    void nextTurn();
+    void nextTurn() throws NotEnoughSpaceException;
 }

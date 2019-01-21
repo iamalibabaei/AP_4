@@ -1,10 +1,13 @@
 package models;
 
+import models.objects.Entity;
+import models.objects.Point;
+
 public class Grass extends Entity
 {
-    public Grass(double x, double y)
+    public Grass(Point point)
     {
-        super(x, y);
+        super(point);
         grass = 0;
     }
 
