@@ -3,10 +3,7 @@ package models;
 import models.buildings.Warehouse;
 import models.buildings.Well;
 import models.buildings.Workshop;
-import models.exceptions.InsufficientResourcesException;
-import models.exceptions.InvalidArgumentException;
-import models.exceptions.IsWorkingException;
-import models.exceptions.ObjectNotFoundException;
+import models.exceptions.*;
 import models.interfaces.Time;
 import models.misc.Mission;
 import models.objects.Item;
@@ -14,7 +11,6 @@ import models.objects.Point;
 import models.objects.animal.Animal;
 import models.objects.animal.Cat;
 import models.objects.animal.Dog;
-import models.objects.animal.DomesticAnimal;
 import models.transportation.Buyer;
 import models.transportation.Seller;
 import models.transportation.Transporter;
@@ -36,6 +32,20 @@ public class Game implements Time
     private Mission mission;
     private int wildAnimalsInMap;
 
+    public Well getWell() {
+        return well;
+    }
+
+    public Warehouse getWarehouse() {
+
+        return warehouse;
+    }
+
+    public Map getMap() {
+
+        return map;
+    }
+
     private Game()
     {
         map = Map.getInstance();
@@ -56,18 +66,6 @@ public class Game implements Time
         {
             workshop.nextTurn();
         }
-//        for (Cell[] cells: map.getCells()) {
-//            for (Cell cell: cells) {
-//                for (Entity entity : cell.getEntities()) {
-//                    if (entity instanceof Animal){
-//                        ((Animal) entity).nextTurn();
-//                    }
-//
-//                }
-//
-//            }
-//
-//        }
         for (Animal animal : map.getAnimals())
         {
             animal.nextTurn();
@@ -146,8 +144,7 @@ public class Game implements Time
         map.cage(point);
     }
 
-    public void startWorkShop(String workshopName)
-    {
+    public void startWorkShop(String workshopName) throws InsufficientResourcesException, IsWorkingException {
         for (Workshop workshop : workshops)
         {
             if (workshop.getName().equals(workshopName))
@@ -158,8 +155,7 @@ public class Game implements Time
         }
     }
 
-    public void upgrade(String parameter)
-    {
+    public void upgrade(String parameter) throws AlreadyAtMaxLevelException {
         if (parameter.equals("cat"))
         {
             //todo upgrade cat
@@ -248,8 +244,7 @@ public class Game implements Time
         System.out.println("invalid input");
     }
 
-    public void addToStash(String transporterName, String itemName, int count)
-    {
+    public void addToStash(String transporterName, String itemName, int count) throws NotEnoughSpaceException, IsWorkingException {
 
         Transporter transporter = truck;
         if (transporterName.equals("helicopter"))
@@ -282,8 +277,7 @@ public class Game implements Time
         helicopter = new Seller();
     }
 
-    public void sendTransporter(String transporterName)
-    {
+    public void sendTransporter(String transporterName) throws IsWorkingException {
         if (transporterName.equals("helicopter"))
         {
             if (helicopter == null)
@@ -298,6 +292,14 @@ public class Game implements Time
         {
             truck.go();
         }
+    }
+
+    public void turn(){
+        //TODO turn method for nTurn
+    }
+
+    public void buy(Animal.Type animal){
+        //TODO buying animal
     }
 
     @Override
