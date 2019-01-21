@@ -1,5 +1,5 @@
 package models.transportation;
-import models.Item;
+import models.objects.Item;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.IsWorkingException;
 

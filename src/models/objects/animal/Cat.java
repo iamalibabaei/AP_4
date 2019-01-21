@@ -1,25 +1,26 @@
-package models.animal;
+package models.objects.animal;
 
-import models.Entity;
-import models.Item;
-import models.Warehouse;
+import models.objects.Entity;
+import models.objects.Item;
+import models.buildings.Warehouse;
 import models.exceptions.AlreadyAtMaxLevelException;
-import models.interfaces.Buyable;
 import models.interfaces.Upgradable;
 
 import models.Map;
+import models.objects.Point;
+
 import java.util.HashMap;
 
 // todo cat upgrade
 
-public class Cat extends Animal implements Buyable, Upgradable {
-    private static final int BUY_COST = 2500, MAX_LEVEL = 1, UPGRADE_COST = 200;
+public class Cat extends Animal implements Upgradable {
+    private static final int MAX_LEVEL = 1, UPGRADE_COST = 200;
     private static int level;
     private Warehouse warehouse;
 
-    public Cat(double x, double y, Animal.Type type, Map map, Warehouse warehouse) {
-        super(x, y, type, map);
-        this.warehouse = warehouse;
+    public Cat(Point point, Animal.Type type) {
+        super(point, type);
+        this.warehouse = Warehouse.getInstance();
     }
 
     @Override
@@ -67,11 +68,6 @@ public class Cat extends Animal implements Buyable, Upgradable {
                 map.addToMap(new Item(this.getCoordinates().getX(), this.getCoordinates().getY(), item));
             }
         }
-    }
-
-    @Override
-    public int getBuyCost() {
-        return BUY_COST;
     }
 
     @Override

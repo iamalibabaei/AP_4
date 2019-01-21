@@ -1,5 +1,7 @@
 package models.exceptions;
 
-public class InvalidArgumentException extends RuntimeException
+import java.io.IOException;
+
+public class InvalidArgumentException extends IOException
 {
 }

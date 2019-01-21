@@ -4,10 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import controller.Controller;
 import models.*;
-import models.animal.Animal;
-import models.animal.DomesticAnimal;
+import models.buildings.Warehouse;
+import models.buildings.Well;
+import models.misc.Mission;
+import models.objects.Item;
+import models.objects.animal.Animal;
+import models.objects.animal.DomesticAnimal;
 import models.Map;
-import models.Workshop;
+import models.buildings.Workshop;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -71,7 +75,7 @@ public class View {
         if (args[0].equals("plant")) {
             controller.plant(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
         }
-        if (args[0].equals("well")) {
+        if (args[0].equals("ourInstance")) {
             controller.refillWell();
         }
         if (args[0].equals("start")) {
@@ -105,7 +109,7 @@ public class View {
             if (args[1].equals("warehouse")) {
                 printWarehouse();
             }
-            if (args[1].equals("well")) {
+            if (args[1].equals("ourInstance")) {
                 printWell();
             }
             if (args[1].equals("workshops")) {

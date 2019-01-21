@@ -1,9 +1,12 @@
-package models;
+package models.misc;
 
-import models.animal.Animal;
-import models.animal.Cat;
-import models.animal.Dog;
-import models.animal.DomesticAnimal;
+import models.Game;
+import models.Map;
+import models.objects.Item;
+import models.objects.animal.Animal;
+import models.objects.animal.Cat;
+import models.objects.animal.Dog;
+import models.objects.animal.DomesticAnimal;
 
 import java.util.HashMap;
 

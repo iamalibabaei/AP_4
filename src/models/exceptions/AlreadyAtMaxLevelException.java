@@ -1,6 +1,8 @@
 package models.exceptions;
 
-public class AlreadyAtMaxLevelException extends RuntimeException
+import java.io.IOException;
+
+public class AlreadyAtMaxLevelException extends IOException
 {
     public AlreadyAtMaxLevelException()
     {

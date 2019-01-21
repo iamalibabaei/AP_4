@@ -1,24 +1,25 @@
-package models.animal;
+package models.objects.animal;
 
 import models.*;
-import models.interfaces.Buyable;
 import models.interfaces.Time;
+import models.objects.Entity;
+import models.objects.Grass;
+import models.objects.Item;
+import models.objects.Point;
 
-public class DomesticAnimal extends Animal implements Buyable, Time {
+public class DomesticAnimal extends Animal implements Time {
     private static final int MAX_SATURATION_RATE = 20;
     private int saturationRate;
     private boolean isHungry;
-    private Type type;
 
     public Type getType() {
         return type;
     }
 
-    public DomesticAnimal(double x, double y, Map map, Type type) {
-        super(x, y, Animal.Type.valueOf(type.toString()), map);
+    public DomesticAnimal(Point point, Type type) {
+        super(point, type);
         saturationRate = MAX_SATURATION_RATE / 2;
         isHungry = true;
-        this.type = type;
     }
 
 
@@ -37,32 +38,6 @@ public class DomesticAnimal extends Animal implements Buyable, Time {
 
     private void produce() {
         map.addToMap(new Item(this.getCoordinates().getX(), this.getCoordinates().getY(), type.PRODUCT));
-    }
-
-    @Override
-    public int getBuyCost() {
-        return type.BUY_COST;
-    }
-
-    public enum Type {
-        HEN(100, Item.Type.EGG, "hen"),
-        SHEEP(1000, Item.Type.FABRIC, "sheep"),
-        COW(10000, Item.Type.MILK, "cow");
-
-        public final int BUY_COST;
-        public final Item.Type PRODUCT;
-        public final String NAME;
-
-        Type(int BUY_COST, Item.Type item, String name) {
-            this.BUY_COST = BUY_COST;
-            this.PRODUCT = item;
-            this.NAME = name;
-        }
-
-        @Override
-        public String toString() {
-            return NAME.toUpperCase();
-        }
     }
 
     @Override

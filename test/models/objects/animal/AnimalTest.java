@@ -1,7 +1,6 @@
-package models.animal;
+package models.objects.animal;
 
-import models.Entity;
-import models.Point;
+import models.objects.Point;
 import models.map.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

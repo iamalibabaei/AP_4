@@ -1,5 +1,6 @@
 package models;
 
+import models.buildings.Well;
 import models.exceptions.AlreadyAtMaxLevelException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
