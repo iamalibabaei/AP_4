@@ -1,12 +1,11 @@
 package models.objects.animal;
 
-import models.objects.Entity;
-import models.objects.Item;
 import models.buildings.Warehouse;
 import models.exceptions.AlreadyAtMaxLevelException;
+import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Upgradable;
-
-import models.Map;
+import models.objects.Entity;
+import models.objects.Item;
 import models.objects.Point;
 
 import java.util.HashMap;
@@ -48,7 +47,7 @@ public class Cat extends Animal implements Upgradable {
     }
 
     @Override
-    public void collide(Entity entity) {
+    public void collide(Entity entity) throws NotEnoughSpaceException {
         HashMap<Item.Type, Integer> items = new HashMap<>();
 
         for (Item item : map.getItems()) {
@@ -65,7 +64,7 @@ public class Cat extends Animal implements Upgradable {
 
         for (Item.Type item : items.keySet()) {
             for (int i = 0; i < items.get(item); i++) {
-                map.addToMap(new Item(this.getCoordinates().getX(), this.getCoordinates().getY(), item));
+                map.addToMap(new Item(this.getCoordinates(), item));
             }
         }
     }

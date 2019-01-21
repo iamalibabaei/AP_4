@@ -294,14 +294,6 @@ public class Game implements Time
         }
     }
 
-    public void turn(){
-        //TODO turn method for nTurn
-    }
-
-    public void buy(Animal.Type animal){
-        //TODO buying animal
-    }
-
     @Override
     public void nextTurn()
     {

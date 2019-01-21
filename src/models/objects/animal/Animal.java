@@ -1,6 +1,7 @@
 package models.objects.animal;
 
 import models.Map;
+import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Time;
 import models.objects.Entity;
 import models.objects.Item;
@@ -25,7 +26,7 @@ public abstract class Animal extends Entity implements Time
         direction = new Point(0, 0);
     }
 
-    public abstract void collide(Entity entity);
+    public abstract void collide(Entity entity) throws NotEnoughSpaceException;
 
     @Override
     public void nextTurn()

@@ -36,7 +36,7 @@ public class Controller
         {
             if (animal.NAME.equals(parameter))
             {
-                game.buy(animal);
+                game.buyAnimal(animal);
                 return;
             }
         }
@@ -116,7 +116,7 @@ public class Controller
     public void nextTurn(int nTurn)
     {
         for (int i = 0; i < nTurn; i++) {
-            game.turn();
+            game.nextTurn();
         }
     }
 
