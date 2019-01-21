@@ -113,14 +113,13 @@ Workshop implements Upgradable, Time
             for (int i = 0; i < productionFactor; i++)
             {
                 //todo hame ye item ha ru ham mioftan x ro ykam jabeja mikonim
-                map.addToMap(new Item(outputPlace.getX(), outputPlace.getY(), itemType));
+                map.addToMap(new Item(outputPlace, itemType));
             }
         }
     }
 
     @Override
-    public void upgrade()
-    {
+    public void upgrade() throws AlreadyAtMaxLevelException {
         if (level == 4)
         {
             throw new AlreadyAtMaxLevelException();
