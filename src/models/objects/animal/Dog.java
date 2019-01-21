@@ -1,6 +1,5 @@
 package models.objects.animal;
 
-import models.Map;
 import models.objects.Entity;
 import models.objects.Point;
 
@@ -32,13 +31,12 @@ public class Dog extends Animal
     public void setTarget()
     {
         target = null;
-
         for (Animal animal : map.getAnimals())
         {
             if (animal instanceof WildAnimal)
             {
-                target.setX(animal.getCoordinates().getX());
-                target.setY(animal.getCoordinates().getY());
+                target = animal.getCoordinates();
+                return;
             }
         }
     }

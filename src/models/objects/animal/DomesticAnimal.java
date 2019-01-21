@@ -6,63 +6,66 @@ import models.objects.Grass;
 import models.objects.Item;
 import models.objects.Point;
 
-public class DomesticAnimal extends Animal implements Time {
+public class DomesticAnimal extends Animal implements Time
+{
     private static final int MAX_SATURATION_RATE = 20;
     private int saturationRate;
     private boolean isHungry;
 
-    public Type getType() {
-        return type;
-    }
-
-    public DomesticAnimal(Point point, Type type) {
+    public DomesticAnimal(Point point, Type type)
+    {
         super(point, type);
         saturationRate = MAX_SATURATION_RATE / 2;
         isHungry = true;
     }
 
+    @Override
+    public void collide(Entity entity)
+    {
+        if (isHungry && entity instanceof Grass)
+        {
+            ((Grass) entity).eatGrass();
+        }
+    }
 
     @Override
-    public void nextTurn() {
-        if (saturationRate == 0) {
+    public void nextTurn()
+    {
+        if (saturationRate == 0)
+        {
             this.die();
         }
         saturationRate--;
-        if (!isHungry && saturationRate <= MAX_SATURATION_RATE / 2) {
+        if (!isHungry && saturationRate <= MAX_SATURATION_RATE / 2)
+        {
             produce();
             isHungry = true;
         }
-        super.nextTurn();
+        setTarget();
+        move();
     }
 
-    private void produce() {
-        map.addToMap(new Item(this.getCoordinates(), type.PRODUCT));
+    private void produce()
+    {
+        map.addToMap(new Item(coordinates, type.PRODUCT));
     }
 
     @Override
-    public void setTarget() {
+    public void setTarget()
+    {
         target = null;
 
-        if (isHungry) {
+        if (isHungry)
+        {
             double dist = 1000;
-            for (Grass grass : map.getGrasses()) {
-                if (grass.getGrass() > 0) {
-                    double dist1 = this.getCoordinates().distance(grass.getCoordinates());
-                    if (dist1 < dist) {
-                        dist = dist1;
-                        target.setX(grass.getCoordinates().getX());
-                        target.setY(grass.getCoordinates().getY());
-                    }
+            for (Grass grass : map.getGrasses())
+            {
+                double dist1 = coordinates.distanceFrom(grass.getCoordinates());
+                if (dist1 < dist)
+                {
+                    dist = dist1;
+                    target = grass.getCoordinates();
                 }
-            }
-        }
-    }
-
-    @Override
-    public void collide(Entity entity) {
-        if (isHungry) {
-            if (entity instanceof Grass){
-                ((Grass) entity).eatGrass();
             }
         }
     }

@@ -2,17 +2,12 @@ package models.objects;
 
 public class Item extends Entity
 {
-    private Type type;
+    public final Type type;
 
     public Item(Point point, Type type)
     {
         super(point);
         this.type = type;
-    }
-
-    public Type getType()
-    {
-        return type;
     }
 
     public enum Type

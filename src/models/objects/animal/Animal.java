@@ -7,15 +7,12 @@ import models.objects.Entity;
 import models.objects.Item;
 import models.objects.Point;
 
-import java.util.Random;
-
 public abstract class Animal extends Entity implements Time
 {
-    private static int speed = 5;
+    private static final int speed = 5;
     public final Type type;
-    protected Map map;
+    Map map;
     Point target;
-    Point direction;
 
     Animal(Point point, Type type)
     {
@@ -23,10 +20,9 @@ public abstract class Animal extends Entity implements Time
         target = null;
         this.map = Map.getInstance();
         this.type = type;
-        direction = new Point(0, 0);
     }
 
-    public abstract void collide(Entity entity) throws NotEnoughSpaceException;
+    public abstract void collide(Entity entity);
 
     @Override
     public void nextTurn()
@@ -37,22 +33,17 @@ public abstract class Animal extends Entity implements Time
 
     public void setTarget() // default move is random
     {
-        Random random = new Random();
-        target.setX(random.nextDouble() * Map.WIDTH);
-        target.setY(random.nextDouble() * Map.WIDTH);
+        target = Point.randomPoint(Map.WIDTH, Map.HEIGHT);
     }
 
     //if (target == null) randomWalk
     public void move()
     {
-
-        direction.setX(target.getX() - this.getCoordinates().getX());
-        direction.setX(target.getY() - this.getCoordinates().getY());
+        Point direction = new Point(target.getX() - this.getCoordinates().getX(),
+                target.getY() - this.getCoordinates().getY());
         direction.normalize();
-
         this.getCoordinates().setX(this.getCoordinates().getX() + direction.getX() * Animal.speed);
         this.getCoordinates().setY(this.getCoordinates().getY() + direction.getY() * Animal.speed);
-
     }
 
     public enum Type

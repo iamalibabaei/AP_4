@@ -43,10 +43,10 @@ public class Point
 
     public boolean collidesWith(Point point)
     {
-        return this.distance(point) <= Game.RADIUS;
+        return this.distanceFrom(point) <= Game.RADIUS;
     }
 
-    public double distance(Point point1)
+    public double distanceFrom(Point point1)
     {
         return Math.sqrt(Math.pow(point1.getX() - this.getX(), 2) + Math.pow(point1.getY() - this.getY(), 2));
     }

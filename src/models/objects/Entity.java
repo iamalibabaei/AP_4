@@ -1,7 +1,7 @@
 package models.objects;
 
 public abstract class Entity {
-    private Point coordinates;
+    protected Point coordinates;
     private boolean exists;
 
     public Entity(Point point) {
@@ -18,12 +18,8 @@ public abstract class Entity {
         return coordinates;
     }
 
-    public void setExists(boolean exists) {
-        this.exists = exists;
-    }
-
-    public boolean Exists() {
-        return exists;
+    public boolean notExists() {
+        return !exists;
     }
 
     public void die() {
