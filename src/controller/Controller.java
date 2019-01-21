@@ -5,6 +5,7 @@ import com.google.gson.stream.JsonReader;
 import models.Game;
 import models.Map;
 import models.misc.Mission;
+import models.objects.Point;
 import models.objects.animal.Animal;
 import models.exceptions.*;
 import models.buildings.Workshop;
@@ -30,7 +31,7 @@ public class Controller
         return controller;
     }
 
-    public void buy(String parameter) throws InsufficientResourcesException {
+    public void buy(String parameter) throws InsufficientResourcesException, InvalidArgumentException {
         for (Animal.Type animal : Animal.Type.values())
         {
             if (animal.NAME.equals(parameter))
@@ -42,47 +43,43 @@ public class Controller
         throw new InvalidArgumentException();
     }
 
-    public void pickUp(int x, int y)
+    public void pickUp(Point point)
     {
-        if (x >= Map.WIDTH || x < 0 || y >= Map.HEIGHT || y < 0) {
+        if (point.getX() >= Map.WIDTH || point.getX() < 0 || point.getY() >= Map.HEIGHT || point.getY() < 0) {
             throw new IndexOutOfBoundsException();
         }
 
-        game.pickUp(x, y);
+        game.pickUp(point);
     }
 
-    public void cage(int x, int y)
+    public void cage(Point point)
     {
-        if (x >= Map.WIDTH || x < 0 || y >= Map.HEIGHT || y < 0) {
+        if (point.getX() >= Map.WIDTH || point.getX() < 0 || point.getY() >= Map.HEIGHT || point.getY() < 0) {
             throw new IndexOutOfBoundsException();
         }
 
-        game.cage(x, y);
+        game.cage(point);
 
     }
 
-    public void plant(int x, int y)
-    {
-        if (x >= Map.WIDTH || x < 0 || y >= Map.HEIGHT  || y < 0) {
+    public void plant(Point point) throws InsufficientResourcesException {
+        if (point.getX() >= Map.WIDTH || point.getX() < 0 || point.getY() >= Map.HEIGHT  || point.getY() < 0) {
             throw new IndexOutOfBoundsException();
         }
 
-        game.plant(x, y);
+        game.plant(point);
 
     }
 
-    public void refillWell()
-    {
+    public void refillWell() throws IsWorkingException, InsufficientResourcesException {
         game.refillWell();
     }
 
-    public void startWorkshop(String workshopName)
-    {
+    public void startWorkshop(String workshopName) throws IsWorkingException, InsufficientResourcesException {
         game.startWorkShop(workshopName);
     }
 
-    public void upgrade(String parameter)
-    {
+    public void upgrade(String parameter) throws AlreadyAtMaxLevelException {
         game.upgrade(parameter);
     }
 
@@ -128,13 +125,11 @@ public class Controller
         game.clearStash(transporterName);
     }
 
-    public void addToStash(String transporterName, String itemName, int count)
-    {
+    public void addToStash(String transporterName, String itemName, int count) throws NotEnoughSpaceException, IsWorkingException {
         game.addToStash(transporterName, itemName, count);
     }
 
-    public void sendTransporter(String transporterName)
-    {
+    public void sendTransporter(String transporterName) throws IsWorkingException {
         game.sendTransporter(transporterName);
     }
 
@@ -174,7 +169,7 @@ public class Controller
     }
 
     public void loadMap(String mapName){
-        //todo loading maps frpm gson
+        //todo loading maps from gson
     }
 
 }
