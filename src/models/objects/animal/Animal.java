@@ -48,7 +48,7 @@ public abstract class Animal extends Entity implements Time
 
         direction.setX(target.getX() - this.getCoordinates().getX());
         direction.setX(target.getY() - this.getCoordinates().getY());
-        direction = direction.normalize(direction);
+        direction.normalize();
 
         this.getCoordinates().setX(this.getCoordinates().getX() + direction.getX() * Animal.speed);
         this.getCoordinates().setY(this.getCoordinates().getY() + direction.getY() * Animal.speed);

@@ -14,12 +14,11 @@ public class Point
         this.y = y;
     }
 
-    public static Point normalize(Point point)
+    public void normalize()
     {
-        double length = Math.sqrt(point.getX() * point.getX() + point.getY() * point.getY());
-        point.setX(point.getX() / length);
-        point.setY(point.getY() / length);
-        return point;
+        double length = Math.sqrt(x * x + y * y);
+        x = x / length;
+        y = y / length;
     }
 
     public double getX()
