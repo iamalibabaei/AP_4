@@ -1,6 +1,6 @@
 package models.transportation;
 
-import models.Item;
+import models.objects.Item;
 import models.exceptions.IsWorkingException;
 import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Time;

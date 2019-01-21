@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import models.Game;
 import models.Map;
-import models.Mission;
-import models.animal.Animal;
+import models.misc.Mission;
+import models.objects.animal.Animal;
 import models.exceptions.*;
-import models.Workshop;
+import models.buildings.Workshop;
 import view.View;
 
 import java.io.*;

@@ -1,12 +1,11 @@
-package models;
+package models.objects;
 
 public abstract class Entity {
-    protected Point coordinates;
-    protected boolean exists;
+    private Point coordinates;
+    private boolean exists;
 
-    public Entity(double x, double y) {
-        coordinates.setX(x);
-        coordinates.setY(y);
+    public Entity(Point point) {
+        coordinates = point;
         exists = true;
     }
 

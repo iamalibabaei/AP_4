@@ -1,4 +1,4 @@
-package models;
+package models.objects;
 
 public class Item extends Entity
 {
@@ -24,7 +24,8 @@ public class Item extends Entity
         SEWING(3, 300, 150), FABRIC(6, 400, 300),
         PLUME(2, 200, 100), FLOURY_CAKE(6, 400, 200),
         CARNIVAL_DRESS(8, 1400, 1300), HEN(1, -1, 100),
-        SHEEP(5, -1, 1000), COW(5, -1, 10000);
+        SHEEP(5, -1, 1000), COW(5, -1, 10000),
+        NONE(-1, -1, -1);
 
         public final int OCCUPIED_SPACE, BUY_COST, SELL_MONEY;
 

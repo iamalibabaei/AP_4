@@ -4,7 +4,7 @@ package models.transportation;
 import models.Map;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.IsWorkingException;
-import models.Item;
+import models.objects.Item;
 
 
 public class Buyer extends Transporter

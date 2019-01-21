@@ -1,5 +1,8 @@
 package models.exceptions;
 
-public class ItemNotInWarehouseException extends RuntimeException {
+import java.io.IOException;
+
+public class ItemNotInWarehouseException extends IOException
+{
 
 }

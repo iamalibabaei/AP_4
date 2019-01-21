@@ -1,7 +1,7 @@
-package models.animal;
+package models.objects.animal;
 
-import models.Item;
-import models.Warehouse;
+import models.objects.Item;
+import models.buildings.Warehouse;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.map.Map;
 import org.junit.jupiter.api.BeforeAll;

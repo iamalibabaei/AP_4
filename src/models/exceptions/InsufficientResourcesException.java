@@ -1,5 +1,7 @@
 package models.exceptions;
 
-public class InsufficientResourcesException extends RuntimeException
+import java.io.IOException;
+
+public class InsufficientResourcesException extends IOException
 {
 }

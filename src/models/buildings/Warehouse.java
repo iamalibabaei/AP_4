@@ -1,9 +1,10 @@
-package models;
+package models.buildings;
 
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Upgradable;
+import models.objects.Item;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,26 +14,35 @@ public class Warehouse implements Upgradable
 {
     public static final int[] CAPACITY = {50, 150, 300, 600}, UPGRADE_COST = {200, 250, 300};
     public static final int MAX_LEVEL = 3;
+    private static Warehouse ourInstance = new Warehouse();
     private int level, remainingCapacity;
     private HashMap<Item.Type, Integer> items;
-
-    public int getLevel() {
-        return level;
-    }
-
-    public int getRemainingCapacity() {
-        return remainingCapacity;
-    }
-
-    public HashMap<Item.Type, Integer> getItems() {
-        return items;
-    }
 
     public Warehouse()
     {
         level = 0;
         items = new HashMap<>();
         remainingCapacity = CAPACITY[level];
+    }
+
+    public static Warehouse getInstance()
+    {
+        return ourInstance;
+    }
+
+    public int getLevel()
+    {
+        return level;
+    }
+
+    public int getRemainingCapacity()
+    {
+        return remainingCapacity;
+    }
+
+    public HashMap<Item.Type, Integer> getItems()
+    {
+        return items;
     }
 
     public void moveToSeller(Item.Type item, int count) throws InsufficientResourcesException

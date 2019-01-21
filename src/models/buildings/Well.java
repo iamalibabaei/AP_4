@@ -1,4 +1,4 @@
-package models;
+package models.buildings;
 
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.InsufficientResourcesException;
@@ -8,11 +8,17 @@ import models.interfaces.Upgradable;
 
 public class Well implements Upgradable, Time
 {
+    private static final Well ourInstance = new Well();
     public static final int[] CAPACITY = {5, 7, 10}, REFILL_COST = {19, 17, 15}, REFILL_TIME = {3, 4, 3};
     public static final int[] UPGRADE_COST = {250, 500};
     public static final int MAX_LEVEL = 2;
     private boolean isRefilling;
     private int level, remainingWater, timer;
+
+    public static Well getInstance()
+    {
+        return ourInstance;
+    }
 
     public boolean isRefilling() {
         return isRefilling;
