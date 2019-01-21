@@ -1,6 +1,5 @@
 package models.objects.animal;
 
-import models.*;
 import models.interfaces.Time;
 import models.objects.Entity;
 import models.objects.Grass;
@@ -37,7 +36,7 @@ public class DomesticAnimal extends Animal implements Time {
     }
 
     private void produce() {
-        map.addToMap(new Item(this.getCoordinates().getX(), this.getCoordinates().getY(), type.PRODUCT));
+        map.addToMap(new Item(this.getCoordinates(), type.PRODUCT));
     }
 
     @Override
