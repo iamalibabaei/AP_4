@@ -8,6 +8,7 @@ import models.buildings.Warehouse;
 import models.buildings.Well;
 import models.misc.Mission;
 import models.objects.Item;
+import models.objects.Point;
 import models.objects.animal.Animal;
 import models.objects.animal.DomesticAnimal;
 import models.Map;
@@ -67,13 +68,13 @@ public class View {
             controller.buy(args[1]);
         }
         if (args[0].equals("pickup")) {
-            controller.pickUp(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+            controller.pickUp(new Point(Double.parseDouble(args[1]), Double.parseDouble(args[2])));
         }
         if (args[0].equals("cage")) {
-            controller.cage(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+            controller.cage(new Point(Double.parseDouble(args[1]), Double.parseDouble(args[2])));
         }
         if (args[0].equals("plant")) {
-            controller.plant(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+            controller.plant(new Point(Double.parseDouble(args[1]), Double.parseDouble(args[2])));
         }
         if (args[0].equals("ourInstance")) {
             controller.refillWell();
