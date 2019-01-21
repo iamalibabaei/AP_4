@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class WellTest
 {
-    private Well well;
+    private static Well well;
 
     @BeforeAll
-    void setUp()
+    static void setUp()
     {
         well = new Well();
     }
