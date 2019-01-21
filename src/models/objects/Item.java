@@ -4,9 +4,9 @@ public class Item extends Entity
 {
     private Type type;
 
-    public Item(double x, double y, Type type)
+    public Item(Point point, Type type)
     {
-        super(x, y);
+        super(point);
         this.type = type;
     }
 
