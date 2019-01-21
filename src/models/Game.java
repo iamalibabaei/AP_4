@@ -11,11 +11,15 @@ import models.objects.Point;
 import models.objects.animal.Animal;
 import models.objects.animal.Cat;
 import models.objects.animal.Dog;
+import models.objects.animal.DomesticAnimal;
 import models.transportation.Buyer;
 import models.transportation.Seller;
 import models.transportation.Transporter;
 
 import java.util.ArrayList;
+
+// todo you have to buy helicopter in the beginning
+// todo multiple trucks and helicopters
 
 public class Game implements Time
 {
@@ -53,7 +57,7 @@ public class Game implements Time
         well = Well.getInstance();
         workshops = new ArrayList<>();
         truck = new Buyer(map);
-        //helicopter = new Seller();
+        helicopter = new Seller();
         mission = new Mission(ourInstance);
 
 
@@ -120,13 +124,13 @@ public class Game implements Time
                 map.addToMap(new Dog(Point.randomPoint(Map.WIDTH, Map.HEIGHT), type));
                 break;
             case SHEEP:
-                map.addToMap(new Dog(Point.randomPoint(Map.WIDTH, Map.HEIGHT), type));
+                map.addToMap(new DomesticAnimal(Point.randomPoint(Map.WIDTH, Map.HEIGHT), type));
                 break;
             case HEN:
-                map.addToMap(new Dog(Point.randomPoint(Map.WIDTH, Map.HEIGHT), type));
+                map.addToMap(new DomesticAnimal(Point.randomPoint(Map.WIDTH, Map.HEIGHT), type));
                 break;
             case COW:
-                map.addToMap(new Dog(Point.randomPoint(Map.WIDTH, Map.HEIGHT), type));
+                map.addToMap(new DomesticAnimal(Point.randomPoint(Map.WIDTH, Map.HEIGHT), type));
                 break;
             default:
                 throw new InvalidArgumentException();
@@ -199,11 +203,22 @@ public class Game implements Time
 
     public void refillWell() throws InsufficientResourcesException, IsWorkingException
     {
-        if (money < Well.REFILL_COST[well.getLevel()])
+        if (money < Well.REFILL_COST[Well.getLevel()])
         {
             throw new InsufficientResourcesException();
         }
         well.issueRefill();
+    }
+
+    public void upgradeWell() throws InsufficientResourcesException, AlreadyAtMaxLevelException
+    {
+        int cost = well.getUpgradeCost();
+        if (money < cost)
+        {
+            throw new InsufficientResourcesException();
+        }
+        money -= cost;
+        well.upgrade();
     }
 
     public void plant(Point point) throws InsufficientResourcesException

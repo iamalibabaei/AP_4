@@ -15,7 +15,7 @@ import java.util.Iterator;
 
 public class Map implements Time
 {
-    public static final double ROUND = 1.0;//distance to the point to cage animals
+    private static final double ROUND = 1.0;//distanceFrom to the point to cage animals
     public static final double WIDTH = 30;
     public static final double HEIGHT = 30;
     private static Map ourInstance = new Map();
@@ -104,7 +104,8 @@ public class Map implements Time
         }
     }
 
-    private void handleCollisions() throws NotEnoughSpaceException {
+    private void handleCollisions() throws NotEnoughSpaceException
+    {
         for (Animal collider : animals)
         {
             for (Animal animal : animals)
@@ -125,7 +126,7 @@ public class Map implements Time
         while (animalIterator.hasNext())
         {
             Animal animal = animalIterator.next();
-            if (!animal.Exists())
+            if (animal.notExists())
             {
                 animals.remove(animal);
             }
@@ -135,7 +136,7 @@ public class Map implements Time
         while (itemIterator.hasNext())
         {
             Item item = itemIterator.next();
-            if (!item.Exists())
+            if (item.notExists())
             {
                 items.remove(item);
             }

@@ -8,27 +8,37 @@ import models.interfaces.Upgradable;
 
 public class Well implements Upgradable, Time
 {
+    public static final int[] UPGRADE_COST = {250, 500}, REFILL_COST = {19, 17, 15};
     private static final Well ourInstance = new Well();
-    public static final int[] CAPACITY = {5, 7, 10}, REFILL_COST = {19, 17, 15}, REFILL_TIME = {3, 4, 3};
-    public static final int[] UPGRADE_COST = {250, 500};
-    public static final int MAX_LEVEL = 2;
+    private static final int[] CAPACITY = {5, 7, 10}, REFILL_TIME = {3, 4, 3};
+    private static final int MAX_LEVEL = 2;
+    private static int level;
     private boolean isRefilling;
-    private int level, remainingWater, timer;
+    private int remainingWater, timer;
+
+    public Well()
+    {
+        isRefilling = false;
+        level = 0;
+    }
 
     public static Well getInstance()
     {
         return ourInstance;
     }
 
-    public boolean isRefilling() {
-        return isRefilling;
-    }
-
-    public int getLevel() {
+    public static int getLevel()
+    {
         return level;
     }
 
-    public int getRemainingWater() {
+    public boolean isRefilling()
+    {
+        return isRefilling;
+    }
+
+    public int getRemainingWater()
+    {
         return remainingWater;
     }
 
@@ -37,12 +47,6 @@ public class Well implements Upgradable, Time
         if (remainingWater == 0)
             throw new InsufficientResourcesException();
         remainingWater--;
-    }
-
-    public Well()
-    {
-        isRefilling = false;
-        level = 0;
     }
 
     public void issueRefill() throws IsWorkingException
