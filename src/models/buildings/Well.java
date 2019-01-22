@@ -20,6 +20,7 @@ public class Well implements Upgradable, Time
     {
         isRefilling = false;
         level = 0;
+        remainingWater = CAPACITY[level];
     }
 
     public static Well getInstance()
