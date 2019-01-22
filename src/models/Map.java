@@ -1,6 +1,5 @@
 package models;
 
-import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Time;
 import models.objects.Entity;
 import models.objects.Grass;
@@ -10,14 +9,11 @@ import models.objects.animal.Animal;
 import models.objects.animal.WildAnimal;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 public class Map implements Time
 {
-    private static final double ROUND = 1.0;//distanceFrom to the point to cage animals
-    public static final double WIDTH = 30;
-    public static final double HEIGHT = 30;
+    public static final double WIDTH = 30, HEIGHT = 30;
     private static Map ourInstance = new Map();
     private ArrayList<Animal> animals;
     private ArrayList<Grass> grasses;
@@ -50,23 +46,19 @@ public class Map implements Time
         return items;
     }
 
-    public void removeItems(ArrayList<Entity> removedEntities)
+    public void removeItems(ArrayList<Item> removedItems)
     {
-        animals.removeAll(removedEntities);
+        items.removeAll(removedItems);
     }
 
     void cage(Point point)
     {
         for (Animal animal : animals)
         {
-            double distance = Math.sqrt(Math.pow((animal.getCoordinates().getX() - point.getX()), 2)
-                    + Math.pow(animal.getCoordinates().getY() - point.getY(), 2));
-            if (distance <= ROUND)
+            double distance = animal.getCoordinates().distanceFrom(point);
+            if (distance <= Game.COLLISION_RADIUS && animal instanceof WildAnimal)
             {
-                if (animal instanceof WildAnimal)
-                {
-                    ((WildAnimal) animal).cage();
-                }
+                ((WildAnimal) animal).cage();
             }
         }
     }
@@ -91,9 +83,11 @@ public class Map implements Time
     }
 
     @Override
-    public void nextTurn() throws NotEnoughSpaceException {
+    public void nextTurn()
+    {
         moveAnimals();
         handleCollisions();
+        removeDeadEntities();
     }
 
     private void moveAnimals()
@@ -104,38 +98,56 @@ public class Map implements Time
         }
     }
 
-    private void handleCollisions() throws NotEnoughSpaceException
+    private void handleCollisions()
     {
+        double distance;
         for (Animal collider : animals)
         {
             for (Animal animal : animals)
             {
-                collider.collide(animal);
+                distance = collider.getCoordinates().distanceFrom(animal.getCoordinates());
+                if (distance <= Game.COLLISION_RADIUS)
+                {
+                    collider.collide(animal);
+                }
             }
             for (Item item : items)
             {
-                collider.collide(item);
+                distance = collider.getCoordinates().distanceFrom(item.getCoordinates());
+                if (distance <= Game.COLLISION_RADIUS)
+                {
+                    collider.collide(item);
+                }
             }
             for (Grass grass : grasses)
             {
-                collider.collide(grass);
+                distance = collider.getCoordinates().distanceFrom(grass.getCoordinates());
+                if (distance <= Game.COLLISION_RADIUS)
+                {
+                    collider.collide(grass);
+                }
             }
         }
+    }
 
-        Iterator<Animal> animalIterator = animals.iterator();
-        while (animalIterator.hasNext())
+    private void removeDeadEntities()
+    {
+        for (Animal animal : animals)
         {
-            Animal animal = animalIterator.next();
             if (animal.notExists())
             {
                 animals.remove(animal);
             }
         }
-
-        Iterator<Item> itemIterator = items.iterator();
-        while (itemIterator.hasNext())
+        for (Grass grass : grasses)
         {
-            Item item = itemIterator.next();
+            if (grass.notExists())
+            {
+                grass.die();
+            }
+        }
+        for (Item item : items)
+        {
             if (item.notExists())
             {
                 items.remove(item);
