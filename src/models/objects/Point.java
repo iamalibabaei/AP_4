@@ -43,7 +43,7 @@ public class Point
 
     public boolean collidesWith(Point point)
     {
-        return this.distanceFrom(point) <= Game.RADIUS;
+        return this.distanceFrom(point) <= Game.COLLISION_RADIUS;
     }
 
     public double distanceFrom(Point point1)

@@ -1,71 +1,44 @@
-
 package models.transportation;
 
 import models.Map;
-import models.exceptions.AlreadyAtMaxLevelException;
-import models.exceptions.IsWorkingException;
 import models.objects.Item;
 import models.objects.Point;
 
 
 public class Buyer extends Transporter
 {
-    private Map map;
-    private static final int BUYER_UPGRADE_SPEED_BOOST = 3,BUYER_UPGRADE_CAPACITY = 20,BASE_CAPACITY = 25,
+    private static final int BUYER_UPGRADE_SPEED_BOOST = 3, BUYER_UPGRADE_CAPACITY = 20, BASE_CAPACITY = 25,
             BASE_TIME_TO_ARRIVE = 12;
     private final static int[] BUYER_UPGRADE_COST_LIST = {400, 800, 1600};
-    public Buyer(Map map) {
-        super(BUYER_UPGRADE_COST_LIST, BUYER_UPGRADE_SPEED_BOOST, BUYER_UPGRADE_CAPACITY);
-        this.capacity = BASE_CAPACITY;
-        this.timeToArrive = BASE_TIME_TO_ARRIVE;
-        this.level = 0;
-        this.map = map;
-    }
+    private Map map;
 
-    public void go() throws IsWorkingException
+    public Buyer()
     {
-        if (isWorking) {
-            throw new IsWorkingException();
-        }
-        isWorking = true;
-        remainTimeToArrive = timeToArrive;
+        super(BUYER_UPGRADE_COST_LIST, BUYER_UPGRADE_SPEED_BOOST, BUYER_UPGRADE_CAPACITY, BASE_TIME_TO_ARRIVE,
+                BASE_CAPACITY);
+        map = Map.getInstance();
     }
 
     @Override
-    public void nextTurn() {
-        if (!isWorking) {
+    public void nextTurn()
+    {
+        if (!isWorking)
+        {
             return;
         }
-        remainTimeToArrive--;
-        if (remainTimeToArrive == 0) {
-            for (Item.Type itemType : list.keySet()) {
-                for (int i = 0; i < list.get(itemType); i++) {
-                    int x = (int)(Math.random() * 30), y = (int)(Math.random() * 30);
-                    Item item = new Item(new Point(x, y), itemType);
-                    map.addToMap(item);
+        remainingTimeToArrive--;
+        if (remainingTimeToArrive == 0)
+        {
+            for (Item.Type itemType : list.keySet())
+            {
+                for (int i = 0; i < list.get(itemType); i++)
+                {
+                    map.addToMap(new Item(Point.randomPoint(Map.WIDTH, Map.HEIGHT), itemType));
                 }
             }
             isWorking = false;
-            list.clear();
+            clearStash();
         }
     }
 
-    @Override
-    public void upgrade() throws AlreadyAtMaxLevelException
-    {
-        if (level == 3) {
-            throw new AlreadyAtMaxLevelException();
-        }
-        this.level ++;
-        this.timeToArrive = this.timeToArrive - UPGRADE_SPEED_BOOST;
-        this.capacity = capacity + UPGRADE_CAPACITY_INCREASE;
-    }
-
-    @Override
-    public int getUpgradeCost() throws AlreadyAtMaxLevelException {
-        if (level == 3) {
-            throw new AlreadyAtMaxLevelException();
-        }
-        return UPGRADE_COST_LIST[level];
-    }
 }
