@@ -153,7 +153,7 @@ public class Game implements Time
         {
             if (workshop.getName().equals(workshopName))
             {
-                workshop.goToWork();
+                workshop.startWorking();
             }
 
         }

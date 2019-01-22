@@ -1,1 +1,1 @@
-{"x":28,"y":27,"level":1,"maxProductionNum":1,"maxWorkingTime":15,"timeToReturnProduct":-1,"productionNum":0,"isWorking":false,"buildCost":2000,"inputs":{"FABRIC":1,"PLUME":1},"outputs":{"CARNIVAL_DRESS":1}}
+{"@type":"models.buildings.Workshop","@val":{"outputPlace":{"x":28.0,"y":27.0},"inputs":{"FABRIC":1,"PLUME":1},"outputs":{"CARNIVAL_DRESS":1},"name":"sewingFactory","level":0,"buildCost":2000,"productionRemainingTime":0,"productionFactor":0,"maxProductionFactor":1,"isWorking":false}}

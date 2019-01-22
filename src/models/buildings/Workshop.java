@@ -1,5 +1,7 @@
 package models.buildings;
 
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.Gson;
 import models.Map;
 import models.exceptions.AlreadyAtMaxLevelException;
@@ -21,9 +23,9 @@ public class Workshop implements Upgradable, Time
     private int level, buildCost;
     private int productionRemainingTime;
     private int productionFactor, maxProductionFactor;
-    private Warehouse warehouse;
     private boolean isWorking;
     private Map map;
+    private Warehouse warehouse;
 
     public Workshop(String name, Point outputPoint, int buildCost, HashMap<Item.Type, Integer> inputs,
                     HashMap<Item.Type, Integer> outputs)
@@ -40,8 +42,9 @@ public class Workshop implements Upgradable, Time
 
     public static Workshop loadJson(String json)
     {
-        Gson gson = new Gson();
-        Workshop workshop = gson.fromJson(json, Workshop.class);
+        YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
+        YaGson yaGson = yaGsonBuilder.create();
+        Workshop workshop = yaGson.fromJson(json, Workshop.class);
         workshop.getMapAndWarehouse();
         return workshop;
     }

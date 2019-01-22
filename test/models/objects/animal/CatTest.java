@@ -1,3 +1,4 @@
+/*
 package models.objects.animal;
 
 import models.objects.Item;
@@ -73,3 +74,4 @@ class CatTest
 
 
 }
+*/

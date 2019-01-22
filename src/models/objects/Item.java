@@ -31,5 +31,4 @@ public class Item extends Entity
             this.SELL_MONEY = SELL_MONEY;
         }
     }
-
 }

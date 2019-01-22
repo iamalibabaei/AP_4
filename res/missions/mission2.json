@@ -1,1 +1,1 @@
-{"money":500,"animalObjectives":{"HEN":5,"COW":1},"ItemObjective":{"EGG":15,"DRIED_EGG":10},"dog":false,"cat":false}
+{"@type":"models.misc.Mission","@val":{"money":1000,"animalObjectives":{"SHEEP":5,"HEN":10,"COW":2},"ItemObjective":{"EGG":15,"DRIED_EGG":10},"dog":false,"cat":false}}

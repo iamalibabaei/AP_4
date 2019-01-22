@@ -1,1 +1,1 @@
-{"x":28,"y":15,"level":1,"maxProductionNum":1,"maxWorkingTime":15,"timeToReturnProduct":-1,"productionNum":0,"isWorking":false,"buildCost":1500,"inputs":{"SEWING":1},"outputs":{"FABRIC":1}}
+{"@type":"models.buildings.Workshop","@val":{"outputPlace":{"x":28.0,"y":15.0},"inputs":{"SEWING":1},"outputs":{"FABRIC":1},"name":"weavingFactory","level":0,"buildCost":1500,"productionRemainingTime":0,"productionFactor":0,"maxProductionFactor":1,"isWorking":false}}

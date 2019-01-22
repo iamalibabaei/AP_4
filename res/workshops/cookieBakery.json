@@ -1,1 +1,1 @@
-{"x":2,"y":15,"level":1,"maxProductionNum":1,"maxWorkingTime":15,"timeToReturnProduct":-1,"productionNum":0,"isWorking":false,"buildCost":200,"inputs":{"DRIED_EGG":1},"outputs":{"CAKE":1}}
+{"@type":"models.buildings.Workshop","@val":{"outputPlace":{"x":2.0,"y":15.0},"inputs":{"DRIED_EGG":1},"outputs":{"CAKE":1},"name":"cookieBakery","level":0,"buildCost":200,"productionRemainingTime":0,"productionFactor":0,"maxProductionFactor":1,"isWorking":false}}

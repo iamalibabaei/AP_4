@@ -48,7 +48,7 @@ public class Mission
         HashMap<Item.Type, Integer> itemCurrentState = new HashMap<>();
 
         for (Item item : map.getItems()) {
-            itemCurrentState.put(item.getType(), itemCurrentState.getOrDefault(item.getType(), 0) + 1);
+            itemCurrentState.put(item.type, itemCurrentState.getOrDefault(item.type, 0) + 1);
         }
 
         for (Animal animal : map.getAnimals()) {
@@ -57,8 +57,8 @@ public class Mission
             } else if (animal instanceof Cat) {
                 hasCat = true;
             } else if (animal instanceof DomesticAnimal) {
-                animalCurrentState.put(((DomesticAnimal) animal).getType()
-                        , animalCurrentState.getOrDefault(((DomesticAnimal) animal).getType(), 0) + 1);
+                animalCurrentState.put(((DomesticAnimal) animal).type
+                        , animalCurrentState.getOrDefault(((DomesticAnimal) animal).type, 0) + 1);
             }
 
         }

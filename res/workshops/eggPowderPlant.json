@@ -1,1 +1,1 @@
-{"x":1,"y":1,"level":1,"maxProductionNum":1,"maxWorkingTime":15,"timeToReturnProduct":-1,"productionNum":0,"isWorking":false,"buildCost":100,"inputs":{"EGG":1},"outputs":{"DRIED_EGG":1}}
+{"@type":"models.buildings.Workshop","@val":{"outputPlace":{"x":1.0,"y":1.0},"inputs":{"EGG":1},"outputs":{"DRIED_EGG":1},"name":"eggPowderPlant","level":0,"buildCost":100,"productionRemainingTime":0,"productionFactor":0,"maxProductionFactor":1,"isWorking":false}}

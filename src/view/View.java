@@ -173,7 +173,7 @@ public class View {
         for (Item.Type item : Item.Type.values()) {
             int count = 0;
             for (Item item1 : Game.getInstance().getMap().getItems()) {
-                if (item.equals(item1.getType())) {
+                if (item.equals(item1.type)) {
                     count++;
                 }
             }
