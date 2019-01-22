@@ -160,44 +160,6 @@ public class Game implements Time
     }
 
     public void upgrade(String parameter) throws AlreadyAtMaxLevelException {
-        if (parameter.equals("cat"))
-        {
-            //todo upgrade cat
-            return;
-        } else if (parameter.equals("dog"))
-        {
-            //TODO upgrade dod
-            return;
-        } else if (parameter.equals("ourInstance"))
-        {
-            well.upgrade();
-            return;
-        } else if (parameter.equals("truck"))
-        {
-            truck.upgrade();
-            return;
-        } else if (parameter.equals("helicopter"))
-        {
-            if (helicopter == null)
-            {
-                System.out.println("no helicopter found");
-                //TODO convert to exception
-                return;
-            }
-            helicopter.upgrade();
-            return;
-        }
-
-        for (Workshop workshop : workshops)
-        {
-            if (workshop.getName().equals(parameter))
-            {
-                workshop.upgrade();
-                return;
-            }
-        }
-        System.out.println("no item found");
-        //TODO convert to exception
 
     }
 

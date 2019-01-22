@@ -1,10 +1,12 @@
 package controller;
 
+import com.gilecode.yagson.YaGson;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import models.Game;
 import models.Map;
 import models.misc.Mission;
+import models.objects.Item;
 import models.objects.Point;
 import models.objects.animal.Animal;
 import models.exceptions.*;
@@ -79,15 +81,41 @@ public class Controller
         game.startWorkShop(workshopName);
     }
 
-    public void upgrade(String parameter) throws AlreadyAtMaxLevelException {
-        game.upgrade(parameter);
+    public void upgrade(String parameter) throws AlreadyAtMaxLevelException, InsufficientResourcesException {
+        if (parameter.equals("cat"))
+        {
+            game.upgradeCat();
+            return;
+        } else if (parameter.equals("dog"))
+        {
+            game.upgradeDog();
+            return;
+        } else if (parameter.equals("well"))
+        {
+            game.upgradeWell();
+            return;
+        } else if (parameter.equals("truck"))
+        {
+            game.upgradeTruck();
+            return;
+        } else if (parameter.equals("helicopter"))
+        {
+            if (game.getHelicopter() == null)
+            {
+                System.out.println("no helicopter found");
+                //TODO convert to exception
+                return;
+            }
+            game.upgradeHelicopter();
+            return;
+        } else {
+            game.upgradeWorkshop(parameter);
+        }
     }
 
     public void loadGame(String gamePath) throws FileNotFoundException {
-        Gson gson = new Gson();
-        JsonReader reader = new JsonReader(new FileReader(gamePath));
-        game = gson.fromJson(reader, Game.class);
-
+        YaGson yaGson = new YaGson();
+        game = yaGson.fromJson(gamePath, Game.class);
     }
 
     public void saveGame(String gamePath) throws IOException {
@@ -96,80 +124,99 @@ public class Controller
         File file=new File(gamePath);
         file.createNewFile();
         FileWriter fileWriter = new FileWriter(file);
-        Gson gson = new Gson();
-
-
-        fileWriter.write(gson.toJson(gamePath));
+        YaGson yaGson = new YaGson();
+        fileWriter.write(yaGson.toJson(game));
         fileWriter.flush();
         fileWriter.close();
     }
 
     public void loadCustom(String path) throws FileNotFoundException // just adds workShop
     {
-        Gson gson = new Gson();
-        JsonReader reader = new JsonReader(new FileReader(path));
-        Workshop workshop = gson.fromJson(reader, Workshop.class);
-
+        YaGson yaGson = new YaGson();
+        Workshop workshop = yaGson.fromJson(path, Workshop.class);
         game.addWorkshop(workshop);
     }
 
-    public void nextTurn(int nTurn)
-    {
-        for (int i = 0; i < nTurn; i++) {
-            game.nextTurn();
-        }
-    }
-
-    public void clearStash(String transporterName)
-    {
-        game.clearStash(transporterName);
-    }
-
-    public void addToStash(String transporterName, String itemName, int count) throws NotEnoughSpaceException, IsWorkingException {
-        game.addToStash(transporterName, itemName, count);
-    }
-
-    public void sendTransporter(String transporterName) throws IsWorkingException {
-        game.sendTransporter(transporterName);
-    }
-
-    public void startGame()
-    {
-        mission = view.getMission();
-
-        while (true)
+    public void clearStash(String transporterName) throws InvalidArgumentException, ObjectNotFoundException {
+        if (transporterName.equals("helicopter"))
         {
-            try
+            if (game.getHelicopter() == null)
             {
-                view.nextLine();
-            } catch (AlreadyAtMaxLevelException e)
+                throw new ObjectNotFoundException();
+            } else
             {
-                view.handleAlreadyAtMaxLevelException();
-            } catch (InsufficientResourcesException e)
-            {
-                view.handleInsufficientResourcesException();
-            } catch (InvalidArgumentException e)
-            {
-                view.handleInvalidArgumentException();
-            } catch (ItemNotInWarehouseException e)
-            {
-                view.handleItemNotInWarehouseException();
-            } catch (IsWorkingException e)
-            {
-            } catch (NotEnoughSpaceException e)
-            {
-                view.handleNotEnoughSpaceException();
-            } catch (FileNotFoundException e)
-            {
-                view.handleFileNotFoundException();
-            } catch (IOException e) {
-                e.printStackTrace();
+                game.clearStashHelicopter();
             }
+            return;
+        } else if (transporterName.equals("truck"))
+        {
+            game.clearTruck();
+            return;
         }
+        throw new InvalidArgumentException();
     }
 
-    public void loadMap(String mapName){
-        //todo loading maps from gson
+    public void addToStash(String transporterName, String itemName, int count)
+            throws NotEnoughSpaceException, IsWorkingException, InvalidArgumentException, ObjectNotFoundException {
+        Item.Type itemType = Item.Type.valueOf(itemName);
+        if (transporterName.equals("helicopter"))
+        {
+            if (game.getHelicopter() == null)
+            {
+                throw new ObjectNotFoundException();
+            } else
+            {
+                game.addToHelicopter(itemName, count);
+            }
+            return;
+        } else if (transporterName.equals("truck"))
+        {
+            game.addToTruck(itemName, count);
+            return;
+        }
+        throw new InvalidArgumentException();
     }
+
+    public void sendTransporter(String transporterName) throws IsWorkingException, ObjectNotFoundException, InvalidArgumentException {
+        if (transporterName.equals("helicopter"))
+        {
+            game.sendHelicopter();
+
+            return;
+        } else if (transporterName.equals("truck"))
+        {
+            game.sendTruck();
+            return;
+        }
+        throw new InvalidArgumentException();
+    }
+
+    public void startApp()
+    {
+
+        this.game = Game.getInstance();
+        this.view = View.getInstance();
+        //TODO view.nextTurn()
+    }
+
+    public void loadMission(String missionString){
+        this.mission = Mission.loadJson(missionString);
+        //todo load map of startGame
+
+    }
+
+    public void startGame() {
+        while (!mission.isAccomplished()) {
+            game.nextTurn();
+            //TODO view.nextTurn()
+        }
+        endGame();
+    }
+
+    public void endGame() {
+        //todo ::::::::
+    }
+
+
 
 }
