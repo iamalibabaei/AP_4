@@ -4,8 +4,6 @@ import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import models.Game;
 import models.Map;
-import models.buildings.Warehouse;
-import models.buildings.Workshop;
 import models.objects.Item;
 import models.objects.animal.Animal;
 import models.objects.animal.Cat;
@@ -16,31 +14,29 @@ import java.util.HashMap;
 
 public class Mission
 {
-    private Game game;
-    private int money;
-    HashMap<DomesticAnimal.Type, Integer> animalObjectives;
-    HashMap<Item.Type, Integer> ItemObjective;
-    boolean dog,cat;
-
-    public int getMoney() {
-        return money;
-    }
-
-    public HashMap<DomesticAnimal.Type, Integer> getAnimalObjectives() {
-        return animalObjectives;
-    }
+    private static Game game;
+    private int moneyObjective;
+    private HashMap<DomesticAnimal.Type, Integer> animalObjectives;
+    private HashMap<Item.Type, Integer> ItemObjective;
+    private boolean dog, cat;
 
     public Mission(int money, HashMap<DomesticAnimal.Type, Integer> animalObjectives,
-                   HashMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat) {
-        this.money = money;
+                   HashMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat)
+    {
+        this.moneyObjective = money;
         this.animalObjectives = animalObjectives;
         ItemObjective = itemObjective;
         this.dog = dog;
         this.cat = cat;
     }
 
-    public Mission(Game game) {
-        this.game = game;
+    public static Mission loadJson(String json)
+    {
+        YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
+        YaGson yaGson = yaGsonBuilder.create();
+        Mission mission = yaGson.fromJson(json, Mission.class);
+        game = Game.getInstance();
+        return mission;
     }
 
     public boolean isAccomplished()
@@ -51,16 +47,21 @@ public class Mission
         HashMap<DomesticAnimal.Type, Integer> animalCurrentState = new HashMap<>();
         HashMap<Item.Type, Integer> itemCurrentState = new HashMap<>();
 
-        for (Item item : map.getItems()) {
+        for (Item item : map.getItems())
+        {
             itemCurrentState.put(item.type, itemCurrentState.getOrDefault(item.type, 0) + 1);
         }
 
-        for (Animal animal : map.getAnimals()) {
-            if (animal instanceof Dog) {
+        for (Animal animal : map.getAnimals())
+        {
+            if (animal instanceof Dog)
+            {
                 hasDog = true;
-            } else if (animal instanceof Cat) {
+            } else if (animal instanceof Cat)
+            {
                 hasCat = true;
-            } else if (animal instanceof DomesticAnimal) {
+            } else if (animal instanceof DomesticAnimal)
+            {
                 animalCurrentState.put(((DomesticAnimal) animal).type
                         , animalCurrentState.getOrDefault(((DomesticAnimal) animal).type, 0) + 1);
             }
@@ -70,51 +71,39 @@ public class Mission
         return checkAccomplishment(gameMoney, animalCurrentState, itemCurrentState, hasCat, hasDog);
     }
 
-    public boolean checkAccomplishment(int money, HashMap<DomesticAnimal.Type, Integer> animalCurrentState,
-                                       HashMap<Item.Type, Integer> ItemCurentState, boolean hasCat, boolean hasDog) {
-        if (this.money > money) {
+    private boolean checkAccomplishment(int money, HashMap<DomesticAnimal.Type, Integer> animalCurrentState,
+                                        HashMap<Item.Type, Integer> ItemCurentState, boolean hasCat, boolean hasDog)
+    {
+        if (this.moneyObjective > money)
+        {
             return false;
         }
-        for (DomesticAnimal.Type type : animalCurrentState.keySet()) {
-            if (animalObjectives.containsKey(type)) {
-                if (animalObjectives.get(type) > animalCurrentState.get(type)) {
+        for (DomesticAnimal.Type type : animalCurrentState.keySet())
+        {
+            if (animalObjectives.containsKey(type))
+            {
+                if (animalObjectives.get(type) > animalCurrentState.get(type))
+                {
                     return false;
                 }
             }
         }
 
-        for (Item.Type type : ItemCurentState.keySet()) {
-            if (ItemObjective.containsKey(type)) {
-                if (ItemObjective.get(type) > ItemCurentState.get(type)) {
+        for (Item.Type type : ItemCurentState.keySet())
+        {
+            if (ItemObjective.containsKey(type))
+            {
+                if (ItemObjective.get(type) > ItemCurentState.get(type))
+                {
                     return false;
                 }
             }
         }
-        if (dog) {
-            if (!hasDog) {
-                return false;
-            }
+        if (dog && !hasDog)
+        {
+            return false;
         }
-        if (cat) {
-            if (!hasCat) {
-                return false;
-            }
-        }
-        return true;
-    }
-    public static Mission loadJson(String json)
-    {
-        YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
-        YaGson yaGson = yaGsonBuilder.create();
-        Mission mission = yaGson.fromJson(json, Mission.class);
-        mission.getGame();
-        return mission;
-    }
-
-
-    private void getGame()
-    {
-        this.game = Game.getInstance();
+        return !cat || hasCat;
     }
 
 }
