@@ -1,7 +1,11 @@
 package models.misc;
 
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import models.Game;
 import models.Map;
+import models.buildings.Warehouse;
+import models.buildings.Workshop;
 import models.objects.Item;
 import models.objects.animal.Animal;
 import models.objects.animal.Cat;
@@ -97,6 +101,20 @@ public class Mission
             }
         }
         return true;
+    }
+    public static Mission loadJson(String json)
+    {
+        YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
+        YaGson yaGson = yaGsonBuilder.create();
+        Mission mission = yaGson.fromJson(json, Mission.class);
+        mission.getGame();
+        return mission;
+    }
+
+
+    private void getGame()
+    {
+        this.game = Game.getInstance();
     }
 
 }
