@@ -10,7 +10,10 @@ import models.objects.animal.Cat;
 import models.objects.animal.Dog;
 import models.objects.animal.DomesticAnimal;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Mission
 {
@@ -30,11 +33,11 @@ public class Mission
         this.cat = cat;
     }
 
-    public static Mission loadJson(String json)
-    {
+    public static Mission loadJson(String jsonAddress) throws FileNotFoundException {
         YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
         YaGson yaGson = yaGsonBuilder.create();
-        Mission mission = yaGson.fromJson(json, Mission.class);
+        FileReader fileReader = new FileReader(jsonAddress);
+        Mission mission = yaGson.fromJson(new Scanner(fileReader).nextLine(), Mission.class);
         game = Game.getInstance();
         return mission;
     }

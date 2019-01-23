@@ -1,31 +1,23 @@
 package view;
 
+
 import controller.Controller;
 import javafx.application.Application;
-
-import javafx.stage.Stage;
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import view.menu.Menu;
 
 public class View extends Application {
     private static View view = new View();
-    private Controller controller;
-    public static final int WIDTH = 1024, HEIGHT = 720;
+    private static Stage mainStage;
+    public static final int WIDTH = 1300, HEIGHT = 720;
 
-    private View() {
-        this.controller = Controller.getInstance();
+    public static Stage getMainStage() {
+        return mainStage;
+    }
+
+    private static Controller getController(){
+        return Controller.getInstance();
     }
 
     public static View getInstance() {
@@ -34,11 +26,47 @@ public class View extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("FarmFrenzy");
-        Menu menu = new Menu();
-        primaryStage.setScene(menu);
-        primaryStage.show();
+        mainStage = primaryStage;
+        getMainStage().setResizable(false);
+        setStageScene(Menu.getInstance());
+
+        getMainStage().setOnCloseRequest(event -> {
+            /*
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Save Game");
+            alert.setHeaderText(null);
+            alert.setContentText("Save the game before closing?");
+            Optional<ButtonType> action = alert.showAndWait();
+            if (action.get() == ButtonType.OK) {
+                getController().saveGame();
+            }
+            ConnectionManager.getInstance().disconnect();
+            Platform.exit();
+            System.exit(0);*/
+        });
+        getMainStage().show();
 
     }
 
+
+    public static void setStageScene(Scene scene) {
+        view.getMainStage().setX(0);
+        view.getMainStage().setY(0);
+        view.getMainStage().setScene(scene);
+        getMainStage().sizeToScene();
+    }
+
+
+    public void goToMap() {
+
+    }
+
+    public void goToSetting() {
+    }
+
+    public void close() {
+    }
+
+    public void newPlayer() {
+    }
 }

@@ -16,7 +16,7 @@ public class Well implements Upgradable, Time
     private boolean isRefilling;
     private int remainingWater, timer;
 
-    public Well()
+    private Well()
     {
         isRefilling = false;
         level = 0;

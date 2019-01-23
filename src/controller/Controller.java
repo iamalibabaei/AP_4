@@ -3,6 +3,7 @@ package controller;
 import com.gilecode.yagson.YaGson;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import javafx.application.Application;
 import models.Game;
 import models.Map;
 import models.misc.Mission;
@@ -18,14 +19,12 @@ import java.io.*;
 public class Controller
 {
     private static Controller controller = new Controller();
-    private View view;
+    private static View view;
     private Game game;
     Mission mission;
 
-    private Controller()
-    {
-        game = Game.getInstance();
-        view = View.getInstance();
+    public static void main(String[] args) {
+        Application.launch(View.class, args);
     }
 
     public static Controller getInstance()
@@ -191,21 +190,15 @@ public class Controller
         throw new InvalidArgumentException();
     }
 
-    public void startApp()
-    {
-
-        this.game = Game.getInstance();
-        this.view = View.getInstance();
-        //TODO view.nextTurn()
-    }
-
     public void loadMission(String missionString){
-        this.mission = Mission.loadJson(missionString);
+        //this.mission = Mission.loadJson(missionString);
         //todo load map of startGame
 
     }
 
     public void startGame() {
+        game = Game.getInstance();
+        view = View.getInstance();
         while (!mission.isAccomplished()) {
             game.nextTurn();
             //TODO view.nextTurn()

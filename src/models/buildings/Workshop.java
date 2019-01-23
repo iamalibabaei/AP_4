@@ -9,10 +9,14 @@ import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
 import models.interfaces.Time;
 import models.interfaces.Upgradable;
+import models.misc.Mission;
 import models.objects.Item;
 import models.objects.Point;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Workshop implements Upgradable, Time
 {
@@ -40,11 +44,11 @@ public class Workshop implements Upgradable, Time
         this.outputs = outputs;
     }
 
-    public static Workshop loadJson(String json)
-    {
+    public static Workshop loadJson(String jsonAddress) throws FileNotFoundException {
         YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
         YaGson yaGson = yaGsonBuilder.create();
-        Workshop workshop = yaGson.fromJson(json, Workshop.class);
+        FileReader fileReader = new FileReader(jsonAddress);
+        Workshop workshop = yaGson.fromJson(new Scanner(fileReader).nextLine(), Workshop.class);
         workshop.getMapAndWarehouse();
         return workshop;
     }

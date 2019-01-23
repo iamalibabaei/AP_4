@@ -14,7 +14,7 @@ class WellTest
     @BeforeAll
     static void setUp()
     {
-        well = new Well();
+        well = Well.getInstance();
     }
 
     @Test
