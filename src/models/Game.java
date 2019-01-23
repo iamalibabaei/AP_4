@@ -56,9 +56,9 @@ public class Game implements Time
         warehouse = Warehouse.getInstance();
         well = Well.getInstance();
         workshops = new ArrayList<>();
-        truck = new Buyer(map);
+        //truck = new Buyer(map);
         helicopter = new Seller();
-        mission = new Mission(ourInstance);
+        //mission = new Mission();
 
 
 //        map.handleCollisions();
@@ -277,4 +277,39 @@ public class Game implements Time
 
     }
 
+    public void clearStashHelicopter() {
+
+    }
+
+    public void clearTruck() {
+
+    }
+
+    public void addToHelicopter(String itemName, int count) {
+
+    }
+
+    public void addToTruck(String itemName, int count) {
+
+    }
+
+    public void sendTruck() {
+
+    }
+
+    public void upgradeCat() {
+
+    }
+
+    public void upgradeDog() {
+    }
+
+    public void upgradeTruck() {
+    }
+
+    public void upgradeHelicopter() {
+    }
+
+    public void upgradeWorkshop(String parameter) {
+    }
 }

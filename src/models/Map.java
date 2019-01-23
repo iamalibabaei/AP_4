@@ -56,7 +56,7 @@ public class Map implements Time
         for (Animal animal : animals)
         {
             double distance = animal.getCoordinates().distanceFrom(point);
-            if (distance <= Game.COLLISION_RADIUS && animal instanceof WildAnimal)
+            if (distance <= Game.RADIUS && animal instanceof WildAnimal)
             {
                 ((WildAnimal) animal).cage();
             }
@@ -106,7 +106,7 @@ public class Map implements Time
             for (Animal animal : animals)
             {
                 distance = collider.getCoordinates().distanceFrom(animal.getCoordinates());
-                if (distance <= Game.COLLISION_RADIUS)
+                if (distance <= Game.RADIUS)
                 {
                     collider.collide(animal);
                 }
@@ -114,7 +114,7 @@ public class Map implements Time
             for (Item item : items)
             {
                 distance = collider.getCoordinates().distanceFrom(item.getCoordinates());
-                if (distance <= Game.COLLISION_RADIUS)
+                if (distance <= Game.RADIUS)
                 {
                     collider.collide(item);
                 }
@@ -122,7 +122,7 @@ public class Map implements Time
             for (Grass grass : grasses)
             {
                 distance = collider.getCoordinates().distanceFrom(grass.getCoordinates());
-                if (distance <= Game.COLLISION_RADIUS)
+                if (distance <= Game.RADIUS)
                 {
                     collider.collide(grass);
                 }
