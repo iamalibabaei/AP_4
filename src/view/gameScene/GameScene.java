@@ -2,10 +2,14 @@ package view.gameScene;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import models.Game;
 import view.View;
 import view.menu.Menu;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class GameScene extends Scene
 {
@@ -25,6 +29,19 @@ public class GameScene extends Scene
     }
 
     private void build() {
+        root.getChildren().clear();
+        Image menuImage = null;
+        try {
+            menuImage = new Image(new FileInputStream("Textures\\back.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ImageView wallpaper = new ImageView(menuImage);
+        wallpaper.setFitWidth(View.WIDTH);
+        wallpaper.setFitHeight(View.HEIGHT);
+        wallpaper.relocate(0, 0);
+
+        root.getChildren().addAll(wallpaper);
 
     }
 }

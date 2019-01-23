@@ -10,8 +10,10 @@ import models.objects.animal.Cat;
 import models.objects.animal.Dog;
 import models.objects.animal.DomesticAnimal;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -38,8 +40,19 @@ public class Mission
         YaGson yaGson = yaGsonBuilder.create();
         FileReader fileReader = new FileReader(jsonAddress);
         Mission mission = yaGson.fromJson(new Scanner(fileReader).nextLine(), Mission.class);
-        game = Game.getInstance();
         return mission;
+    }
+
+    public static ArrayList<String> getAllMission(){
+        File folder = new File("res\\missions");
+        File[] listOfFiles = folder.listFiles();
+        ArrayList<String> usersName = new ArrayList<>();
+        for (int i = 0; i < listOfFiles.length; i++) {
+            String name = listOfFiles[i].getName();
+            name = name.substring(0, name.indexOf('.'));
+            usersName.add(name);
+        }
+        return usersName;
     }
 
     public boolean isAccomplished()

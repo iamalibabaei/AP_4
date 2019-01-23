@@ -6,6 +6,7 @@ import com.google.gson.stream.JsonReader;
 import javafx.application.Application;
 import models.Game;
 import models.Map;
+import models.account.Account;
 import models.misc.Mission;
 import models.objects.Item;
 import models.objects.Point;
@@ -21,7 +22,9 @@ public class Controller
     private static Controller controller = new Controller();
     private static View view;
     private Game game;
-    Mission mission;
+    private Mission mission;
+    private Account account;
+
 
     public static void main(String[] args) {
         Application.launch(View.class, args);
@@ -190,18 +193,25 @@ public class Controller
         throw new InvalidArgumentException();
     }
 
-    public void loadMission(String missionString){
-        //this.mission = Mission.loadJson(missionString);
+    public void loadMission(){
         //todo load map of startGame
 
     }
 
     public void startGame() {
-        game = Game.getInstance();
+        //game = Game.getInstance();
         view = View.getInstance();
+        view.startGame();
+        loadMission();
         while (!mission.isAccomplished()) {
-            game.nextTurn();
-            //TODO view.nextTurn()
+            //TODO
+            //game.nextTurn();
+            view.nextTurn();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         endGame();
     }
@@ -211,5 +221,11 @@ public class Controller
     }
 
 
+    public void setMission(Mission mission) {
+        this.mission = mission;
+    }
 
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }

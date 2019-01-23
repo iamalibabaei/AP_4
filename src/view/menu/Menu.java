@@ -26,6 +26,7 @@ public class Menu extends Scene {
     private Group root;
     private ImageView background;
     private ChoiceBox<String> choiceBox;
+    private TextField password;
 
     public Menu() {
         super(new Group(), View.WIDTH, View.HEIGHT);
@@ -85,6 +86,19 @@ public class Menu extends Scene {
         choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll(Account.getAllAccounts());
         choiceBox.relocate(400, 300);
-        root.getChildren().addAll(menuWallpaper, startGame, setting, newPlayer, exit, choiceBox);
+
+        password = new TextField();
+        password.setPromptText("password");
+        password.relocate(400, 350);
+        root.getChildren().addAll(menuWallpaper, startGame, setting, newPlayer, exit, choiceBox, password);
     }
+
+    public void updateChoiceBox(){
+        choiceBox.getItems().addAll(Account.getAllAccounts());
+    }
+
+    public String getAccount() {
+        return choiceBox.getValue();
+    }
+
 }

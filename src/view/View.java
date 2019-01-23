@@ -5,9 +5,18 @@ import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import models.account.Account;
+import models.exceptions.NotEnoughSpaceException;
+import models.interfaces.Time;
+import models.misc.Mission;
+import view.gameScene.GameScene;
+import view.gameScene.MissionScene;
 import view.menu.Menu;
+import view.newPlayer.NewPlayerScene;
 
-public class View extends Application {
+import java.io.FileNotFoundException;
+
+public class View extends Application implements Time {
     private static View view = new View();
     private static Stage mainStage;
     public static final int WIDTH = 1300, HEIGHT = 720;
@@ -58,15 +67,39 @@ public class View extends Application {
 
 
     public void goToMap() {
-
+        //todo check password and not null
+        Account account = null;
+        try {
+            account = Account.loadJason(Menu.getInstance().getAccount());
+        } catch (FileNotFoundException e) {
+            //TODO show message
+            return;
+        }
+        Controller.getInstance().setAccount(account);
+        setStageScene(MissionScene.getInstance());
     }
 
     public void goToSetting() {
     }
 
     public void close() {
+
     }
 
     public void newPlayer() {
+        setStageScene(new NewPlayerScene());
+    }
+
+    public void goToMenue() {
+        setStageScene(Menu.getInstance());
+    }
+
+    public void startGame() {
+        setStageScene(GameScene.getInstance());
+    }
+
+    @Override
+    public void nextTurn() {
+        System.out.println("nextTurn");
     }
 }
