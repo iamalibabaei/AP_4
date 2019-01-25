@@ -1,8 +1,6 @@
 package controller;
 
 import com.gilecode.yagson.YaGson;
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 import javafx.application.Application;
 import models.Game;
 import models.Map;
@@ -13,9 +11,12 @@ import models.objects.Point;
 import models.objects.animal.Animal;
 import models.exceptions.*;
 import models.buildings.Workshop;
+import models.objects.animal.DomesticAnimal;
 import view.View;
 
 import java.io.*;
+import java.util.Formatter;
+import java.util.HashMap;
 
 public class Controller
 {
@@ -28,6 +29,29 @@ public class Controller
 
     public static void main(String[] args) {
         Application.launch(View.class, args);
+        //serializeMission();
+    }
+
+    private static void serializeMission() {
+        YaGson yaGson = new YaGson();
+        HashMap<DomesticAnimal.Type, Integer> animalObjective = new HashMap<>();
+        animalObjective.put(DomesticAnimal.Type.HEN, 10);
+        animalObjective.put(DomesticAnimal.Type.SHEEP, 2);
+        HashMap<Item.Type, Integer> itemObjective = new HashMap<>();
+        itemObjective.put(Item.Type.EGG, 15);
+        itemObjective.put(Item.Type.DRIED_EGG, 5);
+        HashMap<DomesticAnimal.Type, Integer> animalAtBeginning = new HashMap<>();
+        animalAtBeginning.put(DomesticAnimal.Type.HEN, 5);
+
+        Mission mission = new Mission(1000, animalObjective, itemObjective, false, false, animalAtBeginning, 200);
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter("res\\missions\\mission2.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Formatter formatter = new Formatter(fileWriter);
+        formatter.format(yaGson.toJson(mission)).flush();
     }
 
     public static Controller getInstance()
@@ -227,5 +251,9 @@ public class Controller
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public void click(double x, double y) {
+
     }
 }

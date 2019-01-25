@@ -24,15 +24,19 @@ public class Mission
     private HashMap<DomesticAnimal.Type, Integer> animalObjectives;
     private HashMap<Item.Type, Integer> ItemObjective;
     private boolean dog, cat;
+    private HashMap<DomesticAnimal.Type, Integer> animalAtBeginning;
+    private int moneyAtBeginning;
 
     public Mission(int money, HashMap<DomesticAnimal.Type, Integer> animalObjectives,
-                   HashMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat)
+                   HashMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat, HashMap<Animal.Type, Integer> animalAtBeginning, int moneyAtBeginning)
     {
         this.moneyObjective = money;
         this.animalObjectives = animalObjectives;
         ItemObjective = itemObjective;
         this.dog = dog;
         this.cat = cat;
+        this.animalAtBeginning = animalAtBeginning;
+        this.moneyAtBeginning = moneyAtBeginning;
     }
 
     public static Mission loadJson(String jsonAddress) throws FileNotFoundException {
@@ -83,7 +87,6 @@ public class Mission
             }
 
         }
-
         return checkAccomplishment(gameMoney, animalCurrentState, itemCurrentState, hasCat, hasDog);
     }
 
@@ -122,4 +125,11 @@ public class Mission
         return !cat || hasCat;
     }
 
+    public HashMap<DomesticAnimal.Type, Integer> getAnimalAtBeginning() {
+        return animalAtBeginning;
+    }
+
+    public int getMoneyAtBeginning() {
+        return moneyAtBeginning;
+    }
 }

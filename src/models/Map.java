@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Map implements Time
 {
-    public static final double WIDTH = 30, HEIGHT = 30;
+    public static final double WIDTH = 650, HEIGHT = 350;
     private static Map ourInstance = new Map();
     private ArrayList<Animal> animals;
     private ArrayList<Grass> grasses;

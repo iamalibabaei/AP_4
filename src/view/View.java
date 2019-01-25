@@ -6,9 +6,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.account.Account;
-import models.exceptions.NotEnoughSpaceException;
+import models.exceptions.InsufficientResourcesException;
+import models.exceptions.IsWorkingException;
 import models.interfaces.Time;
-import models.misc.Mission;
 import view.gameScene.GameScene;
 import view.gameScene.MissionScene;
 import view.menu.Menu;
@@ -90,7 +90,7 @@ public class View extends Application implements Time {
         setStageScene(new NewPlayerScene());
     }
 
-    public void goToMenue() {
+    public void goToMenu() {
         setStageScene(Menu.getInstance());
     }
 
@@ -101,5 +101,13 @@ public class View extends Application implements Time {
     @Override
     public void nextTurn() {
         System.out.println("nextTurn");
+    }
+
+    public void showExceptions(Exception e, double x, double y) {
+        if (e instanceof InsufficientResourcesException) {
+
+        } else if (e instanceof IsWorkingException) {
+
+        }
     }
 }

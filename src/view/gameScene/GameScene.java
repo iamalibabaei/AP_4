@@ -1,15 +1,20 @@
 package view.gameScene;
 
+import controller.Controller;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import models.Game;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
+import models.buildings.Warehouse;
+import models.exceptions.InsufficientResourcesException;
+import models.exceptions.IsWorkingException;
 import view.View;
-import view.menu.Menu;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class GameScene extends Scene
 {
@@ -29,19 +34,68 @@ public class GameScene extends Scene
     }
 
     private void build() {
+
         root.getChildren().clear();
-        Image menuImage = null;
-        try {
-            menuImage = new Image(new FileInputStream("Textures\\back.png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ImageView wallpaper = new ImageView(menuImage);
-        wallpaper.setFitWidth(View.WIDTH);
-        wallpaper.setFitHeight(View.HEIGHT);
-        wallpaper.relocate(0, 0);
+        root.getChildren().addAll(GameBackground.getInstance());
+        root.getChildren().addAll(MapView.getInstance());
+        wellGraphic();
+        warehouseGraphic();
+    }
 
-        root.getChildren().addAll(wallpaper);
+    private void warehouseGraphic() {
+        int XValue = View.WIDTH/ 2 - 10, YValue = View.HEIGHT - 50;
+        Circle circle = new Circle(25);
+        circle.setFill(Color.BLUE);
+        Text text = new Text("warehouse");
+        text.setBoundsType(TextBoundsType.VISUAL);
+        StackPane warehouseGraphic = new StackPane();
+        warehouseGraphic.getChildren().addAll(circle,text);
+        warehouseGraphic.relocate(XValue, YValue);
+        warehouseGraphic.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                openWarehouse();
+            }
+        });
 
+        root.getChildren().addAll(warehouseGraphic);
+
+
+
+    }
+
+    private void wellGraphic() {
+        int XValue = 200, YValue = 200;
+        Circle circle = new Circle(25);
+        circle.setFill(Color.BLUE);
+        Text text = new Text("well");
+        text.setBoundsType(TextBoundsType.VISUAL);
+        StackPane wellGraphic = new StackPane();
+        wellGraphic.getChildren().addAll(circle,text);
+        wellGraphic.relocate(XValue, YValue);
+        wellGraphic.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    Controller.getInstance().refillWell();
+                } catch (IsWorkingException e) {
+                    View.getInstance().showExceptions(e, XValue, YValue);
+                } catch (InsufficientResourcesException e) {
+                    View.getInstance().showExceptions(e, XValue, YValue);
+                }
+            }
+        });
+
+        root.getChildren().addAll(wellGraphic);
+    }
+
+    private void openWarehouse() {
+        WarehouseScene.getInstance().UpdateInformation();
+        root.getChildren().add(WarehouseScene.getInstance());
+
+    }
+
+    public void closeWarehouse() {
+        root.getChildren().remove(WarehouseScene.getInstance());
     }
 }

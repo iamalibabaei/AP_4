@@ -36,6 +36,7 @@ public class Menu extends Scene {
 
     private void build() {
         root.getChildren().clear();
+
         Image menuImage = null;
         try {
             menuImage = new Image(new FileInputStream("Textures\\menuWallpaper.jpg"));
@@ -91,6 +92,10 @@ public class Menu extends Scene {
         password.setPromptText("password");
         password.relocate(400, 350);
         root.getChildren().addAll(menuWallpaper, startGame, setting, newPlayer, exit, choiceBox, password);
+
+        //root.getChildren().addAll(MenuBackground.getInstance());
+
+
     }
 
     public void updateChoiceBox(){

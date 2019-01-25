@@ -6,6 +6,7 @@ import models.interfaces.Time;
 import models.objects.Entity;
 import models.objects.Item;
 import models.objects.Point;
+import view.gameScene.MapView;
 
 public abstract class Animal extends Entity implements Time
 {

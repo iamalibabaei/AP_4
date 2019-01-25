@@ -48,10 +48,10 @@ public class MissionScene extends Scene {
         menuWallpaper.relocate(0, 0);
 
         ArrayList<String> missions = Mission.getAllMission();
-        int Yvalue = 200;
+        int YValue = 200;
         for (int i = 0; i < missions.size(); i++) {
             Button button = new Button(missions.get(i));
-            button.relocate(300, Yvalue + i * 50);
+            button.relocate(300, YValue + i * 50);
             root.getChildren().addAll(button);
             button.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -70,7 +70,6 @@ public class MissionScene extends Scene {
             Controller.getInstance().setMission(Mission.loadJson("res\\missions\\"+ text + ".json"));
         } catch (FileNotFoundException e) {
             //TODO show alert
-            System.out.println("salam");
             e.printStackTrace();
         }
         Controller.getInstance().startGame();

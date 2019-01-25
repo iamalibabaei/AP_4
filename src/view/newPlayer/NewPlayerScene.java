@@ -46,7 +46,7 @@ public class NewPlayerScene extends Scene {
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                View.getInstance().goToMenue();
+                View.getInstance().goToMenu();
             }
         });
         back.relocate(300,450);
