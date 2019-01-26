@@ -3,14 +3,16 @@ package view.gameScene;
 import controller.Controller;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
+import models.objects.animal.Animal;
 import view.View;
 
 import java.io.FileInputStream;
@@ -43,12 +45,12 @@ public class GameBackground extends Pane {
         pane.setMinSize(View.WIDTH * 2, View.HEIGHT);
         pane.setBackground(new Background(backgroundImage));
         this.getChildren().add(pane);
-        setScene();
+        setBuyAnimalButton();
 
 
     }
 
-    private void setScene() {//TODO change later
+    private void setBuyAnimalButton() {//TODO change later
         ArrayList<String> animalButton = new ArrayList<>();
         animalButton.add("HEN");
         animalButton.add("SHEEP");
@@ -56,14 +58,23 @@ public class GameBackground extends Pane {
         animalButton.add("CAT");
         animalButton.add("DOG");
         for (String animalName : animalButton) {
-            Circle circle = new Circle(25);
-            circle.setFill(Color.BLUE);
-            Text text = new Text(animalName);
-            text.setBoundsType(TextBoundsType.VISUAL);
-            StackPane addHen = new StackPane();
-            addHen.getChildren().addAll(circle,text);
-            addHen.relocate(40 + animalButton.indexOf(animalName) * 45, 40);
-            addHen.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            Animal.Type type = Animal.Type.valueOf(animalName);
+            Image backImage = null;
+            try {
+                backImage = new Image(new FileInputStream("Textures\\menuItemButton.png"));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            ImageView imageView = new ImageView(backImage);
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(100);
+
+            StackPane addAnimal = new StackPane();
+            Text animalNameText = new Text(animalName);
+            animalNameText.setFill(Color.YELLOW);
+            addAnimal.getChildren().addAll(imageView, animalNameText);
+            addAnimal.relocate(20 + animalButton.indexOf(animalName) * 80, 20);
+            addAnimal.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     try {
@@ -75,7 +86,13 @@ public class GameBackground extends Pane {
                     }
                 }
             });
-            this.getChildren().addAll(addHen);
+            Text text = new Text(Integer.toString(type.BUY_COST));
+            text.setFill(Color.YELLOW);
+            text.setFont(Font.font ("Verdana", 15));
+
+            text.setBoundsType(TextBoundsType.VISUAL);
+            text.relocate(50 + animalButton.indexOf(animalName) * 80, 130);
+            this.getChildren().addAll(addAnimal, text);
         }
 
 

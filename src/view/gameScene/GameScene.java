@@ -47,30 +47,8 @@ public class GameScene extends Scene
         warehouseGraphic();
     }
 
-    private void warehouseGraphic() {
-        int XValue = View.WIDTH/ 2 - 10, YValue = View.HEIGHT - 50;
-        Circle circle = new Circle(25);
-        circle.setFill(Color.BLUE);
-        Text text = new Text("warehouse");
-        text.setBoundsType(TextBoundsType.VISUAL);
-        StackPane warehouseGraphic = new StackPane();
-        warehouseGraphic.getChildren().addAll(circle,text);
-        warehouseGraphic.relocate(XValue, YValue);
-        warehouseGraphic.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                openWarehouse();
-            }
-        });
-
-        root.getChildren().addAll(warehouseGraphic);
-
-
-
-    }
-
     private void wellGraphic() {
-        int XValue = 200, YValue = 200;
+        int XValue = 750, YValue = 130;
         Circle circle = new Circle(25);
         circle.setFill(Color.BLUE);
         Text text = new Text("well");
@@ -92,6 +70,28 @@ public class GameScene extends Scene
         });
 
         root.getChildren().addAll(wellGraphic);
+    }
+
+    private void warehouseGraphic() {
+        int XValue = View.WIDTH/ 2 - 10, YValue = View.HEIGHT - 50;
+        Circle circle = new Circle(25);
+        circle.setFill(Color.BLUE);
+        Text text = new Text("warehouse");
+        text.setBoundsType(TextBoundsType.VISUAL);
+        StackPane warehouseGraphic = new StackPane();
+        warehouseGraphic.getChildren().addAll(circle,text);
+        warehouseGraphic.relocate(XValue, YValue);
+        warehouseGraphic.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                openWarehouse();
+            }
+        });
+
+        root.getChildren().addAll(warehouseGraphic);
+
+
+
     }
 
     private void openWarehouse() {
