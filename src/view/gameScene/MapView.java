@@ -9,17 +9,23 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import models.Map;
+import models.exceptions.NotEnoughSpaceException;
+import models.interfaces.Time;
 import view.View;
+
+import java.util.ArrayList;
 
 public class MapView extends Pane {
     private static MapView instance = new MapView();
-
+    private ArrayList<Text> entitiesInMap;
     public static MapView getInstance() {
         return instance;
     }
 
     private MapView() {
+        entitiesInMap = new ArrayList<>();
         relocate(View.WIDTH * 0.25, View.HEIGHT * 0.3);
         setHeight(Map.HEIGHT);
         setWidth(Map.WIDTH);
@@ -27,7 +33,7 @@ public class MapView extends Pane {
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //System.out.println(event.getSceneX()- 325+"   "+ event.getY());
+                System.out.println(event.getSceneX()- 325+"   "+ event.getY());
                 Controller.getInstance().click(event.getX() - 325, event.getY());
             }
         });
@@ -58,4 +64,5 @@ public class MapView extends Pane {
 
         getChildren().addAll(rectangle1, rectangle2, rectangle3, rectangle4);
     }
+
 }

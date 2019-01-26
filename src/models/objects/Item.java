@@ -1,5 +1,7 @@
 package models.objects;
 
+import javafx.scene.text.Text;
+
 public class Item extends Entity
 {
     public final Type type;
@@ -8,6 +10,7 @@ public class Item extends Entity
     {
         super(point);
         this.type = type;
+        text = new Text(type.name());
     }
 
     public enum Type

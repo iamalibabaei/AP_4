@@ -220,6 +220,7 @@ public class Controller
     public void loadMission(){
         //todo load map of startGame
 
+
     }
 
     public void startGame() {
@@ -230,9 +231,10 @@ public class Controller
         while (!mission.isAccomplished()) {
             //TODO
             //game.nextTurn();
-            view.nextTurn();
+
             try {
                 Thread.sleep(1000);
+                System.out.println("nextTurn");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

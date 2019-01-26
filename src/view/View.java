@@ -5,18 +5,25 @@ import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import models.Game;
 import models.account.Account;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
 import models.interfaces.Time;
+import models.objects.Entity;
+import models.objects.Grass;
+import models.objects.Item;
+import models.objects.Point;
+import models.objects.animal.Animal;
 import view.gameScene.GameScene;
+import view.gameScene.MapView;
 import view.gameScene.MissionScene;
 import view.menu.Menu;
 import view.newPlayer.NewPlayerScene;
 
 import java.io.FileNotFoundException;
 
-public class View extends Application implements Time {
+public class View extends Application {
     private static View view = new View();
     private static Stage mainStage;
     public static final int WIDTH = 1300, HEIGHT = 720;
@@ -98,16 +105,20 @@ public class View extends Application implements Time {
         setStageScene(GameScene.getInstance());
     }
 
-    @Override
-    public void nextTurn() {
-        System.out.println("nextTurn");
-    }
-
     public void showExceptions(Exception e, double x, double y) {
         if (e instanceof InsufficientResourcesException) {
 
         } else if (e instanceof IsWorkingException) {
 
+        }
+    }
+    public void addEntityToMap(Entity entity, Point location) {
+        if (entity instanceof Animal) {
+            GameScene.getInstance().addAnimal((Animal) entity, location);
+        } else if (entity instanceof Grass) {
+            GameScene.getInstance().addGrass((Grass) entity, location);
+        } else if (entity instanceof Item) {
+            GameScene.getInstance().addItem((Item) entity, location);
         }
     }
 }

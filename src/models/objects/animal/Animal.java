@@ -1,5 +1,6 @@
 package models.objects.animal;
 
+import javafx.scene.text.Text;
 import models.Map;
 import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Time;
@@ -21,6 +22,7 @@ public abstract class Animal extends Entity implements Time
         target = null;
         this.map = Map.getInstance();
         this.type = type;
+        text = new Text(type.name());
     }
 
     public abstract void collide(Entity entity);
