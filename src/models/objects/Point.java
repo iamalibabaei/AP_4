@@ -1,6 +1,6 @@
 package models.objects;
 
-import models.Game;
+import controller.InGameController;
 
 import java.util.Random;
 
@@ -17,8 +17,8 @@ public class Point
     public void normalize()
     {
         double length = Math.sqrt(x * x + y * y);
-        x = x / length;
-        y = y / length;
+        x /= length;
+        y /= length;
     }
 
     public double getX()
@@ -41,14 +41,14 @@ public class Point
         this.y = y;
     }
 
-    public boolean collidesWith(Point point)
+    public <T extends Entity> double distanceFrom(T entity)
     {
-        return this.distanceFrom(point) <= Game.RADIUS;
+        return Math.sqrt(StrictMath.pow(entity.coordinates.x - x, 2.0) + StrictMath.pow(entity.coordinates.y - y, 2.0));
     }
 
     public double distanceFrom(Point point1)
     {
-        return Math.sqrt(Math.pow(point1.getX() - this.getX(), 2) + Math.pow(point1.getY() - this.getY(), 2));
+        return Math.sqrt(StrictMath.pow(point1.x - x, 2.0) + StrictMath.pow(point1.y - y, 2.0));
     }
 
     public static Point randomPoint(double xBound, double yBound)

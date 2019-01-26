@@ -1,4 +1,4 @@
-package models.objects.animal;
+package models.objects.animals;
 
 import models.objects.Entity;
 import models.objects.Point;
@@ -7,32 +7,31 @@ import models.objects.Point;
 
 public class WildAnimal extends Animal
 {
-    private State state;
+    private WildAnimal.State state;
 
     public WildAnimal(Point point, Animal.Type type)
     {
         super(point, type);
-        state = State.NOT_CAGED;
+        state = WildAnimal.State.NOT_CAGED;
     }
 
-    public State getState()
+    public WildAnimal.State getState()
     {
         return state;
     }
 
     public void cage()
     {
-        if (this.state == State.CAGED)
+        if (state != WildAnimal.State.CAGED)
         {
-            return;
+            state = WildAnimal.State.values()[state.ordinal() + 1];
         }
-        this.state = State.values()[this.state.ordinal() + 1];
     }
 
     @Override
     public void collide(Entity entity)
     {
-        if (state != State.CAGED && !(entity instanceof WildAnimal))
+        if (state != WildAnimal.State.CAGED && !(entity instanceof WildAnimal))
         {
             entity.die();
         }
@@ -41,7 +40,7 @@ public class WildAnimal extends Animal
     @Override
     public void move()
     {
-        if (state != State.CAGED)
+        if (state != WildAnimal.State.CAGED)
         {
             super.move();
         }

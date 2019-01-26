@@ -32,6 +32,7 @@ public class View extends Application {
         return mainStage;
     }
 
+
     private static Controller getController(){
         return Controller.getInstance();
     }
@@ -49,7 +50,7 @@ public class View extends Application {
         getMainStage().setOnCloseRequest(event -> {
             /*
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Save Game");
+            alert.setTitle("Save InGameController");
             alert.setHeaderText(null);
             alert.setContentText("Save the game before closing?");
             Optional<ButtonType> action = alert.showAndWait();

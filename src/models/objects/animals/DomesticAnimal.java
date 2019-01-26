@@ -1,4 +1,4 @@
-package models.objects.animal;
+package models.objects.animals;
 
 import models.interfaces.Time;
 import models.objects.Entity;
@@ -6,13 +6,13 @@ import models.objects.Grass;
 import models.objects.Item;
 import models.objects.Point;
 
-public class DomesticAnimal extends Animal implements Time
+public class DomesticAnimal extends Animal
 {
     private static final int MAX_SATURATION_RATE = 20;
     private int saturationRate;
     private boolean isHungry;
 
-    public DomesticAnimal(Point point, Type type)
+    public DomesticAnimal(Point point, Animal.Type type)
     {
         super(point, type);
         saturationRate = MAX_SATURATION_RATE / 2;
@@ -33,7 +33,7 @@ public class DomesticAnimal extends Animal implements Time
     {
         if (saturationRate == 0)
         {
-            this.die();
+            die();
         }
         saturationRate--;
         if (!isHungry && saturationRate <= MAX_SATURATION_RATE / 2)

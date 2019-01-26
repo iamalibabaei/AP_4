@@ -2,13 +2,12 @@ package controller;
 
 import com.gilecode.yagson.YaGson;
 import javafx.application.Application;
-import models.Game;
 import models.Map;
 import models.account.Account;
 import models.misc.Mission;
 import models.objects.Item;
 import models.objects.Point;
-import models.objects.animal.Animal;
+import models.objects.animals.Animal;
 import models.exceptions.*;
 import models.buildings.Workshop;
 import models.objects.animal.DomesticAnimal;
@@ -22,7 +21,7 @@ public class Controller
 {
     private static Controller controller = new Controller();
     private static View view;
-    private Game game;
+    private InGameController game;
     private Mission mission;
     private Account account;
 
@@ -71,7 +70,7 @@ public class Controller
         throw new InvalidArgumentException();
     }
 
-    public void pickUp(Point point)
+    public void pickUp(Point point) throws IndexOutOfBoundsException
     {
         if (point.getX() >= Map.WIDTH || point.getX() < 0 || point.getY() >= Map.HEIGHT || point.getY() < 0) {
             throw new IndexOutOfBoundsException();
@@ -80,7 +79,7 @@ public class Controller
         game.pickUp(point);
     }
 
-    public void cage(Point point)
+    public void cage(Point point) throws IndexOutOfBoundsException
     {
         if (point.getX() >= Map.WIDTH || point.getX() < 0 || point.getY() >= Map.HEIGHT || point.getY() < 0) {
             throw new IndexOutOfBoundsException();
@@ -104,7 +103,7 @@ public class Controller
     }
 
     public void startWorkshop(String workshopName) throws IsWorkingException, InsufficientResourcesException {
-        game.startWorkShop(workshopName);
+        game.startWorkshop(workshopName);
     }
 
     public void upgrade(String parameter) throws AlreadyAtMaxLevelException, InsufficientResourcesException {
@@ -141,7 +140,7 @@ public class Controller
 
     public void loadGame(String gamePath) throws FileNotFoundException {
         YaGson yaGson = new YaGson();
-        game = yaGson.fromJson(gamePath, Game.class);
+        game = yaGson.fromJson(gamePath, InGameController.class);
     }
 
     public void saveGame(String gamePath) throws IOException {
@@ -224,7 +223,7 @@ public class Controller
     }
 
     public void startGame() {
-        //game = Game.getInstance();
+        //game = InGameController.getInstance();
         view = View.getInstance();
         view.startGame();
         loadMission();

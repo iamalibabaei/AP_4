@@ -2,49 +2,53 @@ package models.buildings;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import com.google.gson.Gson;
 import models.Map;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
 import models.interfaces.Time;
 import models.interfaces.Upgradable;
-import models.misc.Mission;
 import models.objects.Item;
 import models.objects.Point;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Workshop implements Upgradable, Time
 {
     private static final int[] PRODUCTION_TIME = {15, 14, 13, 11, 8};
     private final Point outputPlace;
-    private final HashMap<Item.Type, Integer> inputs, outputs;
-    private String name;
+    public final java.util.Map<Item.Type, Integer> inputs, outputs;
+    public final String name;
     private int level, buildCost;
     private int productionRemainingTime;
-    private int productionFactor, maxProductionFactor;
+    private int productionFactor;
+
+    public int getMaxProductionFactor()
+    {
+        return maxProductionFactor;
+    }
+
+    private int maxProductionFactor;
     private boolean isWorking;
     private Map map;
-    private Warehouse warehouse;
 
-    public Workshop(String name, Point outputPoint, int buildCost, HashMap<Item.Type, Integer> inputs,
-                    HashMap<Item.Type, Integer> outputs)
+    public Workshop(String name, Point outputPoint, int buildCost, java.util.Map<Item.Type, Integer> inputs,
+                    java.util.Map<Item.Type, Integer> outputs)
     {
-        this.level = 0;
-        this.maxProductionFactor = 1;
-        this.isWorking = false;
+        level = 0;
+        maxProductionFactor = 1;
+        isWorking = false;
         this.name = name;
-        this.outputPlace = outputPoint;
+        outputPlace = outputPoint;
         this.buildCost = buildCost;
         this.inputs = inputs;
         this.outputs = outputs;
     }
 
-    public static Workshop loadJson(String jsonAddress) throws FileNotFoundException {
+    public static Workshop loadJson(String jsonAddress) throws FileNotFoundException
+    {
         YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
         YaGson yaGson = yaGsonBuilder.create();
         FileReader fileReader = new FileReader(jsonAddress);
@@ -55,8 +59,7 @@ public class Workshop implements Upgradable, Time
 
     private void getMapAndWarehouse()
     {
-        this.map = Map.getInstance();
-        this.warehouse = Warehouse.getInstance();
+        map = Map.getInstance();
     }
 
     public int getLevel()
@@ -74,18 +77,13 @@ public class Workshop implements Upgradable, Time
         return isWorking;
     }
 
-    public String getName()
-    {
-        return name;
-    }
-
-    public void startWorking() throws IsWorkingException, InsufficientResourcesException
+    public void startWorking(int productionFactor) throws IsWorkingException, InsufficientResourcesException
     {
         if (!isWorking)
         {
             throw new IsWorkingException();
         }
-        productionFactor = warehouse.moveToWorkshop(inputs, maxProductionFactor).get();
+        this.productionFactor = productionFactor;
         isWorking = true;
         productionRemainingTime = PRODUCTION_TIME[level];
     }

@@ -57,8 +57,9 @@ public class Account implements Serializable {
         File folder = new File("res\\users");
         File[] listOfFiles = folder.listFiles();
         ArrayList<String> usersName = new ArrayList<>();
-        for (int i = 0; i < listOfFiles.length; i++) {
-            String name = listOfFiles[i].getName();
+        for (File listOfFile : listOfFiles)
+        {
+            String name = listOfFile.getName();
             name = name.substring(0, name.indexOf('.'));
             usersName.add(name);
         }

@@ -1,4 +1,4 @@
-package models.objects.animal;
+package models.objects.animals;
 
 import models.Map;
 import models.buildings.Warehouse;
@@ -9,21 +9,24 @@ import models.objects.Entity;
 import models.objects.Item;
 import models.objects.Point;
 
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 
 // todo cat upgrade beyond level 1
+// todo probable bug: collecting more than one item in one turn
 
 public class Cat extends Animal implements Upgradable
 {
     private static final int MAX_LEVEL = 1, UPGRADE_COST = 200;
-    private static int level;
+    private static int level = 0;
     private Warehouse warehouse;
 
     public Cat(Point point, Animal.Type type)
     {
         super(point, type);
-        this.warehouse = Warehouse.getInstance();
-        level = 0;
+        warehouse = Warehouse.getInstance();
     }
 
     @Override
@@ -31,50 +34,38 @@ public class Cat extends Animal implements Upgradable
     {
         if (entity instanceof Item)
         {
-            HashMap<Item.Type, Integer> items = new HashMap<>();
-            items.put(((Item) entity).type, 1);
+            List<Item> item = new ArrayList<>();
+            item.add((Item) entity);
             try
             {
-                items = warehouse.store(items);
-            } catch (NotEnoughSpaceException e)
+                item = Map.store(item);
+            } catch (NotEnoughSpaceException ignore)
             {
                 // nothing happens here!
-            } finally
-            {
-                if (items.get(((Item) entity).type) == 0)
-                {
-                    entity.die();
-                }
             }
         }
-    }
-
-    @Override
-    public void nextTurn()
-    {
-        super.nextTurn();
     }
 
     @Override
     public void setTarget()
     {
         target = null;
-        if (level == 0 && map.getItems().size() != 0)
+        if (level == 0 && !map.getItems().isEmpty())
         {
             target = map.getItems().get(0).getCoordinates();
         } else
         {
-            double dist = 2 * Map.WIDTH;
+            double dist = 2.0 * Map.WIDTH;
             for (Item item : map.getItems())
             {
                 if (warehouse.getRemainingCapacity() >= item.type.OCCUPIED_SPACE)
                 {
-                    Point target = item.getCoordinates();
-                    double dist1 = coordinates.distanceFrom(target);
+                    Point newTarget = item.getCoordinates();
+                    double dist1 = coordinates.distanceFrom(newTarget);
                     if (dist1 < dist)
                     {
                         dist = dist1;
-                        this.target = target;
+                        target = newTarget;
                     }
                 }
             }
@@ -86,7 +77,7 @@ public class Cat extends Animal implements Upgradable
     {
         if (level == MAX_LEVEL)
             throw new AlreadyAtMaxLevelException();
-        level++;
+        Cat.level++;
     }
 
     @Override

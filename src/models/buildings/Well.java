@@ -6,26 +6,28 @@ import models.exceptions.IsWorkingException;
 import models.interfaces.Time;
 import models.interfaces.Upgradable;
 
+// todo implement well last upgrade (automatic planting)
+
 public class Well implements Upgradable, Time
 {
     public static final int[] UPGRADE_COST = {250, 500}, REFILL_COST = {19, 17, 15};
-    private static final Well ourInstance = new Well();
     public static final int[] CAPACITY = {5, 7, 10}, REFILL_TIME = {3, 4, 3};
+    private static final Well instance = new Well();
     private static final int MAX_LEVEL = 2;
-    private static int level;
+    private static int level = 0;
     private boolean isRefilling;
-    private int remainingWater, timer;
+    private int remainingWater;
+    private int remainingTimeToRefill;
 
     private Well()
     {
         isRefilling = false;
-        level = 0;
         remainingWater = CAPACITY[level];
     }
 
     public static Well getInstance()
     {
-        return ourInstance;
+        return instance;
     }
 
     public static int getLevel()
@@ -33,17 +35,7 @@ public class Well implements Upgradable, Time
         return level;
     }
 
-    public boolean isRefilling()
-    {
-        return isRefilling;
-    }
-
-    public int getRemainingWater()
-    {
-        return remainingWater;
-    }
-
-    public void putGrass() throws InsufficientResourcesException
+    public void extractWater() throws InsufficientResourcesException
     {
         if (remainingWater == 0)
             throw new InsufficientResourcesException();
@@ -55,7 +47,7 @@ public class Well implements Upgradable, Time
         if (isRefilling)
             throw new IsWorkingException();
         isRefilling = true;
-        timer = REFILL_TIME[level];
+        remainingTimeToRefill = REFILL_TIME[level];
     }
 
     @Override
@@ -79,8 +71,8 @@ public class Well implements Upgradable, Time
     {
         if (isRefilling)
         {
-            timer--;
-            if (timer == 0)
+            remainingTimeToRefill--;
+            if (remainingTimeToRefill == 0)
                 refill();
         }
     }

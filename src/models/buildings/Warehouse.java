@@ -6,33 +6,32 @@ import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Upgradable;
 import models.objects.Item;
 
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+
+// todo add all feature for truck
 
 public class Warehouse implements Upgradable
 {
     public static final int[] CAPACITY = {50, 150, 300, 600}, UPGRADE_COST = {200, 250, 300};
-    public static final int MAX_LEVEL = 3;
-    private static Warehouse ourInstance = new Warehouse();
-    private int level, remainingCapacity;
-    private HashMap<Item.Type, Integer> items;
+    private static final int MAX_LEVEL = 3;
+    private static Warehouse instance = new Warehouse();
+    private int level;
+    private int remainingCapacity;
+    private EnumMap<Item.Type, Integer> storedItems;
 
-    public Warehouse()
+    private Warehouse()
     {
         level = 0;
-        items = new HashMap<>();
+        storedItems = new EnumMap<>(Item.Type.class);
         remainingCapacity = CAPACITY[level];
     }
 
     public static Warehouse getInstance()
     {
-        return ourInstance;
-    }
-
-    public int getLevel()
-    {
-        return level;
+        return instance;
     }
 
     public int getRemainingCapacity()
@@ -40,71 +39,51 @@ public class Warehouse implements Upgradable
         return remainingCapacity;
     }
 
-    public HashMap<Item.Type, Integer> getItems()
+    public void moveToSeller(Item.Type item)
     {
-        return items;
+        remainingCapacity += item.OCCUPIED_SPACE;
+        storedItems.put(item, storedItems.get(item) - 1);
     }
 
-    public void moveToSeller(Item.Type item, int count) throws InsufficientResourcesException
+    public int moveToWorkshop(Map<Item.Type, Integer> base, int maxCoefficient) throws InsufficientResourcesException
     {
-        int freedSpace = item.OCCUPIED_SPACE * count;
-        int currentCount = items.get(item);
-        if (currentCount < count)
-            throw new InsufficientResourcesException();
-        remainingCapacity += freedSpace;
-        items.put(item, currentCount - count);
-    }
-
-    public AtomicInteger moveToWorkshop(HashMap<Item.Type, Integer> base, int maxCoefficient) throws InsufficientResourcesException
-    {
-        AtomicInteger maxResourceAvailable = new AtomicInteger(999);
-        for (Item.Type type : base.keySet())
+        int maxResourceAvailable = 999;
+        for (Map.Entry<Item.Type, Integer> entry : base.entrySet())
         {
-            int maxResource = items.getOrDefault(type, 0) / base.get(type);
-            maxResourceAvailable.set(Math.min(maxResourceAvailable.get(), maxResource));
+            int maxResource = storedItems.getOrDefault(entry.getKey(), 0) / entry.getValue();
+            maxResourceAvailable = Math.min(maxResourceAvailable, maxResource);
         }
-        if (maxResourceAvailable.get() == 0)
-            throw new InsufficientResourcesException();
-        maxResourceAvailable.set(Math.min(maxResourceAvailable.get(), maxCoefficient));
-        for (Item.Type type : base.keySet())
+        if (maxResourceAvailable == 0)
         {
-            Integer newValue = this.items.get(type) - base.get(type) * maxResourceAvailable.get();
-            this.items.replace(type, newValue);
+            throw new InsufficientResourcesException();
+        }
+        maxResourceAvailable = Math.min(maxResourceAvailable, maxCoefficient);
+        for (Map.Entry<Item.Type, Integer> entry : base.entrySet())
+        {
+            Integer newValue = storedItems.get(entry.getKey()) - entry.getValue() * maxResourceAvailable;
+            storedItems.replace(entry.getKey(), newValue);
         }
         return maxResourceAvailable;
     }
 
-    public HashMap<Item.Type, Integer> store(HashMap<Item.Type, Integer> items) throws NotEnoughSpaceException
+    public List<Item> store(List<Item> items) throws NotEnoughSpaceException
     {
-        // todo knapp-sack algorithm
-        AtomicBoolean enoughSpaceForOneItem = new AtomicBoolean(false);
-        for (HashMap.Entry<Item.Type, Integer> entry : items.entrySet())
+        boolean noSpaceForOneItem = true;
+        List<Item> stored = new ArrayList<>();
+        for (Item item : items)
         {
-            enoughSpaceForOneItem.set(true);
-            int requiredCapacity = entry.getValue() * entry.getKey().OCCUPIED_SPACE;
-            if (remainingCapacity > requiredCapacity)
+            if (remainingCapacity >= item.type.OCCUPIED_SPACE)
             {
-                remainingCapacity -= requiredCapacity;
-                Integer newValue = this.items.getOrDefault(entry.getKey(), 0) + entry.getValue();
-                this.items.replace(entry.getKey(), newValue);
-                this.items.putIfAbsent(entry.getKey(), newValue);
+                noSpaceForOneItem = false;
+                storedItems.put(item.type, storedItems.getOrDefault(item.type, 0) + 1);
+                stored.add(item);
             }
         }
-        if (!enoughSpaceForOneItem.get())
+        if (noSpaceForOneItem)
         {
             throw new NotEnoughSpaceException();
         }
-        return null;
-    }
-
-    private int computeSpace(HashMap<Item.Type, Integer> items)
-    {
-        AtomicInteger ret = new AtomicInteger();
-        for (HashMap.Entry<Item.Type, Integer> entry : items.entrySet())
-        {
-            ret.addAndGet(entry.getKey().OCCUPIED_SPACE * entry.getValue());
-        }
-        return ret.get();
+        return stored;
     }
 
     @Override

@@ -7,17 +7,19 @@ import models.interfaces.Time;
 import models.interfaces.Upgradable;
 import models.objects.Item;
 
-import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.Map;
 
 
 public abstract class Transporter implements Upgradable, Time
 {
     private final int[] UPGRADE_COST_LIST;
-    private final int UPGRADE_SPEED_BOOST, UPGRADE_CAPACITY_INCREASE;
+    private final int UPGRADE_SPEED_BOOST;
+    private final int UPGRADE_CAPACITY_INCREASE;
     protected boolean isWorking;
-    HashMap<Item.Type, Integer> list;
-    private int capacity, timeToArrive, level;
-    int remainingTimeToArrive;
+    protected EnumMap<Item.Type, Integer> list;
+    protected int remainingTimeToArrive;
+    protected int capacity, timeToArrive, level;
 
     Transporter(int[] UPGRADE_COST_LIST, int UPGRADE_SPEED_BOOST, int UPGRADE_CAPACITY_INCREASE,
                 int BASE_TIME_TO_ARRIVE, int capacity)
@@ -28,47 +30,14 @@ public abstract class Transporter implements Upgradable, Time
         this.UPGRADE_SPEED_BOOST = UPGRADE_SPEED_BOOST;
         this.UPGRADE_CAPACITY_INCREASE = UPGRADE_CAPACITY_INCREASE;
         timeToArrive = BASE_TIME_TO_ARRIVE;
-        this.level = 0;
+        level = 0;
+        list = new EnumMap<>(Item.Type.class);
     }
 
-    public boolean isWorking()
-    {
-        return isWorking;
-    }
-
-    public int getLevel()
-    {
-        return level;
-    }
-
-    public int getTimeToArrive()
-    {
-        return timeToArrive;
-    }
-
-    public int getCapacity()
-    {
-        return capacity;
-    }
-
-    public int getRemainingTimeToArrive()
-    {
-        return remainingTimeToArrive;
-    }
-
-    public HashMap<Item.Type, Integer> getList()
-    {
-        return list;
-    }
-
-    public void addToList(Item.Type itemType, int number) throws IsWorkingException, NotEnoughSpaceException
+    public void addToList(Item.Type itemType, int number) throws NotEnoughSpaceException
     {
         // todo double-click feature
-        if (isWorking)
-        {
-            throw new IsWorkingException();
-        }
-        if (this.capacity - this.usedCapacity() < itemType.OCCUPIED_SPACE * number)
+        if (capacity - usedCapacity() < itemType.OCCUPIED_SPACE * number)
         {
             throw new NotEnoughSpaceException();
         }
@@ -81,23 +50,26 @@ public abstract class Transporter implements Upgradable, Time
         }
     }
 
+    public abstract int computePrice();
+
+    public void removeFromList(Item.Type type, int number)
+    {
+        list.put(type, list.get(type) - number);
+    }
+
     private int usedCapacity()
     {
         int usedCapacity = 0;
-        for (Item.Type itemType : list.keySet())
+        for (Map.Entry<Item.Type, Integer> entry : list.entrySet())
         {
-            int elementOccupation = itemType.OCCUPIED_SPACE * list.get(itemType);
+            int elementOccupation = entry.getKey().OCCUPIED_SPACE * entry.getValue();
             usedCapacity += elementOccupation;
         }
         return usedCapacity;
     }
 
-    public void go() throws IsWorkingException
+    public void go()
     {
-        if (isWorking)
-        {
-            throw new IsWorkingException();
-        }
         isWorking = true;
         remainingTimeToArrive = timeToArrive;
     }
@@ -109,9 +81,9 @@ public abstract class Transporter implements Upgradable, Time
         {
             throw new AlreadyAtMaxLevelException();
         }
-        this.level++;
-        this.timeToArrive = timeToArrive - UPGRADE_SPEED_BOOST;
-        this.capacity = UPGRADE_CAPACITY_INCREASE + capacity;
+        level++;
+        timeToArrive -= UPGRADE_SPEED_BOOST;
+        capacity = UPGRADE_CAPACITY_INCREASE + capacity;
     }
 
     @Override

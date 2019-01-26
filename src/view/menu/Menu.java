@@ -48,7 +48,7 @@ public class Menu extends Scene {
         menuWallpaper.setFitHeight(View.HEIGHT);
         menuWallpaper.relocate(0, 0);
         //start game button design
-        Button startGame = new Button("start Game");
+        Button startGame = new Button("start InGameController");
         startGame.relocate(300, 300);
         startGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

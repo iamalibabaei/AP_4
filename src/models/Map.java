@@ -1,23 +1,26 @@
 package models;
 
+import controller.InGameController;
+import models.buildings.Warehouse;
 import models.interfaces.Time;
 import models.objects.Entity;
 import models.objects.Grass;
 import models.objects.Item;
 import models.objects.Point;
-import models.objects.animal.Animal;
-import models.objects.animal.WildAnimal;
+import models.objects.animals.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 public class Map implements Time
 {
-    public static final double WIDTH = 650, HEIGHT = 350;
-    private static Map ourInstance = new Map();
-    private ArrayList<Animal> animals;
-    private ArrayList<Grass> grasses;
-    private ArrayList<Item> items;
+    public static final double WIDTH = 30.0, HEIGHT = 30.0;
+    private static Map instance = new Map();
+    private List<Animal> animals;
+    private List<Grass> grasses;
+    private List<Item> items;
 
     private Map()
     {
@@ -28,35 +31,45 @@ public class Map implements Time
 
     public static Map getInstance()
     {
-        return ourInstance;
+        return instance;
     }
 
-    public ArrayList<Animal> getAnimals()
-    {
-        return animals;
-    }
-
-    public ArrayList<Grass> getGrasses()
-    {
-        return grasses;
-    }
-
-    public ArrayList<Item> getItems()
+    public static List<Item> store(List<Item> items)
     {
         return items;
     }
 
-    public void removeItems(ArrayList<Item> removedItems)
+    public Iterable<Animal> getAnimals()
+    {
+        return animals;
+    }
+
+    public Iterable<Grass> getGrasses()
+    {
+        return grasses;
+    }
+
+    public void putGrass(Point point)
+    {
+        grasses.add(new Grass(point));
+    }
+
+    public List<Item> getItems()
+    {
+        return items;
+    }
+
+    public void removeItems(Collection<Item> removedItems)
     {
         items.removeAll(removedItems);
     }
 
-    void cage(Point point)
+    public void cage(Point point)
     {
         for (Animal animal : animals)
         {
             double distance = animal.getCoordinates().distanceFrom(point);
-            if (distance <= Game.RADIUS && animal instanceof WildAnimal)
+            if (distance <= InGameController.COLLISION_RADIUS && animal instanceof WildAnimal)
             {
                 ((WildAnimal) animal).cage();
             }
@@ -77,7 +90,7 @@ public class Map implements Time
             grasses.add((Grass) entity);
     }
 
-    void plant(Point point)
+    public void plant(Point point)
     {
         grasses.add(new Grass(point));
     }
@@ -100,29 +113,25 @@ public class Map implements Time
 
     private void handleCollisions()
     {
-        double distance;
         for (Animal collider : animals)
         {
             for (Animal animal : animals)
             {
-                distance = collider.getCoordinates().distanceFrom(animal.getCoordinates());
-                if (distance <= Game.RADIUS)
+                if (collider.collidesWith(animal))
                 {
                     collider.collide(animal);
                 }
             }
             for (Item item : items)
             {
-                distance = collider.getCoordinates().distanceFrom(item.getCoordinates());
-                if (distance <= Game.RADIUS)
+                if (collider.collidesWith(item))
                 {
                     collider.collide(item);
                 }
             }
             for (Grass grass : grasses)
             {
-                distance = collider.getCoordinates().distanceFrom(grass.getCoordinates());
-                if (distance <= Game.RADIUS)
+                if (collider.collidesWith(grass))
                 {
                     collider.collide(grass);
                 }
@@ -153,6 +162,42 @@ public class Map implements Time
                 items.remove(item);
             }
         }
+    }
+
+    public void addAnimal(Animal.Type type)
+    {
+        Point coordinates = Point.randomPoint(WIDTH, HEIGHT);
+        switch (type)
+        {
+            case CAT:
+                animals.add(new Cat(coordinates, type));
+                break;
+            case DOG:
+                animals.add(new Dog(coordinates, type));
+                break;
+            case SHEEP:
+                animals.add(new DomesticAnimal(coordinates, type));
+                break;
+            case HEN:
+                animals.add(new DomesticAnimal(coordinates, type));
+                break;
+            case COW:
+                animals.add(new DomesticAnimal(coordinates, type));
+                break;
+        }
+    }
+
+    public List<Item> getNearbyItems(Point point)
+    {
+        List<Item> nearbyItems = new ArrayList<>();
+        for (Item item : items)
+        {
+            if (point.distanceFrom(item) <= InGameController.COLLISION_RADIUS)
+            {
+                nearbyItems.add(item);
+            }
+        }
+        return nearbyItems;
     }
 
 }

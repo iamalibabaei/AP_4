@@ -1,5 +1,5 @@
 /*
-package models.objects.animal;
+package models.objects.animals;
 
 import models.objects.Item;
 import models.buildings.Warehouse;

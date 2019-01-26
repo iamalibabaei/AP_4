@@ -1,5 +1,7 @@
 package models.objects;
 
+import controller.InGameController;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -19,7 +21,11 @@ public abstract class Entity {
     public Entity(Point point) {
         coordinates = point;
         exists = true;
+    }
 
+    public boolean collidesWith(Entity entity)
+    {
+        return coordinates.distanceFrom(entity.coordinates) <= InGameController.COLLISION_RADIUS;
     }
 
     public void setCoordinates(Point coordinates) {
@@ -36,7 +42,7 @@ public abstract class Entity {
     }
 
     public void die() {
-        this.exists = false;
+        exists = false;
     }
 
 }

@@ -1,4 +1,4 @@
-package models.objects.animal;
+package models.objects.animals;
 
 import models.objects.Entity;
 import models.objects.Point;
@@ -19,12 +19,6 @@ public class Dog extends Animal
         {
             entity.die();
         }
-    }
-
-    @Override
-    public void nextTurn()
-    {
-        super.nextTurn();
     }
 
     @Override

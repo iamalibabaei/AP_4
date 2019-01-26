@@ -2,13 +2,13 @@ package models.misc;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import models.Game;
+import controller.InGameController;
 import models.Map;
 import models.objects.Item;
-import models.objects.animal.Animal;
-import models.objects.animal.Cat;
-import models.objects.animal.Dog;
-import models.objects.animal.DomesticAnimal;
+import models.objects.animals.Animal;
+import models.objects.animals.Cat;
+import models.objects.animals.Dog;
+import models.objects.animals.DomesticAnimal;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +19,7 @@ import java.util.Scanner;
 
 public class Mission
 {
-    private static Game game;
+    private static InGameController game;
     private int moneyObjective;
     private HashMap<DomesticAnimal.Type, Integer> animalObjectives;
     private HashMap<Item.Type, Integer> ItemObjective;

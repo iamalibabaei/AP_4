@@ -1,0 +1,66 @@
+package models.objects.animals;
+
+import models.Map;
+import models.interfaces.Time;
+import models.objects.Entity;
+import models.objects.Item;
+import models.objects.Point;
+
+public abstract class Animal extends Entity implements Time
+{
+    private static final int speed = 5;
+    public final Animal.Type type;
+    protected Map map;
+    protected Point target;
+
+    Animal(Point point, Animal.Type type)
+    {
+        super(point);
+        target = null;
+        map = Map.getInstance();
+        this.type = type;
+    }
+
+    public abstract void collide(Entity entity);
+
+    @Override
+    public void nextTurn()
+    {
+        setTarget();
+        move();
+    }
+
+    public void setTarget() // default move is random
+    {
+        target = Point.randomPoint(Map.WIDTH, Map.HEIGHT);
+    }
+
+    //if (target == null) randomWalk
+    public void move()
+    {
+        Point direction = new Point(target.getX() - getCoordinates().getX(),
+                target.getY() - getCoordinates().getY());
+        direction.normalize();
+        getCoordinates().setX(getCoordinates().getX() + direction.getX() * Animal.speed);
+        getCoordinates().setY(getCoordinates().getY() + direction.getY() * Animal.speed);
+    }
+
+    public enum Type
+    {
+        CAT( 2500, Item.Type.NONE), DOG(2600, Item.Type.NONE),
+        LION(-1, Item.Type.NONE), BEAR(-1, Item.Type.NONE),
+        SHEEP(1000, Item.Type.FABRIC), HEN(100, Item.Type.EGG),
+        COW(10000, Item.Type.MILK);
+
+        public final int BUY_COST;
+        public final Item.Type PRODUCT;
+
+        Type(int BUY_COST, Item.Type PRODUCT)
+        {
+            this.BUY_COST = BUY_COST;
+            this.PRODUCT = PRODUCT;
+        }
+
+    }
+
+}
