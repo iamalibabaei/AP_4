@@ -1,5 +1,6 @@
 package models.buildings;
 
+import models.Viewable;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
@@ -8,7 +9,7 @@ import models.interfaces.Upgradable;
 
 // todo implement well last upgrade (automatic planting)
 
-public class Well implements Upgradable, Time
+public class Well extends Viewable implements Upgradable, Time
 {
     public static final String NAME = "well";
     public static final int[] UPGRADE_COST = {250, 500}, REFILL_COST = {19, 17, 15};

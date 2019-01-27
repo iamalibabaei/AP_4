@@ -3,6 +3,7 @@ package models.buildings;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import models.Map;
+import models.Viewable;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
@@ -15,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
-public class Workshop implements Upgradable, Time
+public class Workshop extends Viewable implements Upgradable, Time
 {
     private static final int[] PRODUCTION_TIME = {15, 14, 13, 11, 8};
     private final Point outputPlace;
@@ -33,6 +34,12 @@ public class Workshop implements Upgradable, Time
     private int maxProductionFactor;
     private boolean isWorking;
     private Map map;
+
+    @Override
+    public String getName()
+    {
+        return name;
+    }
 
     public Workshop(String name, Point outputPoint, int buildCost, java.util.Map<Item.Type, Integer> inputs,
                     java.util.Map<Item.Type, Integer> outputs)

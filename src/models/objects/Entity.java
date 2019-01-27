@@ -1,26 +1,23 @@
 package models.objects;
 
 import controller.InGameController;
-
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
+import models.Viewable;
 
-public abstract class Entity {
+public abstract class Entity extends Viewable
+{
     protected Point coordinates;
     private boolean exists;
-    private ImageView imageView;
 
-    public Text getText() {
-        return text;
-    }
-
-    protected Text text;//TODO shape will be imageView
-
-    public Entity(Point point) {
+    public Entity(Point point)
+    {
         coordinates = point;
         exists = true;
+    }
+
+    public Text getText()
+    {
+        return text;
     }
 
     public boolean collidesWith(Entity entity)
@@ -28,20 +25,24 @@ public abstract class Entity {
         return coordinates.distanceFrom(entity.coordinates) <= InGameController.COLLISION_RADIUS;
     }
 
-    public void setCoordinates(Point coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public Point getCoordinates() {
+    public Point getCoordinates()
+    {
 
         return coordinates;
     }
 
-    public boolean notExists() {
+    public void setCoordinates(Point coordinates)
+    {
+        this.coordinates = coordinates;
+    }
+
+    public boolean notExists()
+    {
         return !exists;
     }
 
-    public void die() {
+    public void die()
+    {
         exists = false;
     }
 

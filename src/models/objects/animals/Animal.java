@@ -8,7 +8,7 @@ import models.objects.Point;
 
 public abstract class Animal extends Entity implements Time
 {
-    private static final int speed = 5;
+    private static final int SPEED = 5;
     public final Animal.Type type;
     protected Map map;
     protected Point target;
@@ -19,6 +19,12 @@ public abstract class Animal extends Entity implements Time
         target = null;
         map = Map.getInstance();
         this.type = type;
+    }
+
+    @Override
+    public String getName()
+    {
+        return type.toString().toLowerCase();
     }
 
     public abstract void collide(Entity entity);
@@ -41,8 +47,8 @@ public abstract class Animal extends Entity implements Time
         Point direction = new Point(target.getX() - getCoordinates().getX(),
                 target.getY() - getCoordinates().getY());
         direction.normalize();
-        getCoordinates().setX(getCoordinates().getX() + direction.getX() * Animal.speed);
-        getCoordinates().setY(getCoordinates().getY() + direction.getY() * Animal.speed);
+        getCoordinates().setX(getCoordinates().getX() + direction.getX() * Animal.SPEED);
+        getCoordinates().setY(getCoordinates().getY() + direction.getY() * Animal.SPEED);
     }
 
     public enum Type

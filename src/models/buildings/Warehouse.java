@@ -1,5 +1,6 @@
 package models.buildings;
 
+import models.Viewable;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.NotEnoughSpaceException;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 // todo add all feature for truck
 
-public class Warehouse implements Upgradable
+public class Warehouse extends Viewable implements Upgradable
 {
     public static final String NAME = "warehouse";
     public static final int[] CAPACITY = {50, 150, 300, 600}, UPGRADE_COST = {200, 250, 300};

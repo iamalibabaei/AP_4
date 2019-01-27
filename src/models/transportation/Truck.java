@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class Truck extends Transporter
 {
-    public final String NAME = "truck";
     private static Truck instance = new Truck();
     private static final int[] SELLER_UPGRADE_COST_LIST = {150, 500, 1000};
     private static final int SELLER_UPGRADE_SPEED_BOOST = 5;
@@ -42,15 +41,9 @@ public class Truck extends Transporter
     }
 
     @Override
-    public void go()
-    {
-        super.go();
-    }
-
-    @Override
     public void nextTurn()
     {
-        if (!isWorking)
+        if (isWorking)
         {
             remainingTimeToArrive--;
             if (remainingTimeToArrive == 0)

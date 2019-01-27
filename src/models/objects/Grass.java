@@ -5,7 +5,7 @@ import javafx.scene.text.Text;
 
 public class Grass extends Entity
 {
-    private final static int MAX_GRASS = 10;
+    private static final int MAX_GRASS = 10;
     private int grass;
 
     public Grass(Point point)

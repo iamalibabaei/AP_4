@@ -163,10 +163,10 @@ public class InGameController implements Time
 
     public void clearStash(String transporterName) throws InvalidArgumentException
     {
-        if (transporterName.equals(helicopter.NAME))
+        if (transporterName.equals(helicopter.getName()))
         {
             helicopter.clearStash();
-        } else if (transporterName.equals(truck.NAME))
+        } else if (transporterName.equals(truck.getName()))
         {
             truck.clearStash();
         } else
@@ -186,10 +186,10 @@ public class InGameController implements Time
         }
         if (item == Item.Type.NONE)
             throw new InvalidArgumentException();
-        if (helicopter.NAME.equals(transporterName))
+        if (helicopter.getName().equals(transporterName))
         {
             helicopter.removeFromList(item, 1);
-        } else if (truck.NAME.equals(transporterName))
+        } else if (truck.getName().equals(transporterName))
         {
             truck.removeFromList(item, 1);
         } else
@@ -218,10 +218,10 @@ public class InGameController implements Time
         }
         if (item == Item.Type.NONE)
             throw new InvalidArgumentException();
-        if (helicopter.NAME.equals(transporterName))
+        if (helicopter.getName().equals(transporterName))
         {
             helicopter.addToList(item, count);
-        } else if (truck.NAME.equals(transporterName))
+        } else if (truck.getName().equals(transporterName))
         {
             truck.addToList(item, count);
         } else

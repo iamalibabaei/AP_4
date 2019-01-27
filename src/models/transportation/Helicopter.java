@@ -7,7 +7,6 @@ import models.objects.Point;
 
 public class Helicopter extends Transporter
 {
-    public final String NAME = "helicopter";
     private static final int BUYER_UPGRADE_SPEED_BOOST = 3;
     private static final int BUYER_UPGRADE_CAPACITY = 20;
     private static final int BASE_CAPACITY = 25;
