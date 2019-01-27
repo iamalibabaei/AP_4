@@ -1,5 +1,6 @@
 package models.objects.animals;
 
+import controller.InGameController;
 import models.Map;
 import models.buildings.Warehouse;
 import models.exceptions.AlreadyAtMaxLevelException;
@@ -38,7 +39,7 @@ public class Cat extends Animal implements Upgradable
             item.add((Item) entity);
             try
             {
-                item = Map.store(item);
+                InGameController.getInstance().store(item);
             } catch (NotEnoughSpaceException ignore)
             {
                 // nothing happens here!

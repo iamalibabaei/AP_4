@@ -47,14 +47,13 @@ public class DomesticAnimal extends Animal
 
     private void produce()
     {
-        map.addToMap(new Item(coordinates, type.PRODUCT));
+        map.addItem(new Item(coordinates, type.PRODUCT));
     }
 
     @Override
     public void setTarget()
     {
         target = null;
-
         if (isHungry)
         {
             double dist = 1000;

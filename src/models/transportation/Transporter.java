@@ -17,6 +17,12 @@ public abstract class Transporter implements Upgradable, Time
     private final int UPGRADE_SPEED_BOOST;
     private final int UPGRADE_CAPACITY_INCREASE;
     protected boolean isWorking;
+
+    public EnumMap<Item.Type, Integer> getList()
+    {
+        return list;
+    }
+
     protected EnumMap<Item.Type, Integer> list;
     protected int remainingTimeToArrive;
     protected int capacity, timeToArrive, level;
@@ -26,7 +32,7 @@ public abstract class Transporter implements Upgradable, Time
     {
         isWorking = false;
         this.capacity = capacity;
-        this.UPGRADE_COST_LIST = UPGRADE_COST_LIST;
+        this.UPGRADE_COST_LIST = UPGRADE_COST_LIST.clone();
         this.UPGRADE_SPEED_BOOST = UPGRADE_SPEED_BOOST;
         this.UPGRADE_CAPACITY_INCREASE = UPGRADE_CAPACITY_INCREASE;
         timeToArrive = BASE_TIME_TO_ARRIVE;
@@ -34,19 +40,18 @@ public abstract class Transporter implements Upgradable, Time
         list = new EnumMap<>(Item.Type.class);
     }
 
-    public void addToList(Item.Type itemType, int number) throws NotEnoughSpaceException
+    public void addToList(Item.Type itemType, int count) throws NotEnoughSpaceException
     {
-        // todo double-click feature
-        if (capacity - usedCapacity() < itemType.OCCUPIED_SPACE * number)
+        if (capacity - usedCapacity() < itemType.OCCUPIED_SPACE * count)
         {
             throw new NotEnoughSpaceException();
         }
         if (list.containsKey(itemType))
         {
-            list.put(itemType, number + list.get(itemType));
+            list.put(itemType, count + list.get(itemType));
         } else
         {
-            list.put(itemType, number);
+            list.put(itemType, count);
         }
     }
 

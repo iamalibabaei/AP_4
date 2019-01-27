@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class Warehouse implements Upgradable
 {
+    public static final String NAME = "warehouse";
     public static final int[] CAPACITY = {50, 150, 300, 600}, UPGRADE_COST = {200, 250, 300};
     private static final int MAX_LEVEL = 3;
     private static Warehouse instance = new Warehouse();
@@ -39,10 +40,13 @@ public class Warehouse implements Upgradable
         return remainingCapacity;
     }
 
-    public void moveToSeller(Item.Type item)
+    public void remove(EnumMap<Item.Type, Integer> items)
     {
-        remainingCapacity += item.OCCUPIED_SPACE;
-        storedItems.put(item, storedItems.get(item) - 1);
+        for (Item.Type type : items.keySet())
+        {
+            storedItems.put(type, storedItems.get(type) - 1);
+            remainingCapacity += type.OCCUPIED_SPACE;
+        }
     }
 
     public int moveToWorkshop(Map<Item.Type, Integer> base, int maxCoefficient) throws InsufficientResourcesException

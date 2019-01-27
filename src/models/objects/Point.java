@@ -1,7 +1,5 @@
 package models.objects;
 
-import controller.InGameController;
-
 import java.util.Random;
 
 public class Point
@@ -12,6 +10,12 @@ public class Point
     {
         this.x = x;
         this.y = y;
+    }
+
+    public static Point randomPoint(double xBound, double yBound)
+    {
+        Random random = new Random();
+        return new Point(random.nextDouble() * xBound, random.nextDouble() * yBound);
     }
 
     public void normalize()
@@ -49,12 +53,6 @@ public class Point
     public double distanceFrom(Point point1)
     {
         return Math.sqrt(StrictMath.pow(point1.x - x, 2.0) + StrictMath.pow(point1.y - y, 2.0));
-    }
-
-    public static Point randomPoint(double xBound, double yBound)
-    {
-        Random random = new Random();
-        return new Point(random.nextDouble() * xBound, random.nextDouble() * yBound);
     }
 
 }

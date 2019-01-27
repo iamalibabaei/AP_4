@@ -34,7 +34,7 @@ public class Map implements Time
         return instance;
     }
 
-    public static List<Item> store(List<Item> items)
+    public List<Item> store(List<Item> items)
     {
         return items;
     }
@@ -61,7 +61,10 @@ public class Map implements Time
 
     public void removeItems(Collection<Item> removedItems)
     {
-        items.removeAll(removedItems);
+        for (Item item : removedItems)
+        {
+            item.die();
+        }
     }
 
     public void cage(Point point)
@@ -74,20 +77,6 @@ public class Map implements Time
                 ((WildAnimal) animal).cage();
             }
         }
-    }
-
-    public void addToMap(Entity entity)
-    {
-        if (entity instanceof Animal)
-        {
-            animals.add((Animal) entity);
-        }
-        if (entity instanceof Item)
-        {
-            items.add((Item) entity);
-        }
-        if (entity instanceof Grass)
-            grasses.add((Grass) entity);
     }
 
     public void plant(Point point)
@@ -198,6 +187,16 @@ public class Map implements Time
             }
         }
         return nearbyItems;
+    }
+
+    public void addItem(Item item)
+    {
+        items.add(item);
+    }
+
+    public void addGrass(Grass grass)
+    {
+        grasses.add(grass);
     }
 
 }

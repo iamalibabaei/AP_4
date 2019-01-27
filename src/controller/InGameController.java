@@ -11,7 +11,6 @@ import models.objects.Point;
 import models.objects.animals.Animal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
-import models.transportation.Transporter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +38,8 @@ public class InGameController implements Time
         warehouse = Warehouse.getInstance();
         well = Well.getInstance();
         workshops = new ArrayList<>();
-        truck = new Truck();
-        helicopter = new Helicopter();
+        truck = Truck.getInstance();
+        helicopter = Helicopter.getInstance();
     }
 
     public static InGameController getInstance()
@@ -78,12 +77,19 @@ public class InGameController implements Time
         map.removeItems(storedItems);
     }
 
+    public void store(List<Item> items) throws NotEnoughSpaceException
+    {
+        List<Item> storedItems = warehouse.store(items);
+        map.removeItems(storedItems);
+    }
+
     public void cage(Point point)
     {
         map.cage(point);
     }
 
-    public void startWorkshop(String workshopName) throws InsufficientResourcesException, IsWorkingException {
+    public void startWorkshop(String workshopName) throws InsufficientResourcesException, IsWorkingException
+    {
         for (Workshop workshop : workshops)
         {
             if (workshop.name.equals(workshopName))
@@ -94,13 +100,14 @@ public class InGameController implements Time
         }
     }
 
-    public void upgrade(String parameter) throws AlreadyAtMaxLevelException, InsufficientResourcesException {
-
+    public void upgrade(String parameter) throws AlreadyAtMaxLevelException, InsufficientResourcesException
+    {
+        // todo
     }
 
     public void refillWell() throws InsufficientResourcesException, IsWorkingException
     {
-        if (money < Well.REFILL_COST[Well.getLevel()])
+        if (money < Well.REFILL_COST[well.getLevel()])
         {
             throw new InsufficientResourcesException();
         }
@@ -124,8 +131,14 @@ public class InGameController implements Time
         map.plant(point);
     }
 
-    public void sendHelicopter() throws IsWorkingException
+    public void sendHelicopter() throws InsufficientResourcesException
     {
+        int cost = helicopter.computePrice();
+        if (money < cost)
+        {
+            throw new InsufficientResourcesException();
+        }
+        money -= cost;
         helicopter.go();
     }
 
@@ -134,94 +147,72 @@ public class InGameController implements Time
         workshops.add(workshop);
     }
 
-    public void clearStash(String transporterName)
+    public void clearStash(String transporterName) throws InvalidArgumentException
     {
-    }
-
-    public void upgradeWarehouse() throws AlreadyAtMaxLevelException, InsufficientResourcesException
-    {
-        int cost = warehouse.getUpgradeCost();
-        if (money < cost)
+        if (transporterName.equals(helicopter.NAME))
         {
-            throw new InsufficientResourcesException();
-        }
-        money -= cost;
-        warehouse.upgrade();
+            helicopter.clearStash();
+        } else if (transporterName.equals(truck.NAME))
+        {
+            truck.clearStash();
+        } else
+            throw new InvalidArgumentException();
     }
 
-    public void addToStashHelicopter(String item) throws InsufficientResourcesException, NotEnoughSpaceException
+    public void removeFromStash(String transporterName, String itemName) throws InvalidArgumentException
     {
+        Item.Type item = Item.Type.NONE;
         for (Item.Type type : Item.Type.values())
         {
-            if (type.toString().toLowerCase().equals(item))
+            if (type.toString().equals(itemName))
             {
-                if (money < type.BUY_COST)
-                {
-                    throw new InsufficientResourcesException();
-                }
-                helicopter.addToList(type, 1);
-                money -= type.BUY_COST;
+                item = type;
+                break;
             }
+        }
+        if (item == Item.Type.NONE)
+            throw new InvalidArgumentException();
+        if (helicopter.NAME.equals(transporterName))
+        {
+            helicopter.removeFromList(item, 1);
+        } else if (truck.NAME.equals(transporterName))
+        {
+            truck.removeFromList(item, 1);
+        } else
+        {
+            throw new InvalidArgumentException();
         }
     }
 
-    public void addToStashTruck(String item) throws NotEnoughSpaceException
+    public void sendTruck()
     {
+        truck.go();
+        warehouse.remove(truck.getList());
+    }
+
+    public void addToStash(String transporterName, String itemName, int count) throws NotEnoughSpaceException,
+            InvalidArgumentException
+    {
+        Item.Type item = Item.Type.NONE;
         for (Item.Type type : Item.Type.values())
         {
-            if (type.toString().toLowerCase().equals(item))
+            if (type.toString().equals(itemName))
             {
-                truck.addToList(type, 1);
+                item = type;
+                break;
             }
         }
-    }
-
-    public void removeFromStash(String name, String item)
-    {
-        for (Item.Type type : Item.Type.values())
+        if (item == Item.Type.NONE)
+            throw new InvalidArgumentException();
+        if (helicopter.NAME.equals(transporterName))
         {
-            if (type.toString().toLowerCase().equals(item))
-            {
-                helicopter.removeFromList(type, 1);
-            }
-        }
-    }
-
-    public void sendTransporter(String name)
-    {
-        if (name.equals(Helicopter.NAME))
+            helicopter.addToList(item, count);
+        } else if (truck.NAME.equals(transporterName))
         {
-            helicopter.go();
-        }
-        else if (name.equals(Truck.NAME))
+            truck.addToList(item, count);
+        } else
         {
-            truck.go();
-        }
-    }
-
-
-    public void addToStash(String transporterName, String itemName, int count) throws NotEnoughSpaceException, IsWorkingException {
-
-        Transporter transporter = truck;
-        if (transporterName.equals("helicopter"))
-        {
-            if (helicopter == null)
-            {
-                System.out.println("no helicopter");
-                return;
-            } else
-            {
-                transporter = helicopter;
-            }
-        }
-
-        for (Item.Type item : Item.Type.values())
-        {
-            if (item.toString().toLowerCase().equals(itemName))
-            {
-                transporter.addToList(item, count);
-                return;
-            }
+            throw new InvalidArgumentException();
         }
     }
 
@@ -236,17 +227,6 @@ public class InGameController implements Time
         {
             workshop.nextTurn();
         }
-    }
-
-    public void upgradeHelicopter() throws AlreadyAtMaxLevelException, InsufficientResourcesException
-    {
-        int cost = helicopter.getUpgradeCost();
-        if (money < cost)
-        {
-            throw new InsufficientResourcesException();
-        }
-        money -= cost;
-        helicopter.upgrade();
     }
 
 }

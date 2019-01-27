@@ -1,16 +1,19 @@
 package models.transportation;
 
 import controller.InGameController;
+import models.buildings.Warehouse;
 import models.objects.Item;
 
 import java.util.Map;
 
 //TODO add box
 // todo add all to truck
+// todo double-click feature
 
 public class Truck extends Transporter
 {
-    public static final String NAME = "truck";
+    public final String NAME = "truck";
+    private static Truck instance = new Truck();
     private static final int[] SELLER_UPGRADE_COST_LIST = {150, 500, 1000};
     private static final int SELLER_UPGRADE_SPEED_BOOST = 5;
     private static final int SELLER_UPGRADE_CAPACITY = 20;
@@ -18,11 +21,16 @@ public class Truck extends Transporter
     private static final int BASE_TIME_TO_ARRIVE = 20;
     private Integer money;
 
-    public Truck()
+    private Truck()
     {
         super(SELLER_UPGRADE_COST_LIST, SELLER_UPGRADE_SPEED_BOOST, SELLER_UPGRADE_CAPACITY, BASE_TIME_TO_ARRIVE,
                 BASE_CAPACITY);
         money = InGameController.getInstance().getMoney();
+    }
+
+    public static Truck getInstance()
+    {
+        return instance;
     }
 
     @Override
@@ -34,6 +42,12 @@ public class Truck extends Transporter
             price += entry.getValue() * entry.getKey().SELL_MONEY;
         }
         return price;
+    }
+
+    @Override
+    public void go()
+    {
+        super.go();
     }
 
     @Override

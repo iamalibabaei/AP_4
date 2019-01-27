@@ -10,6 +10,7 @@ import models.interfaces.Upgradable;
 
 public class Well implements Upgradable, Time
 {
+    public static final String NAME = "well";
     public static final int[] UPGRADE_COST = {250, 500}, REFILL_COST = {19, 17, 15};
     public static final int[] CAPACITY = {5, 7, 10}, REFILL_TIME = {3, 4, 3};
     private static final Well instance = new Well();
