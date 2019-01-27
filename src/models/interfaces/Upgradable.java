@@ -6,5 +6,6 @@ public interface Upgradable
 {
     void upgrade() throws AlreadyAtMaxLevelException;
     int getUpgradeCost() throws AlreadyAtMaxLevelException;
+    int getLevel();
 
 }

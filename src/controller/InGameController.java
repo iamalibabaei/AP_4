@@ -29,6 +29,11 @@ public class InGameController implements Time
     private Truck truck;
     private Helicopter helicopter;
     private List<Workshop> workshops;
+
+    public void addMoney(Integer money) {
+        this.money += money;
+    }
+
     private List<Workshop> availableWorkshops;
 
     private InGameController()
@@ -40,6 +45,7 @@ public class InGameController implements Time
         workshops = new ArrayList<>();
         truck = Truck.getInstance();
         helicopter = Helicopter.getInstance();
+        money = 0;
     }
 
     public static InGameController getInstance()

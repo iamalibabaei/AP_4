@@ -1,7 +1,6 @@
 package models.transportation;
 
 import models.exceptions.AlreadyAtMaxLevelException;
-import models.exceptions.IsWorkingException;
 import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Time;
 import models.interfaces.Upgradable;
@@ -32,7 +31,7 @@ public abstract class Transporter implements Upgradable, Time
     {
         isWorking = false;
         this.capacity = capacity;
-        this.UPGRADE_COST_LIST = UPGRADE_COST_LIST.clone();
+        this.UPGRADE_COST_LIST = UPGRADE_COST_LIST;
         this.UPGRADE_SPEED_BOOST = UPGRADE_SPEED_BOOST;
         this.UPGRADE_CAPACITY_INCREASE = UPGRADE_CAPACITY_INCREASE;
         timeToArrive = BASE_TIME_TO_ARRIVE;

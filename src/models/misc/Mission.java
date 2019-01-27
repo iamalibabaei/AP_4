@@ -19,7 +19,7 @@ import java.util.Scanner;
 
 public class Mission
 {
-    private static InGameController game;
+    private static InGameController game = InGameController.getInstance();
     private int moneyObjective;
     private HashMap<DomesticAnimal.Type, Integer> animalObjectives;
     private HashMap<Item.Type, Integer> ItemObjective;
@@ -63,7 +63,7 @@ public class Mission
     {
         boolean hasDog = false, hasCat = false;
         int gameMoney = game.getMoney();
-        Map map = game.getMap();
+        Map map = Map.getInstance();
         HashMap<DomesticAnimal.Type, Integer> animalCurrentState = new HashMap<>();
         HashMap<Item.Type, Integer> itemCurrentState = new HashMap<>();
 

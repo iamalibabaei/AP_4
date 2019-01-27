@@ -11,8 +11,6 @@ import models.objects.Item;
 import models.objects.Point;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 
 // todo cat upgrade beyond level 1
@@ -29,7 +27,10 @@ public class Cat extends Animal implements Upgradable
         super(point, type);
         warehouse = Warehouse.getInstance();
     }
-
+    @Override
+    public int getLevel(){
+        return level;
+    }
     @Override
     public void collide(Entity entity)
     {

@@ -110,4 +110,9 @@ public class Warehouse implements Upgradable
         return UPGRADE_COST[level];
     }
 
+    @Override
+    public int getLevel() {
+        return level;
+    }
+
 }

@@ -62,6 +62,7 @@ public class Workshop implements Upgradable, Time
         map = Map.getInstance();
     }
 
+    @Override
     public int getLevel()
     {
         return level;
@@ -110,7 +111,7 @@ public class Workshop implements Upgradable, Time
             for (int i = 0; i < productionFactor * outputs.get(itemType); i++)
             {
                 //todo hame ye item ha ru ham mioftan x ro ykam jabeja mikonim
-                map.addToMap(new Item(outputPlace, itemType));
+                map.addItem(new Item(outputPlace, itemType));
             }
         }
     }

@@ -60,4 +60,8 @@ public class Helicopter extends Transporter
         }
     }
 
+    @Override
+    public int getLevel() {
+        return level;
+    }
 }

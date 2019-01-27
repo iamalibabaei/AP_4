@@ -1,7 +1,6 @@
 package models.transportation;
 
 import controller.InGameController;
-import models.buildings.Warehouse;
 import models.objects.Item;
 
 import java.util.Map;
@@ -19,13 +18,11 @@ public class Truck extends Transporter
     private static final int SELLER_UPGRADE_CAPACITY = 20;
     private static final int BASE_CAPACITY = 40;
     private static final int BASE_TIME_TO_ARRIVE = 20;
-    private Integer money;
 
     private Truck()
     {
         super(SELLER_UPGRADE_COST_LIST, SELLER_UPGRADE_SPEED_BOOST, SELLER_UPGRADE_CAPACITY, BASE_TIME_TO_ARRIVE,
                 BASE_CAPACITY);
-        money = InGameController.getInstance().getMoney();
     }
 
     public static Truck getInstance()
@@ -61,7 +58,7 @@ public class Truck extends Transporter
                 for (Map.Entry<Item.Type, Integer> entry : list.entrySet())
                 {
                     int elementSell = entry.getKey().SELL_MONEY * entry.getValue();
-                    money += elementSell;
+                    InGameController.getInstance().addMoney(elementSell);
                 }
                 clearStash();
                 isWorking = false;
@@ -69,5 +66,9 @@ public class Truck extends Transporter
         }
     }
 
+    @Override
+    public int getLevel() {
+        return level;
+    }
 }
 
