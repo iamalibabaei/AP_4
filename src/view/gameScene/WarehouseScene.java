@@ -71,7 +71,7 @@ public class WarehouseScene extends Pane {
     private void setBackgroundStuff() {
         Image background = null;
         try {
-            background = new Image(new FileInputStream("Textures\\Service\\Depot\\" + Warehouse.getInstance().getLevel() + ".png"));
+            background = new Image(new FileInputStream("res/Textures/Service/Depot/" + Warehouse.getInstance().getLevel() + ".png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

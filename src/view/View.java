@@ -110,13 +110,13 @@ public class View extends Application {
 
         }
     }
-    public void addEntityToMap(Entity entity, Point location) {
+    public void addEntityToMap(Entity entity) {
         if (entity instanceof Animal) {
-            GameScene.getInstance().addAnimal((Animal) entity, location);
+            GameScene.getInstance().addAnimal((Animal) entity, entity.getCoordinates());
         } else if (entity instanceof Grass) {
-            GameScene.getInstance().addGrass((Grass) entity, location);
+            GameScene.getInstance().addGrass((Grass) entity, entity.getCoordinates());
         } else if (entity instanceof Item) {
-            GameScene.getInstance().addItem((Item) entity, location);
+            GameScene.getInstance().addItem((Item) entity, entity.getCoordinates());
         }
     }
 }

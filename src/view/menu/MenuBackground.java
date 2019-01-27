@@ -27,7 +27,7 @@ public class MenuBackground extends Pane {
 
         Image background = null;
         try {
-            background = new Image(new FileInputStream("Textures\\menuWallpaper.jpg"));
+            background = new Image(new FileInputStream("res/Textures/menuWallpaper.jpg"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class MenuBackground extends Pane {
         this.getChildren().add(pane);
         Image image = null;
         try {
-            image = new Image(new FileInputStream("Textures\\Animals\\Cow\\down_left.png"));
+            image = new Image(new FileInputStream("res/Textures/Animals/Cow/down_left.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

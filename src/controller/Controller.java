@@ -26,6 +26,7 @@ public class Controller
     private InGameController game;
     private Mission mission;
     private Account account;
+    private int delayForNextTurn = 1000;
 
 
     public static void main(String[] args) {
@@ -43,6 +44,7 @@ public class Controller
         itemObjective.put(Item.Type.DRIED_EGG, 5);
         HashMap<Animal.Type, Integer> animalAtBeginning = new HashMap<>();
         animalAtBeginning.put(Animal.Type.HEN, 5);
+
 
         Mission mission = new Mission(1000, animalObjective, itemObjective, false, false, animalAtBeginning, 200);
         FileWriter fileWriter = null;
@@ -218,28 +220,14 @@ public class Controller
 //        throw new InvalidArgumentException();
 //    }
 //
-    public void loadMission(){
-        //todo load map of startGame
-        InGameController.getInstance().addMoney(mission.getMoneyAtBeginning());
-    }
+
 
     public void startGame() {
-        //game = InGameController.getInstance();
+        game = InGameController.getInstance();
         view = View.getInstance();
         view.startGame();
-        loadMission();
-/*        while (!mission.isAccomplished()) {
-            //TODO
-            //game.nextTurn();
-
-            try {
-                Thread.sleep(1000);
-                System.out.println("nextTurn");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        endGame();*/
+        game.setMission(mission);
+        game.startGame();
     }
 
     public void endGame() {
@@ -257,5 +245,9 @@ public class Controller
 
     public void click(double x, double y) {
 
+    }
+
+    public void setDelayForNextTurn(int delayForNextTurn) {
+        this.delayForNextTurn = delayForNextTurn;
     }
 }

@@ -37,7 +37,7 @@ public class GameBackground extends Pane {
     private void setBackgroundStuff() {
         Image background = null;
         try {
-            background = new Image(new FileInputStream("Textures\\back.png"));
+            background = new Image(new FileInputStream("res/Textures/back.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class GameBackground extends Pane {
             Image backImage = null;
 
             try {
-                backImage = new Image(new FileInputStream("Textures\\menuItemButton.png"));
+                backImage = new Image(new FileInputStream("res/Textures/menuItemButton.png"));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

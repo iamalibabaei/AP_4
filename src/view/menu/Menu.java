@@ -39,7 +39,7 @@ public class Menu extends Scene {
 
         Image menuImage = null;
         try {
-            menuImage = new Image(new FileInputStream("Textures\\menuWallpaper.jpg"));
+            menuImage = new Image(new FileInputStream("res/Textures/menuWallpaper.jpg"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

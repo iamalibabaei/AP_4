@@ -8,6 +8,8 @@ import models.objects.Grass;
 import models.objects.Item;
 import models.objects.Point;
 import models.objects.animals.*;
+import view.View;
+import view.gameScene.GameScene;
 
 import java.util.ArrayList;
 import java.util.Collection;

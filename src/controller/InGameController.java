@@ -6,14 +6,19 @@ import models.buildings.Well;
 import models.buildings.Workshop;
 import models.exceptions.*;
 import models.interfaces.Time;
+import models.misc.Mission;
 import models.objects.Item;
 import models.objects.Point;
 import models.objects.animals.Animal;
+import models.objects.animals.Cat;
+import models.objects.animals.Dog;
+import models.objects.animals.DomesticAnimal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
 import view.gameScene.GameScene;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 // todo you have to buy helicopter in the beginning
@@ -30,6 +35,7 @@ public class InGameController implements Time
     private Truck truck;
     private Helicopter helicopter;
     private List<Workshop> workshops;
+    private Mission mission;
 
     public void addMoney(Integer money) {
         this.money += money;
@@ -81,7 +87,6 @@ public class InGameController implements Time
     private void withdrawMoney(int cost) {
         money -= cost;
         GameScene.getInstance().updateMoneyInformation();
-
     }
 
     public void pickUp(Point point) throws NotEnoughSpaceException
@@ -243,4 +248,89 @@ public class InGameController implements Time
         }
     }
 
+    public void loadMission(){
+        addMoney(mission.getMoneyAtBeginning());
+        for (Animal.Type animal : mission.getAnimalAtBeginning().keySet()) {
+            for (int i = 0; i < mission.getAnimalAtBeginning().get(animal); i++) {
+                //todo map.addAnimal(animal);
+            }
+        }
+        InGameController.getInstance().addMoney(mission.getMoneyAtBeginning());
+    }
+
+    public void startGame() {
+        loadMission();
+        //TODO loop for next turn
+
+    }
+
+    private boolean isAccomplished()
+    {
+        boolean hasDog = false, hasCat = false;
+        int gameMoney = getMoney();
+        Map map = Map.getInstance();
+        HashMap<DomesticAnimal.Type, Integer> animalCurrentState = new HashMap<>();
+        HashMap<Item.Type, Integer> itemCurrentState = new HashMap<>();
+
+        for (Item item : map.getItems())
+        {
+            itemCurrentState.put(item.type, itemCurrentState.getOrDefault(item.type, 0) + 1);
+        }
+
+        for (Animal animal : map.getAnimals())
+        {
+            if (animal instanceof Dog)
+            {
+                hasDog = true;
+            } else if (animal instanceof Cat)
+            {
+                hasCat = true;
+            } else if (animal instanceof DomesticAnimal)
+            {
+                animalCurrentState.put(((DomesticAnimal) animal).type
+                        , animalCurrentState.getOrDefault(((DomesticAnimal) animal).type, 0) + 1);
+            }
+
+        }
+        return checkAccomplishment(gameMoney, animalCurrentState, itemCurrentState, hasCat, hasDog);
+    }
+
+    private boolean checkAccomplishment(int money, HashMap<DomesticAnimal.Type, Integer> animalCurrentState,
+                                        HashMap<Item.Type, Integer> ItemCurentState, boolean hasCat, boolean hasDog)
+    {
+        if (mission.getMoneyObjective() > money)
+        {
+            return false;
+        }
+        for (DomesticAnimal.Type type : animalCurrentState.keySet())
+        {
+            if (mission.getAnimalObjectives().containsKey(type))
+            {
+                if (mission.getAnimalObjectives().get(type) > animalCurrentState.get(type))
+                {
+                    return false;
+                }
+            }
+        }
+
+        for (Item.Type type : ItemCurentState.keySet())
+        {
+            if (mission.getItemObjective().containsKey(type))
+            {
+                if (mission.getItemObjective().get(type) > ItemCurentState.get(type))
+                {
+                    return false;
+                }
+            }
+        }
+        if (mission.isDog() && !hasDog)
+        {
+            return false;
+        }
+        return !mission.isCat() || hasCat;
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
+    }
 }

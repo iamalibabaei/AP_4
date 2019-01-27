@@ -35,7 +35,7 @@ public class MissionScene extends Scene {
         root.getChildren().clear();
         Image menuImage = null;
         try {
-            menuImage = new Image(new FileInputStream("Textures\\menuWallpaper.jpg"));
+            menuImage = new Image(new FileInputStream("res/Textures/menuWallpaper.jpg"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class MissionScene extends Scene {
     private void runGame(String text) {
         Controller.getInstance().setAccount(account);
         try {
-            Controller.getInstance().setMission(Mission.loadJson("res\\missions\\"+ text + ".json"));
+            Controller.getInstance().setMission(Mission.loadJson("res/missions/"+ text + ".json"));
         } catch (FileNotFoundException e) {
             //TODO show alert
             e.printStackTrace();
