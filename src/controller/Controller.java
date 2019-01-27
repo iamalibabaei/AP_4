@@ -229,7 +229,7 @@ public class Controller
         view = View.getInstance();
         view.startGame();
         loadMission();
-        while (!mission.isAccomplished()) {
+/*        while (!mission.isAccomplished()) {
             //TODO
             //game.nextTurn();
 
@@ -240,7 +240,7 @@ public class Controller
                 e.printStackTrace();
             }
         }
-        endGame();
+        endGame();*/
     }
 
     public void endGame() {

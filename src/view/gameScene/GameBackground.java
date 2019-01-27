@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
 import models.objects.animals.Animal;
@@ -59,7 +61,7 @@ public class GameBackground extends Pane {
             Image backImage = null;
 
             try {
-                backImage = new Image(new FileInputStream("Textures\\UI\\Icons\\Products\\" + type + "Icon.png"));
+                backImage = new Image(new FileInputStream("Textures\\menuItemButton.png"));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -68,7 +70,9 @@ public class GameBackground extends Pane {
             imageView.setFitWidth(100);
 
             StackPane addAnimal = new StackPane();
-            addAnimal.getChildren().addAll(imageView);
+            Text text = new Text(animalName);
+            text.setFill(Color.YELLOW);
+            addAnimal.getChildren().addAll(imageView, text);
             addAnimal.relocate(20 + animalButton.indexOf(animalName) * 100, 20);
             addAnimal.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -82,8 +86,11 @@ public class GameBackground extends Pane {
                     }
                 }
             });
+            Text buyCost = new Text(Integer.toString(type.BUY_COST));
+            buyCost.setFill(Color.YELLOW);
+            buyCost.relocate(60 + animalButton.indexOf(animalName) * 100, 100);
 
-            this.getChildren().addAll(addAnimal);
+            this.getChildren().addAll(addAnimal, buyCost);
         }
 
 
