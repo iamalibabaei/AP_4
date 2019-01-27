@@ -220,8 +220,7 @@ public class Controller
 //
     public void loadMission(){
         //todo load map of startGame
-//        Game.getInstance().setMoney(0);
-
+        InGameController.getInstance().addMoney(mission.getMoneyAtBeginning());
     }
 
     public void startGame() {

@@ -11,6 +11,7 @@ import models.objects.Point;
 import models.objects.animals.Animal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
+import view.gameScene.GameScene;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class InGameController implements Time
 
     public void addMoney(Integer money) {
         this.money += money;
+        GameScene.getInstance().updateMoneyInformation();
     }
 
     private List<Workshop> availableWorkshops;
@@ -70,6 +72,7 @@ public class InGameController implements Time
                 }
                 map.addAnimal(type);
                 money -= type.BUY_COST;
+                GameScene.getInstance().updateMoneyInformation();
                 return;
             }
         }
@@ -128,6 +131,7 @@ public class InGameController implements Time
             throw new InsufficientResourcesException();
         }
         money -= cost;
+        GameScene.getInstance().updateMoneyInformation();
         well.upgrade();
     }
 
@@ -145,6 +149,7 @@ public class InGameController implements Time
             throw new InsufficientResourcesException();
         }
         money -= cost;
+        GameScene.getInstance().updateMoneyInformation();
         helicopter.go();
     }
 

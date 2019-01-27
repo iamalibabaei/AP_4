@@ -1,6 +1,7 @@
 package view.gameScene;
 
 import controller.Controller;
+import controller.InGameController;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import models.exceptions.InsufficientResourcesException;
@@ -28,7 +30,7 @@ public class GameScene extends Scene
     }
 
     private Group root;
-    private ImageView background;
+    private Text money;
 
     public GameScene() {
         super(new Group(), View.WIDTH, View.HEIGHT);
@@ -43,6 +45,19 @@ public class GameScene extends Scene
         WarehouseScene.getInstance().setVisible(false);
         wellGraphic();
         warehouseGraphic();
+        moneyGraphic();
+    }
+
+    private void moneyGraphic() {
+        money = new Text(Integer.toString(InGameController.getInstance().getMoney()));
+        money.relocate(1000, 100);
+        money.setFill(Color.YELLOW);
+        money.setFont(Font.font(30));
+        root.getChildren().addAll(money);
+    }
+
+    public void updateMoneyInformation(){
+        money.setText(Integer.toString(InGameController.getInstance().getMoney()));
     }
 
     private void wellGraphic() {
@@ -105,19 +120,19 @@ public class GameScene extends Scene
 
     public void addAnimal(Animal animal, Point location) {
         Text text = animal.getText();
-        text.relocate(location.getX() + 325, location.getY());
+        text.relocate((location.getX() + 325) *  MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
         MapView.getInstance().getChildren().addAll(text);
     }
 
     public void addGrass(Grass entity, Point location) {
         Text text = entity.getText();
-        text.relocate(location.getX() + 325, location.getY());
+        text.relocate((location.getX() + 325) *  MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
         MapView.getInstance().getChildren().addAll(text);
     }
 
     public void addItem(Item entity, Point location) {
         Text text = entity.getText();
-        text.relocate(location.getX() + 325, location.getY());
+        text.relocate((location.getX() + 325) *  MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
         MapView.getInstance().getChildren().addAll(text);
     }
     public void removeAnimal(Animal animal){

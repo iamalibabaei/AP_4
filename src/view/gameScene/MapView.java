@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 public class MapView extends Pane {
     private static MapView instance = new MapView();
+    public static final double WIDTH_BASE = 20, HEIGHT_BASE = 12;
     private ArrayList<Text> entitiesInMap;
     public static MapView getInstance() {
         return instance;
@@ -27,14 +28,14 @@ public class MapView extends Pane {
     private MapView() {
         entitiesInMap = new ArrayList<>();
         relocate(View.WIDTH * 0.25, View.HEIGHT * 0.3);
-        setHeight(Map.HEIGHT);
-        setWidth(Map.WIDTH);
+        setHeight(Map.HEIGHT * HEIGHT_BASE);
+        setWidth(Map.WIDTH * WIDTH_BASE);
         build();
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println(event.getSceneX()- 325+"   "+ event.getY());
-                Controller.getInstance().click(event.getX() - 325, event.getY());
+                System.out.println((event.getSceneX()- 325) / WIDTH_BASE+"   "+ event.getY() / HEIGHT_BASE);
+                Controller.getInstance().click((event.getX() - 325) / WIDTH_BASE, event.getY() / HEIGHT_BASE);
             }
         });
     }
