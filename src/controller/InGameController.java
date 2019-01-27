@@ -126,10 +126,12 @@ public class InGameController implements Time
 
     public void refillWell() throws InsufficientResourcesException, IsWorkingException
     {
-        if (money < Well.REFILL_COST[well.getLevel()])
+        int cost = Well.REFILL_COST[well.getLevel()];
+        if (money < cost)
         {
             throw new InsufficientResourcesException();
         }
+        money -= cost;
         well.issueRefill();
     }
 
