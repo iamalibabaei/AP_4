@@ -5,7 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import models.buildings.Warehouse;
+import models.exceptions.AlreadyAtMaxLevelException;
+import models.objects.Item;
 import view.View;
 
 import java.io.FileInputStream;
@@ -26,6 +29,46 @@ public class WarehouseScene extends Pane {
     }
 
     private void build() {
+        setBackgroundStuff();
+        setButtons();
+        setVisible(false);
+
+    }
+
+    private void setButtons() {
+        Button exit = new Button("exit");
+        exit.relocate(20, 20);
+        exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                GameScene.getInstance().closeWarehouse();
+            }
+        });
+        getChildren().addAll(exit);
+        //////////////
+        Button upgrade = new Button("upgradeWarehouse");
+        upgrade.relocate(50, 20);
+        upgrade.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    Warehouse.getInstance().upgrade();
+                } catch (AlreadyAtMaxLevelException e) {
+                    View.getInstance().showExceptions(e, View.WIDTH/2 - width / 2, View.HEIGHT / 2 - height / 2);
+                }
+            }
+        });
+        getChildren().addAll(upgrade);
+        int XValue = 50, YValue = 50;
+        for (Item.Type item : Warehouse.getInstance().getStoredItems().keySet()) {
+            Text text = new Text(item.name() + "---->" + Integer.toString(Warehouse.getInstance().getStoredItems().get(item)));
+            text.relocate(XValue, YValue);
+            YValue += 50;
+            getChildren().addAll(text);
+        }
+    }
+
+    private void setBackgroundStuff() {
         Image background = null;
         try {
             background = new Image(new FileInputStream("Textures\\Service\\Depot\\" + Warehouse.getInstance().getLevel() + ".png"));
@@ -39,18 +82,11 @@ public class WarehouseScene extends Pane {
         pane.setMinSize(width, height);
         pane.setBackground(new Background(backgroundImage));
         getChildren().add(pane);
-        Button exit = new Button("exit");
-        exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                GameScene.getInstance().closeWarehouse();
-            }
-        });
-        getChildren().addAll(exit);
     }
 
     public void UpdateInformation(){
-        //TODO
+        getChildren().clear();
+        build();
     }
 
 

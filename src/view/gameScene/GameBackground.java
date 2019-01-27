@@ -30,6 +30,11 @@ public class GameBackground extends Pane {
     }
 
     private void build() {
+        setBackgroundStuff();
+        setBuyAnimalButton();
+    }
+
+    private void setBackgroundStuff() {
         Image background = null;
         try {
             background = new Image(new FileInputStream("Textures\\back.png"));
@@ -45,8 +50,6 @@ public class GameBackground extends Pane {
         pane.setMinSize(View.WIDTH * 2, View.HEIGHT);
         pane.setBackground(new Background(backgroundImage));
         this.getChildren().add(pane);
-        setBuyAnimalButton();
-
     }
 
     private void setBuyAnimalButton() {//TODO change later

@@ -5,7 +5,6 @@ import controller.InGameController;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -42,10 +41,31 @@ public class GameScene extends Scene
 
         root.getChildren().clear();
         root.getChildren().addAll(GameBackground.getInstance(), MapView.getInstance(), WarehouseScene.getInstance());
-        WarehouseScene.getInstance().setVisible(false);
         wellGraphic();
         warehouseGraphic();
         moneyGraphic();
+        truckGraphic();
+        root.getChildren().addAll(TruckView.getInstance());
+    }
+
+    private void truckGraphic() {
+        int XValue = 200, YValue = 600;
+        Circle circle = new Circle(25);
+        circle.setFill(Color.BLUE);
+        Text text = new Text("truck");
+        text.setBoundsType(TextBoundsType.VISUAL);
+        StackPane truckGraphic = new StackPane();
+        truckGraphic.getChildren().addAll(circle,text);
+        truckGraphic.relocate(XValue, YValue);
+        truckGraphic.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                openTruck();
+            }
+        });
+
+        root.getChildren().addAll(truckGraphic);
+
     }
 
     private void moneyGraphic() {
@@ -129,6 +149,16 @@ public class GameScene extends Scene
         text.relocate((location.getX() + 325) *  MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
         MapView.getInstance().getChildren().addAll(text);
     }
+
+    public void openTruck(){
+        TruckView.getInstance().updateInformation();
+        TruckView.getInstance().setVisible(true);
+    }
+
+    public void closeTruck() {
+        TruckView.getInstance().setVisible(false);
+    }
+
 
     public void addItem(Item entity, Point location) {
         Text text = entity.getText();

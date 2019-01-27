@@ -71,12 +71,17 @@ public class InGameController implements Time
                     throw new InsufficientResourcesException();
                 }
                 map.addAnimal(type);
-                money -= type.BUY_COST;
-                GameScene.getInstance().updateMoneyInformation();
+                withdrawMoney(type.BUY_COST);
                 return;
             }
         }
         throw new InvalidArgumentException();
+    }
+
+    private void withdrawMoney(int cost) {
+        money -= cost;
+        GameScene.getInstance().updateMoneyInformation();
+
     }
 
     public void pickUp(Point point) throws NotEnoughSpaceException
@@ -130,8 +135,7 @@ public class InGameController implements Time
         {
             throw new InsufficientResourcesException();
         }
-        money -= cost;
-        GameScene.getInstance().updateMoneyInformation();
+        withdrawMoney(cost);
         well.upgrade();
     }
 
@@ -148,8 +152,7 @@ public class InGameController implements Time
         {
             throw new InsufficientResourcesException();
         }
-        money -= cost;
-        GameScene.getInstance().updateMoneyInformation();
+        withdrawMoney(cost);
         helicopter.go();
     }
 

@@ -21,6 +21,11 @@ public class Warehouse implements Upgradable
     private static Warehouse instance = new Warehouse();
     private int level;
     private int remainingCapacity;
+
+    public EnumMap<Item.Type, Integer> getStoredItems() {
+        return storedItems;
+    }
+
     private EnumMap<Item.Type, Integer> storedItems;
 
     private Warehouse()
