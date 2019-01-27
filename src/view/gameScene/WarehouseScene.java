@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import models.Game;
 import models.buildings.Warehouse;
 import view.View;
 
@@ -29,7 +28,7 @@ public class WarehouseScene extends Pane {
     private void build() {
         Image background = null;
         try {
-            background = new Image(new FileInputStream("Textures\\Service\\Depot\\03.png"));
+            background = new Image(new FileInputStream("Textures\\Service\\Depot\\" + Warehouse.getInstance().getLevel() + ".png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

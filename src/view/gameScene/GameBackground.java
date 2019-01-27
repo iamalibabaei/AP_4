@@ -1,18 +1,14 @@
 package view.gameScene;
 
-import controller.Controller;
+import controller.InGameController;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextBoundsType;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
-import models.objects.animal.Animal;
+import models.objects.animals.Animal;
 import view.View;
 
 import java.io.FileInputStream;
@@ -39,14 +35,15 @@ public class GameBackground extends Pane {
             e.printStackTrace();
         }
 
-        BackgroundSize backgroundSize = new BackgroundSize(View.WIDTH, View.HEIGHT, false, false, false, false);
-        BackgroundImage backgroundImage = new BackgroundImage(background, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
+        BackgroundSize backgroundSize = new BackgroundSize(View.WIDTH, View.HEIGHT, false,
+                false, false, false);
+        BackgroundImage backgroundImage = new BackgroundImage(background, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
         Pane pane = new Pane();
         pane.setMinSize(View.WIDTH * 2, View.HEIGHT);
         pane.setBackground(new Background(backgroundImage));
         this.getChildren().add(pane);
         setBuyAnimalButton();
-
 
     }
 
@@ -60,8 +57,9 @@ public class GameBackground extends Pane {
         for (String animalName : animalButton) {
             Animal.Type type = Animal.Type.valueOf(animalName);
             Image backImage = null;
+
             try {
-                backImage = new Image(new FileInputStream("Textures\\menuItemButton.png"));
+                backImage = new Image(new FileInputStream("Textures\\UI\\Icons\\Products\\" + type + "Icon.png"));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -70,15 +68,13 @@ public class GameBackground extends Pane {
             imageView.setFitWidth(100);
 
             StackPane addAnimal = new StackPane();
-            Text animalNameText = new Text(animalName);
-            animalNameText.setFill(Color.YELLOW);
-            addAnimal.getChildren().addAll(imageView, animalNameText);
-            addAnimal.relocate(20 + animalButton.indexOf(animalName) * 80, 20);
+            addAnimal.getChildren().addAll(imageView);
+            addAnimal.relocate(20 + animalButton.indexOf(animalName) * 100, 20);
             addAnimal.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     try {
-                        Controller.getInstance().buy(animalName.toLowerCase());
+                        InGameController.getInstance().buyAnimal(animalName.toLowerCase());
                     } catch (InsufficientResourcesException e) {
                         View.getInstance().showExceptions(e, 30, 30);
                     } catch (InvalidArgumentException e) {
@@ -86,13 +82,8 @@ public class GameBackground extends Pane {
                     }
                 }
             });
-            Text text = new Text(Integer.toString(type.BUY_COST));
-            text.setFill(Color.YELLOW);
-            text.setFont(Font.font ("Verdana", 15));
 
-            text.setBoundsType(TextBoundsType.VISUAL);
-            text.relocate(50 + animalButton.indexOf(animalName) * 80, 130);
-            this.getChildren().addAll(addAnimal, text);
+            this.getChildren().addAll(addAnimal);
         }
 
 

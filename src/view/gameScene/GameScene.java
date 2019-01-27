@@ -11,14 +11,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
-import models.Map;
-import models.buildings.Warehouse;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
 import models.objects.Grass;
 import models.objects.Item;
 import models.objects.Point;
-import models.objects.animal.Animal;
+import models.objects.animals.Animal;
 import view.View;
 
 public class GameScene extends Scene
