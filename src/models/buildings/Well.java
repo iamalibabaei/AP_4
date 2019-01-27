@@ -14,14 +14,15 @@ public class Well implements Upgradable, Time
     public static final int[] CAPACITY = {5, 7, 10}, REFILL_TIME = {3, 4, 3};
     private static final Well instance = new Well();
     private static final int MAX_LEVEL = 2;
-    private static int level = 0;
+    private int level;
     private boolean isRefilling;
     private int remainingWater;
-    private int remainingTimeToRefill;
+    private int remainingTimeToRefill; // only needed when refilling
 
     private Well()
     {
         isRefilling = false;
+        level = 0;
         remainingWater = CAPACITY[level];
     }
 
@@ -30,7 +31,7 @@ public class Well implements Upgradable, Time
         return instance;
     }
 
-    public static int getLevel()
+    public int getLevel()
     {
         return level;
     }
