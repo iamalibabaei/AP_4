@@ -1,13 +1,19 @@
 package view.gameScene;
 
+import controller.Controller;
 import controller.AddressConstants;
 import controller.InGameController;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import models.buildings.Warehouse;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
+import models.exceptions.NotEnoughSpaceException;
+import models.interfaces.Time;
 import models.objects.animals.Animal;
 import view.View;
 
@@ -15,7 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class GameBackground extends Pane {
+public class GameBackground extends Pane implements Time {
     private static GameBackground instance = new GameBackground();
 
 
@@ -70,7 +76,7 @@ public class GameBackground extends Pane {
     private void setBackgroundStuff() {
         Image background = null;
         try {
-            background = new Image(new FileInputStream(AddressConstants.GAME_BACKGROUND_ROOT + "background.png"));
+            background = new Image(new FileInputStream("res/Textures/back.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -79,7 +85,6 @@ public class GameBackground extends Pane {
                 false, false, false);
         BackgroundImage backgroundImage = new BackgroundImage(background, BackgroundRepeat.REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
-
         Pane pane = new Pane();
         pane.setMinSize(View.WIDTH * 2, View.HEIGHT);
         pane.setBackground(new Background(backgroundImage));
@@ -173,10 +178,28 @@ public class GameBackground extends Pane {
 //            buyCost.relocate(60 + animalButton.indexOf(animalName) * 100, 100);
             this.getChildren().addAll(addAnimal);
 
+            this.getChildren().addAll(addAnimal, buyCost);
         }
 
 
 
     }
 
+    @Override
+    public void nextTurn() {
+        // if not enough money color of buttons becomes brown
+        for (Node node : getChildren()) {
+            if (node instanceof Text) {
+                try {
+                    if (Integer.parseInt(((Text) node).getText()) > InGameController.getInstance().getMoney()) {
+                        ((Text) node).setFill(Color.BROWN);
+                    } else {
+                        ((Text) node).setFill(Color.YELLOW);
+                    }
+                } catch (Exception e) {
+                    //nothing really
+                }
+            }
+        }
+    }
 }

@@ -14,7 +14,7 @@ import view.View;
 
 import java.util.ArrayList;
 
-public class MapView extends Pane {
+public class MapView extends Pane implements Time{
     private static MapView instance = new MapView();
     public static final double WIDTH_BASE = 20, HEIGHT_BASE = 12;
     private ArrayList<Text> entitiesInMap;
@@ -63,4 +63,14 @@ public class MapView extends Pane {
         getChildren().addAll(rectangle1, rectangle2, rectangle3, rectangle4);
     }
 
+    @Override
+    public void nextTurn() {
+        getChildren().clear();
+        Iterable<Animal> animals = Map.getInstance().getAnimals();
+        for (Animal animal : animals) {
+            animal.getText().relocate(animal.getCoordinates().getX() * WIDTH_BASE
+                                     ,animal.getCoordinates().getY() * HEIGHT_BASE);
+            getChildren().addAll(animal.getText());
+        }
+    }
 }

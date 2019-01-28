@@ -8,16 +8,22 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import models.Map;
 import models.buildings.Warehouse;
 import models.exceptions.InvalidArgumentException;
 import models.exceptions.NotEnoughSpaceException;
 import models.objects.Item;
+import models.objects.animals.Animal;
+import models.objects.animals.Cat;
+import models.objects.animals.Dog;
+import models.objects.animals.DomesticAnimal;
 import models.transportation.Truck;
 import view.View;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.EnumMap;
+import java.util.HashMap;
 
 public class TruckView extends Pane {
     private static TruckView instance = new TruckView();
@@ -50,6 +56,40 @@ public class TruckView extends Pane {
             getChildren().addAll(text);
 
 
+            YValue += 50;
+        }
+        HashMap<DomesticAnimal.Type, Integer> animalCurrentState = new HashMap<>();
+        HashMap<Item.Type, Integer> itemCurrentState = new HashMap<>();
+        Map map = Map.getInstance();
+        for (Item item : map.getItems())
+        {
+            itemCurrentState.put(item.type, itemCurrentState.getOrDefault(item.type, 0) + 1);
+        }
+
+        for (Animal animal : map.getAnimals())
+        {
+            if (animal instanceof DomesticAnimal)
+            {
+                animalCurrentState.put(((DomesticAnimal) animal).type
+                        , animalCurrentState.getOrDefault(((DomesticAnimal) animal).type, 0) + 1);
+            }
+        }
+        Text onMapText = new Text("on the map:");
+        onMapText.relocate(XValue, YValue);
+        getChildren().addAll(onMapText);
+        YValue += 50;
+        for(Animal.Type item : animalCurrentState.keySet()) {
+            String str = item.name() + "  -------->  " + animalCurrentState.get(item);
+            Text text = new Text(str);
+            text.relocate(XValue, YValue);
+            getChildren().addAll(text);
+            YValue += 50;
+        }
+        for(Item.Type item : itemCurrentState.keySet()) {
+            String str = item.name() + "  -------->  " + animalCurrentState.get(item);
+            Text text = new Text(str);
+            text.relocate(XValue, YValue);
+            getChildren().addAll(text);
             YValue += 50;
         }
     }

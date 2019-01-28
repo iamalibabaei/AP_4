@@ -116,7 +116,7 @@ public class View extends Application {
         } else if (entity instanceof Grass) {
             GameScene.getInstance().addGrass((Grass) entity, entity.getCoordinates());
         } else if (entity instanceof Item) {
-            GameScene.getInstance().addItem((Item) entity, entity.getCoordinates());
+            //GameScene.getInstance().addItem((Item) entity, entity.getCoordinates());
         }
     }
 }

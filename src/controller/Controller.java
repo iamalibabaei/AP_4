@@ -26,7 +26,7 @@ public class Controller
     private InGameController game;
     private Mission mission;
     private Account account;
-    private int delayForNextTurn = 1000;
+
 
 
     public static void main(String[] args) {
@@ -247,7 +247,4 @@ public class Controller
 
     }
 
-    public void setDelayForNextTurn(int delayForNextTurn) {
-        this.delayForNextTurn = delayForNextTurn;
-    }
 }

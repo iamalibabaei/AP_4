@@ -15,7 +15,9 @@ import models.objects.animals.Dog;
 import models.objects.animals.DomesticAnimal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
+import view.View;
 import view.gameScene.GameScene;
+import view.gameScene.MapView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +38,7 @@ public class InGameController implements Time
     private Helicopter helicopter;
     private List<Workshop> workshops;
     private Mission mission;
+    private int delayForNextTurn = 1000;
 
     public void addMoney(Integer money) {
         this.money += money;
@@ -131,7 +134,7 @@ public class InGameController implements Time
         {
             throw new InsufficientResourcesException();
         }
-        money -= cost;
+        withdrawMoney(cost);
         well.issueRefill();
     }
 
@@ -263,7 +266,27 @@ public class InGameController implements Time
     public void startGame() {
         loadMission();
         //TODO loop for next turn
+        new Thread() {
+            @Override
+            public void run() {
+                while (!isAccomplished()) {
+                    System.out.println("nextTurn");
+                    nextTurn();
+                    viewNextTurn();
+                    try {
+                        sleep(delayForNextTurn);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                System.out.println("endOfGame");
+            }
+        }.start();
 
+    }
+
+    private void viewNextTurn() {
+        GameScene.getInstance().nextTurn();
     }
 
     private boolean isAccomplished()
@@ -298,7 +321,7 @@ public class InGameController implements Time
     }
 
     private boolean checkAccomplishment(int money, HashMap<DomesticAnimal.Type, Integer> animalCurrentState,
-                                        HashMap<Item.Type, Integer> ItemCurentState, boolean hasCat, boolean hasDog)
+                                        HashMap<Item.Type, Integer> ItemCurrentState, boolean hasCat, boolean hasDog)
     {
         if (mission.getMoneyObjective() > money)
         {
@@ -315,11 +338,11 @@ public class InGameController implements Time
             }
         }
 
-        for (Item.Type type : ItemCurentState.keySet())
+        for (Item.Type type : ItemCurrentState.keySet())
         {
             if (mission.getItemObjective().containsKey(type))
             {
-                if (mission.getItemObjective().get(type) > ItemCurentState.get(type))
+                if (mission.getItemObjective().get(type) > ItemCurrentState.get(type))
                 {
                     return false;
                 }
@@ -334,5 +357,9 @@ public class InGameController implements Time
 
     public void setMission(Mission mission) {
         this.mission = mission;
+    }
+
+    public void setDelayForNextTurn(int delayForNextTurn) {
+        this.delayForNextTurn = delayForNextTurn;
     }
 }
