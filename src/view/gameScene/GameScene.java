@@ -12,15 +12,18 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
+import models.Map;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
+import models.exceptions.NotEnoughSpaceException;
+import models.interfaces.Time;
 import models.objects.Grass;
 import models.objects.Item;
 import models.objects.Point;
 import models.objects.animals.Animal;
 import view.View;
 
-public class GameScene extends Scene
+public class GameScene extends Scene implements Time
 {
     private static GameScene instance = new GameScene();
 
@@ -38,7 +41,6 @@ public class GameScene extends Scene
     }
 
     private void build() {
-
         root.getChildren().clear();
         root.getChildren().addAll(GameBackground.getInstance(), MapView.getInstance(), WarehouseScene.getInstance());
         wellGraphic();
@@ -65,7 +67,6 @@ public class GameScene extends Scene
         });
 
         root.getChildren().addAll(truckGraphic);
-
     }
 
     private void moneyGraphic() {
@@ -105,6 +106,48 @@ public class GameScene extends Scene
         root.getChildren().addAll(wellGraphic);
     }
 
+    @Override
+    public void nextTurn() {
+        updateMoneyInformation();
+        MapView.getInstance().nextTurn();
+        GameBackground.getInstance().nextTurn();
+    }
+
+
+
+
+
+    public void addAnimal(Animal animal, Point location) {
+        Text text = animal.getText();
+        text.relocate((location.getX() + 325) *  MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
+        MapView.getInstance().getChildren().addAll(text);
+    }
+
+    public void addGrass(Grass entity, Point location) {
+        Text text = entity.getText();
+        text.relocate((location.getX() + 325) *  MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
+        MapView.getInstance().getChildren().addAll(text);
+    }
+    public void closeTruck() {
+        TruckView.getInstance().setVisible(false);
+    }
+    public void openTruck(){
+        TruckView.getInstance().updateInformation();
+        TruckView.getInstance().setVisible(true);
+    }
+
+    public void closeWarehouse() {
+        //root.getChildren().remove(WarehouseScene.getInstance());
+        WarehouseScene.getInstance().setVisible(false);
+    }
+
+    private void openWarehouse() {
+        WarehouseScene.getInstance().UpdateInformation();
+        WarehouseScene.getInstance().setVisible(true);
+
+    }
+
+
     private void warehouseGraphic() {
         int XValue = View.WIDTH/ 2 - 10, YValue = View.HEIGHT - 50;
         Circle circle = new Circle(25);
@@ -122,68 +165,5 @@ public class GameScene extends Scene
         });
 
         root.getChildren().addAll(warehouseGraphic);
-
-
-
-    }
-
-    private void openWarehouse() {
-        WarehouseScene.getInstance().UpdateInformation();
-        WarehouseScene.getInstance().setVisible(true);
-
-    }
-
-    public void closeWarehouse() {
-        //root.getChildren().remove(WarehouseScene.getInstance());
-        WarehouseScene.getInstance().setVisible(false);
-    }
-
-    public void addAnimal(Animal animal, Point location) {
-        Text text = animal.getText();
-        text.relocate((location.getX() + 325) *  MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
-        MapView.getInstance().getChildren().addAll(text);
-    }
-
-    public void addGrass(Grass entity, Point location) {
-        Text text = entity.getText();
-        text.relocate((location.getX() + 325) *  MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
-        MapView.getInstance().getChildren().addAll(text);
-    }
-
-    public void openTruck(){
-        TruckView.getInstance().updateInformation();
-        TruckView.getInstance().setVisible(true);
-    }
-
-    public void closeTruck() {
-        TruckView.getInstance().setVisible(false);
-    }
-
-
-    public void addItem(Item entity, Point location) {
-        Text text = entity.getText();
-        text.relocate((location.getX() + 325) *  MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
-        MapView.getInstance().getChildren().addAll(text);
-    }
-    public void removeAnimal(Animal animal){
-        MapView.getInstance().getChildren().remove(animal.getText());
-    }
-    public void removeItem(Item item){
-        MapView.getInstance().getChildren().remove(item);
-    }
-    public void removeGrass(Grass grass) {
-        MapView.getInstance().getChildren().remove(grass);
-    }
-    public void moveAnimal(Animal animal, Point target) {
-        Text text = animal.getText();
-        if (animal.getCoordinates().distanceFrom(target) != 0) {
-            double differenceX = animal.getCoordinates().getX() - target.getX();
-            double differenceY = animal.getCoordinates().getY() - target.getY();
-            double factor = Math.max(Math.abs(differenceX), Math.abs(differenceY));
-            differenceX = differenceX / factor;
-            differenceY = differenceY / factor;
-            text.setScaleX(text.getLayoutX() + 10 * differenceX);
-            text.setScaleY(text.getLayoutY() + 10 * differenceY);
-        }
     }
 }

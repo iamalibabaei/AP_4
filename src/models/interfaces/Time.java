@@ -4,5 +4,5 @@ import models.exceptions.NotEnoughSpaceException;
 
 public interface Time
 {
-    void nextTurn() throws NotEnoughSpaceException;
+    void nextTurn();
 }

@@ -1,7 +1,9 @@
 package view.gameScene;
 
+import controller.Controller;
 import controller.InGameController;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -10,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
+import models.exceptions.NotEnoughSpaceException;
+import models.interfaces.Time;
 import models.objects.animals.Animal;
 import view.View;
 
@@ -17,7 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class GameBackground extends Pane {
+public class GameBackground extends Pane implements Time {
     private static GameBackground instance = new GameBackground();
 
 
@@ -100,4 +104,21 @@ public class GameBackground extends Pane {
 
     }
 
+    @Override
+    public void nextTurn() {
+        // if not enough money color of buttons becomes brown
+        for (Node node : getChildren()) {
+            if (node instanceof Text) {
+                try {
+                    if (Integer.parseInt(((Text) node).getText()) > InGameController.getInstance().getMoney()) {
+                        ((Text) node).setFill(Color.BROWN);
+                    } else {
+                        ((Text) node).setFill(Color.YELLOW);
+                    }
+                } catch (Exception e) {
+                    //nothing really
+                }
+            }
+        }
+    }
 }
