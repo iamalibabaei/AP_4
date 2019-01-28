@@ -10,11 +10,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import models.Map;
+import models.interfaces.Time;
+import models.objects.animals.Animal;
 import view.View;
 
 import java.util.ArrayList;
 
-public class MapView extends Pane implements Time{
+public class MapView extends Pane implements Time {
     private static MapView instance = new MapView();
     public static final double WIDTH_BASE = 20, HEIGHT_BASE = 12;
     private ArrayList<Text> entitiesInMap;

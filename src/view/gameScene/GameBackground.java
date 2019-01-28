@@ -1,18 +1,16 @@
 package view.gameScene;
 
-import controller.Controller;
 import controller.AddressConstants;
 import controller.InGameController;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import models.buildings.Warehouse;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
-import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
 import view.View;
@@ -177,8 +175,6 @@ public class GameBackground extends Pane implements Time {
 //            buyCost.setFill(Color.YELLOW);
 //            buyCost.relocate(60 + animalButton.indexOf(animalName) * 100, 100);
             this.getChildren().addAll(addAnimal);
-
-            this.getChildren().addAll(addAnimal, buyCost);
         }
 
 
