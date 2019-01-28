@@ -1,5 +1,6 @@
 package view.gameScene;
 
+import controller.AddressConstants;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -71,7 +72,7 @@ public class WarehouseScene extends Pane {
     private void setBackgroundStuff() {
         Image background = null;
         try {
-            background = new Image(new FileInputStream("res/Textures/Service/Depot/" + Warehouse.getInstance().getLevel() + ".png"));
+            background = new Image(new FileInputStream(AddressConstants.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

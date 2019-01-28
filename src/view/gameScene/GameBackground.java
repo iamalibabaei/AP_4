@@ -1,13 +1,11 @@
 package view.gameScene;
 
+import controller.AddressConstants;
 import controller.InGameController;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+import models.buildings.Warehouse;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
 import models.objects.animals.Animal;
@@ -32,12 +30,47 @@ public class GameBackground extends Pane {
     private void build() {
         setBackgroundStuff();
         setBuyAnimalButton();
+        setWarehouse();
+        setTruck();
+        setWell();
+        setUnderBar();
+    }
+
+    private void setWell() {
+//        Image wellImage = null;
+//        try {
+//            wellImage = new Image(new FileInputStream(".png"));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        ImageView imageView = new ImageView(wellImage);
+//        StackPane wellPane = new StackPane();
+//        wellPane.getChildren().addAll(imageView);
+//        wellPane.relocate(View.WIDTH / 2, View.HEIGHT );
+//        this.getChildren().addAll(wellPane);
+    }
+
+    private void setTruck() {
+        Image truckImage = null;
+        try {
+            truckImage = new Image(new FileInputStream(AddressConstants.TRUCK_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ImageView imageView = new ImageView(truckImage);
+        StackPane truckPane = new StackPane();
+        truckPane.getChildren().addAll(imageView);
+        truckPane.relocate(View.WIDTH / 2 - truckImage.getWidth() * 3.5, View.HEIGHT - truckImage.getHeight());
+        this.getChildren().addAll(truckPane);
+
     }
 
     private void setBackgroundStuff() {
         Image background = null;
         try {
-            background = new Image(new FileInputStream("res/Textures/back.png"));
+            background = new Image(new FileInputStream(AddressConstants.GAME_BACKGROUND_ROOT + "background.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -46,10 +79,46 @@ public class GameBackground extends Pane {
                 false, false, false);
         BackgroundImage backgroundImage = new BackgroundImage(background, BackgroundRepeat.REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
+
         Pane pane = new Pane();
         pane.setMinSize(View.WIDTH * 2, View.HEIGHT);
         pane.setBackground(new Background(backgroundImage));
-        this.getChildren().add(pane);
+        this.getChildren().addAll(pane);
+    }
+
+    private void setUnderBar(){
+        Image underBarImage = null;
+        try {
+            underBarImage = new Image(new FileInputStream(AddressConstants.GAME_BACKGROUND_ROOT + "underBar.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ImageView imageView = new ImageView(underBarImage);
+        imageView.setFitWidth(View.WIDTH);
+
+        StackPane underBarPane = new StackPane();
+        underBarPane.getChildren().addAll(imageView);
+        underBarPane.relocate(0, View.HEIGHT - underBarImage.getHeight());
+        this.getChildren().addAll(underBarPane);
+
+    }
+
+    private void setWarehouse() {
+        Image warehouseImage = null;
+        try {
+            warehouseImage = new Image(new FileInputStream(AddressConstants.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ImageView imageView = new ImageView(warehouseImage);
+
+        StackPane warehpusePane = new StackPane();
+        warehpusePane.getChildren().addAll(imageView);
+        warehpusePane.relocate((View.WIDTH - warehouseImage.getWidth()) / 2, View.HEIGHT - warehouseImage.getHeight());
+        this.getChildren().addAll(warehpusePane);
+
     }
 
     private void setBuyAnimalButton() {//TODO change later
@@ -63,37 +132,47 @@ public class GameBackground extends Pane {
             Animal.Type type = Animal.Type.valueOf(animalName);
             Image backImage = null;
 
-            try {
-                backImage = new Image(new FileInputStream("res/Textures/menuItemButton.png"));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            if (type.BUY_COST < InGameController.getInstance().getMoney()) {
+                System.out.println(type.BUY_COST);
+                System.out.println(InGameController.getInstance().getMoney());
+                try {
+                    backImage = new Image(new FileInputStream(AddressConstants.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "Icon.png"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                System.out.println(type.BUY_COST);
+                System.out.println(InGameController.getInstance().getMoney());
+                try {
+                    backImage = new Image(new FileInputStream(AddressConstants.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "IconGray.png"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
             ImageView imageView = new ImageView(backImage);
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
 
             StackPane addAnimal = new StackPane();
-            Text text = new Text(animalName);
-            text.setFill(Color.YELLOW);
-            addAnimal.getChildren().addAll(imageView, text);
+//            Text text = new Text(animalName);
+//            text.setFill(Color.YELLOW);
+            addAnimal.getChildren().addAll(imageView);
             addAnimal.relocate(20 + animalButton.indexOf(animalName) * 100, 20);
-            addAnimal.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        InGameController.getInstance().buyAnimal(animalName.toLowerCase());
-                    } catch (InsufficientResourcesException e) {
-                        View.getInstance().showExceptions(e, 30, 30);
-                    } catch (InvalidArgumentException e) {
-                        e.printStackTrace();
-                    }
+            addAnimal.setOnMouseClicked(event -> {
+                try {
+                    InGameController.getInstance().buyAnimal(animalName.toLowerCase());
+                } catch (InsufficientResourcesException e) {
+                    View.getInstance().showExceptions(e, 30, 30);
+                } catch (InvalidArgumentException e) {
+                    e.printStackTrace();
                 }
             });
-            Text buyCost = new Text(Integer.toString(type.BUY_COST));
-            buyCost.setFill(Color.YELLOW);
-            buyCost.relocate(60 + animalButton.indexOf(animalName) * 100, 100);
+//            Text buyCost = new Text(Integer.toString(type.BUY_COST));
+//            buyCost.setFill(Color.YELLOW);
+//            buyCost.relocate(60 + animalButton.indexOf(animalName) * 100, 100);
+            this.getChildren().addAll(addAnimal);
 
-            this.getChildren().addAll(addAnimal, buyCost);
         }
 
 

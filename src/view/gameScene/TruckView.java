@@ -1,6 +1,5 @@
 package view.gameScene;
 
-import controller.Controller;
 import controller.InGameController;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -87,29 +86,21 @@ public class TruckView extends Pane {
 
     private void setButtons() {
         Button exit = new Button("exit");
-        relocate(10, 10);
-        exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                GameScene.getInstance().closeTruck();
-            }
-        });
+        relocate(0, 0);
+        exit.relocate(View.WIDTH / 2 - 100, View.HEIGHT - 50);
+        exit.setOnMouseClicked(event -> GameScene.getInstance().closeTruck());
 
         Button sendTruck = new Button("sendTruck");
-        sendTruck.relocate(30, 10);
-        sendTruck.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                InGameController.getInstance().sendTruck();
-            }
-        });
+//        sendTruck.relocate(30, 10);
+        sendTruck.relocate(View.WIDTH / 2 + 100, View.HEIGHT - 50);
+        sendTruck.setOnMouseClicked(event -> InGameController.getInstance().sendTruck());
         getChildren().addAll(exit, sendTruck);
     }
 
     private void wallpaper() {
         Image background = null;
         try {
-            background = new Image(new FileInputStream("res/Textures/truck.jpg"));
+            background = new Image(new FileInputStream("res/Textures/truckInSideView.jpg"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -57,12 +57,7 @@ public class GameScene extends Scene
         StackPane truckGraphic = new StackPane();
         truckGraphic.getChildren().addAll(circle,text);
         truckGraphic.relocate(XValue, YValue);
-        truckGraphic.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                openTruck();
-            }
-        });
+        truckGraphic.setOnMouseClicked(event -> openTruck());
 
         root.getChildren().addAll(truckGraphic);
 
@@ -89,16 +84,11 @@ public class GameScene extends Scene
         StackPane wellGraphic = new StackPane();
         wellGraphic.getChildren().addAll(circle,text);
         wellGraphic.relocate(XValue, YValue);
-        wellGraphic.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    Controller.getInstance().refillWell();
-                } catch (IsWorkingException e) {
-                    View.getInstance().showExceptions(e, XValue, YValue);
-                } catch (InsufficientResourcesException e) {
-                    View.getInstance().showExceptions(e, XValue, YValue);
-                }
+        wellGraphic.setOnMouseClicked(event -> {
+            try {
+                Controller.getInstance().refillWell();
+            } catch (IsWorkingException | InsufficientResourcesException e) {
+                View.getInstance().showExceptions(e, XValue, YValue);
             }
         });
 

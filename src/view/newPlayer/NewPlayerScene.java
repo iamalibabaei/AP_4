@@ -12,7 +12,8 @@ import models.account.Account;
 import view.View;
 import view.menu.Menu;
 
-public class NewPlayerScene extends Scene {
+public class
+NewPlayerScene extends Scene {
 
     private Group root;
     private ImageView background;

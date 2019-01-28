@@ -7,12 +7,9 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import models.Map;
-import models.exceptions.NotEnoughSpaceException;
-import models.interfaces.Time;
 import view.View;
 
 import java.util.ArrayList;
