@@ -15,6 +15,7 @@ import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import view.Utility;
 import view.View;
 
 public class MenuBackground extends Pane {
@@ -33,19 +34,19 @@ public class MenuBackground extends Pane {
     }
 
     private void build() {
-        ImageView cloud = new ImageView(AddressConstants.getImage(AddressConstants.MENU_CLOUD));
+        ImageView cloud = new ImageView(Utility.getImage(AddressConstants.MENU_CLOUD));
         cloud.setFitWidth(View.WIDTH);
         cloud.setFitHeight(View.HEIGHT);
         cloud.relocate(0, - View.HEIGHT * 0.5);
         getChildren().addAll(cloud);
 
-        ImageView grass1 = new ImageView(AddressConstants.getImage(AddressConstants.MENU_GRASS1));
+        ImageView grass1 = new ImageView(Utility.getImage(AddressConstants.MENU_GRASS1));
         grass1.setFitHeight(View.HEIGHT / 2);
         grass1.setFitWidth(View.WIDTH);
         relocate(0, View.HEIGHT * 0.5);
         getChildren().addAll(grass1);
 
-        ImageView sun = new ImageView(AddressConstants.getImage(AddressConstants.MENU_SUN));
+        ImageView sun = new ImageView(Utility.getImage(AddressConstants.MENU_SUN));
         sun.setFitHeight(250);
         sun.setFitWidth(250);
         sun.relocate(1000, -400);
@@ -61,7 +62,7 @@ public class MenuBackground extends Pane {
         timelineSun.setCycleCount(Timeline.INDEFINITE);
         timelineSun.play();
         //sky and birds
-        ImageView rainBow = new ImageView(AddressConstants.getImage(AddressConstants.MENU_RAINBOW));
+        ImageView rainBow = new ImageView(Utility.getImage(AddressConstants.MENU_RAINBOW));
         rainBow.setFitHeight(200);
         rainBow.setFitWidth(400);
         getChildren().addAll(rainBow);
@@ -76,7 +77,7 @@ public class MenuBackground extends Pane {
         pathTransition.setCycleCount(Timeline.INDEFINITE);
         pathTransition.play();
 
-        ImageView birds = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BIRDS));
+        ImageView birds = new ImageView(Utility.getImage(AddressConstants.MENU_BIRDS));
         birds.setFitWidth(200);
         birds.setFitHeight(200);
         getChildren().addAll(birds);
@@ -92,7 +93,7 @@ public class MenuBackground extends Pane {
 
         pathTransition1.play();
 
-        ImageView billboard = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BILLBOARD));
+        ImageView billboard = new ImageView(Utility.getImage(AddressConstants.MENU_BILLBOARD));
         billboard.setFitHeight(500);
         billboard.setFitWidth(500);
         billboard.relocate(900, -135);
@@ -110,7 +111,7 @@ public class MenuBackground extends Pane {
 
 
 
-        ImageView tree = new ImageView(AddressConstants.getImage(AddressConstants.MENU_Tree));
+        ImageView tree = new ImageView(Utility.getImage(AddressConstants.MENU_Tree));
         tree.setFitHeight(700);
         tree.setFitWidth(700);
         tree.relocate(0, -350);
@@ -124,7 +125,7 @@ public class MenuBackground extends Pane {
             String musicSound = null;
             switch (i) {
                 case 0:
-                    animalImage = AddressConstants.getImage(AddressConstants.MENU_PIG);
+                    animalImage = Utility.getImage(AddressConstants.MENU_PIG);
                     height = 75;
                     width = 75;
                     rotate = 5;
@@ -136,8 +137,8 @@ public class MenuBackground extends Pane {
                     break;
 
                 case 1:
-                    musicSound = AddressConstants.getSound(AddressConstants.MENU_ROOSTER_SOUND);
-                    animalImage = AddressConstants.getImage(AddressConstants.MENU_ROOSTER);
+                    musicSound = Utility.getSound(AddressConstants.MENU_ROOSTER_SOUND);
+                    animalImage = Utility.getImage(AddressConstants.MENU_ROOSTER);
                     height = 200;
                     width = 200;
                     rotate = 5;
@@ -148,8 +149,8 @@ public class MenuBackground extends Pane {
                     time = 2000;
                     break;
                 case 2:
-                    musicSound = AddressConstants.getSound(AddressConstants.MENU_COW_SOUND);
-                    animalImage = AddressConstants.getImage(AddressConstants.MENU_COW);
+                    musicSound = Utility.getSound(AddressConstants.MENU_COW_SOUND);
+                    animalImage = Utility.getImage(AddressConstants.MENU_COW);
                     height = 200;
                     width = 400;
                     rotate = 20;
@@ -170,7 +171,7 @@ public class MenuBackground extends Pane {
                     YValueEnd = 0;
                     YValueStart = -90;
                     time = 1000;
-                    animalImage = AddressConstants.getImage(AddressConstants.MENU_BIRD);
+                    animalImage = Utility.getImage(AddressConstants.MENU_BIRD);
 
             }
             ImageView animalView = new ImageView(animalImage);
@@ -196,7 +197,7 @@ public class MenuBackground extends Pane {
 
         }
 
-        ImageView flower = new ImageView(AddressConstants.getImage(AddressConstants.MENU_FLOWER));
+        ImageView flower = new ImageView(Utility.getImage(AddressConstants.MENU_FLOWER));
         flower.setFitWidth(View.WIDTH);
         flower.setFitHeight(500);
         flower.relocate(0, -130);

@@ -13,6 +13,7 @@ import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
+import view.Utility;
 import view.View;
 
 import java.io.FileInputStream;
@@ -74,7 +75,7 @@ public class GameBackground extends Pane implements Time {
 
     private void setBackgroundStuff() {
         Image background = null;
-        background = AddressConstants.getImage(AddressConstants.GAME_BACKGROUND_ROOT + "background.png");
+        background = Utility.getImage(AddressConstants.GAME_BACKGROUND_ROOT + "background.png");
 
         BackgroundSize backgroundSize = new BackgroundSize(View.WIDTH, View.HEIGHT, false,
                 false, false, false);

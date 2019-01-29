@@ -1,13 +1,5 @@
 package view;
 
-import javafx.scene.image.Image;
-import javafx.scene.media.Media;
-import view.menu.Menu;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 public class AddressConstants
 {
     public static final String GRAPHICS_ROOT = "res/Textures/";
@@ -35,20 +27,5 @@ public class AddressConstants
     public static final String MENU_ROOSTER_SOUND = SOUNDS_ROOT + "rooster.wav";
     public static final String MENU_BUTTON = MENU + "button.png";
 
-    public static Image getImage(String path) {
-        Image image = null;
-        try {
-            image = new Image(new FileInputStream(path));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
 
-
-    public static String getSound(String path) {
-
-        String media = new File(path).toURI().toString();
-        return media;
-    }
 }
