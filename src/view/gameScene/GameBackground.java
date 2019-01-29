@@ -59,7 +59,8 @@ public class GameBackground extends Pane implements Time {
     private void setTruck() {
         Image truckImage = null;
         try {
-            truckImage = new Image(new FileInputStream(AddressConstants.TRUCK_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+            truckImage = new Image(new FileInputStream(
+                    AddressConstants.TRUCK_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -107,7 +108,8 @@ public class GameBackground extends Pane implements Time {
     private void setWarehouse() {
         Image warehouseImage = null;
         try {
-            warehouseImage = new Image(new FileInputStream(AddressConstants.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+            warehouseImage = new Image(new FileInputStream(
+                    AddressConstants.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -136,7 +138,8 @@ public class GameBackground extends Pane implements Time {
                 System.out.println(type.BUY_COST);
                 System.out.println(InGameController.getInstance().getMoney());
                 try {
-                    backImage = new Image(new FileInputStream(AddressConstants.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "Icon.png"));
+                    backImage = new Image(new FileInputStream(
+                            AddressConstants.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "Icon.png"));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -145,7 +148,8 @@ public class GameBackground extends Pane implements Time {
                 System.out.println(type.BUY_COST);
                 System.out.println(InGameController.getInstance().getMoney());
                 try {
-                    backImage = new Image(new FileInputStream(AddressConstants.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "IconGray.png"));
+                    backImage = new Image(new FileInputStream(
+                            AddressConstants.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "IconGray.png"));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

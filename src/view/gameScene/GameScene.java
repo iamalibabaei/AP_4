@@ -1,15 +1,21 @@
 package view.gameScene;
 
+import controller.AddressConstants;
 import controller.MenuController;
 import controller.InGameController;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
+import models.buildings.Well;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
 import models.interfaces.Time;
@@ -17,7 +23,8 @@ import models.objects.Grass;
 import models.objects.Point;
 import models.objects.animals.Animal;
 import view.View;
-import view.gameScene.truck.TruckView;
+
+import java.awt.*;
 
 public class GameScene extends Scene implements Time
 {
@@ -72,8 +79,11 @@ public class GameScene extends Scene implements Time
         money.setText(Integer.toString(InGameController.getInstance().getMoney()));
     }
 
-    private void wellGraphic() {
+    private void wellGraphic(Well well) {
         int XValue = 750, YValue = 130;
+        Image wellImage = AddressConstants.getImage(AddressConstants.WELL_PICTURE_ROOT + well.getLevel() + ".png");
+        ImageView wellImageView = new ImageView(wellImage);
+        
         Circle circle = new Circle(25);
         circle.setFill(Color.BLUE);
         Text text = new Text("well");
