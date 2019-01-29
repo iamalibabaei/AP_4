@@ -17,7 +17,7 @@ import models.objects.animals.Animal;
 import models.objects.animals.DomesticAnimal;
 import models.transportation.Truck;
 import view.View;
-import view.gameScene.GameScene;
+import view.gameScene.InGameView;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -127,7 +127,7 @@ public class TruckView extends Pane {
         Button exit = new Button("exit");
         relocate(0, 0);
         exit.relocate(View.WIDTH / 2 - 100, View.HEIGHT - 50);
-        exit.setOnMouseClicked(event -> GameScene.getInstance().closeTruck());
+        exit.setOnMouseClicked(event -> InGameView.getInstance().closeTruck());
 
         Button sendTruck = new Button("sendTruck");
 //        sendTruck.relocate(30, 10);

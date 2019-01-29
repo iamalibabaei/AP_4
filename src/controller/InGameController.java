@@ -15,7 +15,7 @@ import models.objects.animals.Dog;
 import models.objects.animals.DomesticAnimal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
-import view.gameScene.GameScene;
+import view.gameScene.InGameView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +86,7 @@ public class InGameController implements Time
 
     private void withdrawMoney(int cost) {
         money -= cost;
-        GameScene.getInstance().getMoney();
+        InGameView.getInstance().getMoney();
     }
 
     public void pickUp(Point point) throws NotEnoughSpaceException
@@ -266,7 +266,7 @@ public class InGameController implements Time
     }
 
     private void viewNextTurn() {
-        GameScene.getInstance().nextTurn();
+        InGameView.getInstance().nextTurn();
     }
 
     private boolean isAccomplished()

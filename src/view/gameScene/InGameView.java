@@ -19,18 +19,18 @@ import models.objects.animals.Animal;
 import view.View;
 import view.gameScene.truck.TruckView;
 
-public class GameScene extends Scene implements Time
+public class InGameView extends Scene implements Time
 {
-    private static GameScene instance = new GameScene();
+    private static InGameView instance = new InGameView();
 
-    public static GameScene getInstance() {
+    public static InGameView getInstance() {
         return instance;
     }
 
     private Group root;
     private Text money;
 
-    private GameScene() {
+    private InGameView() {
         super(new Group(), View.WIDTH, View.HEIGHT);
         root = (Group) getRoot();
         build();
