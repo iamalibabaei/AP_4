@@ -20,7 +20,7 @@ import view.menu.newPlayer.NewPlayerScene;
 import java.io.FileNotFoundException;
 
 public class MainView extends Application {
-    private static MainView mainView = new MainView();
+    private static MainView instance = new MainView();
     private Stage mainStage;
     public static final int WIDTH = 1300, HEIGHT = 720;
 
@@ -34,7 +34,7 @@ public class MainView extends Application {
     }
 
     public static MainView getInstance() {
-        return mainView;
+        return instance;
     }
 
     @Override
