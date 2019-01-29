@@ -139,7 +139,7 @@ public class TruckView extends Pane {
     private void wallpaper() {
         Image background = null;
         try {
-            background = new Image(new FileInputStream("res/Textures/truckInSideView.jpg"));
+            background = new Image(new FileInputStream("res/graphicAssets/truckInSideView.jpg"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

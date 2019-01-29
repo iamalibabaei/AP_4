@@ -2,7 +2,7 @@ package view.utility;
 
 public class AddressConstants
 {
-    public static final String GRAPHICS_ROOT = "res/Textures/";
+    public static final String GRAPHICS_ROOT = "res/graphicAssets/";
     public static final String MISSIONS_ROOT = "missions/";
     public static final String SOUNDS_ROOT = GRAPHICS_ROOT + "sounds/";
     public static final String GAME_BACKGROUND_ROOT = GRAPHICS_ROOT + "GameBackground/";

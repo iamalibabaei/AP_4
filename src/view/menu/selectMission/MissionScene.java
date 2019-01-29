@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import models.account.Account;
 import models.misc.Mission;
 import view.MainView;
+import view.utility.Utility;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,9 +34,9 @@ public class MissionScene extends Scene {
 
     private void build() {
         root.getChildren().clear();
-        Image menuImage = null;
+        Image menuImage = Utility.getImage()
         try {
-            menuImage = new Image(new FileInputStream("res/Textures/menuWallpaper.jpg"));
+            menuImage = new Image(new FileInputStream("res/graphicAssets/menuWallpaper.jpg"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
