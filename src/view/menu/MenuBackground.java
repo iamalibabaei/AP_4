@@ -1,5 +1,6 @@
 package view.menu;
 
+import view.MainView;
 import view.utility.AddressConstants;
 import view.utility.SoundPlayer;
 import javafx.animation.KeyFrame;
@@ -16,7 +17,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import view.utility.Utility;
-import view.View;
 
 public class MenuBackground extends Pane {
     private static MenuBackground instance = new MenuBackground();
@@ -26,8 +26,8 @@ public class MenuBackground extends Pane {
     }
 
     private MenuBackground() {
-        setHeight(View.HEIGHT);
-        setWidth(View.WIDTH);
+        setHeight(MainView.HEIGHT);
+        setWidth(MainView.WIDTH);
         relocate(0, 0);
         build();
 
@@ -35,15 +35,15 @@ public class MenuBackground extends Pane {
 
     private void build() {
         ImageView cloud = new ImageView(Utility.getImage(AddressConstants.MENU_CLOUD));
-        cloud.setFitWidth(View.WIDTH);
-        cloud.setFitHeight(View.HEIGHT);
-        cloud.relocate(0, - View.HEIGHT * 0.5);
+        cloud.setFitWidth(MainView.WIDTH);
+        cloud.setFitHeight(MainView.HEIGHT);
+        cloud.relocate(0, - MainView.HEIGHT * 0.5);
         getChildren().addAll(cloud);
 
         ImageView grass1 = new ImageView(Utility.getImage(AddressConstants.MENU_GRASS1));
-        grass1.setFitHeight(View.HEIGHT / 2);
-        grass1.setFitWidth(View.WIDTH);
-        relocate(0, View.HEIGHT * 0.5);
+        grass1.setFitHeight(MainView.HEIGHT / 2);
+        grass1.setFitWidth(MainView.WIDTH);
+        relocate(0, MainView.HEIGHT * 0.5);
         getChildren().addAll(grass1);
 
         ImageView sun = new ImageView(Utility.getImage(AddressConstants.MENU_SUN));
@@ -198,7 +198,7 @@ public class MenuBackground extends Pane {
         }
 
         ImageView flower = new ImageView(Utility.getImage(AddressConstants.MENU_FLOWER));
-        flower.setFitWidth(View.WIDTH);
+        flower.setFitWidth(MainView.WIDTH);
         flower.setFitHeight(500);
         flower.relocate(0, -130);
         getChildren().addAll(flower);

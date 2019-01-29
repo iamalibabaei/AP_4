@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import models.account.Account;
 import models.misc.Mission;
-import view.View;
+import view.MainView;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,7 +26,7 @@ public class MissionScene extends Scene {
     private Group root;
     private ImageView background;
     public MissionScene() {
-        super(new Group(), View.WIDTH, View.HEIGHT);
+        super(new Group(), MainView.WIDTH, MainView.HEIGHT);
         root = (Group) getRoot();
         build();
     }
@@ -40,8 +40,8 @@ public class MissionScene extends Scene {
             e.printStackTrace();
         }
         ImageView menuWallpaper = new ImageView(menuImage);
-        menuWallpaper.setFitWidth(View.WIDTH);
-        menuWallpaper.setFitHeight(View.HEIGHT);
+        menuWallpaper.setFitWidth(MainView.WIDTH);
+        menuWallpaper.setFitHeight(MainView.HEIGHT);
         menuWallpaper.relocate(0, 0);
 
         ArrayList<String> missions = Mission.loadDefaultMissions();

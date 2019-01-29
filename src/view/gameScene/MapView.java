@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 import models.Map;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
-import view.View;
+import view.MainView;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class MapView extends Pane implements Time {
 
     private MapView() {
         entitiesInMap = new ArrayList<>();
-        relocate(View.WIDTH * 0.25, View.HEIGHT * 0.3);
+        relocate(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3);
         setHeight(Map.HEIGHT * HEIGHT_BASE);
         setWidth(Map.WIDTH * WIDTH_BASE);
         build();

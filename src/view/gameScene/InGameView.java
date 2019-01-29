@@ -16,7 +16,7 @@ import models.interfaces.Time;
 import models.objects.Grass;
 import models.objects.Point;
 import models.objects.animals.Animal;
-import view.View;
+import view.MainView;
 import view.gameScene.truck.TruckView;
 
 public class InGameView extends Scene implements Time
@@ -31,7 +31,7 @@ public class InGameView extends Scene implements Time
     private Text money;
 
     private InGameView() {
-        super(new Group(), View.WIDTH, View.HEIGHT);
+        super(new Group(), MainView.WIDTH, MainView.HEIGHT);
         root = (Group) getRoot();
         build();
     }
@@ -85,7 +85,7 @@ public class InGameView extends Scene implements Time
             try {
                 MenuController.getInstance().refillWell();
             } catch (IsWorkingException | InsufficientResourcesException e) {
-                View.getInstance().showExceptions(e, XValue, YValue);
+                MainView.getInstance().showExceptions(e, XValue, YValue);
             }
         });
 
@@ -135,7 +135,7 @@ public class InGameView extends Scene implements Time
 
 
     private void warehouseGraphic() {
-        int XValue = View.WIDTH/ 2 - 10, YValue = View.HEIGHT - 50;
+        int XValue = MainView.WIDTH/ 2 - 10, YValue = MainView.HEIGHT - 50;
         Circle circle = new Circle(25);
         circle.setFill(Color.BLUE);
         Text text = new Text("warehouse");

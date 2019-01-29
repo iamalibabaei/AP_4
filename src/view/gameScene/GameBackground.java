@@ -1,5 +1,6 @@
 package view.gameScene;
 
+import view.MainView;
 import view.utility.AddressConstants;
 import controller.InGameController;
 import javafx.scene.Node;
@@ -14,7 +15,6 @@ import models.exceptions.InvalidArgumentException;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
 import view.utility.Utility;
-import view.View;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -53,7 +53,7 @@ public class GameBackground extends Pane implements Time {
 //        ImageView imageView = new ImageView(wellImage);
 //        StackPane wellPane = new StackPane();
 //        wellPane.getChildren().addAll(imageView);
-//        wellPane.relocate(View.WIDTH / 2, View.HEIGHT );
+//        wellPane.relocate(MainView.WIDTH / 2, MainView.HEIGHT );
 //        this.getChildren().addAll(wellPane);
     }
 
@@ -68,7 +68,7 @@ public class GameBackground extends Pane implements Time {
         ImageView imageView = new ImageView(truckImage);
         StackPane truckPane = new StackPane();
         truckPane.getChildren().addAll(imageView);
-        truckPane.relocate(View.WIDTH / 2 - truckImage.getWidth() * 3.5, View.HEIGHT - truckImage.getHeight());
+        truckPane.relocate(MainView.WIDTH / 2 - truckImage.getWidth() * 3.5, MainView.HEIGHT - truckImage.getHeight());
         this.getChildren().addAll(truckPane);
 
     }
@@ -77,12 +77,12 @@ public class GameBackground extends Pane implements Time {
         Image background = null;
         background = Utility.getImage(AddressConstants.GAME_BACKGROUND_ROOT + "background.png");
 
-        BackgroundSize backgroundSize = new BackgroundSize(View.WIDTH, View.HEIGHT, false,
+        BackgroundSize backgroundSize = new BackgroundSize(MainView.WIDTH, MainView.HEIGHT, false,
                 false, false, false);
         BackgroundImage backgroundImage = new BackgroundImage(background, BackgroundRepeat.REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
         Pane pane = new Pane();
-        pane.setMinSize(View.WIDTH * 2, View.HEIGHT);
+        pane.setMinSize(MainView.WIDTH * 2, MainView.HEIGHT);
         pane.setBackground(new Background(backgroundImage));
         this.getChildren().addAll(pane);
     }
@@ -96,11 +96,11 @@ public class GameBackground extends Pane implements Time {
         }
 
         ImageView imageView = new ImageView(underBarImage);
-        imageView.setFitWidth(View.WIDTH);
+        imageView.setFitWidth(MainView.WIDTH);
 
         StackPane underBarPane = new StackPane();
         underBarPane.getChildren().addAll(imageView);
-        underBarPane.relocate(0, View.HEIGHT - underBarImage.getHeight());
+        underBarPane.relocate(0, MainView.HEIGHT - underBarImage.getHeight());
         this.getChildren().addAll(underBarPane);
 
     }
@@ -117,7 +117,7 @@ public class GameBackground extends Pane implements Time {
 
         StackPane warehpusePane = new StackPane();
         warehpusePane.getChildren().addAll(imageView);
-        warehpusePane.relocate((View.WIDTH - warehouseImage.getWidth()) / 2, View.HEIGHT - warehouseImage.getHeight());
+        warehpusePane.relocate((MainView.WIDTH - warehouseImage.getWidth()) / 2, MainView.HEIGHT - warehouseImage.getHeight());
         this.getChildren().addAll(warehpusePane);
 
     }
@@ -164,7 +164,7 @@ public class GameBackground extends Pane implements Time {
                 try {
                     InGameController.getInstance().buyAnimal(animalName.toLowerCase());
                 } catch (InsufficientResourcesException e) {
-                    View.getInstance().showExceptions(e, 30, 30);
+                    MainView.getInstance().showExceptions(e, 30, 30);
                 } catch (InvalidArgumentException e) {
                     e.printStackTrace();
                 }
