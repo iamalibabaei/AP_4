@@ -1,5 +1,5 @@
 package view.settings;
 
-public class SettingView
+public class SettingsView
 {
 }
