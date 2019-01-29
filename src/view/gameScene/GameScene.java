@@ -31,7 +31,7 @@ public class GameScene extends Scene implements Time
     private Group root;
     private Text money;
 
-    public GameScene() {
+    private GameScene() {
         super(new Group(), View.WIDTH, View.HEIGHT);
         root = (Group) getRoot();
         build();
@@ -69,7 +69,7 @@ public class GameScene extends Scene implements Time
         root.getChildren().addAll(money);
     }
 
-    public void updateMoneyInformation(){
+    public void getMoney(){
         money.setText(Integer.toString(InGameController.getInstance().getMoney()));
     }
 
@@ -95,7 +95,7 @@ public class GameScene extends Scene implements Time
 
     @Override
     public void nextTurn() {
-        updateMoneyInformation();
+        getMoney();
         MapView.getInstance().nextTurn();
         GameBackground.getInstance().nextTurn();
     }
@@ -144,12 +144,7 @@ public class GameScene extends Scene implements Time
         StackPane warehouseGraphic = new StackPane();
         warehouseGraphic.getChildren().addAll(circle,text);
         warehouseGraphic.relocate(XValue, YValue);
-        warehouseGraphic.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                openWarehouse();
-            }
-        });
+        warehouseGraphic.setOnMouseClicked(event -> openWarehouse());
 
         root.getChildren().addAll(warehouseGraphic);
     }

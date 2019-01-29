@@ -32,9 +32,9 @@ public class Account implements Serializable {
         this.missionPassed += 1;
     }
 
-    public static Account loadJason(String name) throws FileNotFoundException {
+    public static Account loadJson(String name) throws FileNotFoundException {
         YaGson yaGson = new YaGson();
-        FileReader fileReader = new FileReader("res\\users\\" + name + ".json");
+        FileReader fileReader = new FileReader("res/users/" + name + ".json");
         String json = new Scanner(fileReader).nextLine();
         //TODO close filereader in this method and methods like this
         return yaGson.fromJson(json, Account.class);
@@ -43,7 +43,7 @@ public class Account implements Serializable {
     public static void toJason(Account account) {
         FileWriter fileWriter = null;
         try {
-            fileWriter = new FileWriter("res\\users\\" + account.name + ".json");
+            fileWriter = new FileWriter("res/users/" + account.name + ".json");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,7 +54,7 @@ public class Account implements Serializable {
         formatter.close();
     }
     public static ArrayList<String> getAllAccounts(){
-        File folder = new File("res\\users");
+        File folder = new File("res/users");
         File[] listOfFiles = folder.listFiles();
         ArrayList<String> usersName = new ArrayList<>();
         for (File listOfFile : listOfFiles)

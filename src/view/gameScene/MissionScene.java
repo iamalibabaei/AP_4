@@ -44,7 +44,7 @@ public class MissionScene extends Scene {
         menuWallpaper.setFitHeight(View.HEIGHT);
         menuWallpaper.relocate(0, 0);
 
-        ArrayList<String> missions = Mission.getAllMission();
+        ArrayList<String> missions = Mission.loadDefaultMissions();
         int YValue = 200;
         for (int i = 0; i < missions.size(); i++) {
             Button button = new Button(missions.get(i));
@@ -62,7 +62,7 @@ public class MissionScene extends Scene {
     }
 
     private void runGame(String text) {
-        MenuController.getInstance().setAccount(account);
+        MenuController.getInstance().setCurrentAccount(account);
         try {
             MenuController.getInstance().setMission(Mission.loadJson("res/missions/"+ text + ".json"));
         } catch (FileNotFoundException e) {

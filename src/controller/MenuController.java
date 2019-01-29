@@ -16,16 +16,26 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.Formatter;
 import java.util.HashMap;
 
 public class MenuController
 {
     private static MenuController menuController = new MenuController();
-    private static View view;
+    private View view;
     private InGameController game;
     private Mission mission;
-    private Account account;
+
+    public void setCurrentAccount(Account currentAccount)
+    {
+        this.currentAccount = currentAccount;
+    }
+
+    private Account currentAccount;
+    private ArrayList<Account> accounts;
+
 
 
 
@@ -36,20 +46,20 @@ public class MenuController
 
     private static void serializeMission() {
         YaGson yaGson = new YaGson();
-        HashMap<Animal.Type, Integer> animalObjective = new HashMap<>();
+        EnumMap<Animal.Type, Integer> animalObjective = new EnumMap<>(Animal.Type.class);
         animalObjective.put(Animal.Type.HEN, 10);
         animalObjective.put(Animal.Type.SHEEP, 2);
-        HashMap<Item.Type, Integer> itemObjective = new HashMap<>();
+        EnumMap<Item.Type, Integer> itemObjective = new EnumMap<>(Item.Type.class);
         itemObjective.put(Item.Type.EGG, 15);
         itemObjective.put(Item.Type.DRIED_EGG, 5);
-        HashMap<Animal.Type, Integer> animalAtBeginning = new HashMap<>();
+        EnumMap<Animal.Type, Integer> animalAtBeginning = new EnumMap<>(Animal.Type.class);
         animalAtBeginning.put(Animal.Type.HEN, 5);
 
 
         Mission mission = new Mission(1000, animalObjective, itemObjective, false, false, animalAtBeginning, 200);
         FileWriter fileWriter = null;
         try {
-            fileWriter = new FileWriter("res\\missions\\mission2.json");
+            fileWriter = new FileWriter("res/missions/mission2.json");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -237,10 +247,6 @@ public class MenuController
 
     public void setMission(Mission mission) {
         this.mission = mission;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public void click(double x, double y) {

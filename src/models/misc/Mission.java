@@ -4,6 +4,7 @@ import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import controller.InGameController;
 import models.Map;
+import models.exceptions.ObjectNotFoundException;
 import models.objects.Item;
 import models.objects.animals.Animal;
 import models.objects.animals.Cat;
@@ -14,25 +15,26 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class Mission
 {
-    private static InGameController game = InGameController.getInstance();
+    public static final String DEFAULT_MISSION_PATH = "res/missions";
     private int moneyObjective;
-    private HashMap<DomesticAnimal.Type, Integer> animalObjectives;
-    private HashMap<Item.Type, Integer> ItemObjective;
+    private EnumMap<Animal.Type, Integer> animalObjectives;
+    private EnumMap<Item.Type, Integer> ItemObjective;
 
     public int getMoneyObjective() {
         return moneyObjective;
     }
 
-    public HashMap<DomesticAnimal.Type, Integer> getAnimalObjectives() {
+    public EnumMap<Animal.Type, Integer> getAnimalObjectives() {
         return animalObjectives;
     }
 
-    public HashMap<Item.Type, Integer> getItemObjective() {
+    public EnumMap<Item.Type, Integer> getItemObjective() {
         return ItemObjective;
     }
 
@@ -45,13 +47,13 @@ public class Mission
     }
 
     private boolean dog, cat;
-    private HashMap<DomesticAnimal.Type, Integer> animalAtBeginning;
+    private EnumMap<Animal.Type, Integer> animalAtBeginning;
     private int moneyAtBeginning;
 
-    public Mission(int money, HashMap<DomesticAnimal.Type, Integer> animalObjectives,
-                   HashMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat, HashMap<Animal.Type, Integer> animalAtBeginning, int moneyAtBeginning)
+    public Mission(int money, EnumMap<Animal.Type, Integer> animalObjectives,
+                   EnumMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat, EnumMap<Animal.Type, Integer> animalAtBeginning, int moneyAtBeginning)
     {
-        this.moneyObjective = money;
+        moneyObjective = money;
         this.animalObjectives = animalObjectives;
         ItemObjective = itemObjective;
         this.dog = dog;
@@ -64,23 +66,27 @@ public class Mission
         YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
         YaGson yaGson = yaGsonBuilder.create();
         FileReader fileReader = new FileReader(jsonAddress);
-        Mission mission = yaGson.fromJson(new Scanner(fileReader).nextLine(), Mission.class);
-        return mission;
+        return yaGson.fromJson(new Scanner(fileReader).nextLine(), Mission.class);
     }
 
-    public static ArrayList<String> getAllMission(){
-        File folder = new File("res\\missions");
+    public static ArrayList<String> loadDefaultMissions()
+    {
+        File folder = new File(DEFAULT_MISSION_PATH);
         File[] listOfFiles = folder.listFiles();
         ArrayList<String> usersName = new ArrayList<>();
-        for (int i = 0; i < listOfFiles.length; i++) {
-            String name = listOfFiles[i].getName();
-            name = name.substring(0, name.indexOf('.'));
-            usersName.add(name);
+        if (listOfFiles != null)
+        {
+            for (File listOfFile : listOfFiles)
+            {
+                String name = listOfFile.getName();
+                name = name.substring(0, name.indexOf('.'));
+                usersName.add(name);
+            }
         }
         return usersName;
     }
 
-    public HashMap<DomesticAnimal.Type, Integer> getAnimalAtBeginning() {
+    public EnumMap<Animal.Type, Integer> getAnimalAtBeginning() {
         return animalAtBeginning;
     }
 

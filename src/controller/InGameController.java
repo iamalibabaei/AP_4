@@ -15,9 +15,7 @@ import models.objects.animals.Dog;
 import models.objects.animals.DomesticAnimal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
-import view.View;
 import view.gameScene.GameScene;
-import view.gameScene.MapView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,21 +36,20 @@ public class InGameController implements Time
     private Helicopter helicopter;
     private List<Workshop> workshops;
     private Mission mission;
-    private int delayForNextTurn = 1000;
+    private List<Workshop> availableWorkshops;
+    private final int FPS = 60, SECOND_PER_FRAME = 1000 / FPS;
 
-    public void addMoney(Integer money) {
+    public void moneyDeposit(Integer money) {
         this.money += money;
-        GameScene.getInstance().updateMoneyInformation();
     }
 
-    private List<Workshop> availableWorkshops;
 
     private InGameController()
     {
         availableWorkshops = new ArrayList<>();
         map = Map.getInstance();
         warehouse = Warehouse.getInstance();
-        well = Well.getInstance();
+        well = new Well();
         workshops = new ArrayList<>();
         truck = Truck.getInstance();
         helicopter = Helicopter.getInstance();
@@ -89,7 +86,7 @@ public class InGameController implements Time
 
     private void withdrawMoney(int cost) {
         money -= cost;
-        GameScene.getInstance().updateMoneyInformation();
+        GameScene.getInstance().getMoney();
     }
 
     public void pickUp(Point point) throws NotEnoughSpaceException
@@ -254,35 +251,18 @@ public class InGameController implements Time
     }
 
     public void loadMission(){
-        addMoney(mission.getMoneyAtBeginning());
+        moneyDeposit(mission.getMoneyAtBeginning());
         for (Animal.Type animal : mission.getAnimalAtBeginning().keySet()) {
             for (int i = 0; i < mission.getAnimalAtBeginning().get(animal); i++) {
                 //todo map.addAnimal(animal);
             }
         }
-        InGameController.getInstance().addMoney(mission.getMoneyAtBeginning());
+        InGameController.getInstance().moneyDeposit(mission.getMoneyAtBeginning());
     }
 
     public void startGame() {
         loadMission();
         //TODO loop for next turn
-        new Thread() {
-            @Override
-            public void run() {
-                while (!isAccomplished()) {
-                    System.out.println("nextTurn");
-                    nextTurn();
-                    viewNextTurn();
-                    try {
-                        sleep(delayForNextTurn);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                System.out.println("endOfGame");
-            }
-        }.start();
-
     }
 
     private void viewNextTurn() {
@@ -359,7 +339,4 @@ public class InGameController implements Time
         this.mission = mission;
     }
 
-    public void setDelayForNextTurn(int delayForNextTurn) {
-        this.delayForNextTurn = delayForNextTurn;
-    }
 }

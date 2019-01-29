@@ -51,7 +51,7 @@ public class Truck extends Transporter
                 for (Map.Entry<Item.Type, Integer> entry : list.entrySet())
                 {
                     int elementSell = entry.getKey().SELL_MONEY * entry.getValue();
-                    InGameController.getInstance().addMoney(elementSell);
+                    InGameController.getInstance().moneyDeposit(elementSell);
                 }
                 clearStash();
                 isWorking = false;

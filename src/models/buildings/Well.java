@@ -11,26 +11,19 @@ import models.interfaces.Upgradable;
 
 public class Well extends Viewable implements Upgradable, Time
 {
-    public static final String NAME = "well";
     public static final int[] UPGRADE_COST = {250, 500}, REFILL_COST = {19, 17, 15};
     public static final int[] CAPACITY = {5, 7, 10}, REFILL_TIME = {3, 4, 3};
-    private static final Well instance = new Well();
     private static final int MAX_LEVEL = 2;
     private int level;
     private boolean isRefilling;
     private int remainingWater;
     private int remainingTimeToRefill; // only needed when refilling
 
-    private Well()
+    public Well()
     {
         isRefilling = false;
         level = 0;
         remainingWater = CAPACITY[level];
-    }
-
-    public static Well getInstance()
-    {
-        return instance;
     }
 
     @Override

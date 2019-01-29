@@ -21,10 +21,10 @@ import java.io.FileNotFoundException;
 
 public class View extends Application {
     private static View view = new View();
-    private static Stage mainStage;
+    private Stage mainStage;
     public static final int WIDTH = 1300, HEIGHT = 720;
 
-    public static Stage getMainStage() {
+    public Stage getMainStage() {
         return mainStage;
     }
 
@@ -38,12 +38,12 @@ public class View extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         mainStage = primaryStage;
-        getMainStage().setResizable(false);
+        mainStage.setResizable(false);
         setStageScene(Menu.getInstance());
 
-        getMainStage().setOnCloseRequest(event -> {
+        mainStage.setOnCloseRequest(event -> {
             /*
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Save InGameController");
@@ -57,16 +57,16 @@ public class View extends Application {
             Platform.exit();
             System.exit(0);*/
         });
-        getMainStage().show();
+        mainStage.show();
 
     }
 
 
-    public static void setStageScene(Scene scene) {
-        view.getMainStage().setX(0);
-        view.getMainStage().setY(0);
-        view.getMainStage().setScene(scene);
-        getMainStage().sizeToScene();
+    private void setStageScene(Scene scene) {
+        mainStage.setX(0);
+        mainStage.setY(0);
+        mainStage.setScene(scene);
+        mainStage.sizeToScene();
     }
 
 
@@ -74,13 +74,16 @@ public class View extends Application {
         //todo check password and not null
         Account account = null;
         try {
-            account = Account.loadJason(Menu.getInstance().getAccount());
+            account = Account.loadJson(Menu.getInstance().getAccount());
         } catch (FileNotFoundException e) {
             //TODO show message
             return;
         }
-        MenuController.getInstance().setAccount(account);
+        System.out.println(1);
+        MenuController.getInstance().setCurrentAccount(account);
+        System.out.println(2);
         setStageScene(MissionScene.getInstance());
+        System.out.println(3);
     }
 
     public void goToSetting() {
