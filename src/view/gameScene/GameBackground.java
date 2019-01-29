@@ -1,6 +1,6 @@
 package view.gameScene;
 
-import view.AddressConstants;
+import view.utility.AddressConstants;
 import controller.InGameController;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -13,7 +13,7 @@ import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
-import view.Utility;
+import view.utility.Utility;
 import view.View;
 
 import java.io.FileInputStream;

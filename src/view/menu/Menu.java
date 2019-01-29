@@ -1,7 +1,7 @@
 package view.menu;
 
-import view.AddressConstants;
-import view.SoundPlayer;
+import view.utility.AddressConstants;
+import view.utility.SoundPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import models.account.Account;
-import view.Utility;
+import view.utility.Utility;
 import view.View;
 
 public class Menu extends Scene {
