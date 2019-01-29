@@ -2,10 +2,8 @@ package view.gameScene;
 
 import controller.MenuController;
 import controller.InGameController;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -19,6 +17,7 @@ import models.objects.Grass;
 import models.objects.Point;
 import models.objects.animals.Animal;
 import view.View;
+import view.gameScene.truck.TruckView;
 
 public class GameScene extends Scene implements Time
 {

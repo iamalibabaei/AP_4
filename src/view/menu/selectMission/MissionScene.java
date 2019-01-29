@@ -1,4 +1,4 @@
-package view.gameScene;
+package view.menu.selectMission;
 
 import controller.MenuController;
 import javafx.event.EventHandler;

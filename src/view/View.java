@@ -13,9 +13,9 @@ import models.objects.Grass;
 import models.objects.Item;
 import models.objects.animals.Animal;
 import view.gameScene.GameScene;
-import view.gameScene.MissionScene;
+import view.menu.selectMission.MissionScene;
 import view.menu.Menu;
-import view.newPlayer.NewPlayerScene;
+import view.menu.newPlayer.NewPlayerScene;
 
 import java.io.FileNotFoundException;
 

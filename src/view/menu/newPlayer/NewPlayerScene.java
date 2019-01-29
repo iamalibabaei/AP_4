@@ -1,4 +1,4 @@
-package view.newPlayer;
+package view.menu.newPlayer;
 
 import javafx.event.EventHandler;
 import javafx.scene.Group;

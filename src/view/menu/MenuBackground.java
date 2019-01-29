@@ -1,7 +1,7 @@
 package view.menu;
 
-import controller.AddressConstants;
-import controller.SoundPlayer;
+import view.AddressConstants;
+import view.SoundPlayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PathTransition;

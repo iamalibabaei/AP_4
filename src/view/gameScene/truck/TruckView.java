@@ -1,4 +1,4 @@
-package view.gameScene;
+package view.gameScene.truck;
 
 import controller.InGameController;
 import javafx.event.EventHandler;
@@ -14,11 +14,10 @@ import models.exceptions.InvalidArgumentException;
 import models.exceptions.NotEnoughSpaceException;
 import models.objects.Item;
 import models.objects.animals.Animal;
-import models.objects.animals.Cat;
-import models.objects.animals.Dog;
 import models.objects.animals.DomesticAnimal;
 import models.transportation.Truck;
 import view.View;
+import view.gameScene.GameScene;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

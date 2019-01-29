@@ -1,6 +1,6 @@
 package view.gameScene;
 
-import controller.AddressConstants;
+import view.AddressConstants;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;

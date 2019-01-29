@@ -1,6 +1,6 @@
 package view.gameScene;
 
-import controller.AddressConstants;
+import view.AddressConstants;
 import controller.InGameController;
 import javafx.scene.Node;
 import javafx.scene.image.Image;

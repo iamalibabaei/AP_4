@@ -1,7 +1,7 @@
 package view.menu;
 
-import controller.AddressConstants;
-import controller.SoundPlayer;
+import view.AddressConstants;
+import view.SoundPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -92,6 +92,7 @@ public class Menu extends Scene {
     }
 
     public String getAccount() {
+        System.out.println(choiceBox.getValue());
         return choiceBox.getValue();
     }
 
