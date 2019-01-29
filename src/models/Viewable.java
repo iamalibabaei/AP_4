@@ -7,7 +7,6 @@ public abstract class Viewable
 {
     protected Text text;//TODO shape will be imageView
     protected ImageView imageView;
-    private St
 
     public String getName()
     {

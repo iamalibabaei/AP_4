@@ -2,21 +2,14 @@ package models.misc;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import controller.InGameController;
-import models.Map;
-import models.exceptions.ObjectNotFoundException;
 import models.objects.Item;
 import models.objects.animals.Animal;
-import models.objects.animals.Cat;
-import models.objects.animals.Dog;
-import models.objects.animals.DomesticAnimal;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Mission
@@ -66,6 +59,7 @@ public class Mission
         YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
         YaGson yaGson = yaGsonBuilder.create();
         FileReader fileReader = new FileReader(jsonAddress);
+        System.out.println("before json");
         return yaGson.fromJson(new Scanner(fileReader).nextLine(), Mission.class);
     }
 

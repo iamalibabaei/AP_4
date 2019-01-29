@@ -34,6 +34,10 @@ public class SpriteAnimation extends Transition {
         setInterpolator(Interpolator.LINEAR);
     }
 
+    public void setCycleDuration(int time) {
+        setCycleDuration(new Duration(time));
+    }
+
     @Override
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);

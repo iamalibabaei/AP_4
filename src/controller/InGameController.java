@@ -49,7 +49,7 @@ public class InGameController implements Time
         availableWorkshops = new ArrayList<>();
         map = Map.getInstance();
         warehouse = Warehouse.getInstance();
-        well = new Well();
+        well = Well.getInstance();
         workshops = new ArrayList<>();
         truck = Truck.getInstance();
         helicopter = Helicopter.getInstance();

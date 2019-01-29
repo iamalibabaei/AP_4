@@ -21,7 +21,7 @@ import java.io.FileNotFoundException;
 
 public class MainView extends Application {
     private static MainView instance = new MainView();
-    private Stage mainStage;
+    private static Stage mainStage;
     public static final int WIDTH = 1300, HEIGHT = 720;
 
     public Stage getMainStage() {
@@ -39,10 +39,12 @@ public class MainView extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        System.out.println("start");
         mainStage = primaryStage;
         mainStage.setResizable(false);
         setStageScene(Menu.getInstance());
-
+        System.out.println("after setStage");
+        if (mainStage == null) throw new AssertionError();
         mainStage.setOnCloseRequest(event -> {
             /*
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -58,11 +60,12 @@ public class MainView extends Application {
             System.exit(0);*/
         });
         mainStage.show();
-
+        System.out.println("end");
     }
 
 
     private void setStageScene(Scene scene) {
+        if (mainStage == null) throw new AssertionError();
         mainStage.setX(0);
         mainStage.setY(0);
         mainStage.setScene(scene);

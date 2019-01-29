@@ -4,7 +4,7 @@ public class AddressConstants
 {
     public static final String GRAPHICS_ROOT = "res/graphicAssets/";
     public static final String MISSIONS_ROOT = "missions/";
-    public static final String SOUNDS_ROOT = GRAPHICS_ROOT + "sounds/";
+    public static final String SOUNDS_ROOT =  "res/sounds/";
     public static final String GAME_BACKGROUND_ROOT = GRAPHICS_ROOT + "GameBackground/";
     public static final String ANIMAL_ICONS_ROOT = GAME_BACKGROUND_ROOT + "AnimalIcons/";
     public static final String WAREHOUSE_PICTURE_ROOT = GAME_BACKGROUND_ROOT + "Depot/";
