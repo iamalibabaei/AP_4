@@ -1,5 +1,6 @@
 package view.menu;
 
+import view.MainView;
 import view.utility.AddressConstants;
 import view.utility.SoundPlayer;
 import javafx.event.EventHandler;
@@ -13,7 +14,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import models.account.Account;
 import view.utility.Utility;
-import view.View;
 
 public class Menu extends Scene {
     private static Menu instance = new Menu();
@@ -28,7 +28,7 @@ public class Menu extends Scene {
     private TextField password;
 
     public Menu() {
-        super(new Group(), View.WIDTH, View.HEIGHT);
+        super(new Group(), MainView.WIDTH, MainView.HEIGHT);
         SoundPlayer.getInstance().playBackground(Utility.getSound(AddressConstants.MENU_SOUND));
         root = (Group) getRoot();
         build();
@@ -44,7 +44,7 @@ public class Menu extends Scene {
         StackPane startGame = new StackPane();
         Text startGameText = new Text("start game");
         startGame.getChildren().addAll(startButton, startGameText);
-        startButton.setOnMouseClicked(event -> View.getInstance().goToMap());
+        startButton.setOnMouseClicked(event -> MainView.getInstance().goToMap());
         startGame.relocate(200, 200);
 
         ImageView settingButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
@@ -53,7 +53,7 @@ public class Menu extends Scene {
         StackPane setting = new StackPane();
         Text settingText = new Text("setting");
         setting.getChildren().addAll(settingButton, settingText);
-        setting.setOnMouseClicked(event -> View.getInstance().goToSetting());
+        setting.setOnMouseClicked(event -> MainView.getInstance().goToSetting());
         setting.relocate(200, 280);
 
         ImageView newPlayerButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
@@ -62,7 +62,7 @@ public class Menu extends Scene {
         StackPane newPlayer = new StackPane();
         Text newPlayerText = new Text("new player");
         newPlayer.getChildren().addAll(newPlayerButton, newPlayerText);
-        newPlayer.setOnMouseClicked(event -> View.getInstance().newPlayer());
+        newPlayer.setOnMouseClicked(event -> MainView.getInstance().newPlayer());
         newPlayer.relocate(200, 360);
 
         ImageView exitButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
@@ -71,7 +71,7 @@ public class Menu extends Scene {
         StackPane exit = new StackPane();
         Text exitText = new Text("exit");
         exit.getChildren().addAll(exitButton, exitText);
-        exit.setOnMouseClicked(event -> View.getInstance().close());
+        exit.setOnMouseClicked(event -> MainView.getInstance().close());
         exit.relocate(200, 440);
         //TODO change these
         choiceBox = new ChoiceBox<>();

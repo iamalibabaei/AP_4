@@ -16,7 +16,7 @@ import models.objects.Item;
 import models.objects.animals.Animal;
 import models.objects.animals.DomesticAnimal;
 import models.transportation.Truck;
-import view.View;
+import view.MainView;
 import view.gameScene.InGameView;
 
 import java.io.FileInputStream;
@@ -32,8 +32,8 @@ public class TruckView extends Pane {
 
     private TruckView() {
         relocate(0 , 0);
-        setHeight(View.HEIGHT);
-        setWidth(View.WIDTH);
+        setHeight(MainView.HEIGHT);
+        setWidth(MainView.WIDTH);
         setVisible(false);
         build();
     }
@@ -109,9 +109,9 @@ public class TruckView extends Pane {
                     try {
                         InGameController.getInstance().addToStash("truck", item.name(), Integer.parseInt(textField.getText()));
                     } catch (NotEnoughSpaceException e) {
-                        View.getInstance().showExceptions(e, 100, 100);
+                        MainView.getInstance().showExceptions(e, 100, 100);
                     } catch (InvalidArgumentException e) {
-                        View.getInstance().showExceptions(e, 100, 100);
+                        MainView.getInstance().showExceptions(e, 100, 100);
                     }
                     updateInformation();
                     setVisible(true);
@@ -126,12 +126,12 @@ public class TruckView extends Pane {
     private void setButtons() {
         Button exit = new Button("exit");
         relocate(0, 0);
-        exit.relocate(View.WIDTH / 2 - 100, View.HEIGHT - 50);
+        exit.relocate(MainView.WIDTH / 2 - 100, MainView.HEIGHT - 50);
         exit.setOnMouseClicked(event -> InGameView.getInstance().closeTruck());
 
         Button sendTruck = new Button("sendTruck");
 //        sendTruck.relocate(30, 10);
-        sendTruck.relocate(View.WIDTH / 2 + 100, View.HEIGHT - 50);
+        sendTruck.relocate(MainView.WIDTH / 2 + 100, MainView.HEIGHT - 50);
         sendTruck.setOnMouseClicked(event -> InGameController.getInstance().sendTruck());
         getChildren().addAll(exit, sendTruck);
     }
@@ -139,17 +139,17 @@ public class TruckView extends Pane {
     private void wallpaper() {
         Image background = null;
         try {
-            background = new Image(new FileInputStream("res/Textures/truckInSideView.jpg"));
+            background = new Image(new FileInputStream("res/graphicAssets/truckInSideView.jpg"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        BackgroundSize backgroundSize = new BackgroundSize(View.WIDTH, View.HEIGHT, false,
+        BackgroundSize backgroundSize = new BackgroundSize(MainView.WIDTH, MainView.HEIGHT, false,
                 false, false, false);
         BackgroundImage backgroundImage = new BackgroundImage(background, BackgroundRepeat.REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
         Pane pane = new Pane();
-        pane.setMinSize(View.WIDTH * 2, View.HEIGHT);
+        pane.setMinSize(MainView.WIDTH * 2, MainView.HEIGHT);
         pane.setBackground(new Background(backgroundImage));
         this.getChildren().add(pane);
 

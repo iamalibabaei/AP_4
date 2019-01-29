@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import models.account.Account;
-import view.View;
+import view.MainView;
 import view.menu.Menu;
 
 public class
@@ -20,7 +20,7 @@ NewPlayerScene extends Scene {
     TextField name, password;
 
     public NewPlayerScene() {
-        super(new Group(), View.WIDTH, View.HEIGHT);
+        super(new Group(), MainView.WIDTH, MainView.HEIGHT);
         root = (Group) getRoot();
         build();
     }
@@ -47,7 +47,7 @@ NewPlayerScene extends Scene {
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                View.getInstance().goToMenu();
+                MainView.getInstance().goToMenu();
             }
         });
         back.relocate(300,450);

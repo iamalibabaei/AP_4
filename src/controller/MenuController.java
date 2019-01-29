@@ -10,7 +10,7 @@ import models.misc.Mission;
 import models.objects.Item;
 import models.objects.Point;
 import models.objects.animals.Animal;
-import view.View;
+import view.MainView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,12 +19,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Formatter;
-import java.util.HashMap;
 
 public class MenuController
 {
     private static MenuController menuController = new MenuController();
-    private View view;
+    private MainView mainView;
     private InGameController game;
     private Mission mission;
 
@@ -40,7 +39,7 @@ public class MenuController
 
 
     public static void main(String[] args) {
-        Application.launch(View.class, args);
+        Application.launch(MainView.class, args);
         //serializeMission();
     }
 
@@ -234,8 +233,8 @@ public class MenuController
 
     public void startGame() {
         game = InGameController.getInstance();
-        view = View.getInstance();
-        view.startGame();
+        mainView = MainView.getInstance();
+        mainView.startGame();
         game.setMission(mission);
         game.startGame();
     }

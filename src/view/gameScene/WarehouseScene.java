@@ -1,5 +1,6 @@
 package view.gameScene;
 
+import view.MainView;
 import view.utility.AddressConstants;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -10,7 +11,6 @@ import javafx.scene.text.Text;
 import models.buildings.Warehouse;
 import models.exceptions.AlreadyAtMaxLevelException;
 import models.objects.Item;
-import view.View;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,7 +23,7 @@ public class WarehouseScene extends Pane {
     }
 
     private WarehouseScene(){
-        relocate(View.WIDTH/2 - width / 2, View.HEIGHT / 2 - height / 2);
+        relocate(MainView.WIDTH/2 - width / 2, MainView.HEIGHT / 2 - height / 2);
         setHeight(height);
         setWidth(width);
         build();
@@ -55,7 +55,7 @@ public class WarehouseScene extends Pane {
                 try {
                     Warehouse.getInstance().upgrade();
                 } catch (AlreadyAtMaxLevelException e) {
-                    View.getInstance().showExceptions(e, View.WIDTH/2 - width / 2, View.HEIGHT / 2 - height / 2);
+                    MainView.getInstance().showExceptions(e, MainView.WIDTH/2 - width / 2, MainView.HEIGHT / 2 - height / 2);
                 }
             }
         });
