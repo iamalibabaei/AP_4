@@ -12,13 +12,8 @@ import models.objects.Point;
 import models.objects.animals.Animal;
 import view.MainView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.Formatter;
+import java.io.*;
+import java.util.*;
 
 public class MenuController
 {
@@ -41,29 +36,33 @@ public class MenuController
     public static void main(String[] args) {
         Application.launch(MainView.class, args);
         //serializeMission();
+
     }
 
     private static void serializeMission() {
-        YaGson yaGson = new YaGson();
-        EnumMap<Animal.Type, Integer> animalObjective = new EnumMap<>(Animal.Type.class);
-        animalObjective.put(Animal.Type.HEN, 10);
-        animalObjective.put(Animal.Type.SHEEP, 2);
-        EnumMap<Item.Type, Integer> itemObjective = new EnumMap<>(Item.Type.class);
-        itemObjective.put(Item.Type.EGG, 15);
-        itemObjective.put(Item.Type.DRIED_EGG, 5);
-        EnumMap<Animal.Type, Integer> animalAtBeginning = new EnumMap<>(Animal.Type.class);
+        int moneyObjective = 4000 , moneyAtBeginning = 2000;
+        HashMap<Animal.Type, Integer> animalObjectives = new HashMap<>();
+        animalObjectives.put(Animal.Type.HEN, 10);
+        animalObjectives.put(Animal.Type.SHEEP, 2);
+        HashMap<Item.Type, Integer> ItemObjective = new HashMap<>();
+        ItemObjective.put(Item.Type.EGG, 10);
+        boolean dog = false, cat = false;
+        HashMap<Animal.Type, Integer> animalAtBeginning = new HashMap<>();
         animalAtBeginning.put(Animal.Type.HEN, 5);
 
 
-        Mission mission = new Mission(1000, animalObjective, itemObjective, false, false, animalAtBeginning, 200);
+
+        Mission mission = new Mission(moneyObjective, animalObjectives, ItemObjective, false, false, animalAtBeginning, moneyAtBeginning);
         FileWriter fileWriter = null;
         try {
-            fileWriter = new FileWriter("res/missions/mission2.json");
+            fileWriter = new FileWriter("res/missions/mission1.json");
         } catch (IOException e) {
             e.printStackTrace();
         }
+        YaGson yaGson = new YaGson();
         Formatter formatter = new Formatter(fileWriter);
-        formatter.format(yaGson.toJson(mission)).flush();
+        formatter.format(yaGson.toJson(mission));
+        formatter.flush();
     }
 
     public static MenuController getInstance()

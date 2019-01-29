@@ -10,24 +10,45 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Mission
 {
     public static final String DEFAULT_MISSION_PATH = "res/missions";
     private int moneyObjective;
-    private EnumMap<Animal.Type, Integer> animalObjectives;
-    private EnumMap<Item.Type, Integer> ItemObjective;
+    private HashMap<Animal.Type, Integer> animalObjectives;
+    private HashMap<Item.Type, Integer> ItemObjective;
+    private boolean dog, cat;
+    private HashMap<Animal.Type, Integer> animalAtBeginning;
+    private int moneyAtBeginning;
+
+
+    public Mission(int money, HashMap<Animal.Type, Integer> animalObjectives,
+                   HashMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat, HashMap<Animal.Type, Integer> animalAtBeginning, int moneyAtBeginning)
+    {
+        moneyObjective = money;
+        this.animalObjectives = animalObjectives;
+        ItemObjective = itemObjective;
+        this.dog = dog;
+        this.cat = cat;
+        this.animalAtBeginning = animalAtBeginning;
+        this.moneyAtBeginning = moneyAtBeginning;
+    }
+
+
+
+
 
     public int getMoneyObjective() {
         return moneyObjective;
     }
 
-    public EnumMap<Animal.Type, Integer> getAnimalObjectives() {
+    public HashMap<Animal.Type, Integer> getAnimalObjectives() {
         return animalObjectives;
     }
 
-    public EnumMap<Item.Type, Integer> getItemObjective() {
+    public HashMap<Item.Type, Integer> getItemObjective() {
         return ItemObjective;
     }
 
@@ -39,28 +60,22 @@ public class Mission
         return cat;
     }
 
-    private boolean dog, cat;
-    private EnumMap<Animal.Type, Integer> animalAtBeginning;
-    private int moneyAtBeginning;
 
-    public Mission(int money, EnumMap<Animal.Type, Integer> animalObjectives,
-                   EnumMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat, EnumMap<Animal.Type, Integer> animalAtBeginning, int moneyAtBeginning)
-    {
-        moneyObjective = money;
-        this.animalObjectives = animalObjectives;
-        ItemObjective = itemObjective;
-        this.dog = dog;
-        this.cat = cat;
-        this.animalAtBeginning = animalAtBeginning;
-        this.moneyAtBeginning = moneyAtBeginning;
+    public HashMap<Animal.Type, Integer> getAnimalAtBeginning() {
+        return animalAtBeginning;
+    }
+
+    public int getMoneyAtBeginning() {
+        return moneyAtBeginning;
     }
 
     public static Mission loadJson(String jsonAddress) throws FileNotFoundException {
-        YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
-        YaGson yaGson = yaGsonBuilder.create();
+        YaGson yaGson = new YaGson();
         FileReader fileReader = new FileReader(jsonAddress);
-        System.out.println("before json");
-        return yaGson.fromJson(new Scanner(fileReader).nextLine(), Mission.class);
+        Scanner scanner = new Scanner(fileReader);
+        String json = scanner.nextLine();
+        Mission mission = yaGson.fromJson(json, Mission.class);
+        return mission;
     }
 
     public static ArrayList<String> loadDefaultMissions()
@@ -80,11 +95,4 @@ public class Mission
         return usersName;
     }
 
-    public EnumMap<Animal.Type, Integer> getAnimalAtBeginning() {
-        return animalAtBeginning;
-    }
-
-    public int getMoneyAtBeginning() {
-        return moneyAtBeginning;
-    }
 }

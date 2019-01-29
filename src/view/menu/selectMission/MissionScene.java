@@ -1,5 +1,6 @@
 package view.menu.selectMission;
 
+import controller.InGameController;
 import controller.MenuController;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import view.utility.AddressConstants;
 import view.utility.Utility;
 
 import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class MissionScene extends Scene {
@@ -27,19 +29,16 @@ public class MissionScene extends Scene {
     public MissionScene() {
         super(new Group(), MainView.WIDTH, MainView.HEIGHT);
         root = (Group) getRoot();
-        System.out.println("missionCons");
         build();
     }
 
     private void build() {
         root.getChildren().clear();
         Image menuImage = Utility.getImage(AddressConstants.GRAPHICS_ROOT + "menuWallpaper.jpg");
-
         ImageView menuWallpaper = new ImageView(menuImage);
         menuWallpaper.setFitWidth(MainView.WIDTH);
         menuWallpaper.setFitHeight(MainView.HEIGHT);
         menuWallpaper.relocate(0, 0);
-        System.out.println("before buttons");;
         ArrayList<String> missions = Mission.loadDefaultMissions();
         int YValue = 200;
         for (int i = 0; i < missions.size(); i++) {
@@ -48,15 +47,14 @@ public class MissionScene extends Scene {
             root.getChildren().addAll(button);
             button.setOnMouseClicked(event -> runGame(button.getText()));
         }
-        System.out.println("after");
 
     }
 
     private void runGame(String text) {
         MenuController.getInstance().setCurrentAccount(account);
         try {
-            MenuController.getInstance().setMission(Mission.loadJson("res/missions/"+ text + ".json"));
-            System.out.println("after mission set");
+            MenuController.getInstance().setMission(Mission.loadJson(AddressConstants.MISSIONS_ROOT + text + ".json"));
+            //InGameController.getInstance().setMission(Mission.loadJson(AddressConstants.MISSIONS_ROOT + text + ".json"));
         } catch (FileNotFoundException e) {
             //TODO show alert
             e.printStackTrace();
