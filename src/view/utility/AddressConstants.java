@@ -26,6 +26,7 @@ public class AddressConstants
     public static final String MENU_COW_SOUND = SOUNDS_ROOT + "cow.wav";
     public static final String MENU_ROOSTER_SOUND = SOUNDS_ROOT + "rooster.wav";
     public static final String MENU_BUTTON = MENU + "button.png";
+    public static final String WELL_PICTURE_ROOT = GRAPHICS_ROOT + "Service/Well/";
 
 
 }

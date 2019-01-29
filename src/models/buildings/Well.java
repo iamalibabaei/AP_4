@@ -19,7 +19,13 @@ public class Well extends Viewable implements Upgradable, Time
     private int remainingWater;
     private int remainingTimeToRefill; // only needed when refilling
 
-    public Well()
+    private static Well instance = new Well();
+
+    public static Well getInstance() {
+        return instance;
+    }
+
+    private Well()
     {
         isRefilling = false;
         level = 0;

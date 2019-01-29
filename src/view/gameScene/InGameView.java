@@ -1,20 +1,18 @@
 package view.gameScene;
 
-import controller.AddressConstants;
-import controller.MenuController;
 import controller.InGameController;
-import javafx.event.EventHandler;
+import controller.MenuController;
+import javafx.animation.Animation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
+import javafx.util.Duration;
 import models.buildings.Well;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
@@ -24,6 +22,9 @@ import models.objects.Point;
 import models.objects.animals.Animal;
 import view.MainView;
 import view.gameScene.truck.TruckView;
+import view.menu.SpriteAnimation;
+import view.utility.AddressConstants;
+import view.utility.Utility;
 
 public class InGameView extends Scene implements Time
 {
@@ -78,27 +79,40 @@ public class InGameView extends Scene implements Time
         money.setText(Integer.toString(InGameController.getInstance().getMoney()));
     }
 
-    private void wellGraphic(Well well) {
-        int XValue = 750, YValue = 130;
-        Image wellImage = AddressConstants.getImage(AddressConstants.WELL_PICTURE_ROOT + well.getLevel() + ".png");
-        ImageView wellImageView = new ImageView(wellImage);
+    private void wellGraphic() {
+        int XValue = (int) (MainView.WIDTH * 0.6), YValue = (int) (MainView.HEIGHT / 5);
 
-        Circle circle = new Circle(25);
-        circle.setFill(Color.BLUE);
-        Text text = new Text("well");
-        text.setBoundsType(TextBoundsType.VISUAL);
-        StackPane wellGraphic = new StackPane();
-        wellGraphic.getChildren().addAll(circle,text);
-        wellGraphic.relocate(XValue, YValue);
-        wellGraphic.setOnMouseClicked(event -> {
+        ImageView wellImageView = new ImageView(Utility.getImage(AddressConstants.WELL_PICTURE_ROOT + Well.getInstance().getLevel() + ".png"));
+        root.getChildren().addAll(wellImageView);
+
+        SpriteAnimation wellSpriteAnimation = new SpriteAnimation(wellImageView, Duration.millis(1250), 16, 4,
+                0, 0, (int) (wellImageView.getImage().getWidth() / 4), (int) wellImageView.getImage().getHeight() / 4);
+
+        wellImageView.setOnMouseClicked(event -> {
             try {
                 MenuController.getInstance().refillWell();
             } catch (IsWorkingException | InsufficientResourcesException e) {
                 MainView.getInstance().showExceptions(e, XValue, YValue);
             }
+            wellSpriteAnimation.setCycleCount(Animation.INDEFINITE);
+            wellSpriteAnimation.play();
         });
+//        Circle circle = new Circle(25);
+//        circle.setFill(Color.BLUE);
+//        Text text = new Text("well");
+//        text.setBoundsType(TextBoundsType.VISUAL);
+//        StackPane wellGraphic = new StackPane();
+//        wellGraphic.getChildren().addAll(circle,text);
+//        wellGraphic.relocate(XValue, YValue);
+//        wellGraphic.setOnMouseClicked(event -> {
+//            try {
+//                MenuController.getInstance().refillWell();
+//            } catch (IsWorkingException | InsufficientResourcesException e) {
+//                MainView.getInstance().showExceptions(e, XValue, YValue);
+//            }
+//        });
 
-        root.getChildren().addAll(wellGraphic);
+//        root.getChildren().addAll(wellGraphic);
     }
 
     @Override
