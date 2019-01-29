@@ -1,5 +1,7 @@
 package view.menu;
 
+import controller.AddressConstants;
+import controller.SoundPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,6 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import models.account.Account;
 import view.View;
 
@@ -29,6 +34,7 @@ public class Menu extends Scene {
 
     public Menu() {
         super(new Group(), View.WIDTH, View.HEIGHT);
+        SoundPlayer.getInstance().playBackground(AddressConstants.getSound(AddressConstants.MENU_SOUND));
         root = (Group) getRoot();
         build();
     }
@@ -36,16 +42,6 @@ public class Menu extends Scene {
     private void build() {
         root.getChildren().clear();
 
-        Image menuImage = null;
-        try {
-            menuImage = new Image(new FileInputStream("res/Textures/menuWallpaper.jpg"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ImageView menuWallpaper = new ImageView(menuImage);
-        menuWallpaper.setFitWidth(View.WIDTH);
-        menuWallpaper.setFitHeight(View.HEIGHT);
-        menuWallpaper.relocate(0, 0);
         //start game button design
         Button startGame = new Button("start game");
         startGame.relocate(300, 300);
@@ -55,6 +51,21 @@ public class Menu extends Scene {
                 View.getInstance().goToMap();
             }
         });
+//        //todo change font of texes
+//        ImageView button = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BUTTON));
+//        button.setFitHeight(100);
+//        button.setFitWidth(200);
+//        StackPane startGame = new StackPane();
+//        Text startGameText = new Text("start game");
+//        startGame.getChildren().addAll(button, startGameText);
+//        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                View.getInstance().goToMap();
+//            }
+//        });
+//        startGame.relocate(200, 200);
+//        //root.getChildren().addAll(startGame);
 
         Button setting = new Button("setting");
         setting.relocate(300, 350);
@@ -65,6 +76,10 @@ public class Menu extends Scene {
             }
         });
 
+
+
+
+        //exit
         Button exit = new Button("EXIT");
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -74,6 +89,8 @@ public class Menu extends Scene {
         });
         exit.relocate(300, 500);
 
+
+        //new player
         Button newPlayer = new Button("new player");
         newPlayer.relocate(300, 400);
         newPlayer.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -90,7 +107,7 @@ public class Menu extends Scene {
         password = new TextField();
         password.setPromptText("password");
         password.relocate(400, 350);
-        root.getChildren().addAll(menuWallpaper, startGame, setting, newPlayer, exit, choiceBox, password);
+        root.getChildren().addAll(MenuBackground.getInstance(), startGame, setting, newPlayer, exit, choiceBox, password);
 
         //root.getChildren().addAll(MenuBackground.getInstance());
 
@@ -105,4 +122,19 @@ public class Menu extends Scene {
         return choiceBox.getValue();
     }
 
+    private void createButtton(String textOnButton, int x, int y, EventHandler eventHandler) {
+        Pane pane = new Pane();
+        //todo change font of texes
+        ImageView button = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BUTTON));
+        button.setFitHeight(100);
+        button.setFitWidth(200);
+        Text text = new Text(textOnButton);
+        pane.getChildren().addAll(button, text);
+        button.setOnMouseClicked(eventHandler);
+        pane.relocate(x, y);
+        root.getChildren().addAll(pane);
+    }
+
+
 }
+
