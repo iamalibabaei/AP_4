@@ -1,10 +1,4 @@
-package view;
-
-import javafx.scene.image.Image;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+package view.utility;
 
 public class AddressConstants
 {
@@ -32,21 +26,6 @@ public class AddressConstants
     public static final String MENU_COW_SOUND = SOUNDS_ROOT + "cow.wav";
     public static final String MENU_ROOSTER_SOUND = SOUNDS_ROOT + "rooster.wav";
     public static final String MENU_BUTTON = MENU + "button.png";
-    public static final String WELL_PICTURE_ROOT = GRAPHICS_ROOT + "Service/Well/";
-    public static Image getImage(String path) {
-        Image image = null;
-        try {
-            image = new Image(new FileInputStream(path));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
 
 
-    public static String getSound(String path) {
-
-        String media = new File(path).toURI().toString();
-        return media;
-    }
 }

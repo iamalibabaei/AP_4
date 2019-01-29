@@ -1,7 +1,7 @@
 package view.menu;
 
-import view.AddressConstants;
-import view.SoundPlayer;
+import view.utility.AddressConstants;
+import view.utility.SoundPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import models.account.Account;
+import view.utility.Utility;
 import view.View;
 
 public class Menu extends Scene {
@@ -28,7 +29,7 @@ public class Menu extends Scene {
 
     public Menu() {
         super(new Group(), View.WIDTH, View.HEIGHT);
-        SoundPlayer.getInstance().playBackground(AddressConstants.getSound(AddressConstants.MENU_SOUND));
+        SoundPlayer.getInstance().playBackground(Utility.getSound(AddressConstants.MENU_SOUND));
         root = (Group) getRoot();
         build();
     }
@@ -37,7 +38,7 @@ public class Menu extends Scene {
         root.getChildren().clear();
 
         //todo change font of texes
-        ImageView startButton = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BUTTON));
+        ImageView startButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         startButton.setFitHeight(100);
         startButton.setFitWidth(200);
         StackPane startGame = new StackPane();
@@ -46,7 +47,7 @@ public class Menu extends Scene {
         startButton.setOnMouseClicked(event -> View.getInstance().goToMap());
         startGame.relocate(200, 200);
 
-        ImageView settingButton = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BUTTON));
+        ImageView settingButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         settingButton.setFitHeight(100);
         settingButton.setFitWidth(200);
         StackPane setting = new StackPane();
@@ -55,7 +56,7 @@ public class Menu extends Scene {
         setting.setOnMouseClicked(event -> View.getInstance().goToSetting());
         setting.relocate(200, 280);
 
-        ImageView newPlayerButton = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BUTTON));
+        ImageView newPlayerButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         newPlayerButton.setFitHeight(100);
         newPlayerButton.setFitWidth(200);
         StackPane newPlayer = new StackPane();
@@ -64,7 +65,7 @@ public class Menu extends Scene {
         newPlayer.setOnMouseClicked(event -> View.getInstance().newPlayer());
         newPlayer.relocate(200, 360);
 
-        ImageView exitButton = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BUTTON));
+        ImageView exitButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         exitButton.setFitHeight(100);
         exitButton.setFitWidth(200);
         StackPane exit = new StackPane();
@@ -99,7 +100,7 @@ public class Menu extends Scene {
     private void createButtton(String textOnButton, int x, int y, EventHandler eventHandler) {
         Pane pane = new Pane();
         //todo change font of texes
-        ImageView button = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BUTTON));
+        ImageView button = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         button.setFitHeight(100);
         button.setFitWidth(200);
         Text text = new Text(textOnButton);

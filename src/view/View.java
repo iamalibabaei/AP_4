@@ -12,7 +12,7 @@ import models.objects.Entity;
 import models.objects.Grass;
 import models.objects.Item;
 import models.objects.animals.Animal;
-import view.gameScene.GameScene;
+import view.gameScene.InGameView;
 import view.menu.selectMission.MissionScene;
 import view.menu.Menu;
 import view.menu.newPlayer.NewPlayerScene;
@@ -102,7 +102,7 @@ public class View extends Application {
     }
 
     public void startGame() {
-        setStageScene(GameScene.getInstance());
+        setStageScene(InGameView.getInstance());
     }
 
     public void showExceptions(Exception e, double x, double y) {
@@ -114,11 +114,11 @@ public class View extends Application {
     }
     public void addEntityToMap(Entity entity) {
         if (entity instanceof Animal) {
-            GameScene.getInstance().addAnimal((Animal) entity, entity.getCoordinates());
+            InGameView.getInstance().addAnimal((Animal) entity, entity.getCoordinates());
         } else if (entity instanceof Grass) {
-            GameScene.getInstance().addGrass((Grass) entity, entity.getCoordinates());
+            InGameView.getInstance().addGrass((Grass) entity, entity.getCoordinates());
         } else if (entity instanceof Item) {
-            //GameScene.getInstance().addItem((Item) entity, entity.getCoordinates());
+            //InGameView.getInstance().addItem((Item) entity, entity.getCoordinates());
         }
     }
 }

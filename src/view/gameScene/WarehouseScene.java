@@ -1,6 +1,6 @@
 package view.gameScene;
 
-import view.AddressConstants;
+import view.utility.AddressConstants;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -42,7 +42,7 @@ public class WarehouseScene extends Pane {
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                GameScene.getInstance().closeWarehouse();
+                InGameView.getInstance().closeWarehouse();
             }
         });
         getChildren().addAll(exit);
