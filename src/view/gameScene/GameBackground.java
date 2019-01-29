@@ -31,6 +31,7 @@ public class GameBackground extends Pane implements Time {
         build();
     }
 
+
     private void build() {
         setBackgroundStuff();
         setBuyAnimalButton();
@@ -73,11 +74,7 @@ public class GameBackground extends Pane implements Time {
 
     private void setBackgroundStuff() {
         Image background = null;
-        try {
-            background = new Image(new FileInputStream("res/Textures/back.png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        background = AddressConstants.getImage(AddressConstants.GAME_BACKGROUND_ROOT + "background.png");
 
         BackgroundSize backgroundSize = new BackgroundSize(View.WIDTH, View.HEIGHT, false,
                 false, false, false);

@@ -19,9 +19,9 @@ import java.io.IOException;
 import java.util.Formatter;
 import java.util.HashMap;
 
-public class Controller
+public class MenuController
 {
-    private static Controller controller = new Controller();
+    private static MenuController menuController = new MenuController();
     private static View view;
     private InGameController game;
     private Mission mission;
@@ -57,9 +57,9 @@ public class Controller
         formatter.format(yaGson.toJson(mission)).flush();
     }
 
-    public static Controller getInstance()
+    public static MenuController getInstance()
     {
-        return controller;
+        return menuController;
     }
 
     //    public void buy(String parameter) throws InsufficientResourcesException, InvalidArgumentException {

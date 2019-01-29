@@ -1,6 +1,6 @@
 package view.gameScene;
 
-import controller.Controller;
+import controller.MenuController;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -34,7 +34,7 @@ public class MapView extends Pane implements Time {
             @Override
             public void handle(MouseEvent event) {
                 System.out.println((event.getSceneX()- 325) / WIDTH_BASE+"   "+ event.getY() / HEIGHT_BASE);
-                Controller.getInstance().click((event.getX() - 325) / WIDTH_BASE, event.getY() / HEIGHT_BASE);
+                MenuController.getInstance().click((event.getX() - 325) / WIDTH_BASE, event.getY() / HEIGHT_BASE);
             }
         });
     }

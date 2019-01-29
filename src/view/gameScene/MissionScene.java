@@ -1,6 +1,6 @@
 package view.gameScene;
 
-import controller.Controller;
+import controller.MenuController;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -62,14 +62,14 @@ public class MissionScene extends Scene {
     }
 
     private void runGame(String text) {
-        Controller.getInstance().setAccount(account);
+        MenuController.getInstance().setAccount(account);
         try {
-            Controller.getInstance().setMission(Mission.loadJson("res/missions/"+ text + ".json"));
+            MenuController.getInstance().setMission(Mission.loadJson("res/missions/"+ text + ".json"));
         } catch (FileNotFoundException e) {
             //TODO show alert
             e.printStackTrace();
         }
-        Controller.getInstance().startGame();
+        MenuController.getInstance().startGame();
     }
 
 

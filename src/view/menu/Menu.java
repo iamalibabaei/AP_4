@@ -5,20 +5,14 @@ import controller.SoundPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import models.account.Account;
 import view.View;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class Menu extends Scene {
     private static Menu instance = new Menu();
@@ -49,12 +43,7 @@ public class Menu extends Scene {
         StackPane startGame = new StackPane();
         Text startGameText = new Text("start game");
         startGame.getChildren().addAll(startButton, startGameText);
-        startButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                View.getInstance().goToMap();
-            }
-        });
+        startButton.setOnMouseClicked(event -> View.getInstance().goToMap());
         startGame.relocate(200, 200);
 
         ImageView settingButton = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BUTTON));
@@ -63,12 +52,7 @@ public class Menu extends Scene {
         StackPane setting = new StackPane();
         Text settingText = new Text("setting");
         setting.getChildren().addAll(settingButton, settingText);
-        setting.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                View.getInstance().goToSetting();
-            }
-        });
+        setting.setOnMouseClicked(event -> View.getInstance().goToSetting());
         setting.relocate(200, 280);
 
         ImageView newPlayerButton = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BUTTON));
@@ -77,12 +61,7 @@ public class Menu extends Scene {
         StackPane newPlayer = new StackPane();
         Text newPlayerText = new Text("new player");
         newPlayer.getChildren().addAll(newPlayerButton, newPlayerText);
-        newPlayer.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                View.getInstance().newPlayer();
-            }
-        });
+        newPlayer.setOnMouseClicked(event -> View.getInstance().newPlayer());
         newPlayer.relocate(200, 360);
 
         ImageView exitButton = new ImageView(AddressConstants.getImage(AddressConstants.MENU_BUTTON));
@@ -91,12 +70,7 @@ public class Menu extends Scene {
         StackPane exit = new StackPane();
         Text exitText = new Text("exit");
         exit.getChildren().addAll(exitButton, exitText);
-        exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                View.getInstance().close();
-            }
-        });
+        exit.setOnMouseClicked(event -> View.getInstance().close());
         exit.relocate(200, 440);
         //TODO change these
         choiceBox = new ChoiceBox<>();

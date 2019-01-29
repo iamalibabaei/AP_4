@@ -1,7 +1,7 @@
 package view;
 
 
-import controller.Controller;
+import controller.MenuController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -11,7 +11,6 @@ import models.exceptions.IsWorkingException;
 import models.objects.Entity;
 import models.objects.Grass;
 import models.objects.Item;
-import models.objects.Point;
 import models.objects.animals.Animal;
 import view.gameScene.GameScene;
 import view.gameScene.MissionScene;
@@ -30,8 +29,8 @@ public class View extends Application {
     }
 
 
-    private static Controller getController(){
-        return Controller.getInstance();
+    private static MenuController getController(){
+        return MenuController.getInstance();
     }
 
     public static View getInstance() {
@@ -80,7 +79,7 @@ public class View extends Application {
             //TODO show message
             return;
         }
-        Controller.getInstance().setAccount(account);
+        MenuController.getInstance().setAccount(account);
         setStageScene(MissionScene.getInstance());
     }
 

@@ -1,6 +1,6 @@
 package view.gameScene;
 
-import controller.Controller;
+import controller.MenuController;
 import controller.InGameController;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -12,13 +12,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
-import models.Map;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
-import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Time;
 import models.objects.Grass;
-import models.objects.Item;
 import models.objects.Point;
 import models.objects.animals.Animal;
 import view.View;
@@ -87,7 +84,7 @@ public class GameScene extends Scene implements Time
         wellGraphic.relocate(XValue, YValue);
         wellGraphic.setOnMouseClicked(event -> {
             try {
-                Controller.getInstance().refillWell();
+                MenuController.getInstance().refillWell();
             } catch (IsWorkingException | InsufficientResourcesException e) {
                 View.getInstance().showExceptions(e, XValue, YValue);
             }

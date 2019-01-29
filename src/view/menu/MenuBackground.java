@@ -8,7 +8,7 @@ import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -121,9 +121,7 @@ public class MenuBackground extends Pane {
         for (int i = 0; i < 4; i++) {
             int XValueStart, YValueStart,XValueEnd,YValueEnd, rotate, height,width, time;
             Image animalImage;
-            var musicSoundAnonymousObject = new Object() {
-                String musicSound = null;
-            };
+            String musicSound = null;
             switch (i) {
                 case 0:
                     animalImage = AddressConstants.getImage(AddressConstants.MENU_PIG);
@@ -138,7 +136,7 @@ public class MenuBackground extends Pane {
                     break;
 
                 case 1:
-                    musicSoundAnonymousObject.musicSound = AddressConstants.getSound(AddressConstants.MENU_ROOSTER_SOUND);
+                    musicSound = AddressConstants.getSound(AddressConstants.MENU_ROOSTER_SOUND);
                     animalImage = AddressConstants.getImage(AddressConstants.MENU_ROOSTER);
                     height = 200;
                     width = 200;
@@ -150,7 +148,7 @@ public class MenuBackground extends Pane {
                     time = 2000;
                     break;
                 case 2:
-                    musicSoundAnonymousObject.musicSound = AddressConstants.getSound(AddressConstants.MENU_COW_SOUND);
+                    musicSound = AddressConstants.getSound(AddressConstants.MENU_COW_SOUND);
                     animalImage = AddressConstants.getImage(AddressConstants.MENU_COW);
                     height = 200;
                     width = 400;
@@ -180,8 +178,9 @@ public class MenuBackground extends Pane {
             animalView.setFitWidth(width);
             animalView.setFitHeight(height);
             animalView.relocate(XValueStart, YValueStart);
-            if (musicSoundAnonymousObject.musicSound != null) {
-                animalView.setOnMouseClicked(event -> SoundPlayer.getInstance().play(musicSoundAnonymousObject.musicSound));
+            if (musicSound != null) {
+                String finalMusicSound = musicSound;
+                animalView.setOnMouseClicked(event -> SoundPlayer.getInstance().play(finalMusicSound));
             }
             getChildren().addAll(animalView);
 
