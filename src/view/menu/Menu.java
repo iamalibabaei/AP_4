@@ -28,7 +28,7 @@ public class Menu extends Scene {
     private TextField password;
 
     public Menu() {
-        super(new Group(), MainView.WIDTH, MainView.HEIGHT);
+        super(new Group());
         SoundPlayer.getInstance().playBackground(Utility.getSound(AddressConstants.MENU_SOUND));
         root = (Group) getRoot();
         build();

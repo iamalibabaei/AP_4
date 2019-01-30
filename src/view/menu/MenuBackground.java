@@ -1,8 +1,5 @@
 package view.menu;
 
-import view.MainView;
-import view.utility.AddressConstants;
-import view.utility.SoundPlayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PathTransition;
@@ -16,6 +13,9 @@ import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import view.MainView;
+import view.utility.AddressConstants;
+import view.utility.SoundPlayer;
 import view.utility.Utility;
 
 public class MenuBackground extends Pane {

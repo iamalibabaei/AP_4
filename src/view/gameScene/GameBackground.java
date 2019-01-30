@@ -39,39 +39,26 @@ public class GameBackground extends Pane implements Time {
 //        setTruck();
 //        setWell();
         setUnderBar();
+        setUpperBar();
     }
 
-//    private void setWell() {
-//        Image wellImage = null;
-//        try {
-//            wellImage = new Image(new FileInputStream(".png"));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        ImageView imageView = new ImageView(wellImage);
-//        StackPane wellPane = new StackPane();
-//        wellPane.getChildren().addAll(imageView);
-//        wellPane.relocate(MainView.WIDTH / 2, MainView.HEIGHT );
-//        this.getChildren().addAll(wellPane);
-//    }
+    private void setUpperBar() {
+        Image upperBarImage = null;
+        try {
+            upperBarImage = new Image(new FileInputStream(AddressConstants.GAME_BACKGROUND_ROOT + "upperBar.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-//    private void setTruck() {
-//        Image truckImage = null;
-//        try {
-//            truckImage = new Image(new FileInputStream(
-//                    AddressConstants.TRUCK_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        ImageView imageView = new ImageView(truckImage);
-//        StackPane truckPane = new StackPane();
-//        truckPane.getChildren().addAll(imageView);
-//        truckPane.relocate(MainView.WIDTH / 2 - truckImage.getWidth() * 3.5, MainView.HEIGHT - truckImage.getHeight());
-//        this.getChildren().addAll(truckPane);
-//
-//    }
+        ImageView imageView = new ImageView(upperBarImage);
+        imageView.setFitHeight(90);
+
+        StackPane upperBarPane = new StackPane();
+        upperBarPane.getChildren().addAll(imageView);
+        upperBarPane.relocate(MainView.WIDTH - upperBarImage.getWidth(), 0);
+        this.getChildren().addAll(upperBarPane);
+
+    }
 
     private void setBackgroundStuff() {
         Image background = null;
@@ -97,10 +84,11 @@ public class GameBackground extends Pane implements Time {
 
         ImageView imageView = new ImageView(underBarImage);
         imageView.setFitWidth(MainView.WIDTH);
+        imageView.setFitHeight(MainView.HEIGHT / 7.7);
 
         StackPane underBarPane = new StackPane();
         underBarPane.getChildren().addAll(imageView);
-        underBarPane.relocate(0, MainView.HEIGHT - underBarImage.getHeight());
+        underBarPane.relocate(0, MainView.HEIGHT - imageView.getImage().getHeight());
         this.getChildren().addAll(underBarPane);
 
     }
@@ -138,14 +126,11 @@ public class GameBackground extends Pane implements Time {
                 }
             }
             ImageView imageView = new ImageView(backImage);
-            imageView.setFitHeight(100);
-            imageView.setFitWidth(100);
+            imageView.setFitHeight(MainView.HEIGHT / 14);
+            imageView.setFitWidth(MainView.WIDTH / 14);
 
-            StackPane addAnimal = new StackPane();
-//            Text text = new Text(animalName);
-//            text.setFill(Color.YELLOW);
-            addAnimal.getChildren().addAll(imageView);
-            addAnimal.relocate(20 + animalButton.indexOf(animalName) * 100, 20);
+            StackPane addAnimal = new StackPane();            addAnimal.getChildren().addAll(imageView);
+            addAnimal.relocate(20 + animalButton.indexOf(animalName) * MainView.WIDTH / 14, 20);
             addAnimal.setOnMouseClicked(event -> {
                 try {
                     InGameController.getInstance().buyAnimal(animalName.toLowerCase());
@@ -155,9 +140,6 @@ public class GameBackground extends Pane implements Time {
                     e.printStackTrace();
                 }
             });
-//            Text buyCost = new Text(Integer.toString(type.BUY_COST));
-//            buyCost.setFill(Color.YELLOW);
-//            buyCost.relocate(60 + animalButton.indexOf(animalName) * 100, 100);
             this.getChildren().addAll(addAnimal);
         }
 

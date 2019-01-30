@@ -1,6 +1,5 @@
 package view.menu.selectMission;
 
-import controller.InGameController;
 import controller.MenuController;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,7 +13,6 @@ import view.utility.AddressConstants;
 import view.utility.Utility;
 
 import java.io.FileNotFoundException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class MissionScene extends Scene {

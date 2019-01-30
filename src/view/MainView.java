@@ -4,6 +4,7 @@ package view;
 import controller.MenuController;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import models.account.Account;
 import models.exceptions.InsufficientResourcesException;
@@ -22,8 +23,7 @@ import java.io.FileNotFoundException;
 public class MainView extends Application {
     private static MainView instance = new MainView();
     private static Stage mainStage;
-    public static final int WIDTH = 1300, HEIGHT = 720;
-
+    public static final int HEIGHT = (int) Screen.getPrimary().getBounds().getHeight(), WIDTH = (int) HEIGHT * 4 / 3;
     public Stage getMainStage() {
         return mainStage;
     }
@@ -40,8 +40,10 @@ public class MainView extends Application {
     @Override
     public void start(Stage primaryStage) {
         System.out.println("start");
+        primaryStage.setFullScreen(true);
+        System.out.println(Screen.getPrimary().getBounds());
         mainStage = primaryStage;
-        mainStage.setResizable(false);
+        mainStage.setResizable(true);
         setStageScene(Menu.getInstance());
         System.out.println("after setStage");
         if (mainStage == null) throw new AssertionError();

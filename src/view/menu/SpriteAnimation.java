@@ -32,11 +32,18 @@ public class SpriteAnimation extends Transition {
         this.height = height;
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
+        interpolate(0);
     }
 
 
     public void setCycleDuration(int time) {
         setCycleDuration(new Duration(time));
+    }
+
+    @Override
+    public void stop(){
+        super.stop();
+        imageView.setViewport(new Rectangle2D(0, 0, width, height));
     }
 
     @Override
