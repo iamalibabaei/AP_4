@@ -22,7 +22,7 @@ import models.objects.Point;
 import models.objects.animals.Animal;
 import view.MainView;
 import view.gameScene.truck.TruckView;
-import view.menu.SpriteAnimation;
+import view.utility.SpriteAnimation;
 import view.utility.AddressConstants;
 import view.utility.Utility;
 

@@ -46,7 +46,7 @@ public class MissionScene extends Scene {
             root.getChildren().addAll(button);
             button.setOnMouseClicked(event -> runGame(button.getText()));
         }
-        root.getChildren().addAll(menuWallpaper);
+//        root.getChildren().addAll(menuWallpaper);
     }
 
     private void runGame(String text) {
