@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import models.account.Account;
 import models.misc.Mission;
 import view.MainView;
@@ -25,7 +26,7 @@ public class MissionScene extends Scene {
     private Group root;
     private ImageView background;
     public MissionScene() {
-        super(new Group(), MainView.WIDTH, MainView.HEIGHT);
+        super(new Group(), MainView.WIDTH, MainView.HEIGHT, Color.BLACK);
         root = (Group) getRoot();
         build();
     }
@@ -45,7 +46,7 @@ public class MissionScene extends Scene {
             root.getChildren().addAll(button);
             button.setOnMouseClicked(event -> runGame(button.getText()));
         }
-
+        root.getChildren().addAll(menuWallpaper);
     }
 
     private void runGame(String text) {

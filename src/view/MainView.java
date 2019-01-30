@@ -4,6 +4,7 @@ package view;
 import controller.MenuController;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import models.account.Account;
@@ -23,7 +24,8 @@ import java.io.FileNotFoundException;
 public class MainView extends Application {
     private static MainView instance = new MainView();
     private static Stage mainStage;
-    public static final int HEIGHT = (int) Screen.getPrimary().getBounds().getHeight(), WIDTH = (int) HEIGHT * 4 / 3;
+    public static final int HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
+    public static final int WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
     public Stage getMainStage() {
         return mainStage;
     }
@@ -41,9 +43,10 @@ public class MainView extends Application {
     public void start(Stage primaryStage) {
         System.out.println("start");
         primaryStage.setFullScreen(true);
-        System.out.println(Screen.getPrimary().getBounds());
         mainStage = primaryStage;
         mainStage.setResizable(true);
+        mainStage.setHeight(WIDTH);
+        mainStage.setWidth(HEIGHT);
         setStageScene(Menu.getInstance());
         System.out.println("after setStage");
         if (mainStage == null) throw new AssertionError();
@@ -68,6 +71,7 @@ public class MainView extends Application {
 
     private void setStageScene(Scene scene) {
         if (mainStage == null) throw new AssertionError();
+        scene.setFill(Color.BLACK);
         mainStage.setX(0);
         mainStage.setY(0);
         mainStage.setScene(scene);

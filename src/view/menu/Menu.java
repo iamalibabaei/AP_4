@@ -1,8 +1,5 @@
 package view.menu;
 
-import view.MainView;
-import view.utility.AddressConstants;
-import view.utility.SoundPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -11,8 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import models.account.Account;
+import view.MainView;
+import view.utility.AddressConstants;
+import view.utility.SoundPlayer;
 import view.utility.Utility;
 
 public class Menu extends Scene {
@@ -28,7 +29,7 @@ public class Menu extends Scene {
     private TextField password;
 
     public Menu() {
-        super(new Group());
+        super(new Group(), MainView.WIDTH, MainView.HEIGHT, Color.BLACK);
         SoundPlayer.getInstance().playBackground(Utility.getSound(AddressConstants.MENU_SOUND));
         root = (Group) getRoot();
         build();
