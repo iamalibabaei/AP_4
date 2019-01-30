@@ -22,7 +22,7 @@ public class AddressConstants
     public static final String MENU_BIRD = MENU + "bird.png";
     public static final String MENU_ROOSTER = MENU + "rooster.png";
     public static final String MENU_PIG = MENU + "pig.png";
-    public static final String MENU_SOUND = SOUNDS_ROOT + "menuSound.wav";
+    public static final String MENU_SOUND = SOUNDS_ROOT + "mainMenu.wav";
     public static final String MENU_COW_SOUND = SOUNDS_ROOT + "cow.wav";
     public static final String MENU_ROOSTER_SOUND = SOUNDS_ROOT + "rooster.wav";
     public static final String MENU_BUTTON = MENU + "button.png";
