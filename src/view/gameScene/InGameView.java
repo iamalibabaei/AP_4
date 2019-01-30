@@ -2,17 +2,18 @@ package view.gameScene;
 
 import controller.InGameController;
 import controller.MenuController;
-import javafx.animation.Animation;
+import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextBoundsType;
 import javafx.util.Duration;
+import models.buildings.Warehouse;
 import models.buildings.Well;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
@@ -25,6 +26,9 @@ import view.gameScene.truck.TruckView;
 import view.menu.SpriteAnimation;
 import view.utility.AddressConstants;
 import view.utility.Utility;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class InGameView extends Scene implements Time
 {
@@ -54,25 +58,46 @@ public class InGameView extends Scene implements Time
     }
 
     private void truckGraphic() {
-        int XValue = 200, YValue = 600;
-        Circle circle = new Circle(25);
-        circle.setFill(Color.BLUE);
-        Text text = new Text("truck");
-        text.setBoundsType(TextBoundsType.VISUAL);
-        StackPane truckGraphic = new StackPane();
-        truckGraphic.getChildren().addAll(circle,text);
-        truckGraphic.relocate(XValue, YValue);
-        truckGraphic.setOnMouseClicked(event -> openTruck());
+//        int XValue = 200, YValue = 600;
+//        Circle circle = new Circle(25);
+//        circle.setFill(Color.BLUE);
+//        Text text = new Text("truck");
+//        text.setBoundsType(TextBoundsType.VISUAL);
+//        StackPane truckGraphic = new StackPane();
+//        truckGraphic.getChildren().addAll(circle,text);
+//        truckGraphic.relocate(XValue, YValue);
+//
+//        root.getChildren().addAll(truckGraphic);
+        Image truckImage = null;
+        try {
+            truckImage = new Image(new FileInputStream(
+                    AddressConstants.TRUCK_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        root.getChildren().addAll(truckGraphic);
+        ImageView imageView = new ImageView(truckImage);
+        StackPane truckPane = new StackPane();
+        truckPane.getChildren().addAll(imageView);
+        truckPane.relocate(MainView.WIDTH / 2 - truckImage.getWidth() * 3.5, MainView.HEIGHT - truckImage.getHeight());
+        root.getChildren().addAll(truckPane);
+        truckPane.setOnMouseClicked(event -> openTruck());
+
+
     }
 
     private void moneyGraphic() {
+        ImageView moneyButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        moneyButton.setFitWidth(170);
+        moneyButton.setFitHeight(90);
         money = new Text(Integer.toString(InGameController.getInstance().getMoney()));
-        money.relocate(1000, 100);
         money.setFill(Color.YELLOW);
         money.setFont(Font.font(30));
-        root.getChildren().addAll(money);
+        StackPane pane = new StackPane();
+        pane.getChildren().addAll(moneyButton, money);
+        pane.setAlignment(Pos.CENTER);
+        pane.relocate(MainView.WIDTH * 0.65, MainView.HEIGHT / 8.5);
+        root.getChildren().addAll(pane);
     }
 
     public void getMoney(){
@@ -80,22 +105,27 @@ public class InGameView extends Scene implements Time
     }
 
     private void wellGraphic() {
-        int XValue = (int) (MainView.WIDTH * 0.6), YValue = (int) (MainView.HEIGHT / 5);
+        int XValue = (int) (MainView.WIDTH * 0.53), YValue = (int) (MainView.HEIGHT / 10);
 
         ImageView wellImageView = new ImageView(Utility.getImage(AddressConstants.WELL_PICTURE_ROOT + Well.getInstance().getLevel() + ".png"));
+        wellImageView.relocate(XValue, YValue);
+        wellImageView.setViewport(new Rectangle2D(0, 0, (int) (wellImageView.getImage().getWidth() / 4),
+                (int) wellImageView.getImage().getHeight() / 4));
         root.getChildren().addAll(wellImageView);
 
         SpriteAnimation wellSpriteAnimation = new SpriteAnimation(wellImageView, Duration.millis(1250), 16, 4,
                 0, 0, (int) (wellImageView.getImage().getWidth() / 4), (int) wellImageView.getImage().getHeight() / 4);
-
         wellImageView.setOnMouseClicked(event -> {
             try {
                 MenuController.getInstance().refillWell();
             } catch (IsWorkingException | InsufficientResourcesException e) {
                 MainView.getInstance().showExceptions(e, XValue, YValue);
             }
-            wellSpriteAnimation.setCycleCount(Animation.INDEFINITE);
-            wellSpriteAnimation.play();
+            wellSpriteAnimation.setCycleCount(3);
+            wellSpriteAnimation.playFromStart();
+            wellSpriteAnimation.setOnFinished(event1 -> {
+                wellSpriteAnimation.stop();
+            });
         });
 //        Circle circle = new Circle(25);
 //        circle.setFill(Color.BLUE);
@@ -156,18 +186,36 @@ public class InGameView extends Scene implements Time
 
     }
 
-
     private void warehouseGraphic() {
-        int XValue = MainView.WIDTH/ 2 - 10, YValue = MainView.HEIGHT - 50;
-        Circle circle = new Circle(25);
-        circle.setFill(Color.BLUE);
-        Text text = new Text("warehouse");
-        text.setBoundsType(TextBoundsType.VISUAL);
-        StackPane warehouseGraphic = new StackPane();
-        warehouseGraphic.getChildren().addAll(circle,text);
-        warehouseGraphic.relocate(XValue, YValue);
-        warehouseGraphic.setOnMouseClicked(event -> openWarehouse());
+        Image warehouseImage = null;
+        try {
+            warehouseImage = new Image(new FileInputStream(
+                    AddressConstants.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        root.getChildren().addAll(warehouseGraphic);
+        ImageView imageView = new ImageView(warehouseImage);
+
+        StackPane warehpusePane = new StackPane();
+        warehpusePane.getChildren().addAll(imageView);
+        warehpusePane.relocate((MainView.WIDTH - warehouseImage.getWidth()) / 2, MainView.HEIGHT - warehouseImage.getHeight());
+        root.getChildren().addAll(warehpusePane);
+        warehpusePane.setOnMouseClicked(event -> openWarehouse());
+
+
     }
+
+//    private void warehouseGraphic() {
+//        int XValue = MainView.WIDTH/ 2 - 10, YValue = MainView.HEIGHT - 50;
+//        Circle circle = new Circle(25);
+//        circle.setFill(Color.BLUE);
+//        Text text = new Text("warehouse");
+//        text.setBoundsType(TextBoundsType.VISUAL);
+//        StackPane warehouseGraphic = new StackPane();
+//        warehouseGraphic.getChildren().addAll(circle,text);
+//        warehouseGraphic.relocate(XValue, YValue);
+//
+//        root.getChildren().addAll(warehouseGraphic);
+//    }
 }

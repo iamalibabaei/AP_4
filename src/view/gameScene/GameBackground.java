@@ -1,7 +1,5 @@
 package view.gameScene;
 
-import view.MainView;
-import view.utility.AddressConstants;
 import controller.InGameController;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -9,11 +7,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import models.buildings.Warehouse;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
+import view.MainView;
+import view.utility.AddressConstants;
 import view.utility.Utility;
 
 import java.io.FileInputStream;
@@ -36,13 +35,13 @@ public class GameBackground extends Pane implements Time {
     private void build() {
         setBackgroundStuff();
         setBuyAnimalButton();
-        setWarehouse();
-        setTruck();
-        setWell();
+//        setWarehouse();
+//        setTruck();
+//        setWell();
         setUnderBar();
     }
 
-    private void setWell() {
+//    private void setWell() {
 //        Image wellImage = null;
 //        try {
 //            wellImage = new Image(new FileInputStream(".png"));
@@ -55,24 +54,24 @@ public class GameBackground extends Pane implements Time {
 //        wellPane.getChildren().addAll(imageView);
 //        wellPane.relocate(MainView.WIDTH / 2, MainView.HEIGHT );
 //        this.getChildren().addAll(wellPane);
-    }
+//    }
 
-    private void setTruck() {
-        Image truckImage = null;
-        try {
-            truckImage = new Image(new FileInputStream(
-                    AddressConstants.TRUCK_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        ImageView imageView = new ImageView(truckImage);
-        StackPane truckPane = new StackPane();
-        truckPane.getChildren().addAll(imageView);
-        truckPane.relocate(MainView.WIDTH / 2 - truckImage.getWidth() * 3.5, MainView.HEIGHT - truckImage.getHeight());
-        this.getChildren().addAll(truckPane);
-
-    }
+//    private void setTruck() {
+//        Image truckImage = null;
+//        try {
+//            truckImage = new Image(new FileInputStream(
+//                    AddressConstants.TRUCK_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        ImageView imageView = new ImageView(truckImage);
+//        StackPane truckPane = new StackPane();
+//        truckPane.getChildren().addAll(imageView);
+//        truckPane.relocate(MainView.WIDTH / 2 - truckImage.getWidth() * 3.5, MainView.HEIGHT - truckImage.getHeight());
+//        this.getChildren().addAll(truckPane);
+//
+//    }
 
     private void setBackgroundStuff() {
         Image background = null;
@@ -106,23 +105,6 @@ public class GameBackground extends Pane implements Time {
 
     }
 
-    private void setWarehouse() {
-        Image warehouseImage = null;
-        try {
-            warehouseImage = new Image(new FileInputStream(
-                    AddressConstants.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        ImageView imageView = new ImageView(warehouseImage);
-
-        StackPane warehpusePane = new StackPane();
-        warehpusePane.getChildren().addAll(imageView);
-        warehpusePane.relocate((MainView.WIDTH - warehouseImage.getWidth()) / 2, MainView.HEIGHT - warehouseImage.getHeight());
-        this.getChildren().addAll(warehpusePane);
-
-    }
 
     private void setBuyAnimalButton() {//TODO change later
         ArrayList<String> animalButton = new ArrayList<>();

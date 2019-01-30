@@ -34,6 +34,7 @@ public class SpriteAnimation extends Transition {
         setInterpolator(Interpolator.LINEAR);
     }
 
+
     public void setCycleDuration(int time) {
         setCycleDuration(new Duration(time));
     }
@@ -48,4 +49,5 @@ public class SpriteAnimation extends Transition {
             lastIndex = index;
         }
     }
+
 }
