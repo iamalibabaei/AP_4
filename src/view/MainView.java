@@ -75,10 +75,10 @@ public class MainView extends Application {
 
     private void setStageScene(Scene scene) {
         if (mainStage == null) throw new AssertionError();
-        mainStage.setX(0);
-        mainStage.setY(0);
-        mainStage.centerOnScreen();
+//        mainStage.setX(WIDTH / 2);
+//        mainStage.setY(0);
         mainStage.setScene(scene);
+//        mainStage.centerOnScreen();
         mainStage.setFullScreen(true);
     }
 

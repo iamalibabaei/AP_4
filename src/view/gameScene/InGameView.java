@@ -2,7 +2,12 @@ package view.gameScene;
 
 import controller.InGameController;
 import controller.MenuController;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -51,7 +56,7 @@ public class InGameView extends Scene implements Time
     private void build() {
         root.getChildren().clear();
         root.getChildren().addAll(GameBackground.getInstance(), MapView.getInstance(), WarehouseScene.getInstance());
-        emptyWorkshopGraphic();
+//        emptyWorkshopGraphic();
         wellGraphic();
         warehouseGraphic();
         moneyGraphic();
@@ -114,7 +119,8 @@ public class InGameView extends Scene implements Time
         StackPane place6Pane = new StackPane();
         place6Pane.getChildren().addAll(place6);
         x = MainView.WIDTH - (MainView.WIDTH - place6.getImage().getWidth() * 2 + MainView.WIDTH / 3.4);
-        place6Pane.relocate(MainView.WIDTH - place6.getImage().getWidth() * 2 + x, MainView.HEIGHT / 1.6);
+        place6Pane.relocate(MainView.WIDTH - place6.getImage().getWidth() * 2 + x
+                , MainView.HEIGHT / 1.6);
         System.out.println("xxx" + (MainView.WIDTH - place6.getImage().getWidth() * 2 + MainView.WIDTH / 3.4));
         root.getChildren().addAll(place6Pane);
         place6Pane.setOnMouseClicked(event -> openWorkshopChoices(6));
@@ -296,4 +302,48 @@ public class InGameView extends Scene implements Time
 
 
     }
+
+    public void showTruckPath(){
+        ImageView truckView = new ImageView(Utility.getImage(AddressConstants.TRUCK_MINI_PICTURE_ROOT + Truck.getInstance().getLevel() + "_mini.png"));
+        truckView.setViewport(new Rectangle2D(0, 0, 48, 48));
+        truckView.setFitWidth(MainView.WIDTH / 20);
+        truckView.setFitHeight(MainView.HEIGHT / 20);
+        truckView.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT / 35);
+        truckView.setScaleX(-1);
+        root.getChildren().addAll(truckView);
+        double end = MainView.WIDTH - MainView.WIDTH * 0.75 - 48;
+        KeyValue xForGoing = new KeyValue(truckView.xProperty(), end);
+        KeyFrame going = new KeyFrame(Duration.millis(2000), xForGoing);
+        Timeline timeLineGoing = new Timeline(going);
+        timeLineGoing.getKeyFrames().addAll(going);
+//        VehicleTimeLine(truck, turnToMoveObjectToCityAndComeBack, truckView, timeLineGoing);
+        timeLineGoing.play();
+
+//        truckView.setViewport(new Rectangle2D(0, 0, 48, 48));
+
+        Animation animation = new SpriteAnimation(truckView, Duration.millis(2000), 2, 2, 0, 0,
+                (int) (truckView.getImage().getWidth() /  2), (int) (truckView.getImage().getHeight()));
+        animation.setCycleCount(1);
+        animation.play();
+        animation.setOnFinished(event -> {
+            root.getChildren().removeAll(truckView);
+            truckView.relocate(MainView.WIDTH - 48, MainView.HEIGHT / 35);
+            truckView.setScaleX(1);
+            root.getChildren().addAll(truckView);
+            KeyValue xForGoing1 = new KeyValue(truckView.xProperty(), -MainView.WIDTH / 75);
+
+            KeyFrame going1 = new KeyFrame(Duration.millis(2000), xForGoing1);
+            Timeline timeLineGoing1 = new Timeline(going1);
+            timeLineGoing1.getKeyFrames().addAll(going1);
+            timeLineGoing1.play();
+
+            animation.setCycleCount(1);
+            animation.play();
+            animation.setOnFinished(event1 -> {
+                root.getChildren().removeAll(truckView);
+            });
+        });
+
+    }
+
 }
