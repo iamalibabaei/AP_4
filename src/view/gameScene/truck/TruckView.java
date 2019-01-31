@@ -183,7 +183,7 @@ public class TruckView extends Pane {
 
         StackPane back = new StackPane();
         back.getChildren().addAll(backImage, backText);
-        back.setOnMouseClicked(event -> InGameView.getInstance().closehelicopter());
+        back.setOnMouseClicked(event -> InGameView.getInstance().closeTruck());
         back.relocate(0, 200);
         getChildren().addAll(back);
 

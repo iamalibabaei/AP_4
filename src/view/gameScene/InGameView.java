@@ -261,6 +261,10 @@ public class InGameView extends Scene implements Time
     public void closehelicopter() {
         HelicopterView.getInstance().setVisible(false);
     }
+
+    public void closeTruck() {
+        TruckView.getInstance().setVisible(false);
+    }
     public void openTruck(){
         TruckView.getInstance().updateInformation();
         TruckView.getInstance().setVisible(true);
