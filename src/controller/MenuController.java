@@ -230,12 +230,12 @@ public class MenuController
 //
 
 
-    public void startGame() {
+    public void startGame(Mission mission) {
+        this.mission = mission;
         game = InGameController.getInstance();
         mainView = MainView.getInstance();
-        mainView.startGame();
-        game.setMission(mission);
-        game.startGame();
+        game.startGame(mission);
+        mainView.startGame(mission);
     }
 
     public void endGame() {
