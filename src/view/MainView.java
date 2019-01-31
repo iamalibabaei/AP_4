@@ -4,8 +4,8 @@ package view;
 import controller.InGameController;
 import controller.MenuController;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import models.account.Account;
@@ -16,9 +16,9 @@ import models.objects.Grass;
 import models.objects.Item;
 import models.objects.animals.Animal;
 import view.gameScene.InGameView;
-import view.menu.selectMission.MissionScene;
 import view.menu.Menu;
 import view.menu.newPlayer.NewPlayerScene;
+import view.menu.selectMission.MissionScene;
 
 import java.io.FileNotFoundException;
 
@@ -44,6 +44,7 @@ public class MainView extends Application {
     public void start(Stage primaryStage) {
         System.out.println("start");
         primaryStage.setFullScreen(true);
+        primaryStage.centerOnScreen();
         mainStage = primaryStage;
         mainStage.setResizable(true);
         mainStage.setHeight(WIDTH);
@@ -65,6 +66,10 @@ public class MainView extends Application {
             System.exit(0);*/
         });
         mainStage.show();
+        Rectangle2D primScreenBounds = Screen.getPrimary().getBounds();
+        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+        System.out.println("end");
     }
 
 

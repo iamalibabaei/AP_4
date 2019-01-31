@@ -7,13 +7,11 @@ import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -23,7 +21,6 @@ import view.MainView;
 import view.utility.AddressConstants;
 import view.utility.Utility;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class MissionScene extends Scene {
