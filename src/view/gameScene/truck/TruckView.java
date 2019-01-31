@@ -2,32 +2,23 @@ package view.gameScene.truck;
 
 import controller.InGameController;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import models.Map;
 import models.buildings.Warehouse;
 import models.exceptions.InvalidArgumentException;
 import models.exceptions.NotEnoughSpaceException;
 import models.objects.Item;
-import models.objects.animals.Animal;
-import models.objects.animals.DomesticAnimal;
 import models.transportation.Truck;
 import view.MainView;
 import view.gameScene.InGameView;
 import view.utility.AddressConstants;
 import view.utility.Utility;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.EnumMap;
-import java.util.HashMap;
 
 public class TruckView extends Pane {
     private static TruckView instance = new TruckView();
@@ -192,7 +183,7 @@ public class TruckView extends Pane {
 
         StackPane back = new StackPane();
         back.getChildren().addAll(backImage, backText);
-        back.setOnMouseClicked(event -> InGameView.getInstance().closeTruck());
+        back.setOnMouseClicked(event -> InGameView.getInstance().closehelicopter());
         back.relocate(0, 200);
         getChildren().addAll(back);
 

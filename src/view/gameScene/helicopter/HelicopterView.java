@@ -1,4 +1,4 @@
-package view.gameScene.truck;
+package view.gameScene.helicopter;
 
 import controller.InGameController;
 import javafx.event.EventHandler;
@@ -8,17 +8,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import models.buildings.Warehouse;
+import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
 import models.exceptions.NotEnoughSpaceException;
 import models.objects.Item;
+import models.transportation.Helicopter;
 import models.transportation.Truck;
 import view.MainView;
 import view.gameScene.InGameView;
 import view.utility.AddressConstants;
 import view.utility.Utility;
 
-import java.util.EnumMap;
+import java.util.ArrayList;
 
 public class HelicopterView extends Pane {
     private static HelicopterView instance = new HelicopterView();
@@ -43,48 +44,36 @@ public class HelicopterView extends Pane {
 
     private void setHelicopterInfo() {
         int XValue = MainView.WIDTH / 2 - 200, YValue = MainView.HEIGHT / 2 ;//todo fix numbers if needed
-        EnumMap<Item.Type, Integer> storedItems = Warehouse.getInstance().getStoredItems();
-        for (Item.Type item : storedItems.keySet()) {
+        ArrayList<Item.Type> items = new ArrayList<>();
+        items.add( Item.Type.PLUME);
+        items.add(Item.Type.FLOUR);
+        for (Item.Type item : items) {
             ImageView itemImage = new ImageView(Utility.getImage(AddressConstants.ITEM_ROOT + item.name().toLowerCase() + ".png"));
             itemImage.setFitWidth(50);
             itemImage.setFitHeight(50);
             itemImage.relocate(XValue, YValue);
 
-            Text text = new Text(Integer.toString(storedItems.get(item)));
-            text.setFont(Font.font("SWItalt", 15));
-            text.relocate(XValue + 70, YValue);
-
-            ImageView addToTruckImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
-            addToTruckImage.setFitHeight(100);
-            addToTruckImage.setFitWidth(200);
-            Text addToTruckText = new Text("add to truck");
+            ImageView addToHelicopterImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+            addToHelicopterImage.setFitHeight(100);
+            addToHelicopterImage.setFitWidth(200);
+            Text addToTruckText = new Text("add helicopter");
             addToTruckText.setFont(Font.font("SWItalt", 15));
             TextField amount = new TextField();
             amount.setPromptText("amount");
             amount.relocate(XValue + 200, YValue);
 
-
             StackPane addToTruck = new StackPane();
-            addToTruck.getChildren().addAll(addToTruckImage, addToTruckText);
-            addToTruck.setOnMouseClicked(event -> addToTruck(item, amount.getText()));
+            addToTruck.getChildren().addAll(addToHelicopterImage, addToTruckText);
+            addToTruck.setOnMouseClicked(event -> addTohelicopter(item, amount.getText()));
             addToTruck.relocate(XValue + 150, YValue);
 
-            getChildren().addAll(itemImage, text, addToTruck, amount);
+            getChildren().addAll(itemImage, addToTruck, amount);
             YValue += 100;
-
-
         }
-
-
-
-
-
-
-
 
     }
 
-    private void addToTruck(Item.Type item, String amountStr) {
+    private void addTohelicopter(Item.Type item, String amountStr) {
         int amount = 0;
         try {
             amount = Integer.parseInt(amountStr);
@@ -92,11 +81,11 @@ public class HelicopterView extends Pane {
             return;
         }
         try {
-            InGameController.getInstance().addToStash("truck", item.name(),amount );
+            InGameController.getInstance().addToStash("helicopter", item.name(),amount );
         } catch (NotEnoughSpaceException e) {
             return;
         } catch (InvalidArgumentException e) {
-            System.out.println("invallid argument in truckView");
+            System.out.println("invallid argument in helocopterView");
             return;
         }
         updateInformation();
@@ -138,12 +127,18 @@ public class HelicopterView extends Pane {
         sendTruckImage.setFitHeight(100);
         sendTruckImage.setFitWidth(200);
 
-        Text senTruckText = new Text("send truck");
+        Text senTruckText = new Text("send");
         senTruckText.setFont(Font.font("SWItalt", 15));
 
         StackPane sendTruck = new StackPane();
         sendTruck.getChildren().addAll(sendTruckImage, senTruckText);
-        sendTruck.setOnMouseClicked(event -> InGameController.getInstance().sendTruck());
+        sendTruck.setOnMouseClicked(event -> {
+            try {
+                InGameController.getInstance().sendHelicopter();
+            } catch (InsufficientResourcesException e) {
+                //TODO
+            }
+        });
         sendTruck.relocate(0, 0);
         getChildren().addAll(sendTruck);
 
@@ -160,9 +155,9 @@ public class HelicopterView extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    InGameController.getInstance().clearStash("truck");
+                    InGameController.getInstance().clearStash("helicopter");
                 } catch (InvalidArgumentException e) {
-                    System.out.println("invalid Argument in truckView");
+                    System.out.println("invalid Argument in helicopterView");
                     return;
                 }
 
@@ -183,7 +178,7 @@ public class HelicopterView extends Pane {
 
         StackPane back = new StackPane();
         back.getChildren().addAll(backImage, backText);
-        back.setOnMouseClicked(event -> InGameView.getInstance().closeTruck());
+        back.setOnMouseClicked(event -> InGameView.getInstance().closehelicopter());
         back.relocate(0, 200);
         getChildren().addAll(back);
 
@@ -203,11 +198,11 @@ public class HelicopterView extends Pane {
         build();
     }
 
-    public void openTruck(){
+    public void openHelicopter(){
         if (Truck.getInstance().isWorking()) {
             return;
         }
-        TruckView.getInstance().updateInformation();
-        TruckView.getInstance().setVisible(true);
+        HelicopterView.getInstance().updateInformation();
+        HelicopterView.getInstance().setVisible(true);
     }
 }

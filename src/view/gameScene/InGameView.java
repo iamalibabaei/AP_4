@@ -23,6 +23,7 @@ import models.objects.animals.Animal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
 import view.MainView;
+import view.gameScene.helicopter.HelicopterView;
 import view.gameScene.truck.TruckView;
 import view.utility.AddressConstants;
 import view.utility.SpriteAnimation;
@@ -163,14 +164,14 @@ public class InGameView extends Scene implements Time
         helicopterPane.getChildren().addAll(imageView);
         helicopterPane.relocate(MainView.WIDTH / 2 + imageView.getImage().getWidth() * 0.5, MainView.HEIGHT - imageView.getImage().getHeight() * 1.6);
         root.getChildren().addAll(helicopterPane);
-        helicopterPane.setOnMouseClicked(event -> openHelicpter());
-
+        helicopterPane.setOnMouseClicked(event -> openHelicopter());
+        root.getChildren().addAll(HelicopterView.getInstance());
 
     }
 
-    private void openHelicpter() {//TODO
-//        HelicopterView.getInstance().updateInformation();
-//        HelicopterView.getInstance().setVisible(true);
+    private void openHelicopter() {
+        HelicopterView.getInstance().updateInformation();
+        HelicopterView.getInstance().setVisible(true);
     }
 
     private void truckGraphic() {
@@ -182,7 +183,7 @@ public class InGameView extends Scene implements Time
         truckPane.getChildren().addAll(imageView);
         truckPane.relocate(MainView.WIDTH / 2 - imageView.getImage().getWidth() * 3.7, MainView.HEIGHT - imageView.getImage().getHeight() * 1.9);
         root.getChildren().addAll(truckPane);
-        truckPane.setOnMouseClicked(event -> openTruck());
+        truckPane.setOnMouseClicked(event -> TruckView.getInstance().openTruck());
 
 
     }
@@ -257,8 +258,8 @@ public class InGameView extends Scene implements Time
         text.relocate((location.getX() + 325) *  MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
         MapView.getInstance().getChildren().addAll(text);
     }
-    public void closeTruck() {
-        TruckView.getInstance().setVisible(false);
+    public void closehelicopter() {
+        HelicopterView.getInstance().setVisible(false);
     }
     public void openTruck(){
         TruckView.getInstance().updateInformation();
