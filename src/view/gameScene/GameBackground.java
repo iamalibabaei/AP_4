@@ -88,7 +88,7 @@ public class GameBackground extends Pane implements Time {
 
         StackPane underBarPane = new StackPane();
         underBarPane.getChildren().addAll(imageView);
-        underBarPane.relocate(0, MainView.HEIGHT - imageView.getImage().getHeight());
+        underBarPane.relocate(0, MainView.HEIGHT - imageView.getImage().getHeight() * 0.8);
         this.getChildren().addAll(underBarPane);
 
     }

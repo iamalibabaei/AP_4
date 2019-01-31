@@ -132,7 +132,14 @@ public class TruckView extends Pane {
         Button sendTruck = new Button("sendTruck");
 //        sendTruck.relocate(30, 10);
         sendTruck.relocate(MainView.WIDTH / 2 + 100, MainView.HEIGHT - 50);
-        sendTruck.setOnMouseClicked(event -> InGameController.getInstance().sendTruck());
+        sendTruck.setOnMouseClicked(event ->{
+                InGameController.getInstance().sendTruck();
+//            ImageView imageView = new ImageView(Utility.getImage(AddressConstants.HELICOPTER_MINI_PICTURE_ROOT + Truck.getInstance().getLevel() + "_mini.png"));
+//            imageView.setFitWidth(MainView.WIDTH / 100);
+//            imageView.setFitHeight(MainView.HEIGHT / 100);
+//            SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(Truck.getInstance().))
+
+        });
         getChildren().addAll(exit, sendTruck);
     }
 
