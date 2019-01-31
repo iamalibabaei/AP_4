@@ -89,20 +89,22 @@ public class InGameView extends Scene implements Time
         place3Pane.setOnMouseClicked(event -> openWorkshopChoices(3));
 
         ImageView place4 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place4.png"));
-        place4.setFitWidth(MainView.WIDTH / 3.1);
+        place4.setFitWidth(MainView.WIDTH / 3.3);
         place4.setFitHeight(MainView.HEIGHT / 4.5);
         StackPane place4Pane = new StackPane();
         place4Pane.getChildren().addAll(place4);
-        place4Pane.relocate(MainView.WIDTH - place4.getImage().getWidth() * 2, MainView.HEIGHT / 4.8);
+        double x = MainView.WIDTH - (MainView.WIDTH - place4.getImage().getWidth() * 2 + MainView.WIDTH / 3.3);
+        place4Pane.relocate(MainView.WIDTH - place4.getImage().getWidth() * 2 + x, MainView.HEIGHT / 4.8);
         root.getChildren().addAll(place4Pane);
         place4Pane.setOnMouseClicked(event -> openWorkshopChoices(4));
 
         ImageView place5 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place5.png"));
-        place5.setFitWidth(MainView.WIDTH / 3.1);
+        place5.setFitWidth(MainView.WIDTH / 3.4);
         place5.setFitHeight(MainView.HEIGHT / 4.7);
         StackPane place5Pane = new StackPane();
         place5Pane.getChildren().addAll(place5);
-        place5Pane.relocate(MainView.WIDTH - place5.getImage().getWidth() * 2, MainView.HEIGHT / 2.4);
+        x = MainView.WIDTH - (MainView.WIDTH - place5.getImage().getWidth() * 2 + MainView.WIDTH / 3.4);
+        place5Pane.relocate(MainView.WIDTH - place5.getImage().getWidth() * 2 + x, MainView.HEIGHT / 2.4);
         root.getChildren().addAll(place5Pane);
         place5Pane.setOnMouseClicked(event -> openWorkshopChoices(5));
 
@@ -111,7 +113,8 @@ public class InGameView extends Scene implements Time
         place6.setFitHeight(MainView.HEIGHT / 4.5);
         StackPane place6Pane = new StackPane();
         place6Pane.getChildren().addAll(place6);
-        place6Pane.relocate(MainView.WIDTH - place6.getImage().getWidth() * 2, MainView.HEIGHT / 1.6);
+        x = MainView.WIDTH - (MainView.WIDTH - place6.getImage().getWidth() * 2 + MainView.WIDTH / 3.4);
+        place6Pane.relocate(MainView.WIDTH - place6.getImage().getWidth() * 2 + x, MainView.HEIGHT / 1.6);
         System.out.println("xxx" + (MainView.WIDTH - place6.getImage().getWidth() * 2 + MainView.WIDTH / 3.4));
         root.getChildren().addAll(place6Pane);
         place6Pane.setOnMouseClicked(event -> openWorkshopChoices(6));
