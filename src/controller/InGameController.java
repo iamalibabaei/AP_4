@@ -254,19 +254,17 @@ public class InGameController implements Time
         moneyDeposit(mission.getMoneyAtBeginning());
         for (Animal.Type animal : mission.getAnimalAtBeginning().keySet()) {
             for (int i = 0; i < mission.getAnimalAtBeginning().get(animal); i++) {
-                //todo map.addAnimal(animal);
+                //TODO add animal to map
             }
         }
         InGameController.getInstance().moneyDeposit(mission.getMoneyAtBeginning());
     }
 
-    public void startGame() {
+    public void startGame(Mission mission) {
+        this.mission = mission;
+
         loadMission();
         //TODO loop for next turn
-    }
-
-    private void viewNextTurn() {
-        InGameView.getInstance().nextTurn();
     }
 
     private boolean isAccomplished()

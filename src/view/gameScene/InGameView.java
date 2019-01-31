@@ -30,6 +30,7 @@ import view.utility.Utility;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class InGameView extends Scene implements Time
 {
@@ -103,9 +104,7 @@ public class InGameView extends Scene implements Time
         truckPane.getChildren().addAll(imageView);
         truckPane.relocate(MainView.WIDTH / 2 - truckImage.getWidth() * 3.7, MainView.HEIGHT - truckImage.getHeight() * 1.9);
         root.getChildren().addAll(truckPane);
-        truckPane.setOnMouseClicked(event -> openTruck());
-
-
+        truckPane.setOnMouseClicked(event -> TruckView.getInstance().openTruck());
     }
 
     public void getMoney(){
@@ -130,7 +129,8 @@ public class InGameView extends Scene implements Time
             try {
                 MenuController.getInstance().refillWell();
             } catch (IsWorkingException | InsufficientResourcesException e) {
-                MainView.getInstance().showExceptions(e, XValue, YValue);
+                showExceptions(e, XValue, YValue);
+                return;
             }
             wellSpriteAnimation.setCycleCount(Well.getInstance().REFILL_TIME[Well.getInstance().getLevel()]);
             wellSpriteAnimation.playFromStart();
@@ -138,6 +138,10 @@ public class InGameView extends Scene implements Time
                 wellSpriteAnimation.stop();
             });
         });
+    }
+
+    private void showExceptions(Exception e, int xValue, int yValue) {
+
     }
 
     private void moneyGraphic() {
@@ -175,10 +179,6 @@ public class InGameView extends Scene implements Time
     }
     public void closeTruck() {
         TruckView.getInstance().setVisible(false);
-    }
-    public void openTruck(){
-        TruckView.getInstance().updateInformation();
-        TruckView.getInstance().setVisible(true);
     }
 
     public void closeWarehouse() {

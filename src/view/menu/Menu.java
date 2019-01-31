@@ -40,7 +40,7 @@ public class Menu extends Scene {
 
     private void build() {
         root.getChildren().clear();
-        //todo change font of texes
+
         ImageView startButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         startButton.setFitHeight(100);
         startButton.setFitWidth(200);
@@ -48,7 +48,7 @@ public class Menu extends Scene {
         Text startGameText = new Text("start game");
         startGameText.setFont(Font.font("SWItalt", 15));
         startGame.getChildren().addAll(startButton, startGameText);
-        startButton.setOnMouseClicked(event -> MainView.getInstance().goToMap());
+        startGame.setOnMouseClicked(event -> MainView.getInstance().goToMap());
         startGame.relocate(200, 200);
 
         ImageView settingButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
