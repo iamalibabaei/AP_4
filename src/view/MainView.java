@@ -26,7 +26,7 @@ public class MainView extends Application {
     private static MainView instance = new MainView();
     private static Stage mainStage;
     public static final int HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
-    public static final int WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
+    public static final int WIDTH = (int) HEIGHT * 4 / 3;
     public Stage getMainStage() {
         return mainStage;
     }

@@ -20,10 +20,12 @@ import models.interfaces.Time;
 import models.objects.Grass;
 import models.objects.Point;
 import models.objects.animals.Animal;
+import models.transportation.Helicopter;
+import models.transportation.Truck;
 import view.MainView;
 import view.gameScene.truck.TruckView;
-import view.utility.SpriteAnimation;
 import view.utility.AddressConstants;
+import view.utility.SpriteAnimation;
 import view.utility.Utility;
 
 import java.io.FileInputStream;
@@ -53,22 +55,53 @@ public class InGameView extends Scene implements Time
         warehouseGraphic();
         moneyGraphic();
         truckGraphic();
+        helicopterGraphic();
+//        workshopGraphic();
         root.getChildren().addAll(TruckView.getInstance());
+    }
+
+
+    private void helicopterGraphic() {
+        Image helicopterImage = null;
+        try {
+            helicopterImage = new Image(new FileInputStream(
+                    AddressConstants.HELICOPTER_PICTURE_ROOT + Helicopter.getInstance().getLevel() + ".png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ImageView imageView = new ImageView(helicopterImage);
+        imageView.setFitWidth(MainView.WIDTH / 4.5);
+        imageView.setFitHeight(MainView.HEIGHT / 4.5);
+        StackPane helicopterPane = new StackPane();
+        helicopterPane.getChildren().addAll(imageView);
+        helicopterPane.relocate(MainView.WIDTH / 2 + helicopterImage.getWidth() * 0.5, MainView.HEIGHT - helicopterImage.getHeight() * 1.6);
+        root.getChildren().addAll(helicopterPane);
+        helicopterPane.setOnMouseClicked(event -> openHelicpter());
+
+
+    }
+
+    private void openHelicpter() {//TODO
+//        HelicopterView.getInstance().updateInformation();
+//        HelicopterView.getInstance().setVisible(true);
     }
 
     private void truckGraphic() {
         Image truckImage = null;
         try {
             truckImage = new Image(new FileInputStream(
-                    AddressConstants.TRUCK_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+                    AddressConstants.TRUCK_PICTURE_ROOT + Truck.getInstance().getLevel() + ".png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
         ImageView imageView = new ImageView(truckImage);
+        imageView.setFitWidth(MainView.WIDTH / 5);
+        imageView.setFitHeight(MainView.HEIGHT / 5);
         StackPane truckPane = new StackPane();
         truckPane.getChildren().addAll(imageView);
-        truckPane.relocate(MainView.WIDTH / 2 - truckImage.getWidth() * 2, MainView.HEIGHT - truckImage.getHeight());
+        truckPane.relocate(MainView.WIDTH / 2 - truckImage.getWidth() * 3.7, MainView.HEIGHT - truckImage.getHeight() * 1.9);
         root.getChildren().addAll(truckPane);
         truckPane.setOnMouseClicked(event -> openTruck());
 
@@ -80,19 +113,18 @@ public class InGameView extends Scene implements Time
     }
 
     private void wellGraphic() {
-        int XValue = (int) (MainView.WIDTH * 0.5), YValue = (int) (MainView.HEIGHT / 7);
+        int XValue = (int) (MainView.WIDTH * 0.4), YValue = (int) (MainView.HEIGHT / 9);
 
         ImageView wellImageView = new ImageView(Utility.getImage(AddressConstants.WELL_PICTURE_ROOT +
                 Well.getInstance().getLevel() + ".png"));
         wellImageView.relocate(XValue, YValue);
-//        wellImageView.setViewport(new Rectangle2D(0, 0, (int) (wellImageView.getImage().getWidth() / 4),
-//                (int) wellImageView.getImage().getHeight() / 4));
+        wellImageView.setFitHeight(MainView.HEIGHT / 6);
+        wellImageView.setFitWidth(MainView.WIDTH / 6);
         root.getChildren().addAll(wellImageView);
 
         SpriteAnimation wellSpriteAnimation = new SpriteAnimation(wellImageView, Duration.millis(1250), 16, 4,
                 0, 0, (int) (wellImageView.getImage().getWidth() / 4),
                 (int) wellImageView.getImage().getHeight() / 4);
-//        wellSpriteAnimation.play();
         wellSpriteAnimation.stop();
         wellImageView.setOnMouseClicked(event -> {
             try {
@@ -170,10 +202,11 @@ public class InGameView extends Scene implements Time
         }
 
         ImageView imageView = new ImageView(warehouseImage);
-
+        imageView.setFitHeight(MainView.HEIGHT / 5);
+        imageView.setFitWidth(MainView.WIDTH / 5);
         StackPane warehousePane = new StackPane();
         warehousePane.getChildren().addAll(imageView);
-        warehousePane.relocate((MainView.WIDTH - warehouseImage.getWidth()) / 2, MainView.HEIGHT - 2 * warehouseImage.getHeight());
+        warehousePane.relocate((MainView.WIDTH - warehouseImage.getWidth()) * 0.4, MainView.HEIGHT - 1.55 * warehouseImage.getHeight());
         root.getChildren().addAll(warehousePane);
         warehousePane.setOnMouseClicked(event -> openWarehouse());
 
