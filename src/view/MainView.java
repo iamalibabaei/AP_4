@@ -70,7 +70,6 @@ public class MainView extends Application {
 
     private void setStageScene(Scene scene) {
         if (mainStage == null) throw new AssertionError();
-        scene.setFill(Color.BLACK);
         mainStage.setX(0);
         mainStage.setY(0);
         mainStage.setScene(scene);

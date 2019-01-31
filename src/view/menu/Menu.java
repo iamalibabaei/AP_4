@@ -32,7 +32,7 @@ public class Menu extends Scene {
     private Text notChosenAccount;
 
     public Menu() {
-        super(new Group(), MainView.WIDTH, MainView.HEIGHT, Color.BLACK);
+        super(new Group(), MainView.WIDTH, MainView.HEIGHT);
         SoundPlayer.getInstance().playBackground(Utility.getSound(AddressConstants.MENU_SOUND));
         root = (Group) getRoot();
         build();

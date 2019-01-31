@@ -5,10 +5,12 @@ public class AddressConstants
     public static final String GRAPHICS_ROOT = "res/graphicAssets/";
     public static final String MISSIONS_ROOT = "res/missions/";
     public static final String SOUNDS_ROOT =  "res/sounds/";
+    public static final String SERVICES_ROOT = GRAPHICS_ROOT + "Service/";
     public static final String GAME_BACKGROUND_ROOT = GRAPHICS_ROOT + "GameBackground/";
     public static final String ANIMAL_ICONS_ROOT = GAME_BACKGROUND_ROOT + "AnimalIcons/";
+    public static final String HELICOPTER_PICTURE_ROOT = SERVICES_ROOT + "Helicopter/";
     public static final String WAREHOUSE_PICTURE_ROOT = GAME_BACKGROUND_ROOT + "Depot/";
-    public static final String TRUCK_PICTURE_ROOT = GRAPHICS_ROOT + "Service/Truck/";
+    public static final String TRUCK_PICTURE_ROOT = SERVICES_ROOT + "Truck/";
     public static final String MENU = GRAPHICS_ROOT + "menu/";
     public static final String MENU_CLOUD = MENU + "cloud.png";
     public static final String MENU_GRASS1 = MENU + "grass1.png";

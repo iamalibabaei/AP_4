@@ -31,7 +31,6 @@ public class GameBackground extends Pane implements Time {
         build();
     }
 
-
     private void build() {
         setBackgroundStuff();
         setBuyAnimalButton();
@@ -39,7 +38,7 @@ public class GameBackground extends Pane implements Time {
 //        setTruck();
 //        setWell();
         setUnderBar();
-        setUpperBar();
+//        setUpperBar();
     }
 
     private void setUpperBar() {
