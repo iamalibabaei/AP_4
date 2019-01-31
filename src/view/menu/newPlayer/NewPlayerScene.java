@@ -26,6 +26,12 @@ NewPlayerScene extends Scene {
     }
 
     private void build() {
+
+
+
+
+
+
         name = new TextField();
         name.setPromptText("name");
         name.relocate(300, 300);

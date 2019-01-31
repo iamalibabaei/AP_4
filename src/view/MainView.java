@@ -1,6 +1,7 @@
 package view;
 
 
+import controller.InGameController;
 import controller.MenuController;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -48,7 +49,6 @@ public class MainView extends Application {
         mainStage.setHeight(WIDTH);
         mainStage.setWidth(HEIGHT);
         setStageScene(Menu.getInstance());
-        System.out.println("after setStage");
         if (mainStage == null) throw new AssertionError();
         mainStage.setOnCloseRequest(event -> {
             /*
@@ -65,13 +65,11 @@ public class MainView extends Application {
             System.exit(0);*/
         });
         mainStage.show();
-        System.out.println("end");
     }
 
 
     private void setStageScene(Scene scene) {
         if (mainStage == null) throw new AssertionError();
-        scene.setFill(Color.BLACK);
         mainStage.setX(0);
         mainStage.setY(0);
         mainStage.setScene(scene);
@@ -82,17 +80,30 @@ public class MainView extends Application {
     public void goToMap() {
         //todo check password and not null
         Account account = null;
+        if (Menu.getInstance().getAccount() == null) {
+            Menu.getInstance().showNotChosenAccount();
+            return;
+        }
         try {
             account = Account.loadJson(Menu.getInstance().getAccount());
         } catch (FileNotFoundException e) {
-            //TODO show message
+            System.out.println("null");
             return;
         }
-        System.out.println(1);
+
+        String password = Menu.getInstance().getPass();
+        System.out.println(password);
+        System.out.println(account.getPassword());
+        if (!password.equals(account.getPassword())) {
+            Menu.getInstance().showWrongPass();
+            return;
+        }
+        Menu.getInstance().clearMessages();
         MenuController.getInstance().setCurrentAccount(account);
-        System.out.println(2);
+        MissionScene.getInstance().updateInfo();
         setStageScene(MissionScene.getInstance());
-        System.out.println(3);
+
+
     }
 
     public void goToSetting() {
@@ -112,6 +123,7 @@ public class MainView extends Application {
 
     public void startGame() {
         setStageScene(InGameView.getInstance());
+        InGameController.getInstance().startGame();
     }
 
     public void showExceptions(Exception e, double x, double y) {
