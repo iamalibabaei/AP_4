@@ -22,6 +22,12 @@ public class Mission
     private boolean dog, cat;
     private HashMap<Animal.Type, Integer> animalAtBeginning;
     private int moneyAtBeginning;
+    public HashMap<Animal.Type, Integer> getAnimalObjectives() {
+        return animalObjectives;
+    }
+    public HashMap<Item.Type, Integer> getItemObjective() {
+        return ItemObjective;
+    }
 
 
     public Mission(int money, HashMap<Animal.Type, Integer> animalObjectives,
@@ -42,14 +48,6 @@ public class Mission
 
     public int getMoneyObjective() {
         return moneyObjective;
-    }
-
-    public HashMap<Animal.Type, Integer> getAnimalObjectives() {
-        return animalObjectives;
-    }
-
-    public HashMap<Item.Type, Integer> getItemObjective() {
-        return ItemObjective;
     }
 
     public boolean isDog() {

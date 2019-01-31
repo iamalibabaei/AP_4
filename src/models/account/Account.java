@@ -12,6 +12,7 @@ public class Account implements Serializable {
     private int missionPassed;
 
     public Account(String name, String password) {
+        this.missionPassed = 0;
         this.name = name;
         this.password = password;
     }

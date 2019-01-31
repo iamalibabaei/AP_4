@@ -27,6 +27,11 @@ public class AddressConstants
     public static final String MENU_ROOSTER_SOUND = SOUNDS_ROOT + "rooster.wav";
     public static final String MENU_BUTTON = MENU + "button.png";
     public static final String WELL_PICTURE_ROOT = GRAPHICS_ROOT + "Service/Well/";
+    public static final String MISSION_SCENE = GRAPHICS_ROOT + "missionScene/";
+    public static final String MISSION_SCENE_BACKGROUND = MISSION_SCENE + "back.png";
+    public static final String MISSION_SCENE_ICON = MISSION_SCENE + "icon.png";
+    public static final String MISSION_SCENE_TAB = MISSION_SCENE + "missionTab.png";
+    public static final String NEW_PLAYER = GRAPHICS_ROOT + "newPlayer/back.png";
 
 
 }

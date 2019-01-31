@@ -251,4 +251,7 @@ public class MenuController
 
     }
 
+    public Account getCurrentAccount() {
+        return currentAccount;
+    }
 }

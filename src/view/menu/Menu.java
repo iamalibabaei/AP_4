@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import models.account.Account;
 import view.MainView;
@@ -27,6 +28,8 @@ public class Menu extends Scene {
     private ImageView background;
     private ChoiceBox<String> choiceBox;
     private TextField password;
+    private Text wrongPass;
+    private Text notChosenAccount;
 
     public Menu() {
         super(new Group(), MainView.WIDTH, MainView.HEIGHT, Color.BLACK);
@@ -37,13 +40,13 @@ public class Menu extends Scene {
 
     private void build() {
         root.getChildren().clear();
-
         //todo change font of texes
         ImageView startButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         startButton.setFitHeight(100);
         startButton.setFitWidth(200);
         StackPane startGame = new StackPane();
         Text startGameText = new Text("start game");
+        startGameText.setFont(Font.font("SWItalt", 15));
         startGame.getChildren().addAll(startButton, startGameText);
         startButton.setOnMouseClicked(event -> MainView.getInstance().goToMap());
         startGame.relocate(200, 200);
@@ -53,6 +56,7 @@ public class Menu extends Scene {
         settingButton.setFitWidth(200);
         StackPane setting = new StackPane();
         Text settingText = new Text("setting");
+        settingText.setFont(Font.font("SWItalt", 15));
         setting.getChildren().addAll(settingButton, settingText);
         setting.setOnMouseClicked(event -> MainView.getInstance().goToSetting());
         setting.relocate(200, 280);
@@ -62,6 +66,7 @@ public class Menu extends Scene {
         newPlayerButton.setFitWidth(200);
         StackPane newPlayer = new StackPane();
         Text newPlayerText = new Text("new player");
+        newPlayerText.setFont(Font.font("SWItalt", 15));
         newPlayer.getChildren().addAll(newPlayerButton, newPlayerText);
         newPlayer.setOnMouseClicked(event -> MainView.getInstance().newPlayer());
         newPlayer.relocate(200, 360);
@@ -71,6 +76,7 @@ public class Menu extends Scene {
         exitButton.setFitWidth(200);
         StackPane exit = new StackPane();
         Text exitText = new Text("exit");
+        exitText.setFont(Font.font("SWItalt", 15));
         exit.getChildren().addAll(exitButton, exitText);
         exit.setOnMouseClicked(event -> MainView.getInstance().close());
         exit.relocate(200, 440);
@@ -84,9 +90,19 @@ public class Menu extends Scene {
         password.relocate(400, 350);
         root.getChildren().addAll(MenuBackground.getInstance(), startGame, setting, newPlayer, exit, choiceBox, password);
 
-        //root.getChildren().addAll(MenuBackground.getInstance());
+        wrongPass = new Text("WRONG PASSWORD");
+        wrongPass.setFill(Color.RED);
+        wrongPass.setVisible(false);
+        wrongPass.setFont(Font.font("SWItalt", 20));
+        wrongPass.relocate(400, 250);
+        root.getChildren().addAll(wrongPass);
 
-
+        notChosenAccount = new Text("CHOOSE A PLAYER");
+        notChosenAccount.setFill(Color.RED);
+        notChosenAccount.setFont(Font.font("SWItalt", 20));
+        notChosenAccount.setVisible(false);
+        notChosenAccount.relocate(400, 250);
+        root.getChildren().addAll(notChosenAccount);
     }
 
     public void updateChoiceBox(){
@@ -94,23 +110,28 @@ public class Menu extends Scene {
     }
 
     public String getAccount() {
-        System.out.println(choiceBox.getValue());
         return choiceBox.getValue();
     }
-
-    private void createButtton(String textOnButton, int x, int y, EventHandler eventHandler) {
-        Pane pane = new Pane();
-        //todo change font of texes
-        ImageView button = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
-        button.setFitHeight(100);
-        button.setFitWidth(200);
-        Text text = new Text(textOnButton);
-        pane.getChildren().addAll(button, text);
-        button.setOnMouseClicked(eventHandler);
-        pane.relocate(x, y);
-        root.getChildren().addAll(pane);
+    public String getPass(){
+        String pass = password.getText();
+        password.clear();
+        return pass;
     }
 
 
+    public void showNotChosenAccount() {
+        clearMessages();
+        notChosenAccount.setVisible(true);
+    }
+
+    public void showWrongPass() {
+        clearMessages();
+        wrongPass.setVisible(true);
+    }
+
+    public void clearMessages(){
+        wrongPass.setVisible(false);
+        notChosenAccount.setVisible(false);
+    }
 }
 
