@@ -78,8 +78,9 @@ public class MainView extends Application {
         if (mainStage == null) throw new AssertionError();
         mainStage.setX(0);
         mainStage.setY(0);
+        mainStage.centerOnScreen();
         mainStage.setScene(scene);
-        mainStage.sizeToScene();
+        mainStage.setFullScreen(true);
     }
 
 
@@ -108,6 +109,7 @@ public class MainView extends Application {
         MenuController.getInstance().setCurrentAccount(account);
         MissionScene.getInstance().updateInfo();
         setStageScene(MissionScene.getInstance());
+
 
 
     }

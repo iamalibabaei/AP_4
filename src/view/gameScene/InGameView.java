@@ -30,7 +30,6 @@ import view.utility.Utility;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class InGameView extends Scene implements Time
 {
@@ -69,7 +68,7 @@ public class InGameView extends Scene implements Time
         place1Pane.getChildren().addAll(place1);
         place1Pane.relocate(MainView.WIDTH / 18, MainView.HEIGHT / 4.6);
         root.getChildren().addAll(place1Pane);
-        place1Pane.setOnMouseClicked(event -> openWorkshopChoices());
+        place1Pane.setOnMouseClicked(event -> openWorkshopChoices(1));
 
         ImageView place2 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place2.png"));
         place2.setFitWidth(MainView.WIDTH / 4.2);
@@ -78,7 +77,7 @@ public class InGameView extends Scene implements Time
         place2Pane.getChildren().addAll(place2);
         place2Pane.relocate(0, MainView.HEIGHT / 2.4);
         root.getChildren().addAll(place2Pane);
-        place2Pane.setOnMouseClicked(event -> openWorkshopChoices());
+        place2Pane.setOnMouseClicked(event -> openWorkshopChoices(2));
 
         ImageView place3 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place3.png"));
         place3.setFitWidth(MainView.WIDTH / 3.1);
@@ -87,25 +86,25 @@ public class InGameView extends Scene implements Time
         place3Pane.getChildren().addAll(place3);
         place3Pane.relocate(0, MainView.HEIGHT / 1.6);
         root.getChildren().addAll(place3Pane);
-        place3Pane.setOnMouseClicked(event -> openWorkshopChoices());
+        place3Pane.setOnMouseClicked(event -> openWorkshopChoices(3));
 
-//        ImageView place4 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place4.png"));
-//        place4.setFitWidth(MainView.WIDTH / 3.1);
-//        place4.setFitHeight(MainView.HEIGHT / 4.5);
-//        StackPane place4Pane = new StackPane();
-//        place4Pane.getChildren().addAll(place4);
-//        place4Pane.relocate(0, MainView.HEIGHT / 1.6);
-//        root.getChildren().addAll(place4Pane);
-//        place4Pane.setOnMouseClicked(event -> openWorkshopChoices());
-//
-//        ImageView place5 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place5.png"));
-//        place5.setFitWidth(MainView.WIDTH / 3.1);
-//        place5.setFitHeight(MainView.HEIGHT / 4.5);
-//        StackPane place5Pane = new StackPane();
-//        place5Pane.getChildren().addAll(place5);
-//        place5Pane.relocate(0, MainView.HEIGHT / 1.6);
-//        root.getChildren().addAll(place5Pane);
-//        place5Pane.setOnMouseClicked(event -> openWorkshopChoices());
+        ImageView place4 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place4.png"));
+        place4.setFitWidth(MainView.WIDTH / 3.1);
+        place4.setFitHeight(MainView.HEIGHT / 4.5);
+        StackPane place4Pane = new StackPane();
+        place4Pane.getChildren().addAll(place4);
+        place4Pane.relocate(MainView.WIDTH - place4.getImage().getWidth() * 2, MainView.HEIGHT / 4.8);
+        root.getChildren().addAll(place4Pane);
+        place4Pane.setOnMouseClicked(event -> openWorkshopChoices(4));
+
+        ImageView place5 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place5.png"));
+        place5.setFitWidth(MainView.WIDTH / 3.1);
+        place5.setFitHeight(MainView.HEIGHT / 4.7);
+        StackPane place5Pane = new StackPane();
+        place5Pane.getChildren().addAll(place5);
+        place5Pane.relocate(MainView.WIDTH - place5.getImage().getWidth() * 2, MainView.HEIGHT / 2.4);
+        root.getChildren().addAll(place5Pane);
+        place5Pane.setOnMouseClicked(event -> openWorkshopChoices(5));
 
         ImageView place6 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place6.png"));
         place6.setFitWidth(MainView.WIDTH / 3.4);
@@ -115,12 +114,40 @@ public class InGameView extends Scene implements Time
         place6Pane.relocate(MainView.WIDTH - place6.getImage().getWidth() * 2, MainView.HEIGHT / 1.6);
         System.out.println("xxx" + (MainView.WIDTH - place6.getImage().getWidth() * 2 + MainView.WIDTH / 3.4));
         root.getChildren().addAll(place6Pane);
-        place6Pane.setOnMouseClicked(event -> openWorkshopChoices());
+        place6Pane.setOnMouseClicked(event -> openWorkshopChoices(6));
 
     }
 
-    private void openWorkshopChoices() {
+    private void openWorkshopChoices(int place) {
+    }
 
+    private void drawWorkshop(int place, String workshop) {
+        switch (place){
+            case 1:{
+
+                break;
+            }
+            case 2:{
+
+                break;
+            }
+            case 3:{
+
+                break;
+            }
+            case 4:{
+
+                break;
+            }
+            case 5:{
+
+                break;
+            }
+            case 6:{
+
+                break;
+            }
+        }
     }
 
 
@@ -152,7 +179,9 @@ public class InGameView extends Scene implements Time
         truckPane.getChildren().addAll(imageView);
         truckPane.relocate(MainView.WIDTH / 2 - imageView.getImage().getWidth() * 3.7, MainView.HEIGHT - imageView.getImage().getHeight() * 1.9);
         root.getChildren().addAll(truckPane);
-        truckPane.setOnMouseClicked(event -> TruckView.getInstance().openTruck());
+        truckPane.setOnMouseClicked(event -> openTruck());
+
+
     }
 
     public void getMoney(){
@@ -173,23 +202,23 @@ public class InGameView extends Scene implements Time
                 0, 0, (int) (wellImageView.getImage().getWidth() / 4),
                 (int) wellImageView.getImage().getHeight() / 4);
         wellSpriteAnimation.stop();
+        final boolean[] isWorking = {true};
         wellImageView.setOnMouseClicked(event -> {
-            try {
-                MenuController.getInstance().refillWell();
-            } catch (IsWorkingException | InsufficientResourcesException e) {
-                showExceptions(e, XValue, YValue);
-                return;
+            if (isWorking[0]) {
+                isWorking[0] = false;
+                try {
+                    MenuController.getInstance().refillWell();
+                } catch (IsWorkingException | InsufficientResourcesException e) {
+                    MainView.getInstance().showExceptions(e, XValue, YValue);
+                }
+                wellSpriteAnimation.setCycleCount(Well.getInstance().REFILL_TIME[Well.getInstance().getLevel()]);
+                wellSpriteAnimation.playFromStart();
+                wellSpriteAnimation.setOnFinished(event1 -> {
+                    wellSpriteAnimation.stop();
+                    isWorking[0] = true;
+                });
             }
-            wellSpriteAnimation.setCycleCount(Well.getInstance().REFILL_TIME[Well.getInstance().getLevel()]);
-            wellSpriteAnimation.playFromStart();
-            wellSpriteAnimation.setOnFinished(event1 -> {
-                wellSpriteAnimation.stop();
-            });
         });
-    }
-
-    private void showExceptions(Exception e, int xValue, int yValue) {
-
     }
 
     private void moneyGraphic() {
@@ -199,7 +228,7 @@ public class InGameView extends Scene implements Time
         StackPane pane = new StackPane();
         pane.getChildren().addAll(money);
         pane.setAlignment(Pos.CENTER);
-        pane.relocate(MainView.WIDTH * 0.65, MainView.HEIGHT / 8.5);
+        pane.relocate(MainView.WIDTH * 0.7, MainView.HEIGHT / 32);
         root.getChildren().addAll(pane);
     }
 
@@ -227,6 +256,10 @@ public class InGameView extends Scene implements Time
     }
     public void closeTruck() {
         TruckView.getInstance().setVisible(false);
+    }
+    public void openTruck(){
+        TruckView.getInstance().updateInformation();
+        TruckView.getInstance().setVisible(true);
     }
 
     public void closeWarehouse() {
