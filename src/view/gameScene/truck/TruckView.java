@@ -46,33 +46,28 @@ public class TruckView extends Pane {
     private void build() {
         wallpaper();
         setButtons();
-        setItems();
+        //setItems();
         setTruckInfo();
     }
 
     private void setTruckInfo() {
-        int XValue = MainView.WIDTH / 2 - 200, YValue = MainView.HEIGHT / 2 - 200;//todo fix numbers if needed
+        int XValue = MainView.WIDTH / 2 - 200, YValue = MainView.HEIGHT / 2 ;//todo fix numbers if needed
         EnumMap<Item.Type, Integer> storedItems = Warehouse.getInstance().getStoredItems();
         for (Item.Type item : storedItems.keySet()) {
             ImageView itemImage = new ImageView(Utility.getImage(AddressConstants.ITEM_ROOT + item.name().toLowerCase() + ".png"));
             itemImage.setFitWidth(50);
             itemImage.setFitHeight(50);
             itemImage.relocate(XValue, YValue);
+
             Text text = new Text(Integer.toString(storedItems.get(item)));
             text.setFont(Font.font("SWItalt", 15));
             text.relocate(XValue + 70, YValue);
 
-
-
             ImageView addToTruckImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
             addToTruckImage.setFitHeight(100);
             addToTruckImage.setFitWidth(200);
-
             Text addToTruckText = new Text("add to truck");
             addToTruckText.setFont(Font.font("SWItalt", 15));
-
-
-
             TextField amount = new TextField();
             amount.setPromptText("amount");
             amount.relocate(XValue + 200, YValue);
@@ -82,6 +77,9 @@ public class TruckView extends Pane {
             addToTruck.getChildren().addAll(addToTruckImage, addToTruckText);
             addToTruck.setOnMouseClicked(event -> addToTruck(item, amount.getText()));
             addToTruck.relocate(XValue + 150, YValue);
+
+            getChildren().addAll(itemImage, text, addToTruck, amount);
+            YValue += 100;
 
 
         }
@@ -114,35 +112,35 @@ public class TruckView extends Pane {
         setVisible(true);
     }
 
-    private void setItems() {
-        EnumMap<Item.Type, Integer>  storedItems=  Warehouse.getInstance().getStoredItems();
-        int XValue = 30, YValue = 50;
-        for (Item.Type item : storedItems.keySet()) {
-            String str = item.name() + "  ---->  " + storedItems.get(item);
-            Text text = new Text(str);
-            text.relocate(XValue, YValue);
-            TextField textField = new TextField();
-            text.relocate(XValue + 100, YValue);
-            Button button = new Button("sell");
-            button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        InGameController.getInstance().addToStash("truck", item.name(), Integer.parseInt(textField.getText()));
-                    } catch (NotEnoughSpaceException e) {
-                        MainView.getInstance().showExceptions(e, 100, 100);
-                    } catch (InvalidArgumentException e) {
-                        MainView.getInstance().showExceptions(e, 100, 100);
-                    }
-                    updateInformation();
-                    setVisible(true);
-
-                }
-            });
-            getChildren().addAll(text, textField, button);
-            YValue += 30;
-        }
-    }
+//    private void setItems() {
+//        EnumMap<Item.Type, Integer>  storedItems=  Warehouse.getInstance().getStoredItems();
+//        int XValue = 30, YValue = 50;
+//        for (Item.Type item : storedItems.keySet()) {
+//            String str = item.name() + "  ---->  " + storedItems.get(item);
+//            Text text = new Text(str);
+//            text.relocate(XValue, YValue);
+//            TextField textField = new TextField();
+//            text.relocate(XValue + 100, YValue);
+//            Button button = new Button("sell");
+//            button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent event) {
+//                    try {
+//                        InGameController.getInstance().addToStash("truck", item.name(), Integer.parseInt(textField.getText()));
+//                    } catch (NotEnoughSpaceException e) {
+//                        MainView.getInstance().showExceptions(e, 100, 100);
+//                    } catch (InvalidArgumentException e) {
+//                        MainView.getInstance().showExceptions(e, 100, 100);
+//                    }
+//                    updateInformation();
+//                    setVisible(true);
+//
+//                }
+//            });
+//            getChildren().addAll(text, textField, button);
+//            YValue += 30;
+//        }
+//    }
 
     private void setButtons() {
         ImageView sendTruckImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
@@ -157,9 +155,6 @@ public class TruckView extends Pane {
         sendTruck.setOnMouseClicked(event -> InGameController.getInstance().sendTruck());
         sendTruck.relocate(0, 0);
         getChildren().addAll(sendTruck);
-
-
-
 
         ImageView clearStashImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         clearStashImage.setFitHeight(100);
@@ -188,19 +183,6 @@ public class TruckView extends Pane {
         clearStash.relocate(0, 100);
         getChildren().addAll(clearStash);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         ImageView backImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         backImage.setFitHeight(100);
         backImage.setFitWidth(200);
@@ -213,10 +195,6 @@ public class TruckView extends Pane {
         back.setOnMouseClicked(event -> InGameView.getInstance().closeTruck());
         back.relocate(0, 200);
         getChildren().addAll(back);
-
-
-
-
 
     }
 
