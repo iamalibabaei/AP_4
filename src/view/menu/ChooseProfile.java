@@ -68,7 +68,7 @@ public class ChooseProfile extends Pane {
 
 
         //////new player
-        Text newPlayerText = new Text("or creat new account");
+        Text newPlayerText = new Text("or create a new account");
         newPlayerText.setFont(Font.font("SWItalt", 15));
         newPlayerText.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.15);
         getChildren().addAll(newPlayerText);
@@ -114,7 +114,7 @@ public class ChooseProfile extends Pane {
         exitButton.setFitWidth(width);
         exitButton.setFitHeight(height);
         StackPane exit = new StackPane();
-        Text backText = new Text("back");
+        Text backText = new Text("Back");
         backText.setFont(Font.font("SWItalt", 15));
         backText.setFill(Color.WHITE);
         exit.getChildren().addAll(exitButton, backText);
