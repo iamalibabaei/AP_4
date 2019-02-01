@@ -39,6 +39,8 @@ public class AddressConstants
     public static final String PLACES_ROOT = GRAPHICS_ROOT + "UI/places/";
     public static final String TRUCK_INSIDE = GRAPHICS_ROOT + "truckInSideView.jpg";
     public static final String ITEM_ROOT = GRAPHICS_ROOT + "item/";
+    public static final String GAME_MENU = GRAPHICS_ROOT + "game_menu_1.png";
 
 
+    public static final String WORKSHOP_ROOT = "res/workshops";
 }

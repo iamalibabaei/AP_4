@@ -11,9 +11,12 @@ import models.interfaces.Time;
 import models.interfaces.Upgradable;
 import models.objects.Item;
 import models.objects.Point;
+import view.utility.AddressConstants;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Workshop extends Viewable implements Upgradable, Time
@@ -142,6 +145,24 @@ public class Workshop extends Viewable implements Upgradable, Time
             throw new AlreadyAtMaxLevelException();
         }
         return buildCost + 100 * (1 + level);
+    }
+
+
+    public static ArrayList<String> loadDefaultWorkshops()
+    {
+        File folder = new File(AddressConstants.WORKSHOP_ROOT);
+        File[] listOfFiles = folder.listFiles();
+        ArrayList<String> workshopName = new ArrayList<>();
+        if (listOfFiles != null)
+        {
+            for (File listOfFile : listOfFiles)
+            {
+                String name = listOfFile.getName();
+                name = name.substring(0, name.indexOf("."));
+                workshopName.add(name);
+            }
+        }
+        return workshopName;
     }
 
 }

@@ -146,16 +146,6 @@ public class TruckView extends Pane {
         sendTruck.setOnMouseClicked(event -> InGameController.getInstance().sendTruck());
         sendTruck.relocate(0, 0);
         getChildren().addAll(sendTruck);
-        Button sendTruck = new Button("sendTruck");
-//        sendTruck.relocate(30, 10);
-        sendTruck.relocate(MainView.WIDTH / 2 + 100, MainView.HEIGHT - 50);
-        sendTruck.setOnMouseClicked(event ->{
-            InGameController.getInstance().sendTruck();
-            InGameView.getInstance().closeTruck();
-            InGameView.getInstance().showTruckPath();
-        });
-        getChildren().addAll(exit, sendTruck);
-    }
 
         ImageView clearStashImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         clearStashImage.setFitHeight(100);
@@ -175,14 +165,6 @@ public class TruckView extends Pane {
                     System.out.println("invalid Argument in truckView");
                     return;
                 }
-
-    private void wallpaper() {
-        Image background = null;
-        try {
-            background = new Image(new FileInputStream("res/graphicAssets/truckInSideView.jpg"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
                 updateInformation();
                 setVisible(true);

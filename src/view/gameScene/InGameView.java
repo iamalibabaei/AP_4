@@ -64,6 +64,7 @@ public class InGameView extends Scene implements Time
         truckGraphic();
         helicopterGraphic();
         root.getChildren().addAll(TruckView.getInstance());
+        root.getChildren().addAll(WorkshopView.getInstance());
     }
 
     private void emptyWorkshopGraphic() {
@@ -129,9 +130,10 @@ public class InGameView extends Scene implements Time
     }
 
     private void openWorkshopChoices(int place) {
+
     }
 
-    private void drawWorkshop(int place, String workshop) {
+    public void drawWorkshop(int place, String workshop) {//string hamun workshop.name hast
         switch (place){
             case 1:{
 

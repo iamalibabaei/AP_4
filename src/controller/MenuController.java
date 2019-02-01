@@ -171,7 +171,7 @@ public class MenuController
     {
         YaGson yaGson = new YaGson();
         Workshop workshop = yaGson.fromJson(path, Workshop.class);
-        game.addWorkshop(workshop);
+        //game.addWorkshop(workshop);
     }
 
 //    public void clearStash(String transporterName) throws InvalidArgumentException, ObjectNotFoundException {
