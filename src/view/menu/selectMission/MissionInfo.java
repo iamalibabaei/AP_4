@@ -1,7 +1,6 @@
 package view.menu.selectMission;
 
 import controller.MenuController;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -11,7 +10,6 @@ import models.account.Account;
 import models.misc.Mission;
 import models.objects.Item;
 import models.objects.animals.Animal;
-import view.MainView;
 import view.utility.AddressConstants;
 import view.utility.Utility;
 
@@ -32,32 +30,32 @@ public class MissionInfo extends Pane {
         imageView.setFitWidth(1000);
         imageView.relocate(200, 0);
         getChildren().addAll(imageView);
-        //TODO setFont
-        text.setFont(Font.font(25));
+        text.setFont(Font.font("Rage Italic", 25));
         text.relocate(500, 250);
         getChildren().addAll(text);
-        addButtond();
+        addButtons();
 
         setVisible(false);
     }
 
-    private void addButtond() {
+    private void addButtons() {
         ImageView start = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         start.setFitHeight(100);
         start.setFitWidth(200);
         StackPane startGame = new StackPane();
         Text startGameText = new Text("start game");
+        startGameText.setFont(Font.font("Rage Italic", 25));
         startGame.getChildren().addAll(start, startGameText);
         startGame.setOnMouseClicked(event -> startGame());
         startGame.relocate(750, 265);
         getChildren().addAll(startGame);
-
 
         ImageView exitButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         exitButton.setFitHeight(100);
         exitButton.setFitWidth(200);
         StackPane exit = new StackPane();
         Text exitText = new Text("back");
+        exitText.setFont(Font.font("Rage Italic", 25));
         exit.getChildren().addAll(exitButton, exitText);
         exit.setOnMouseClicked(event -> setVisible(false));
         exit.relocate(750, 320);
@@ -76,12 +74,12 @@ public class MissionInfo extends Pane {
         this.mission = mission;
         String missionInfo = str +"\nmoney objective: " + mission.getMoneyObjective() +'\n' + "item objective: \n";
         for (Item.Type item : mission.getItemObjective().keySet()) {
-            missionInfo = missionInfo + item.name() + "  ->  " + mission.getItemObjective().get(item) + '\n';
+            missionInfo = missionInfo + item.name() + "  :  " + mission.getItemObjective().get(item) + '\n';
 
         }
         missionInfo = missionInfo + "animal objective\n";
         for (Animal.Type animal : mission.getAnimalObjectives().keySet()) {
-            missionInfo = missionInfo + animal.name() + "  ->  " + mission.getAnimalObjectives().get(animal) + '\n';
+            missionInfo = missionInfo + animal.name() + " :  " + mission.getAnimalObjectives().get(animal) + '\n';
         }
         if (mission.isDog()) {
             missionInfo = missionInfo + "reach dog\n";

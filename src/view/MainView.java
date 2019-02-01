@@ -85,7 +85,6 @@ public class MainView extends Application {
 
 
     public void goToMap() {
-        //todo check password and not null
         Account account = null;
         if (Menu.getInstance().getAccount() == null) {
             Menu.getInstance().showNotChosenAccount();
