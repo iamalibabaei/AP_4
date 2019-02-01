@@ -62,13 +62,13 @@ public class InGameView extends Scene implements Time
         warehouseGraphic();
         moneyGraphic();
         truckGraphic();
-        buildWorkshopGraphic();
+//        buildWorkshopGraphic();
         helicopterGraphic();
         root.getChildren().addAll(TruckView.getInstance());
         root.getChildren().addAll(WorkshopView.getInstance());
     }
 
-    private void buildWorkshopGraphic() {
+/*    private void buildWorkshopGraphic() {
         for (int i = 0; i < 6; i++) {
             int place = 0;
             double XValue = MainView.WIDTH, YValue = MainView.HEIGHT;
@@ -116,7 +116,7 @@ public class InGameView extends Scene implements Time
 
         }
     }
-
+*/
     private void emptyWorkshopGraphic() {
         ImageView place1 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place1.png"));
         place1.setFitWidth(MainView.WIDTH / 3.2375);
@@ -291,7 +291,13 @@ public class InGameView extends Scene implements Time
         pane.getChildren().addAll(money);
         pane.setAlignment(Pos.CENTER);
         pane.relocate(MainView.WIDTH * 0.7, MainView.HEIGHT / 32);
-        root.getChildren().addAll(pane);
+        ImageView moneyImageview = new ImageView(Utility.getImage(AddressConstants.GAME_BACKGROUND_ROOT + "money.png"));
+        moneyImageview.relocate(MainView.WIDTH * 0.7,MainView.HEIGHT / 150);
+        SpriteAnimation moneyAnimation = new SpriteAnimation(moneyImageview, Duration.millis(1200), 16, 4,
+                0,0, (int) (moneyImageview.getImage().getWidth() / 4), (int) (moneyImageview.getImage().getHeight() / 4));
+        moneyAnimation.setCycleCount(Animation.INDEFINITE);
+        moneyAnimation.play();
+        root.getChildren().addAll(pane, moneyImageview);
     }
 
     @Override
