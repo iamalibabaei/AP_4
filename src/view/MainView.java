@@ -4,11 +4,9 @@ package view;
 import controller.InGameController;
 import controller.MenuController;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import models.account.Account;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
 import models.misc.Mission;
@@ -20,100 +18,102 @@ import view.gameScene.InGameView;
 import view.menu.Menu;
 import view.menu.selectMission.MissionScene;
 
-import java.io.FileNotFoundException;
-
-public class MainView extends Application {
-    private static MainView instance = new MainView();
-    private static Stage mainStage;
+public class MainView extends Application
+{
     public static final int HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
     public static final int WIDTH = HEIGHT * 4 / 3;
     public static final int OFFSET_X = (WIDTH - HEIGHT) / 2;
     public static final int OFFSET_Y = 0;
-    public Stage getMainStage() {
-        return mainStage;
-    }
+    private static MainView instance = new MainView();
+    private static Stage mainStage;
 
-
-    private static MenuController getController(){
+    private static MenuController getController()
+    {
         return MenuController.getInstance();
     }
 
-    public static MainView getInstance() {
+    public static MainView getInstance()
+    {
         return instance;
     }
 
+    public Stage getMainStage()
+    {
+        return mainStage;
+    }
+
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)
+    {
+
         System.out.println("start");
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setResizable(true);
         setStageScene(Menu.getInstance());
         mainStage.show();
-        mainStage.setOnCloseRequest(event -> {
-            /*
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Save InGameController");
-            alert.setHeaderText(null);
-            alert.setContentText("Save the game before closing?");
-            Optional<ButtonType> action = alert.showAndWait();
-            if (action.get() == ButtonType.OK) {
-                getController().saveGame();
-            }
-            ConnectionManager.getInstance().disconnect();
-            Platform.exit();
-            System.exit(0);*/
-        });
+        mainStage.setOnCloseRequest(event -> close());
         System.out.println("end");
     }
 
 
-    private void setStageScene(Scene scene) {
+    private void setStageScene(Scene scene)
+    {
 //        mainStage.setX(WIDTH / 2);
 //        mainStage.setY(0);
         mainStage.setScene(scene);
 //        mainStage.centerOnScreen();
     }
 
+    public void close()
+    {
 
-    public void goToMap() {
+    }
+
+    public void goToMap()
+    {
         MissionScene.getInstance().updateInfo();
         setStageScene(MissionScene.getInstance());
-
-
-
     }
 
-    public void goToSetting() {
+    public void goToSetting()
+    {
     }
 
-    public void close() {
-
-    }
-
-    public void goToMenu() {
+    public void goToMenu()
+    {
         setStageScene(Menu.getInstance());
     }
 
-    public void startGame(Mission mission) {
+    public void startGame(Mission mission)
+    {
         setStageScene(InGameView.getInstance());
         InGameController.getInstance().startGame(mission);
     }
 
-    public void showExceptions(Exception e, double x, double y) {
-        if (e instanceof InsufficientResourcesException) {
+    public void showExceptions(Exception e, double x, double y)
+    {
+        if (e instanceof InsufficientResourcesException)
+        {
 
-        } else if (e instanceof IsWorkingException) {
+        } else if (e instanceof IsWorkingException)
+        {
 
         }
     }
-    public void addEntityToMap(Entity entity) {
-        if (entity instanceof Animal) {
+
+    public void addEntityToMap(Entity entity)
+    {
+        if (entity instanceof Animal)
+        {
             InGameView.getInstance().addAnimal((Animal) entity, entity.getCoordinates());
-        } else if (entity instanceof Grass) {
+        } else if (entity instanceof Grass)
+        {
             InGameView.getInstance().addGrass((Grass) entity, entity.getCoordinates());
-        } else if (entity instanceof Item) {
+        } else if (entity instanceof Item)
+        {
             //InGameView.getInstance().addItem((Item) entity, entity.getCoordinates());
         }
     }
+
 }

@@ -5,15 +5,21 @@ import javafx.application.Application;
 import models.Map;
 import models.account.Account;
 import models.buildings.Workshop;
-import models.exceptions.*;
+import models.exceptions.InsufficientResourcesException;
+import models.exceptions.IsWorkingException;
 import models.misc.Mission;
 import models.objects.Item;
 import models.objects.Point;
 import models.objects.animals.Animal;
 import view.MainView;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.HashMap;
 
 public class MenuController
 {
@@ -21,26 +27,19 @@ public class MenuController
     private MainView mainView;
     private InGameController game;
     private Mission mission;
-
-    public void setCurrentAccount(Account currentAccount)
-    {
-        this.currentAccount = currentAccount;
-    }
-
     private Account currentAccount;
     private ArrayList<Account> accounts;
 
-
-
-
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         Application.launch(MainView.class, args);
         //serializeMission();
 
     }
 
-    private static void serializeMission() {
-        int moneyObjective = 4000 , moneyAtBeginning = 2000;
+    private static void serializeMission()
+    {
+        int moneyObjective = 4000, moneyAtBeginning = 2000;
         HashMap<Animal.Type, Integer> animalObjectives = new HashMap<>();
         animalObjectives.put(Animal.Type.HEN, 10);
         animalObjectives.put(Animal.Type.SHEEP, 2);
@@ -51,12 +50,14 @@ public class MenuController
         animalAtBeginning.put(Animal.Type.HEN, 5);
 
 
-
-        Mission mission = new Mission(moneyObjective, animalObjectives, ItemObjective, false, false, animalAtBeginning, moneyAtBeginning);
+        Mission mission = new Mission(moneyObjective, animalObjectives, ItemObjective, false, false,
+                animalAtBeginning, moneyAtBeginning);
         FileWriter fileWriter = null;
-        try {
+        try
+        {
             fileWriter = new FileWriter("res/missions/mission1.json");
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
         YaGson yaGson = new YaGson();
@@ -68,6 +69,17 @@ public class MenuController
     public static MenuController getInstance()
     {
         return menuController;
+    }
+
+    public void plant(Point point) throws InsufficientResourcesException
+    {
+        if (point.getX() >= Map.WIDTH || point.getX() < 0 || point.getY() >= Map.HEIGHT || point.getY() < 0)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+
+        game.plant(point);
+
     }
 
     //    public void buy(String parameter) throws InsufficientResourcesException, InvalidArgumentException {
@@ -101,21 +113,20 @@ public class MenuController
 //
 //    }
 
-    public void plant(Point point) throws InsufficientResourcesException {
-        if (point.getX() >= Map.WIDTH || point.getX() < 0 || point.getY() >= Map.HEIGHT  || point.getY() < 0) {
-            throw new IndexOutOfBoundsException();
-        }
-
-        game.plant(point);
-
-    }
-
-    public void refillWell() throws IsWorkingException, InsufficientResourcesException {
+    public void refillWell() throws IsWorkingException, InsufficientResourcesException
+    {
         game.refillWell();
     }
 
-    public void startWorkshop(String workshopName) throws IsWorkingException, InsufficientResourcesException {
+    public void startWorkshop(String workshopName) throws IsWorkingException, InsufficientResourcesException
+    {
         game.startWorkshop(workshopName);
+    }
+
+    public void loadGame(String gamePath) throws FileNotFoundException
+    {
+        YaGson yaGson = new YaGson();
+        game = yaGson.fromJson(gamePath, InGameController.class);
     }
 
 //    public void upgrade(String parameter) throws AlreadyAtMaxLevelException, InsufficientResourcesException {
@@ -150,15 +161,11 @@ public class MenuController
 //        }
 //    }
 
-    public void loadGame(String gamePath) throws FileNotFoundException {
-        YaGson yaGson = new YaGson();
-        game = yaGson.fromJson(gamePath, InGameController.class);
-    }
-
-    public void saveGame(String gamePath) throws IOException {
+    public void saveGame(String gamePath) throws IOException
+    {
 
         // Writing to a file
-        File file=new File(gamePath);
+        File file = new File(gamePath);
         file.createNewFile();
         FileWriter fileWriter = new FileWriter(file);
         YaGson yaGson = new YaGson();
@@ -172,6 +179,15 @@ public class MenuController
         YaGson yaGson = new YaGson();
         Workshop workshop = yaGson.fromJson(path, Workshop.class);
         //game.addWorkshop(workshop);
+    }
+
+    public void startGame(Mission mission)
+    {
+        this.mission = mission;
+        game = InGameController.getInstance();
+        mainView = MainView.getInstance();
+        game.startGame(mission);
+        mainView.startGame(mission);
     }
 
 //    public void clearStash(String transporterName) throws InvalidArgumentException, ObjectNotFoundException {
@@ -214,7 +230,8 @@ public class MenuController
 //        throw new InvalidArgumentException();
 //    }
 
-//    public void sendTransporter(String transporterName) throws IsWorkingException, ObjectNotFoundException, InvalidArgumentException {
+//    public void sendTransporter(String transporterName) throws IsWorkingException, ObjectNotFoundException,
+//    InvalidArgumentException {
 //        if (transporterName.equals("helicopter"))
 //        {
 //            game.sendHelicopter();
@@ -229,29 +246,29 @@ public class MenuController
 //    }
 //
 
-
-    public void startGame(Mission mission) {
-        this.mission = mission;
-        game = InGameController.getInstance();
-        mainView = MainView.getInstance();
-        game.startGame(mission);
-        mainView.startGame(mission);
-    }
-
-    public void endGame() {
+    public void endGame()
+    {
         //todo ::::::::
     }
 
-
-    public void setMission(Mission mission) {
+    public void setMission(Mission mission)
+    {
         this.mission = mission;
     }
 
-    public void click(double x, double y) {
+    public void click(double x, double y)
+    {
 
     }
 
-    public Account getCurrentAccount() {
+    public Account getCurrentAccount()
+    {
         return currentAccount;
     }
+
+    public void setCurrentAccount(Account currentAccount)
+    {
+        this.currentAccount = currentAccount;
+    }
+
 }

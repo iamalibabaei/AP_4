@@ -30,7 +30,7 @@ public class Account implements Serializable {
     }
 
     public void setNextMission() {
-        this.missionPassed += 1;
+        this.missionPassed++;
     }
 
     public static Account loadJson(String name) throws FileNotFoundException {
