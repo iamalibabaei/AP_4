@@ -12,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import models.account.Account;
-import sun.applet.Main;
 import view.MainView;
 import view.utility.AddressConstants;
 import view.utility.SoundPlayer;
