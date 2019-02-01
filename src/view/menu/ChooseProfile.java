@@ -41,7 +41,7 @@ public class ChooseProfile extends Pane {
         ImageView imageView = new ImageView(Utility.getImage(AddressConstants.GAME_MENU));
         imageView.relocate(0, - MainView.HEIGHT * 0.1);
         imageView.setFitHeight(2 * MainView.HEIGHT / 3);
-        imageView.setFitWidth(400);
+        imageView.setFitWidth(MainView.WIDTH * 0.4);
         getChildren().addAll(imageView);
 
         Text text = new Text("choose your account");
@@ -117,7 +117,13 @@ public class ChooseProfile extends Pane {
         backText.setFont(Font.font("SWItalt", 15));
         backText.setFill(Color.WHITE);
         exit.getChildren().addAll(exitButton, backText);
-        exit.setOnMouseClicked(event -> addNewPlayer());
+        exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clearMessage();
+                setVisible(false);
+            }
+        });
         exit.relocate(MainView.WIDTH * 0.05, MainView.HEIGHT * 0.4);
 
         getChildren().addAll(name, password, submit, exit);
