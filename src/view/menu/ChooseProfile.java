@@ -20,17 +20,17 @@ import view.utility.Utility;
 
 import java.io.FileNotFoundException;
 
-public class GoToMap extends Pane {
-    private static GoToMap instance = new GoToMap();
+public class ChooseProfile extends Pane {
+    private static ChooseProfile instance = new ChooseProfile();
     private ChoiceBox<String> choiceBox;
     TextField name, password;
     Text choosePlayer;
 
-    public static GoToMap getInstance() {
+    public static ChooseProfile getInstance() {
         return instance;
     }
 
-    private GoToMap() {
+    private ChooseProfile() {
         relocate(200, 200);
         setVisible(false);
         build();

@@ -3,15 +3,12 @@ package view.menu;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import models.account.Account;
 import view.MainView;
 import view.utility.AddressConstants;
 import view.utility.SoundPlayer;
@@ -51,11 +48,11 @@ public class Menu extends Scene
     private void build()
     {
         root.getChildren().clear();
-        StackPane startGame = makeMenuButton(200, 200, "Start Game", event -> GoToMap.getInstance().open());
+        StackPane startGame = makeMenuButton(200, 200, "Start Game", event -> ChooseProfile.getInstance().open());
         StackPane setting = makeMenuButton(200, 280, "Settings", event -> MainView.getInstance().goToSetting());
         StackPane exit = makeMenuButton(200, 440, "Exit", event -> MainView.getInstance().close());
 
-        root.getChildren().addAll(MenuBackground.getInstance(), startGame, setting, exit, GoToMap.getInstance());
+        root.getChildren().addAll(MenuBackground.getInstance(), startGame, setting, exit, ChooseProfile.getInstance());
 
     }
 
