@@ -43,7 +43,8 @@ public class TruckView extends Pane {
     }
 
     private void setTruckInfo() {
-        int XValue = MainView.WIDTH / 2 - 200, YValue = MainView.HEIGHT / 2 ;//todo fix numbers if needed
+        double XValue = MainView.WIDTH / 2 - 200;//todo fix numbers if needed
+        double YValue = MainView.HEIGHT / 2 ;
         EnumMap<Item.Type, Integer> storedItems = Warehouse.getInstance().getStoredItems();
         for (Item.Type item : storedItems.keySet()) {
             ImageView itemImage = new ImageView(Utility.getImage(AddressConstants.ITEM_ROOT + item.name().toLowerCase() + ".png"));

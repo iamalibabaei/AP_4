@@ -49,7 +49,7 @@ public class InGameView extends Scene implements Time
     private Text money;
 
     private InGameView() {
-        super(new Group(), MainView.WIDTH, MainView.HEIGHT, Color.BLACK);
+        super(new Group(), (double) MainView.WIDTH, (double) MainView.HEIGHT, Color.BLACK);
         root = (Group) getRoot();
         build();
     }

@@ -43,7 +43,8 @@ public class HelicopterView extends Pane {
     }
 
     private void setHelicopterInfo() {
-        int XValue = MainView.WIDTH / 2 - 200, YValue = MainView.HEIGHT / 2 ;//todo fix numbers if needed
+        double XValue = MainView.WIDTH / 2 - 200;//todo fix numbers if needed
+        double YValue = MainView.HEIGHT / 2 ;
         ArrayList<Item.Type> items = new ArrayList<>();
         items.add( Item.Type.PLUME);
         items.add(Item.Type.FLOUR);

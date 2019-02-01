@@ -35,13 +35,13 @@ public class MenuBackground
         buildSun();
         buildRainbow();
         buildBirds();
-        buildBillBoard();
         buildTree();
         addPig();
         addRooster();
         addCow();
         addBird();
         buildFlower();
+        buildBillBoard();
         return pane;
     }
 
@@ -136,7 +136,7 @@ public class MenuBackground
         );
         text.setFont(Font.font("Courier New", 30));
         text.relocate(MainView.WIDTH * 0.8, MainView.HEIGHT * 0.65);
-        list.addAll(text, billboard);
+        list.addAll(billboard, text);
     }
 
     private static void buildTree()
