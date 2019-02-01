@@ -70,38 +70,36 @@ public class InGameView extends Scene implements Time
 
     private void buildWorkshopGraphic() {
         for (int i = 0; i < 6; i++) {
-            var placeRef = new Object() {
-                int place = 0;
-            };
+            int place = 0;
             double XValue = MainView.WIDTH, YValue = MainView.HEIGHT;
             switch (i) {
                 case 0:
-                    placeRef.place = 1;
+                    place = 1;
                     XValue = XValue * 0.2;
                     YValue = YValue * 0.3;
                     break;
                 case 1 :
-                    placeRef.place = 2;
+                    place = 2;
                     XValue = XValue * 0.2;
                     YValue = YValue * 0.5;
                     break;
                 case 2 :
-                    placeRef.place = 3;
+                    place = 3;
                     XValue = XValue * 0.2;
                     YValue = YValue * 0.65;
                     break;
                 case 3 :
-                    placeRef.place = 4;
+                    place = 4;
                     XValue = XValue * 0.85;
                     YValue = YValue * 0.3;
                     break;
                 case 4 :
-                    placeRef.place = 5;
+                    place = 5;
                     XValue = XValue * 0.85;
                     YValue = YValue * 0.5;
                     break;
                 case 5 :
-                    placeRef.place = 6;
+                    place = 6;
                     XValue = XValue * 0.85;
                     YValue = YValue * 0.65;
                     break;
@@ -111,7 +109,8 @@ public class InGameView extends Scene implements Time
             imageView.setFitWidth(50);
             imageView.setFitHeight(50);
             imageView.relocate(XValue, YValue);
-            imageView.setOnMouseClicked(event -> WorkshopView.getInstance().open(placeRef.place));
+            int finalPlace = place;
+            imageView.setOnMouseClicked(event -> WorkshopView.getInstance().open(finalPlace));
             root.getChildren().addAll(imageView);
 
 
