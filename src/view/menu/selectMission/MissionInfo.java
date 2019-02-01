@@ -10,7 +10,7 @@ import models.account.Account;
 import models.misc.Mission;
 import models.objects.Item;
 import models.objects.animals.Animal;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
 import java.io.FileNotFoundException;
@@ -25,7 +25,7 @@ public class MissionInfo extends Pane {
 
     public MissionInfo() {
         text = new Text();
-        ImageView imageView = new ImageView(Utility.getImage(AddressConstants.MISSION_SCENE_TAB));
+        ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.MISSION_SCENE_TAB));
         imageView.setFitHeight(1000);
         imageView.setFitWidth(1000);
         imageView.relocate(200, 0);
@@ -39,7 +39,7 @@ public class MissionInfo extends Pane {
     }
 
     private void addButtons() {
-        ImageView start = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView start = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         start.setFitHeight(100);
         start.setFitWidth(200);
         StackPane startGame = new StackPane();
@@ -50,7 +50,7 @@ public class MissionInfo extends Pane {
         startGame.relocate(750, 265);
         getChildren().addAll(startGame);
 
-        ImageView exitButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView exitButton = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         exitButton.setFitHeight(100);
         exitButton.setFitWidth(200);
         StackPane exit = new StackPane();
@@ -67,7 +67,7 @@ public class MissionInfo extends Pane {
         MenuController.getInstance().setCurrentAccount(account);
         Mission mission = null;
         try {
-            mission = Mission.loadJson(AddressConstants.MISSIONS_ROOT + str + ".json");
+            mission = Mission.loadJson(PictureAddresses.MISSIONS_ROOT + str + ".json");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

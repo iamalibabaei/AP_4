@@ -1,8 +1,7 @@
-package view.gameScene;
+package view.gameScene.workshop;
 
 import controller.InGameController;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -11,23 +10,23 @@ import javafx.scene.text.Text;
 import models.buildings.Workshop;
 import models.exceptions.AlreadyAtMaxLevelException;
 import view.MainView;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class WorkshopView extends Pane {
-    private static WorkshopView instance = new WorkshopView();
+public class View extends Pane {
+    private static View instance = new View();
     private static final int height = 500, width = 500;
     private ArrayList<String> workshops;
     private ChoiceBox<String> choiceBox;
     private int place;
-    public static WorkshopView getInstance() {
+    public static View getInstance() {
         return instance;
     }
 
-    private WorkshopView() {
+    private View() {
         workshops = Workshop.loadDefaultWorkshops();
         setVisible(false);
         relocate(MainView.WIDTH/2 - width / 2, MainView.HEIGHT / 2 - height / 2);
@@ -37,7 +36,7 @@ public class WorkshopView extends Pane {
     }
 
     private void build() {
-        ImageView imageView = new ImageView(Utility.getImage(AddressConstants.GAME_MENU));
+        ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.GAME_MENU));
         imageView.relocate(0, 0);
         imageView.setFitHeight(400);
         imageView.setFitWidth(400);
@@ -53,7 +52,7 @@ public class WorkshopView extends Pane {
         choiceBox.relocate(70, 130);
         getChildren().addAll(choiceBox);
 
-        ImageView buildbutton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView buildbutton = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         buildbutton.setFitHeight(100);
         buildbutton.setFitWidth(200);
         StackPane build = new StackPane();
@@ -64,7 +63,7 @@ public class WorkshopView extends Pane {
         build.relocate(70, 200);
         getChildren().addAll(build);
 
-        ImageView exitButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView exitButton = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         exitButton.setFitHeight(100);
         exitButton.setFitWidth(200);
         StackPane exit = new StackPane();
@@ -83,7 +82,7 @@ public class WorkshopView extends Pane {
     private void buildWorkshop() {
         Workshop workshop = null;
         try {
-            workshop = Workshop.loadJson(AddressConstants.WORKSHOP_ROOT + choiceBox.getValue() + ".json");
+            workshop = Workshop.loadJson(PictureAddresses.WORKSHOP_ROOT + choiceBox.getValue() + ".json");
         } catch (FileNotFoundException e) {
             System.out.println("workshop not found");
             e.printStackTrace();

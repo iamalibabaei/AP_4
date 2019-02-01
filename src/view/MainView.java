@@ -17,8 +17,7 @@ import models.objects.Entity;
 import models.objects.Grass;
 import models.objects.Item;
 import models.objects.animals.Animal;
-import view.gameScene.InGameView;
-import view.menu.Menu;
+import view.gameScene.View;
 import view.menu.selectMission.MissionScene;
 
 public class MainView extends Application
@@ -65,7 +64,7 @@ public class MainView extends Application
         mainStage.setFullScreen(true);
         mainStage.setResizable(true);
         mainStage.setScene(mainScene);
-        Menu.build(root);
+        view.menu.View.build(root);
         mainStage.show();
         mainStage.setOnCloseRequest(event -> close());
         System.out.println("end");
@@ -94,12 +93,12 @@ public class MainView extends Application
 
     public void goToMenu()
     {
-//        mainStage.setScene(Menu.getInstance());
+//        mainStage.setScene(View.getInstance());
     }
 
     public void startGame(Mission mission)
     {
-        mainStage.setScene(InGameView.getInstance());
+        mainStage.setScene(View.getInstance());
         InGameController.getInstance().startGame(mission);
     }
 
@@ -118,13 +117,13 @@ public class MainView extends Application
     {
         if (entity instanceof Animal)
         {
-            InGameView.getInstance().addAnimal((Animal) entity, entity.getCoordinates());
+            View.getInstance().addAnimal((Animal) entity, entity.getCoordinates());
         } else if (entity instanceof Grass)
         {
-            InGameView.getInstance().addGrass((Grass) entity, entity.getCoordinates());
+            View.getInstance().addGrass((Grass) entity, entity.getCoordinates());
         } else if (entity instanceof Item)
         {
-            //InGameView.getInstance().addItem((Item) entity, entity.getCoordinates());
+            //View.getInstance().addItem((Item) entity, entity.getCoordinates());
         }
     }
 

@@ -12,22 +12,22 @@ import models.exceptions.InvalidArgumentException;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
 import view.MainView;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class GameBackground extends Pane implements Time {
-    private static GameBackground instance = new GameBackground();
+public class Background extends Pane implements Time {
+    private static Background instance = new Background();
 
 
-    public static GameBackground getInstance() {
+    public static Background getInstance() {
         return instance;
     }
 
-    private GameBackground() {
+    private Background() {
         this.setHeight(MainView.HEIGHT);
         this.setWidth(MainView.WIDTH);
         System.out.println("hieghtttt = " + this.getWidth());
@@ -44,7 +44,7 @@ public class GameBackground extends Pane implements Time {
     private void setUpperBar() {
         Image upperBarImage = null;
         try {
-            upperBarImage = new Image(new FileInputStream(AddressConstants.GAME_BACKGROUND_ROOT + "upperBar.png"));
+            upperBarImage = new Image(new FileInputStream(PictureAddresses.GAME_BACKGROUND_ROOT + "upperBar.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -61,7 +61,7 @@ public class GameBackground extends Pane implements Time {
 
     private void setBackgroundStuff() {
         Image background = null;
-        background = Utility.getImage(AddressConstants.GAME_BACKGROUND_ROOT + "background.png");
+        background = Utility.getImage(PictureAddresses.GAME_BACKGROUND_ROOT + "background.png");
 
         BackgroundSize backgroundSize = new BackgroundSize(MainView.WIDTH, MainView.HEIGHT, false,
                 false, false, false);
@@ -69,14 +69,14 @@ public class GameBackground extends Pane implements Time {
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
         Pane pane = new Pane();
         pane.setMinSize(MainView.WIDTH * 2, MainView.HEIGHT);
-        pane.setBackground(new Background(backgroundImage));
+        pane.setBackground(new javafx.scene.layout.Background(backgroundImage));
         this.getChildren().addAll(pane);
     }
 
     private void setUnderBar(){
         Image underBarImage = null;
         try {
-            underBarImage = new Image(new FileInputStream(AddressConstants.GAME_BACKGROUND_ROOT + "underBar.png"));
+            underBarImage = new Image(new FileInputStream(PictureAddresses.GAME_BACKGROUND_ROOT + "underBar.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -109,7 +109,7 @@ public class GameBackground extends Pane implements Time {
                 System.out.println(InGameController.getInstance().getMoney());
                 try {
                     backImage = new Image(new FileInputStream(
-                            AddressConstants.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "Icon.png"));
+                            PictureAddresses.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "Icon.png"));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -119,7 +119,7 @@ public class GameBackground extends Pane implements Time {
                 System.out.println(InGameController.getInstance().getMoney());
                 try {
                     backImage = new Image(new FileInputStream(
-                            AddressConstants.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "IconGray.png"));
+                            PictureAddresses.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "IconGray.png"));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

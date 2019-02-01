@@ -1,11 +1,9 @@
-package view.menu;
+package view.menu.profiles;
 
 import controller.MenuController;
 import javafx.animation.FadeTransition;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -14,7 +12,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import models.account.Account;
 import view.MainView;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
 import java.io.FileNotFoundException;
@@ -37,7 +35,7 @@ public class ChooseProfile extends Pane {
 
     private void build() {
         final double width = MainView.HEIGHT * 0.3, height = width / 2;
-        ImageView imageView = new ImageView(Utility.getImage(AddressConstants.GAME_MENU));
+        ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.GAME_MENU));
         imageView.relocate(0, - MainView.HEIGHT * 0.1);
         imageView.setFitHeight(2 * MainView.HEIGHT / 3);
         imageView.setFitWidth(MainView.WIDTH * 0.4);
@@ -52,7 +50,7 @@ public class ChooseProfile extends Pane {
         choiceBox.getItems().addAll(Account.getAllAccounts());
         choiceBox.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.1);
 
-        ImageView button = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView button = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         button.setFitWidth(width);
         button.setFitHeight(height);
         StackPane goButton = new StackPane();
@@ -78,7 +76,7 @@ public class ChooseProfile extends Pane {
         password.setPromptText("password");
         password.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.25);
 
-        ImageView submitButtin = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView submitButtin = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         submitButtin.setFitWidth(width);
         submitButtin.setFitHeight(height);
         StackPane submit = new StackPane();
@@ -89,7 +87,7 @@ public class ChooseProfile extends Pane {
         submit.setOnMouseClicked(event -> addNewPlayer());
         submit.relocate(MainView.WIDTH * 0.05, MainView.HEIGHT * 0.3);
 
-        ImageView exitButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView exitButton = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         exitButton.setFitWidth(width);
         exitButton.setFitHeight(height);
         StackPane exit = new StackPane();

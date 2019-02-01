@@ -15,19 +15,18 @@ import models.exceptions.NotEnoughSpaceException;
 import models.objects.Item;
 import models.transportation.Truck;
 import view.MainView;
-import view.gameScene.InGameView;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
 import java.util.ArrayList;
 
-public class HelicopterView extends Pane {
-    private static HelicopterView instance = new HelicopterView();
-    public static HelicopterView getInstance() {
+public class View extends Pane {
+    private static View instance = new View();
+    public static View getInstance() {
         return instance;
     }
 
-    private HelicopterView() {
+    private View() {
         relocate(0 , 0);
         setHeight(MainView.HEIGHT);
         setWidth(MainView.WIDTH);
@@ -49,12 +48,12 @@ public class HelicopterView extends Pane {
         items.add( Item.Type.PLUME);
         items.add(Item.Type.FLOUR);
         for (Item.Type item : items) {
-            ImageView itemImage = new ImageView(Utility.getImage(AddressConstants.ITEM_ROOT + item.name().toLowerCase() + ".png"));
+            ImageView itemImage = new ImageView(Utility.getImage(PictureAddresses.ITEM_ROOT + item.name().toLowerCase() + ".png"));
             itemImage.setFitWidth(50);
             itemImage.setFitHeight(50);
             itemImage.relocate(XValue, YValue);
 
-            ImageView addToHelicopterImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+            ImageView addToHelicopterImage = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
             addToHelicopterImage.setFitHeight(100);
             addToHelicopterImage.setFitWidth(200);
             Text addToTruckText = new Text("add helicopter");
@@ -124,7 +123,7 @@ public class HelicopterView extends Pane {
 //    }
 
     private void setButtons() {
-        ImageView sendTruckImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView sendTruckImage = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         sendTruckImage.setFitHeight(100);
         sendTruckImage.setFitWidth(200);
 
@@ -136,8 +135,8 @@ public class HelicopterView extends Pane {
         sendTruck.setOnMouseClicked(event -> {
             try {
                 InGameController.getInstance().sendHelicopter();
-                InGameView.getInstance().closehelicopter();
-                InGameView.getInstance().showHelicopterPath();
+                view.gameScene.View.getInstance().closehelicopter();
+                view.gameScene.View.getInstance().showHelicopterPath();
             } catch (InsufficientResourcesException e) {
                 //TODO
             }
@@ -145,7 +144,7 @@ public class HelicopterView extends Pane {
         sendTruck.relocate(0, 0);
         getChildren().addAll(sendTruck);
 
-        ImageView clearStashImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView clearStashImage = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         clearStashImage.setFitHeight(100);
         clearStashImage.setFitWidth(200);
 
@@ -172,7 +171,7 @@ public class HelicopterView extends Pane {
         clearStash.relocate(0, 100);
         getChildren().addAll(clearStash);
 
-        ImageView backImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView backImage = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         backImage.setFitHeight(100);
         backImage.setFitWidth(200);
 
@@ -181,14 +180,14 @@ public class HelicopterView extends Pane {
 
         StackPane back = new StackPane();
         back.getChildren().addAll(backImage, backText);
-        back.setOnMouseClicked(event -> InGameView.getInstance().closehelicopter());
+        back.setOnMouseClicked(event -> view.gameScene.View.getInstance().closehelicopter());
         back.relocate(0, 200);
         getChildren().addAll(back);
 
     }
 
     private void wallpaper() {
-        ImageView back = new ImageView(Utility.getImage(AddressConstants.TRUCK_INSIDE));
+        ImageView back = new ImageView(Utility.getImage(PictureAddresses.TRUCK_INSIDE));
         back.setFitWidth(350);
         back.setFitHeight(600);
         back.relocate(MainView.WIDTH * 0.3 ,MainView.HEIGHT * 0.2);
@@ -205,7 +204,7 @@ public class HelicopterView extends Pane {
         if (Truck.getInstance().isWorking()) {
             return;
         }
-        HelicopterView.getInstance().updateInformation();
-        HelicopterView.getInstance().setVisible(true);
+        view.gameScene.helicopter.View.getInstance().updateInformation();
+        view.gameScene.helicopter.View.getInstance().setVisible(true);
     }
 }

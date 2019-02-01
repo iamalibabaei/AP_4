@@ -10,14 +10,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import view.MainView;
-import view.utility.AddressConstants;
+import view.menu.profiles.ChooseProfile;
+import view.utility.constants.PictureAddresses;
 import view.utility.SoundPlayer;
 import view.utility.Utility;
+import view.utility.constants.MusicAddresses;
 
-public class Menu
+public class View
 {
 
-    private Menu()
+    private View()
     {
     }
 
@@ -31,16 +33,16 @@ public class Menu
                 event -> multiPlayer());
         StackPane exit = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6, "Exit",
                 event -> MainView.getInstance().close());
-        Pane background = MenuBackground.build();
+        Pane background = Background.build();
         root.getChildren().addAll(background, startGame, multiPlayer, setting, exit, ChooseProfile.getInstance());
-        SoundPlayer.getInstance().playBackground(Utility.getSound(AddressConstants.MENU_MUSIC));
+        SoundPlayer.getInstance().playBackground(Utility.getSound(MusicAddresses.MENU_MUSIC));
 
     }
 
     private static StackPane makeMenuButton(double x, double y, String name, EventHandler<? super MouseEvent> value)
     {
         final double width = MainView.HEIGHT * 0.3, height = width / 2;
-        ImageView button = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView button = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         button.setFitWidth(width);
         button.setFitHeight(height);
         StackPane pane = new StackPane();

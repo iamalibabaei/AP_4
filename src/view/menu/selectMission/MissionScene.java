@@ -18,7 +18,7 @@ import javafx.util.Duration;
 import models.account.Account;
 import models.misc.Mission;
 import view.MainView;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class MissionScene extends Scene {
 
     private void showProfileInfo()
     {
-        ImageView billboard = new ImageView(Utility.getImage(AddressConstants.MENU_BILLBOARD));
+        ImageView billboard = new ImageView(Utility.getImage(PictureAddresses.MENU_BILLBOARD));
         billboard.setFitHeight(500);
         billboard.setFitWidth(500);
         billboard.relocate(900, 300);
@@ -85,7 +85,7 @@ public class MissionScene extends Scene {
 
     private void buildMenuButton(double XCenter, double YCenter)
     {
-        ImageView sun = new ImageView(Utility.getImage(AddressConstants.MENU_SUN));
+        ImageView sun = new ImageView(Utility.getImage(PictureAddresses.MENU_SUN));
         sun.setFitHeight(250);
         sun.setFitWidth(250);
         sun.relocate(XCenter - 50, YCenter - 50);
@@ -109,13 +109,13 @@ public class MissionScene extends Scene {
 
     private void buildBackground()
     {
-        ImageView cloud = new ImageView(Utility.getImage(AddressConstants.MENU_CLOUD));
+        ImageView cloud = new ImageView(Utility.getImage(PictureAddresses.MENU_CLOUD));
         cloud.setFitWidth(MainView.WIDTH);
         cloud.setFitHeight(MainView.HEIGHT);
         cloud.relocate(0,0);
         root.getChildren().addAll(cloud);
 
-        Image wallpaper = Utility.getImage(AddressConstants.MISSION_SCENE_BACKGROUND);
+        Image wallpaper = Utility.getImage(PictureAddresses.MISSION_SCENE_BACKGROUND);
         ImageView missionWallpaper = new ImageView(wallpaper);
         missionWallpaper.setFitWidth(MainView.WIDTH);
         missionWallpaper.setFitHeight(MainView.HEIGHT);
@@ -125,7 +125,7 @@ public class MissionScene extends Scene {
 
     private void creatButton(double x, double y, Color color, String mission) {
         StackPane stackPane = new StackPane();
-        ImageView imageView = new ImageView(Utility.getImage(AddressConstants.MISSION_SCENE_ICON));
+        ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.MISSION_SCENE_ICON));
         imageView.setFitWidth(150);
         imageView.setFitHeight(150);
         Text text = new Text(mission);

@@ -28,27 +28,25 @@ import models.objects.animals.Animal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
 import view.MainView;
-import view.gameScene.helicopter.HelicopterView;
-import view.gameScene.truck.TruckView;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 import view.utility.SpriteAnimation;
 import view.utility.Utility;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class InGameView extends Scene implements Time
+public class View extends Scene implements Time
 {
-    private static InGameView instance = new InGameView();
+    private static View instance = new View();
 
-    public static InGameView getInstance() {
+    public static View getInstance() {
         return instance;
     }
 
     private Group root;
     private Text money;
 
-    private InGameView() {
+    private View() {
         super(new Group(), (double) MainView.WIDTH, (double) MainView.HEIGHT, Color.BLACK);
         root = (Group) getRoot();
         build();
@@ -56,7 +54,7 @@ public class InGameView extends Scene implements Time
 
     private void build() {
         root.getChildren().clear();
-        root.getChildren().addAll(GameBackground.getInstance(), MapView.getInstance(), WarehouseScene.getInstance());
+        root.getChildren().addAll(Background.getInstance(), MapView.getInstance(), view.gameScene.warehouse.View.getInstance());
 //        emptyWorkshopGraphic();
         wellGraphic();
         warehouseGraphic();
@@ -64,8 +62,8 @@ public class InGameView extends Scene implements Time
         truckGraphic();
         buildWorkshopGraphic();
         helicopterGraphic();
-        root.getChildren().addAll(TruckView.getInstance());
-        root.getChildren().addAll(WorkshopView.getInstance());
+        root.getChildren().addAll(view.gameScene.truck.View.getInstance());
+        root.getChildren().addAll(view.gameScene.workshop.View.getInstance());
     }
 
     private void buildWorkshopGraphic() {
@@ -105,12 +103,12 @@ public class InGameView extends Scene implements Time
                     break;
 
             }
-            ImageView imageView = new ImageView(Utility.getImage(AddressConstants.BUILD_WORKSHOP_ICON));
+            ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.BUILD_WORKSHOP_ICON));
             imageView.setFitWidth(50);
             imageView.setFitHeight(50);
             imageView.relocate(XValue, YValue);
             int finalPlace = place;
-            imageView.setOnMouseClicked(event -> WorkshopView.getInstance().open(finalPlace));
+            imageView.setOnMouseClicked(event -> view.gameScene.workshop.View.getInstance().open(finalPlace));
             root.getChildren().addAll(imageView);
 
 
@@ -118,7 +116,7 @@ public class InGameView extends Scene implements Time
     }
 
     private void emptyWorkshopGraphic() {
-        ImageView place1 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place1.png"));
+        ImageView place1 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place1.png"));
         place1.setFitWidth(MainView.WIDTH / 3.2375);
         place1.setFitHeight(MainView.HEIGHT / 5);
         StackPane place1Pane = new StackPane();
@@ -127,7 +125,7 @@ public class InGameView extends Scene implements Time
         root.getChildren().addAll(place1Pane);
         place1Pane.setOnMouseClicked(event -> openWorkshopChoices(1));
 
-        ImageView place2 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place2.png"));
+        ImageView place2 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place2.png"));
         place2.setFitWidth(MainView.WIDTH / 4.2);
         place2.setFitHeight(MainView.HEIGHT / 4.7);
         StackPane place2Pane = new StackPane();
@@ -136,7 +134,7 @@ public class InGameView extends Scene implements Time
         root.getChildren().addAll(place2Pane);
         place2Pane.setOnMouseClicked(event -> openWorkshopChoices(2));
 
-        ImageView place3 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place3.png"));
+        ImageView place3 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place3.png"));
         place3.setFitWidth(MainView.WIDTH / 3.1);
         place3.setFitHeight(MainView.HEIGHT / 4.5);
         StackPane place3Pane = new StackPane();
@@ -145,7 +143,7 @@ public class InGameView extends Scene implements Time
         root.getChildren().addAll(place3Pane);
         place3Pane.setOnMouseClicked(event -> openWorkshopChoices(3));
 
-        ImageView place4 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place4.png"));
+        ImageView place4 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place4.png"));
         place4.setFitWidth(MainView.WIDTH / 3.3);
         place4.setFitHeight(MainView.HEIGHT / 4.5);
         StackPane place4Pane = new StackPane();
@@ -155,7 +153,7 @@ public class InGameView extends Scene implements Time
         root.getChildren().addAll(place4Pane);
         place4Pane.setOnMouseClicked(event -> openWorkshopChoices(4));
 
-        ImageView place5 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place5.png"));
+        ImageView place5 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place5.png"));
         place5.setFitWidth(MainView.WIDTH / 3.4);
         place5.setFitHeight(MainView.HEIGHT / 4.7);
         StackPane place5Pane = new StackPane();
@@ -165,7 +163,7 @@ public class InGameView extends Scene implements Time
         root.getChildren().addAll(place5Pane);
         place5Pane.setOnMouseClicked(event -> openWorkshopChoices(5));
 
-        ImageView place6 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place6.png"));
+        ImageView place6 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place6.png"));
         place6.setFitWidth(MainView.WIDTH / 3.4);
         place6.setFitHeight(MainView.HEIGHT / 4.5);
         StackPane place6Pane = new StackPane();
@@ -215,7 +213,7 @@ public class InGameView extends Scene implements Time
 
     private void helicopterGraphic() {
 
-        ImageView imageView = new ImageView(Utility.getImage(AddressConstants.HELICOPTER_PICTURE_ROOT + Helicopter.getInstance().getLevel() + ".png"));
+        ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.HELICOPTER_PICTURE_ROOT + Helicopter.getInstance().getLevel() + ".png"));
         imageView.setFitWidth(MainView.WIDTH / 4.5);
         imageView.setFitHeight(MainView.HEIGHT / 4.5);
         StackPane helicopterPane = new StackPane();
@@ -223,25 +221,25 @@ public class InGameView extends Scene implements Time
         helicopterPane.relocate(MainView.WIDTH / 2 + imageView.getImage().getWidth() * 0.5, MainView.HEIGHT - imageView.getImage().getHeight() * 1.6);
         root.getChildren().addAll(helicopterPane);
         helicopterPane.setOnMouseClicked(event -> openHelicopter());
-        root.getChildren().addAll(HelicopterView.getInstance());
+        root.getChildren().addAll(view.gameScene.helicopter.View.getInstance());
 
     }
 
     private void openHelicopter() {
-        HelicopterView.getInstance().updateInformation();
-        HelicopterView.getInstance().setVisible(true);
+        view.gameScene.helicopter.View.getInstance().updateInformation();
+        view.gameScene.helicopter.View.getInstance().setVisible(true);
     }
 
     private void truckGraphic() {
 
-        ImageView imageView = new ImageView(Utility.getImage(AddressConstants.TRUCK_PICTURE_ROOT + Truck.getInstance().getLevel() + ".png"));
+        ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.TRUCK_PICTURE_ROOT + Truck.getInstance().getLevel() + ".png"));
         imageView.setFitWidth(MainView.WIDTH / 5);
         imageView.setFitHeight(MainView.HEIGHT / 5);
         StackPane truckPane = new StackPane();
         truckPane.getChildren().addAll(imageView);
         truckPane.relocate(MainView.WIDTH / 2 - imageView.getImage().getWidth() * 3.7, MainView.HEIGHT - imageView.getImage().getHeight() * 1.9);
         root.getChildren().addAll(truckPane);
-        truckPane.setOnMouseClicked(event -> TruckView.getInstance().openTruck());
+        truckPane.setOnMouseClicked(event -> view.gameScene.truck.View.getInstance().openTruck());
 
 
     }
@@ -253,7 +251,7 @@ public class InGameView extends Scene implements Time
     private void wellGraphic() {
         int XValue = (int) (MainView.WIDTH * 0.4), YValue = (int) (MainView.HEIGHT / 9);
 
-        ImageView wellImageView = new ImageView(Utility.getImage(AddressConstants.WELL_PICTURE_ROOT +
+        ImageView wellImageView = new ImageView(Utility.getImage(PictureAddresses.WELL_PICTURE_ROOT +
                 Well.getInstance().getLevel() + ".png"));
         wellImageView.relocate(XValue, YValue);
         wellImageView.setFitHeight(MainView.HEIGHT / 6);
@@ -291,7 +289,7 @@ public class InGameView extends Scene implements Time
         pane.getChildren().addAll(money);
         pane.setAlignment(Pos.CENTER);
         pane.relocate(MainView.WIDTH * 0.7, MainView.HEIGHT / 32);
-        ImageView moneyImageview = new ImageView(Utility.getImage(AddressConstants.GAME_BACKGROUND_ROOT + "money.png"));
+        ImageView moneyImageview = new ImageView(Utility.getImage(PictureAddresses.GAME_BACKGROUND_ROOT + "money.png"));
         moneyImageview.relocate(MainView.WIDTH * 0.7,MainView.HEIGHT / 150);
         SpriteAnimation moneyAnimation = new SpriteAnimation(moneyImageview, Duration.millis(1200), 16, 4,
                 0,0, (int) (moneyImageview.getImage().getWidth() / 4), (int) (moneyImageview.getImage().getHeight() / 4));
@@ -304,7 +302,7 @@ public class InGameView extends Scene implements Time
     public void nextTurn() {
         getMoney();
         MapView.getInstance().nextTurn();
-        GameBackground.getInstance().nextTurn();
+        Background.getInstance().nextTurn();
     }
 
 
@@ -323,25 +321,25 @@ public class InGameView extends Scene implements Time
         MapView.getInstance().getChildren().addAll(text);
     }
     public void closehelicopter() {
-        HelicopterView.getInstance().setVisible(false);
+        view.gameScene.helicopter.View.getInstance().setVisible(false);
     }
 
     public void closeTruck() {
-        TruckView.getInstance().setVisible(false);
+        view.gameScene.truck.View.getInstance().setVisible(false);
     }
     public void openTruck(){
-        TruckView.getInstance().updateInformation();
-        TruckView.getInstance().setVisible(true);
+        view.gameScene.truck.View.getInstance().updateInformation();
+        view.gameScene.truck.View.getInstance().setVisible(true);
     }
 
     public void closeWarehouse() {
-        //root.getChildren().remove(WarehouseScene.getInstance());
-        WarehouseScene.getInstance().setVisible(false);
+        //root.getChildren().remove(View.getInstance());
+        view.gameScene.warehouse.View.getInstance().setVisible(false);
     }
 
     private void openWarehouse() {
-        WarehouseScene.getInstance().UpdateInformation();
-        WarehouseScene.getInstance().setVisible(true);
+        view.gameScene.warehouse.View.getInstance().UpdateInformation();
+        view.gameScene.warehouse.View.getInstance().setVisible(true);
 
     }
 
@@ -349,7 +347,7 @@ public class InGameView extends Scene implements Time
         Image warehouseImage = null;
         try {
             warehouseImage = new Image(new FileInputStream(
-                    AddressConstants.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+                    PictureAddresses.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -367,7 +365,7 @@ public class InGameView extends Scene implements Time
     }
 
     public void showTruckPath(){
-        ImageView truckView = new ImageView(Utility.getImage(AddressConstants.TRUCK_MINI_PICTURE_ROOT + Truck.getInstance().getLevel() + "_mini.png"));
+        ImageView truckView = new ImageView(Utility.getImage(PictureAddresses.TRUCK_MINI_PICTURE_ROOT + Truck.getInstance().getLevel() + "_mini.png"));
         truckView.setViewport(new Rectangle2D(0, 0, 48, 48));
         truckView.setFitWidth(MainView.WIDTH / 20);
         truckView.setFitHeight(MainView.HEIGHT / 20);
@@ -406,7 +404,7 @@ public class InGameView extends Scene implements Time
     }
 
     public void showHelicopterPath(){
-        ImageView helicopterkView = new ImageView(Utility.getImage(AddressConstants.HELICOPTER_MINI_PICTURE_ROOT+ Truck.getInstance().getLevel() + "_mini.png"));
+        ImageView helicopterkView = new ImageView(Utility.getImage(PictureAddresses.HELICOPTER_MINI_PICTURE_ROOT+ Truck.getInstance().getLevel() + "_mini.png"));
         helicopterkView.setViewport(new Rectangle2D(0, 0, 48, 48));
         helicopterkView.setFitWidth(MainView.WIDTH / 20);
         helicopterkView.setFitHeight(MainView.HEIGHT / 20);

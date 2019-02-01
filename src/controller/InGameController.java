@@ -15,7 +15,7 @@ import models.objects.animals.Dog;
 import models.objects.animals.DomesticAnimal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
-import view.gameScene.InGameView;
+import view.gameScene.View;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,7 +89,7 @@ public class InGameController implements Time
             return false;
         }
         money -= cost;
-        InGameView.getInstance().getMoney();
+        View.getInstance().getMoney();
         return true;
     }
 
@@ -170,7 +170,7 @@ public class InGameController implements Time
     public void addWorkshop(Workshop workshop, int place)
     {
         workshops.add(workshop);
-        InGameView.getInstance().drawWorkshop(place, workshop.name);
+        View.getInstance().drawWorkshop(place, workshop.name);
     }
 
     public void clearStash(String transporterName) throws InvalidArgumentException

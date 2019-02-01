@@ -1,7 +1,7 @@
-package view.gameScene;
+package view.gameScene.warehouse;
 
 import view.MainView;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -15,14 +15,14 @@ import models.objects.Item;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class WarehouseScene extends Pane {
-    private static WarehouseScene instance = new WarehouseScene();
+public class View extends Pane {
+    private static View instance = new View();
     private static final int height = 500, width = 500;
-    public static WarehouseScene getInstance() {
+    public static View getInstance() {
         return instance;
     }
 
-    private WarehouseScene(){
+    private View(){
         relocate(MainView.WIDTH/2 - width / 2, MainView.HEIGHT / 2 - height / 2);
         setHeight(height);
         setWidth(width);
@@ -42,7 +42,7 @@ public class WarehouseScene extends Pane {
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                InGameView.getInstance().closeWarehouse();
+                view.gameScene.View.getInstance().closeWarehouse();
             }
         });
         getChildren().addAll(exit);
@@ -72,7 +72,7 @@ public class WarehouseScene extends Pane {
     private void setBackgroundStuff() {
         Image background = null;
         try {
-            background = new Image(new FileInputStream(AddressConstants.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+            background = new Image(new FileInputStream(PictureAddresses.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -13,16 +13,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import view.MainView;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 import view.utility.SoundPlayer;
 import view.utility.Utility;
+import view.utility.constants.MusicAddresses;
 
-public class MenuBackground
+public class Background
 {
     private static Pane pane = new Pane();
     private static ObservableList<Node> list = pane.getChildren();
 
-    private MenuBackground()
+    private Background()
     {
     }
 
@@ -46,7 +47,7 @@ public class MenuBackground
 
     private static void buildWhiteBack()
     {
-        ImageView whiteImage = new ImageView(Utility.getImage(AddressConstants.WHITE_IMAGE));
+        ImageView whiteImage = new ImageView(Utility.getImage(PictureAddresses.WHITE_IMAGE));
         whiteImage.setFitWidth(MainView.SCREEN_WIDTH * 4 / 3);
         whiteImage.setFitHeight(MainView.SCREEN_HEIGHT);
         whiteImage.relocate(-MainView.WIDTH / 3, 0);
@@ -55,7 +56,7 @@ public class MenuBackground
 
     private static void buildCloud()
     {
-        ImageView cloud = new ImageView(Utility.getImage(AddressConstants.MENU_CLOUD));
+        ImageView cloud = new ImageView(Utility.getImage(PictureAddresses.MENU_CLOUD));
         cloud.setFitWidth(MainView.SCREEN_WIDTH * 4 / 3);
         cloud.setFitHeight(MainView.SCREEN_HEIGHT);
         cloud.relocate(-MainView.WIDTH / 3, 0);
@@ -64,7 +65,7 @@ public class MenuBackground
 
     private static void buildGrass()
     {
-        ImageView grass = new ImageView(Utility.getImage(AddressConstants.MENU_GRASS1));
+        ImageView grass = new ImageView(Utility.getImage(PictureAddresses.MENU_GRASS1));
         grass.setFitWidth(MainView.SCREEN_WIDTH * 4 / 3);
         grass.setFitHeight(MainView.SCREEN_HEIGHT * 0.5);
         grass.relocate(-MainView.WIDTH / 3, MainView.HEIGHT * 0.5);
@@ -73,7 +74,7 @@ public class MenuBackground
 
     private static void buildSun()
     {
-        ImageView sun = new ImageView(Utility.getImage(AddressConstants.MENU_SUN));
+        ImageView sun = new ImageView(Utility.getImage(PictureAddresses.MENU_SUN));
         final double width = MainView.HEIGHT / 3;
         final double height = MainView.HEIGHT / 3;
         sun.setFitHeight(width);
@@ -92,7 +93,7 @@ public class MenuBackground
 
     private static void buildRainbow()
     {
-        ImageView rainBow = new ImageView(Utility.getImage(AddressConstants.MENU_RAINBOW));
+        ImageView rainBow = new ImageView(Utility.getImage(PictureAddresses.MENU_RAINBOW));
         rainBow.setFitHeight(MainView.HEIGHT / 4);
         rainBow.setFitWidth(MainView.HEIGHT / 2);
         //PathTransition
@@ -109,7 +110,7 @@ public class MenuBackground
 
     private static void buildBirds()
     {
-        ImageView birds = new ImageView(Utility.getImage(AddressConstants.MENU_BIRDS));
+        ImageView birds = new ImageView(Utility.getImage(PictureAddresses.MENU_BIRDS));
         birds.setFitWidth(MainView.HEIGHT / 4);
         birds.setFitHeight(MainView.HEIGHT / 4);
         //PathTransition
@@ -125,7 +126,7 @@ public class MenuBackground
 
     private static void buildTree()
     {
-        ImageView tree = new ImageView(Utility.getImage(AddressConstants.MENU_Tree));
+        ImageView tree = new ImageView(Utility.getImage(PictureAddresses.MENU_Tree));
         tree.setFitHeight(MainView.HEIGHT * 0.8);
         tree.setFitWidth(MainView.HEIGHT * 0.8);
         tree.relocate(0, MainView.HEIGHT * 0.2);
@@ -137,7 +138,7 @@ public class MenuBackground
         double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
         String musicSound = null;
-        animalImage = Utility.getImage(AddressConstants.MENU_PIG);
+        animalImage = Utility.getImage(PictureAddresses.MENU_PIG);
         height = MainView.HEIGHT * 0.075;
         width = MainView.HEIGHT * 0.075;
         rotate = 5;
@@ -156,8 +157,8 @@ public class MenuBackground
     {
         double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
-        String musicSound = Utility.getSound(AddressConstants.MENU_ROOSTER_SOUND);
-        animalImage = Utility.getImage(AddressConstants.MENU_ROOSTER);
+        String musicSound = Utility.getSound(MusicAddresses.MENU_ROOSTER_SOUND);
+        animalImage = Utility.getImage(PictureAddresses.MENU_ROOSTER);
         height = MainView.HEIGHT / 3;
         width = MainView.HEIGHT / 3;
         rotate = 5;
@@ -174,8 +175,8 @@ public class MenuBackground
     {
         double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
-        String musicSound = Utility.getSound(AddressConstants.MENU_COW_SOUND);
-        animalImage = Utility.getImage(AddressConstants.MENU_COW);
+        String musicSound = Utility.getSound(MusicAddresses.MENU_COW_SOUND);
+        animalImage = Utility.getImage(PictureAddresses.MENU_COW);
         height = MainView.HEIGHT / 4;
         width = 2 * MainView.HEIGHT / 4;
         rotate = 20;
@@ -201,7 +202,7 @@ public class MenuBackground
         YValueEnd = 0;
         YValueStart = MainView.HEIGHT * 0.5;
         time = 1000;
-        animalImage = Utility.getImage(AddressConstants.MENU_BIRD);
+        animalImage = Utility.getImage(PictureAddresses.MENU_BIRD);
 
         makeAnimation(XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time, animalImage,
                 musicSound);
@@ -210,7 +211,7 @@ public class MenuBackground
 
     private static void buildFlower()
     {
-        ImageView flower = new ImageView(Utility.getImage(AddressConstants.MENU_FLOWER));
+        ImageView flower = new ImageView(Utility.getImage(PictureAddresses.MENU_FLOWER));
         flower.setFitWidth((double) MainView.WIDTH * 1.5);
         flower.setFitHeight(MainView.HEIGHT / 3);
 //        flower.relocate(0, (double) MainView.HEIGHT);
@@ -220,7 +221,7 @@ public class MenuBackground
 
     private static void buildBillBoard()
     {
-        ImageView billboard = new ImageView(Utility.getImage(AddressConstants.MENU_BILLBOARD));
+        ImageView billboard = new ImageView(Utility.getImage(PictureAddresses.MENU_BILLBOARD));
         final double width = MainView.WIDTH / 2;
         billboard.setFitHeight(width);
         billboard.setFitWidth(width);

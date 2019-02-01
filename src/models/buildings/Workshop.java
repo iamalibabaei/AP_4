@@ -11,7 +11,7 @@ import models.interfaces.Time;
 import models.interfaces.Upgradable;
 import models.objects.Item;
 import models.objects.Point;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -150,7 +150,7 @@ public class Workshop extends Viewable implements Upgradable, Time
 
     public static ArrayList<String> loadDefaultWorkshops()
     {
-        File folder = new File(AddressConstants.WORKSHOP_ROOT);
+        File folder = new File(PictureAddresses.WORKSHOP_ROOT);
         File[] listOfFiles = folder.listFiles();
         ArrayList<String> workshopName = new ArrayList<>();
         if (listOfFiles != null)

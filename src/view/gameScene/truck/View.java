@@ -15,19 +15,18 @@ import models.exceptions.NotEnoughSpaceException;
 import models.objects.Item;
 import models.transportation.Truck;
 import view.MainView;
-import view.gameScene.InGameView;
-import view.utility.AddressConstants;
+import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
 import java.util.EnumMap;
 
-public class TruckView extends Pane {
-    private static TruckView instance = new TruckView();
-    public static TruckView getInstance() {
+public class View extends Pane {
+    private static View instance = new View();
+    public static View getInstance() {
         return instance;
     }
 
-    private TruckView() {
+    private View() {
         relocate(0 , 0);
         setHeight(MainView.HEIGHT);
         setWidth(MainView.WIDTH);
@@ -47,7 +46,7 @@ public class TruckView extends Pane {
         double YValue = MainView.HEIGHT / 2 ;
         EnumMap<Item.Type, Integer> storedItems = Warehouse.getInstance().getStoredItems();
         for (Item.Type item : storedItems.keySet()) {
-            ImageView itemImage = new ImageView(Utility.getImage(AddressConstants.ITEM_ROOT + item.name().toLowerCase() + ".png"));
+            ImageView itemImage = new ImageView(Utility.getImage(PictureAddresses.ITEM_ROOT + item.name().toLowerCase() + ".png"));
             itemImage.setFitWidth(50);
             itemImage.setFitHeight(50);
             itemImage.relocate(XValue, YValue);
@@ -56,7 +55,7 @@ public class TruckView extends Pane {
             text.setFont(Font.font("SWItalt", 15));
             text.relocate(XValue + 70, YValue);
 
-            ImageView addToTruckImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+            ImageView addToTruckImage = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
             addToTruckImage.setFitHeight(100);
             addToTruckImage.setFitWidth(200);
             Text addToTruckText = new Text("add to truck");
@@ -136,7 +135,7 @@ public class TruckView extends Pane {
 //    }
 
     private void setButtons() {
-        ImageView sendTruckImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView sendTruckImage = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         sendTruckImage.setFitHeight(100);
         sendTruckImage.setFitWidth(200);
 
@@ -147,13 +146,13 @@ public class TruckView extends Pane {
         sendTruck.getChildren().addAll(sendTruckImage, senTruckText);
         sendTruck.setOnMouseClicked(event -> {
             InGameController.getInstance().sendTruck();
-            InGameView.getInstance().closeTruck();
-            InGameView.getInstance().showTruckPath();
+            view.gameScene.View.getInstance().closeTruck();
+            view.gameScene.View.getInstance().showTruckPath();
         });
         sendTruck.relocate(0, 0);
         getChildren().addAll(sendTruck);
 
-        ImageView clearStashImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView clearStashImage = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         clearStashImage.setFitHeight(100);
         clearStashImage.setFitWidth(200);
 
@@ -180,7 +179,7 @@ public class TruckView extends Pane {
         clearStash.relocate(0, 100);
         getChildren().addAll(clearStash);
 
-        ImageView backImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        ImageView backImage = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         backImage.setFitHeight(100);
         backImage.setFitWidth(200);
 
@@ -189,14 +188,14 @@ public class TruckView extends Pane {
 
         StackPane back = new StackPane();
         back.getChildren().addAll(backImage, backText);
-        back.setOnMouseClicked(event -> InGameView.getInstance().closeTruck());
+        back.setOnMouseClicked(event -> view.gameScene.View.getInstance().closeTruck());
         back.relocate(0, 200);
         getChildren().addAll(back);
 
     }
 
     private void wallpaper() {
-        ImageView back = new ImageView(Utility.getImage(AddressConstants.TRUCK_INSIDE));
+        ImageView back = new ImageView(Utility.getImage(PictureAddresses.TRUCK_INSIDE));
         back.setFitWidth(350);
         back.setFitHeight(600);
         back.relocate(MainView.WIDTH * 0.3 ,MainView.HEIGHT * 0.2);
@@ -213,7 +212,7 @@ public class TruckView extends Pane {
         if (Truck.getInstance().isWorking()) {
             return;
         }
-        TruckView.getInstance().updateInformation();
-        TruckView.getInstance().setVisible(true);
+        view.gameScene.truck.View.getInstance().updateInformation();
+        view.gameScene.truck.View.getInstance().setVisible(true);
     }
 }
