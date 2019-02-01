@@ -37,12 +37,18 @@ public class Menu
     public static void build(Group root)
     {
         StackPane startGame = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3, "Start Game", event -> ChooseProfile.getInstance().open());
-        StackPane setting = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4, "Settings", event -> MainView.getInstance().goToSetting());
-        StackPane exit = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5, "Exit", event -> MainView.getInstance().close());
+        StackPane setting = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5, "Settings", event -> MainView.getInstance().goToSetting());
+        StackPane multiPlayer = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4, "MultiPlayer", event -> multiPlayer());
+        StackPane exit = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6, "Exit", event -> MainView.getInstance().close());
         Pane background = MenuBackground.build();
-        root.getChildren().addAll(background, startGame, setting, exit, ChooseProfile.getInstance());
+        root.getChildren().addAll(background, startGame, multiPlayer, setting, exit, ChooseProfile.getInstance());
         SoundPlayer.getInstance().playBackground(Utility.getSound(AddressConstants.MENU_SOUND));
 
+    }
+
+    private static void multiPlayer() {
+
+        //TODO
     }
 
 }

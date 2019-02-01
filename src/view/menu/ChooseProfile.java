@@ -91,25 +91,6 @@ public class ChooseProfile extends Pane {
         submit.setOnMouseClicked(event -> addNewPlayer());
         submit.relocate(MainView.WIDTH * 0.05, MainView.HEIGHT * 0.3);
 
-
-
-//        Button submit = new Button("SUBMIT");
-//        submit.relocate(60, 330);
-//        submit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                addNewPlayer();
-//            }
-//        });
-
-//        Button back = new Button("back");
-//        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                setVisible(false);
-//            }
-//        });
-//        back.relocate(MainView.WIDTH * 0.05, 0);
         ImageView exitButton = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
         exitButton.setFitWidth(width);
         exitButton.setFitHeight(height);
