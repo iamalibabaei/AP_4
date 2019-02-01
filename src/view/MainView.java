@@ -4,7 +4,10 @@ package view;
 import controller.InGameController;
 import controller.MenuController;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import models.exceptions.InsufficientResourcesException;
@@ -20,14 +23,23 @@ import view.menu.selectMission.MissionScene;
 
 public class MainView extends Application
 {
-    public static final int SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
-    public static final int SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
-    public static final int HEIGHT = SCREEN_HEIGHT;
-    public static final int WIDTH = HEIGHT * 4 / 3;
-    public static final int OFFSET_X = (SCREEN_WIDTH - WIDTH) / 2;
-    public static final int OFFSET_Y = 0;
+    public static final double SCREEN_WIDTH = Screen.getPrimary().getBounds().getWidth();
+    public static final double SCREEN_HEIGHT = Screen.getPrimary().getBounds().getHeight();
+    public static final double HEIGHT = SCREEN_HEIGHT;
+    public static final double WIDTH = HEIGHT * 4 / 3;
+    public static final double OFFSET_X = (SCREEN_WIDTH - WIDTH) / 2;
+    public static final double OFFSET_Y = 0;
     private static MainView instance = new MainView();
     private static Stage mainStage;
+    private Scene mainScene;
+    private Group root;
+
+    public MainView()
+    {
+        mainScene = new Scene(new Group(), SCREEN_WIDTH, SCREEN_HEIGHT, Color.BLACK);
+        root = (Group) mainScene.getRoot();
+        root.relocate(OFFSET_X, OFFSET_Y);
+    }
 
     private static MenuController getController()
     {
@@ -52,10 +64,17 @@ public class MainView extends Application
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setResizable(true);
-        mainStage.setScene(Menu.getInstance());
+        mainStage.setScene(mainScene);
+        Menu.build(root);
         mainStage.show();
         mainStage.setOnCloseRequest(event -> close());
         System.out.println("end");
+    }
+
+    private void setScene(Pane pane)
+    {
+        root.getChildren().clear();
+        root.getChildren().add(pane);
     }
 
     public void close()
@@ -75,7 +94,7 @@ public class MainView extends Application
 
     public void goToMenu()
     {
-        mainStage.setScene(Menu.getInstance());
+//        mainStage.setScene(Menu.getInstance());
     }
 
     public void startGame(Mission mission)

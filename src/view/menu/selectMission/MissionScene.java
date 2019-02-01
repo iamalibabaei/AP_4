@@ -57,7 +57,9 @@ public class MissionScene extends Scene {
 
         ArrayList<String> missions = Mission.loadDefaultMissions();
         missions.sort(String::compareTo);
-        int XCenter= MainView.WIDTH / 2 - 100, YCenter = MainView.HEIGHT / 2 - 100, radios = 300;
+        double XCenter= MainView.WIDTH / 2 - 100;
+        double YCenter = MainView.HEIGHT / 2 - 100;
+        int radios = 300;
         double teta = 2 * 3.1415 / missions.size();
         for (String mission : missions) {
             int i = Integer.parseInt(mission.substring(mission.indexOf('n') + 1));
