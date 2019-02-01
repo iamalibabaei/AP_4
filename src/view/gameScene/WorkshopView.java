@@ -29,7 +29,7 @@ public class WorkshopView extends Pane {
 
     private WorkshopView() {
         workshops = Workshop.loadDefaultWorkshops();
-        //setVisible(false);
+        setVisible(false);
         relocate(MainView.WIDTH/2 - width / 2, MainView.HEIGHT / 2 - height / 2);
         setHeight(height);
         setWidth(width);
