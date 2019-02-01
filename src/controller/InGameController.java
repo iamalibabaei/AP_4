@@ -36,7 +36,7 @@ public class InGameController implements Time
     private Helicopter helicopter;
     private List<Workshop> workshops;
     private Mission mission;
-    private List<Workshop> availableWorkshops;
+    private ArrayList<String> availableWorkshops;
     private final int FPS = 60, SECOND_PER_FRAME = 1000 / FPS;
 
     public void moneyDeposit(Integer money) {
@@ -84,9 +84,13 @@ public class InGameController implements Time
         throw new InvalidArgumentException();
     }
 
-    private void withdrawMoney(int cost) {
+    public boolean withdrawMoney(int cost) {
+        if (money - cost < 0) {
+            return false;
+        }
         money -= cost;
         InGameView.getInstance().getMoney();
+        return true;
     }
 
     public void pickUp(Point point) throws NotEnoughSpaceException
@@ -163,9 +167,10 @@ public class InGameController implements Time
         helicopter.go();
     }
 
-    public void addWorkshop(Workshop workshop)
+    public void addWorkshop(Workshop workshop, int place)
     {
         workshops.add(workshop);
+        InGameView.getInstance().drawWorkshop(place, workshop.name);
     }
 
     public void clearStash(String transporterName) throws InvalidArgumentException
@@ -337,4 +342,7 @@ public class InGameController implements Time
         this.mission = mission;
     }
 
+    public ArrayList<String> getAvailableWorkshops() {
+        return availableWorkshops;
+    }
 }
