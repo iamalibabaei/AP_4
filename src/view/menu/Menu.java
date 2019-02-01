@@ -18,11 +18,10 @@ public class Menu extends Scene
 {
     private static Menu instance = new Menu();
     private Group root;
-    private ImageView background;
 
     public Menu()
     {
-        super(new Group(), (double) MainView.WIDTH, (double) MainView.HEIGHT);
+        super(new Group(), (double) MainView.SCREEN_WIDTH, (double) MainView.SCREEN_HEIGHT, Color.BLACK);
         SoundPlayer.getInstance().playBackground(Utility.getSound(AddressConstants.MENU_SOUND));
         root = (Group) getRoot();
         build();
@@ -41,17 +40,16 @@ public class Menu extends Scene
         text.setFill(Color.WHITE);
         pane.getChildren().addAll(button, text);
         pane.setOnMouseClicked(value);
-        pane.relocate((double) x, (double) y);
+        pane.relocate((double) x + MainView.OFFSET_X, (double) y + MainView.OFFSET_Y);
         return pane;
     }
 
     private void build()
     {
         root.getChildren().clear();
-        StackPane startGame = makeMenuButton(200, 200, "Start Game", event -> ChooseProfile.getInstance().open());
+        StackPane startGame = makeMenuButton(00, 200, "Start Game", event -> ChooseProfile.getInstance().open());
         StackPane setting = makeMenuButton(200, 280, "Settings", event -> MainView.getInstance().goToSetting());
         StackPane exit = makeMenuButton(200, 440, "Exit", event -> MainView.getInstance().close());
-
         root.getChildren().addAll(MenuBackground.getInstance(), startGame, setting, exit, ChooseProfile.getInstance());
 
     }

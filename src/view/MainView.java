@@ -20,9 +20,11 @@ import view.menu.selectMission.MissionScene;
 
 public class MainView extends Application
 {
-    public static final int HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
+    public static final int SCREEN_WIDTH = (int) Screen.getPrimary().getBounds().getWidth();
+    public static final int SCREEN_HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
+    public static final int HEIGHT = SCREEN_HEIGHT;
     public static final int WIDTH = HEIGHT * 4 / 3;
-    public static final int OFFSET_X = (WIDTH - HEIGHT) / 2;
+    public static final int OFFSET_X = (SCREEN_WIDTH - WIDTH) / 2;
     public static final int OFFSET_Y = 0;
     private static MainView instance = new MainView();
     private static Stage mainStage;
@@ -50,19 +52,10 @@ public class MainView extends Application
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setResizable(true);
-        setStageScene(Menu.getInstance());
+        mainStage.setScene(Menu.getInstance());
         mainStage.show();
         mainStage.setOnCloseRequest(event -> close());
         System.out.println("end");
-    }
-
-
-    private void setStageScene(Scene scene)
-    {
-//        mainStage.setX(WIDTH / 2);
-//        mainStage.setY(0);
-        mainStage.setScene(scene);
-//        mainStage.centerOnScreen();
     }
 
     public void close()
@@ -73,7 +66,7 @@ public class MainView extends Application
     public void goToMap()
     {
         MissionScene.getInstance().updateInfo();
-        setStageScene(MissionScene.getInstance());
+        mainStage.setScene(MissionScene.getInstance());
     }
 
     public void goToSetting()
@@ -82,12 +75,12 @@ public class MainView extends Application
 
     public void goToMenu()
     {
-        setStageScene(Menu.getInstance());
+        mainStage.setScene(Menu.getInstance());
     }
 
     public void startGame(Mission mission)
     {
-        setStageScene(InGameView.getInstance());
+        mainStage.setScene(InGameView.getInstance());
         InGameController.getInstance().startGame(mission);
     }
 
