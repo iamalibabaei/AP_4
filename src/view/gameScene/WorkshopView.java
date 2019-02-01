@@ -85,6 +85,7 @@ public class WorkshopView extends Pane {
         try {
             workshop = Workshop.loadJson(AddressConstants.WORKSHOP_ROOT + choiceBox.getValue() + ".json");
         } catch (FileNotFoundException e) {
+            System.out.println("workshop not found");
             e.printStackTrace();
         }
         int cost = 0;
@@ -96,6 +97,7 @@ public class WorkshopView extends Pane {
         System.out.println(workshop.name);
         if (InGameController.getInstance().withdrawMoney(cost)){
             InGameController.getInstance().addWorkshop(workshop, place);
+            choiceBox.getItems().remove(choiceBox.getValue());
             close();
             return;
         }
