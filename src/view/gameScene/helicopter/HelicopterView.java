@@ -5,14 +5,14 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
 import models.exceptions.NotEnoughSpaceException;
 import models.objects.Item;
-import models.transportation.Helicopter;
 import models.transportation.Truck;
 import view.MainView;
 import view.gameScene.InGameView;
@@ -135,6 +135,8 @@ public class HelicopterView extends Pane {
         sendTruck.setOnMouseClicked(event -> {
             try {
                 InGameController.getInstance().sendHelicopter();
+                InGameView.getInstance().closehelicopter();
+                InGameView.getInstance().showHelicopterPath();
             } catch (InsufficientResourcesException e) {
                 //TODO
             }

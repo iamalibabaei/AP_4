@@ -374,11 +374,7 @@ public class InGameView extends Scene implements Time
         KeyFrame going = new KeyFrame(Duration.millis(2000), xForGoing);
         Timeline timeLineGoing = new Timeline(going);
         timeLineGoing.getKeyFrames().addAll(going);
-//        VehicleTimeLine(truck, turnToMoveObjectToCityAndComeBack, truckView, timeLineGoing);
         timeLineGoing.play();
-
-//        truckView.setViewport(new Rectangle2D(0, 0, 48, 48));
-
         Animation animation = new SpriteAnimation(truckView, Duration.millis(2000), 2, 2, 0, 0,
                 (int) (truckView.getImage().getWidth() /  2), (int) (truckView.getImage().getHeight()));
         animation.setCycleCount(1);
@@ -399,6 +395,45 @@ public class InGameView extends Scene implements Time
             animation.play();
             animation.setOnFinished(event1 -> {
                 root.getChildren().removeAll(truckView);
+            });
+        });
+
+    }
+
+    public void showHelicopterPath(){
+        ImageView helicopterkView = new ImageView(Utility.getImage(AddressConstants.HELICOPTER_MINI_PICTURE_ROOT+ Truck.getInstance().getLevel() + "_mini.png"));
+        helicopterkView.setViewport(new Rectangle2D(0, 0, 48, 48));
+        helicopterkView.setFitWidth(MainView.WIDTH / 20);
+        helicopterkView.setFitHeight(MainView.HEIGHT / 20);
+        helicopterkView.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT / 150);
+        helicopterkView.setScaleX(1);
+        root.getChildren().addAll(helicopterkView);
+        double end = MainView.WIDTH - MainView.WIDTH * 0.75 - 48;
+        KeyValue xForGoing = new KeyValue(helicopterkView.xProperty(), end);
+        KeyFrame going = new KeyFrame(Duration.millis(2000), xForGoing);
+        Timeline timeLineGoing = new Timeline(going);
+        timeLineGoing.getKeyFrames().addAll(going);
+        timeLineGoing.play();
+        Animation animation = new SpriteAnimation(helicopterkView, Duration.millis(2000), 6, 3, 0, 0,
+                (int) (helicopterkView.getImage().getWidth() /  3), (int) (helicopterkView.getImage().getHeight() / 2));
+        animation.setCycleCount(1);
+        animation.play();
+        animation.setOnFinished(event -> {
+            root.getChildren().removeAll(helicopterkView);
+            helicopterkView.relocate(MainView.WIDTH - 48, MainView.HEIGHT / 150 );
+            helicopterkView.setScaleX(-1);
+            root.getChildren().addAll(helicopterkView);
+            KeyValue xForGoing1 = new KeyValue(helicopterkView.xProperty(), -MainView.WIDTH / 75);
+
+            KeyFrame going1 = new KeyFrame(Duration.millis(2000), xForGoing1);
+            Timeline timeLineGoing1 = new Timeline(going1);
+            timeLineGoing1.getKeyFrames().addAll(going1);
+            timeLineGoing1.play();
+
+            animation.setCycleCount(1);
+            animation.play();
+            animation.setOnFinished(event1 -> {
+                root.getChildren().removeAll(helicopterkView);
             });
         });
 

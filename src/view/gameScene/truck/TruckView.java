@@ -5,7 +5,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import models.buildings.Warehouse;
@@ -143,7 +144,11 @@ public class TruckView extends Pane {
 
         StackPane sendTruck = new StackPane();
         sendTruck.getChildren().addAll(sendTruckImage, senTruckText);
-        sendTruck.setOnMouseClicked(event -> InGameController.getInstance().sendTruck());
+        sendTruck.setOnMouseClicked(event -> {
+            InGameController.getInstance().sendTruck();
+            InGameView.getInstance().closeTruck();
+            InGameView.getInstance().showTruckPath();
+        });
         sendTruck.relocate(0, 0);
         getChildren().addAll(sendTruck);
 
