@@ -29,6 +29,7 @@ public class MenuBackground extends Pane
 
     private void build()
     {
+        buildWhiteBack();
         buildCloud();
         buildGrass();
         buildSun();
@@ -43,29 +44,37 @@ public class MenuBackground extends Pane
         buildFlower();
     }
 
+    private void buildWhiteBack() {
+        ImageView whiteImage = new ImageView(Utility.getImage(AddressConstants.WHITE_IMAGE));
+        whiteImage.setFitWidth((double) MainView.SCREEN_WIDTH * 4/3);
+        whiteImage.setFitHeight((double) MainView.SCREEN_HEIGHT);
+        whiteImage.relocate(- MainView.WIDTH / 3, 0);
+        getChildren().add(whiteImage);
+    }
+
     private void buildCloud()
     {
         ImageView cloud = new ImageView(Utility.getImage(AddressConstants.MENU_CLOUD));
-        cloud.setFitWidth((double) MainView.WIDTH);
-        cloud.setFitHeight((double) MainView.HEIGHT);
-        cloud.relocate(0, 0);
+        cloud.setFitWidth((double) MainView.SCREEN_WIDTH * 4/3);
+        cloud.setFitHeight((double) MainView.SCREEN_HEIGHT);
+        cloud.relocate(- MainView.WIDTH / 3, 0);
         getChildren().addAll(cloud);
     }
 
     private void buildGrass()
     {
-        ImageView grass1 = new ImageView(Utility.getImage(AddressConstants.MENU_GRASS1));
-        grass1.setFitWidth((double) MainView.WIDTH);
-        grass1.setFitHeight((double) (MainView.HEIGHT / 2));
-        grass1.relocate(0, (double) (MainView.HEIGHT / 2));
-        getChildren().addAll(grass1);
+        ImageView grass = new ImageView(Utility.getImage(AddressConstants.MENU_GRASS1));
+        grass.setFitWidth((double) MainView.SCREEN_WIDTH * 4/3);
+        grass.setFitHeight((double) MainView.SCREEN_HEIGHT * 0.5);
+        grass.relocate(- MainView.WIDTH / 3, MainView.HEIGHT * 0.5);
+        getChildren().addAll(grass);
     }
 
     private void buildSun()
     {
         ImageView sun = new ImageView(Utility.getImage(AddressConstants.MENU_SUN));
-        final double width = (double) (MainView.HEIGHT / 5);
-        final double height = (double) (MainView.HEIGHT / 5);
+        final double width = (double) (MainView.HEIGHT / 3);
+        final double height = (double) (MainView.HEIGHT / 3);
         sun.setFitHeight(width);
         sun.setFitWidth(height);
         sun.relocate((double) MainView.WIDTH - width, 0);
@@ -75,7 +84,6 @@ public class MenuBackground extends Pane
         Timeline timelineSun = new Timeline(keyFrameSun);
         timelineSun.getKeyFrames().addAll(keyFrameSun);
         timelineSun.setAutoReverse(true);
-        timelineSun.setCycleCount(4);
         timelineSun.setCycleCount(Animation.INDEFINITE);
         timelineSun.play();
         getChildren().addAll(sun);
@@ -84,11 +92,12 @@ public class MenuBackground extends Pane
     private void buildRainbow()
     {
         ImageView rainBow = new ImageView(Utility.getImage(AddressConstants.MENU_RAINBOW));
-        rainBow.setFitHeight(200);
-        rainBow.setFitWidth(400);
+        rainBow.setFitHeight(MainView.HEIGHT / 4);
+        rainBow.setFitWidth(MainView.HEIGHT / 2);
         //PathTransition
-        Path path = new Path(new MoveTo(400, -200),
-                new LineTo(1000, -200));
+        final double YValue = MainView.HEIGHT / 4, XValueStart = MainView.WIDTH /4, XValueEnd = MainView.WIDTH  * 0.8;
+        Path path = new Path(new MoveTo(XValueStart, YValue),
+                new LineTo(XValueEnd, YValue));
         path.setVisible(false);
         getChildren().add(path);
         PathTransition pathTransition = new PathTransition(Duration.millis(5000), path, rainBow);
@@ -101,11 +110,11 @@ public class MenuBackground extends Pane
     private void buildBirds()
     {
         ImageView birds = new ImageView(Utility.getImage(AddressConstants.MENU_BIRDS));
-        birds.setFitWidth(200);
-        birds.setFitHeight(200);
+        birds.setFitWidth(MainView.HEIGHT / 4);
+        birds.setFitHeight(MainView.HEIGHT / 4);
         //PathTransition
-        Path path1 = new Path(new MoveTo(1000, -100),
-                new LineTo(350, 0));
+        Path path1 = new Path(new MoveTo(MainView.WIDTH, MainView.HEIGHT * 0.3),
+                new LineTo(MainView.WIDTH * 0.2, MainView.HEIGHT * 0.5));
         path1.setVisible(false);
         getChildren().add(path1);
         PathTransition pathTransition1 = new PathTransition(Duration.millis(15000), path1, birds);
@@ -118,59 +127,63 @@ public class MenuBackground extends Pane
     private void buildBillBoard()
     {
         ImageView billboard = new ImageView(Utility.getImage(AddressConstants.MENU_BILLBOARD));
-        billboard.setFitHeight(500);
-        billboard.setFitWidth(500);
-        billboard.relocate(900, -135);
+        final double width = MainView.WIDTH / 2;
+        billboard.setFitHeight(width);
+        billboard.setFitWidth(width);
+        billboard.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT - width);
         Text text = new Text(
                 "FARM FRENZY\n" +
                         "BY : AP_4\n"
         );
         text.setFont(Font.font("Courier New", 30));
-        text.relocate(980, 90);
-        getChildren().addAll(text);
+        text.relocate(MainView.WIDTH * 0.8, MainView.HEIGHT * 0.65);
         getChildren().addAll(billboard);
+        getChildren().addAll(text);
     }
 
     private void buildTree()
     {
         ImageView tree = new ImageView(Utility.getImage(AddressConstants.MENU_Tree));
-        tree.setFitHeight(700);
-        tree.setFitWidth(700);
-        tree.relocate(0, -350);
+        tree.setFitHeight(MainView.HEIGHT * 0.8);
+        tree.setFitWidth(MainView.HEIGHT * 0.8);
+        tree.relocate(0, MainView.HEIGHT * 0.2);
         getChildren().addAll(tree);
     }
 
     private void addPig()
     {
-        int XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
+        double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
         String musicSound = null;
         animalImage = Utility.getImage(AddressConstants.MENU_PIG);
-        height = 75;
-        width = 75;
+        height = MainView.HEIGHT * 0.075;
+        width = MainView.HEIGHT * 0.075;
         rotate = 5;
-        XValueEnd = -150;
-        XValueStart = 830;
-        YValueEnd = -20;
-        YValueStart = 150;
+
+        XValueStart = MainView.WIDTH * 0.65;
+        YValueStart = MainView.WIDTH * 0.55;
+
+        XValueEnd = - MainView.WIDTH * 0.1;
+        YValueEnd = - MainView.WIDTH * 0.05;
         time = 20000;
         makeAnimation(XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time, animalImage,
                 musicSound);
+
     }
 
     private void addRooster()
     {
-        int XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
+        double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
         String musicSound = Utility.getSound(AddressConstants.MENU_ROOSTER_SOUND);
         animalImage = Utility.getImage(AddressConstants.MENU_ROOSTER);
-        height = 200;
-        width = 200;
+        height = MainView.HEIGHT / 3;
+        width = MainView.HEIGHT / 3;
         rotate = 5;
         XValueEnd = 0;
-        XValueStart = 1000;
+        XValueStart = MainView.WIDTH * 0.8;
         YValueEnd = 0;
-        YValueStart = -105;
+        YValueStart = MainView.HEIGHT * 0.31;
         time = 2000;
         makeAnimation(XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time, animalImage,
                 musicSound);
@@ -178,17 +191,17 @@ public class MenuBackground extends Pane
 
     private void addCow()
     {
-        int XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
+        double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
         String musicSound = Utility.getSound(AddressConstants.MENU_COW_SOUND);
         animalImage = Utility.getImage(AddressConstants.MENU_COW);
-        height = 200;
-        width = 400;
+        height = MainView.HEIGHT / 4;
+        width = 2 * MainView.HEIGHT / 4;
         rotate = 20;
-        XValueEnd = 900;
-        XValueStart = 200;
+        XValueEnd = MainView.WIDTH * 0.6;
+        XValueStart = 0;
         YValueEnd = 0;
-        YValueStart = 150;
+        YValueStart = MainView.HEIGHT * 0.7;
         time = 15000;
         makeAnimation(XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time, animalImage,
                 musicSound);
@@ -196,16 +209,16 @@ public class MenuBackground extends Pane
 
     private void addBird()
     {
-        int XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
+        double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
         String musicSound = null;
         height = 50;
         width = 50;
         rotate = 10;
         XValueEnd = 0;
-        XValueStart = 140;
+        XValueStart = MainView.WIDTH * 0.15;
         YValueEnd = 0;
-        YValueStart = -90;
+        YValueStart = MainView.HEIGHT * 0.5;
         time = 1000;
         animalImage = Utility.getImage(AddressConstants.MENU_BIRD);
 
@@ -217,29 +230,30 @@ public class MenuBackground extends Pane
     private void buildFlower()
     {
         ImageView flower = new ImageView(Utility.getImage(AddressConstants.MENU_FLOWER));
-        flower.setFitWidth((double) MainView.WIDTH);
+        flower.setFitWidth((double) MainView.WIDTH * 1.5);
         flower.setFitHeight(MainView.HEIGHT / 3);
 //        flower.relocate(0, (double) MainView.HEIGHT);
-        flower.relocate(0, (double) (MainView.HEIGHT * 2 / 3));
+        flower.relocate(- MainView.WIDTH / 3, (double) (MainView.HEIGHT * 2 / 3));
         getChildren().addAll(flower);
     }
 
-    private void makeAnimation(int XValueStart, int YValueStart, int XValueEnd, int YValueEnd, int rotate, int height
-            , int width, int time, Image animalImage, String musicSound)
+    private void makeAnimation(double XValueStart, double YValueStart, double XValueEnd, double YValueEnd, double rotate
+            , double height, double width, double time, Image animalImage, String musicSound)
     {
         ImageView animalView = new ImageView(animalImage);
-        animalView.setRotate((double) -rotate);
-        animalView.setFitWidth((double) width);
-        animalView.setFitHeight((double) height);
-        animalView.relocate((double) XValueStart, (double) YValueStart);
+        animalView.setRotate(-rotate);
+        animalView.setFitWidth(width);
+        animalView.setFitHeight(height);
+        animalView.relocate(XValueStart, YValueStart);
         if (musicSound != null)
         {
             animalView.setOnMouseClicked(event -> SoundPlayer.getInstance().play(musicSound));
         }
-        KeyValue xvalue = new KeyValue(animalView.xProperty(), XValueEnd + MainView.OFFSET_X);
-        KeyValue yvalue = new KeyValue(animalView.yProperty(), YValueEnd + MainView.OFFSET_Y);
+        getChildren().addAll(animalView);
+        KeyValue xvalue = new KeyValue(animalView.xProperty(), XValueEnd );
+        KeyValue yvalue = new KeyValue(animalView.yProperty(), YValueEnd );
         KeyValue kvRotate = new KeyValue(animalView.rotateProperty(), rotate);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis((double) time), xvalue, yvalue, kvRotate);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(time), xvalue, yvalue, kvRotate);
         Timeline timeline = new Timeline(keyFrame);
         timeline.getKeyFrames().addAll(keyFrame);
         timeline.setAutoReverse(true);

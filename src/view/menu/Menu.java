@@ -27,29 +27,29 @@ public class Menu extends Scene
         build();
     }
 
-    private StackPane makeMenuButton(int x, int y, String name, EventHandler
+    private StackPane makeMenuButton(double x, double y, String name, EventHandler
                                 <? super MouseEvent> value)
     {
-        final int width = 200, height = 100;
+        final double width = MainView.HEIGHT * 0.3, height = width / 2;
         ImageView button = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
-        button.setFitWidth((double) width);
-        button.setFitHeight((double) height);
+        button.setFitWidth(width);
+        button.setFitHeight(height);
         StackPane pane = new StackPane();
         Text text = new Text(name);
         text.setFont(Font.font("SWItalt", 15));
         text.setFill(Color.WHITE);
         pane.getChildren().addAll(button, text);
         pane.setOnMouseClicked(value);
-        pane.relocate((double) x + MainView.OFFSET_X, (double) y + MainView.OFFSET_Y);
+        pane.relocate(x + MainView.OFFSET_X, y + MainView.OFFSET_Y);
         return pane;
     }
 
     private void build()
     {
         root.getChildren().clear();
-        StackPane startGame = makeMenuButton(00, 200, "Start Game", event -> ChooseProfile.getInstance().open());
-        StackPane setting = makeMenuButton(200, 280, "Settings", event -> MainView.getInstance().goToSetting());
-        StackPane exit = makeMenuButton(200, 440, "Exit", event -> MainView.getInstance().close());
+        StackPane startGame = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3, "Start Game", event -> ChooseProfile.getInstance().open());
+        StackPane setting = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4, "Settings", event -> MainView.getInstance().goToSetting());
+        StackPane exit = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5, "Exit", event -> MainView.getInstance().close());
         root.getChildren().addAll(MenuBackground.getInstance(), startGame, setting, exit, ChooseProfile.getInstance());
 
     }

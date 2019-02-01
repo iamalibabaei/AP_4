@@ -42,4 +42,7 @@ public class AddressConstants
     public static final String GAME_MENU = GRAPHICS_ROOT + "game_menu_1.png";
     public static final String WORKSHOP_ROOT = "res/workshops/";
     public static final String BUILD_WORKSHOP_ICON = MENU + "bil.png" ;
+    public static final String WHITE_IMAGE = GRAPHICS_ROOT + "white-image.png";
 }
+
+

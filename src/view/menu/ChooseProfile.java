@@ -31,44 +31,45 @@ public class ChooseProfile extends Pane {
     }
 
     private ChooseProfile() {
-        relocate(200, 200);
+        relocate(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.3);
         setVisible(false);
         build();
     }
 
     private void build() {
+        final double width = MainView.HEIGHT * 0.3, height = width / 2;
         ImageView imageView = new ImageView(Utility.getImage(AddressConstants.GAME_MENU));
-        imageView.relocate(0, 0);
-        imageView.setFitHeight(400);
+        imageView.relocate(0, - MainView.HEIGHT * 0.1);
+        imageView.setFitHeight(2 * MainView.HEIGHT / 3);
         imageView.setFitWidth(400);
         getChildren().addAll(imageView);
 
         Text text = new Text("choose your account");
         text.setFont(Font.font("Rage Italic", 25));
-        text.relocate(60, 100);
+        text.relocate(MainView.WIDTH * 0.1, 0);
         getChildren().addAll(text);
 
         choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll(Account.getAllAccounts());
-        choiceBox.relocate(250, 100);
+        choiceBox.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.1);
 
         ImageView button = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
-        button.setFitWidth(200);
-        button.setFitHeight(100);
+        button.setFitWidth(width);
+        button.setFitHeight(height);
         StackPane goButton = new StackPane();
         Text goText = new Text("GO");
         goText.setFont(Font.font("SWItalt", 15));
         goText.setFill(Color.WHITE);
         goButton.getChildren().addAll(button, goText);
         goButton.setOnMouseClicked(event -> go());
-        goButton.relocate(150, 100);
+        goButton.relocate(MainView.WIDTH * 0.125, 20);
         getChildren().addAll(goButton, choiceBox);
 
 
         //////new player
         Text newPlayerText = new Text("or creat new account");
         newPlayerText.setFont(Font.font("SWItalt", 15));
-        newPlayerText.relocate(60, 200);
+        newPlayerText.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.15);
         getChildren().addAll(newPlayerText);
         name = new TextField();
         name.setPromptText("name");
