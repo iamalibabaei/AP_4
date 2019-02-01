@@ -2,7 +2,6 @@ package view.menu;
 
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -17,6 +16,26 @@ import view.utility.Utility;
 
 public class Menu
 {
+
+    private Menu()
+    {
+    }
+
+    public static void build(Group root)
+    {
+        StackPane startGame = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3, "Start Game",
+                event -> ChooseProfile.getInstance().open());
+        StackPane setting = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5, "Settings",
+                event -> MainView.getInstance().goToSetting());
+        StackPane multiPlayer = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4, "MultiPlayer",
+                event -> multiPlayer());
+        StackPane exit = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6, "Exit",
+                event -> MainView.getInstance().close());
+        Pane background = MenuBackground.build();
+        root.getChildren().addAll(background, startGame, multiPlayer, setting, exit, ChooseProfile.getInstance());
+        SoundPlayer.getInstance().playBackground(Utility.getSound(AddressConstants.MENU_MUSIC));
+
+    }
 
     private static StackPane makeMenuButton(double x, double y, String name, EventHandler<? super MouseEvent> value)
     {
@@ -34,20 +53,8 @@ public class Menu
         return pane;
     }
 
-    public static void build(Group root)
+    private static void multiPlayer()
     {
-        StackPane startGame = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3, "Start Game", event -> ChooseProfile.getInstance().open());
-        StackPane setting = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5, "Settings", event -> MainView.getInstance().goToSetting());
-        StackPane multiPlayer = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4, "MultiPlayer", event -> multiPlayer());
-        StackPane exit = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6, "Exit", event -> MainView.getInstance().close());
-        Pane background = MenuBackground.build();
-        root.getChildren().addAll(background, startGame, multiPlayer, setting, exit, ChooseProfile.getInstance());
-        SoundPlayer.getInstance().playBackground(Utility.getSound(AddressConstants.MENU_SOUND));
-
-    }
-
-    private static void multiPlayer() {
-
         //TODO
     }
 

@@ -4,7 +4,8 @@ public class AddressConstants
 {
     public static final String GRAPHICS_ROOT = "res/graphicAssets/";
     public static final String MISSIONS_ROOT = "res/missions/";
-    public static final String SOUNDS_ROOT =  "res/sounds/";
+    public static final String SOUNDS_ROOT =  "res/sounds/interface/";
+    public static final String MUSICS_ROOT = "res/sounds/music/";
     public static final String SERVICES_ROOT = GRAPHICS_ROOT + "Service/";
     public static final String GAME_BACKGROUND_ROOT = GRAPHICS_ROOT + "GameBackground/";
     public static final String ANIMAL_ICONS_ROOT = GAME_BACKGROUND_ROOT + "AnimalIcons/";
@@ -24,9 +25,9 @@ public class AddressConstants
     public static final String MENU_BIRD = MENU + "bird.png";
     public static final String MENU_ROOSTER = MENU + "rooster.png";
     public static final String MENU_PIG = MENU + "pig.png";
-    public static final String MENU_SOUND = SOUNDS_ROOT + "mainMenu.mp3";
-    public static final String MENU_COW_SOUND = SOUNDS_ROOT + "cow.wav";
-    public static final String MENU_ROOSTER_SOUND = SOUNDS_ROOT + "rooster.wav";
+    public static final String MENU_MUSIC = MUSICS_ROOT + "mainMenu.mp3";
+    public static final String MENU_COW_SOUND = SOUNDS_ROOT + "cowMenuSound.wav";
+    public static final String MENU_ROOSTER_SOUND = SOUNDS_ROOT + "roosterMenuSound.wav";
     public static final String MENU_BUTTON = MENU + "button.png";
     public static final String WELL_PICTURE_ROOT = GRAPHICS_ROOT + "Service/Well/";
     public static final String MISSION_SCENE = GRAPHICS_ROOT + "missionScene/";

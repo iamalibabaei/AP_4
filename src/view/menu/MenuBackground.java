@@ -2,7 +2,6 @@ package view.menu;
 
 import javafx.animation.*;
 import javafx.collections.ObservableList;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,29 +44,30 @@ public class MenuBackground
         return pane;
     }
 
-    private static void buildWhiteBack() {
+    private static void buildWhiteBack()
+    {
         ImageView whiteImage = new ImageView(Utility.getImage(AddressConstants.WHITE_IMAGE));
-        whiteImage.setFitWidth(MainView.SCREEN_WIDTH * 4/3);
+        whiteImage.setFitWidth(MainView.SCREEN_WIDTH * 4 / 3);
         whiteImage.setFitHeight(MainView.SCREEN_HEIGHT);
-        whiteImage.relocate(- MainView.WIDTH / 3, 0);
+        whiteImage.relocate(-MainView.WIDTH / 3, 0);
         list.add(whiteImage);
     }
 
     private static void buildCloud()
     {
         ImageView cloud = new ImageView(Utility.getImage(AddressConstants.MENU_CLOUD));
-        cloud.setFitWidth(MainView.SCREEN_WIDTH * 4/3);
+        cloud.setFitWidth(MainView.SCREEN_WIDTH * 4 / 3);
         cloud.setFitHeight(MainView.SCREEN_HEIGHT);
-        cloud.relocate(- MainView.WIDTH / 3, 0);
+        cloud.relocate(-MainView.WIDTH / 3, 0);
         list.addAll(cloud);
     }
 
     private static void buildGrass()
     {
         ImageView grass = new ImageView(Utility.getImage(AddressConstants.MENU_GRASS1));
-        grass.setFitWidth(MainView.SCREEN_WIDTH * 4/3);
+        grass.setFitWidth(MainView.SCREEN_WIDTH * 4 / 3);
         grass.setFitHeight(MainView.SCREEN_HEIGHT * 0.5);
-        grass.relocate(- MainView.WIDTH / 3, MainView.HEIGHT * 0.5);
+        grass.relocate(-MainView.WIDTH / 3, MainView.HEIGHT * 0.5);
         list.add(grass);
     }
 
@@ -96,7 +96,7 @@ public class MenuBackground
         rainBow.setFitHeight(MainView.HEIGHT / 4);
         rainBow.setFitWidth(MainView.HEIGHT / 2);
         //PathTransition
-        final double YValue = MainView.HEIGHT / 4, XValueStart = MainView.WIDTH /4, XValueEnd = MainView.WIDTH  * 0.8;
+        final double YValue = MainView.HEIGHT / 4, XValueStart = MainView.WIDTH / 4, XValueEnd = MainView.WIDTH * 0.8;
         Path path = new Path(new MoveTo(XValueStart, YValue),
                 new LineTo(XValueEnd, YValue));
         path.setVisible(false);
@@ -123,22 +123,6 @@ public class MenuBackground
         list.addAll(birds, path1);
     }
 
-    private static void buildBillBoard()
-    {
-        ImageView billboard = new ImageView(Utility.getImage(AddressConstants.MENU_BILLBOARD));
-        final double width = MainView.WIDTH / 2;
-        billboard.setFitHeight(width);
-        billboard.setFitWidth(width);
-        billboard.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT - width);
-        Text text = new Text(
-                "FARM FRENZY\n" +
-                        "BY : AP_4\n"
-        );
-        text.setFont(Font.font("Courier New", 30));
-        text.relocate(MainView.WIDTH * 0.8, MainView.HEIGHT * 0.65);
-        list.addAll(billboard, text);
-    }
-
     private static void buildTree()
     {
         ImageView tree = new ImageView(Utility.getImage(AddressConstants.MENU_Tree));
@@ -161,8 +145,8 @@ public class MenuBackground
         XValueStart = MainView.WIDTH * 0.65;
         YValueStart = MainView.WIDTH * 0.55;
 
-        XValueEnd = - MainView.WIDTH * 0.1;
-        YValueEnd = - MainView.WIDTH * 0.05;
+        XValueEnd = -MainView.WIDTH * 0.1;
+        YValueEnd = -MainView.WIDTH * 0.05;
         time = 20000;
         makeAnimation(XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time, animalImage,
                 musicSound);
@@ -230,12 +214,28 @@ public class MenuBackground
         flower.setFitWidth((double) MainView.WIDTH * 1.5);
         flower.setFitHeight(MainView.HEIGHT / 3);
 //        flower.relocate(0, (double) MainView.HEIGHT);
-        flower.relocate(- MainView.WIDTH / 3, (double) (MainView.HEIGHT * 2 / 3));
-       list.add(flower);
+        flower.relocate(-MainView.WIDTH / 3, (double) (MainView.HEIGHT * 2 / 3));
+        list.add(flower);
+    }
+
+    private static void buildBillBoard()
+    {
+        ImageView billboard = new ImageView(Utility.getImage(AddressConstants.MENU_BILLBOARD));
+        final double width = MainView.WIDTH / 2;
+        billboard.setFitHeight(width);
+        billboard.setFitWidth(width);
+        billboard.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT - width);
+        Text text = new Text(
+                "FARM FRENZY\n" +
+                        "BY : AP_4\n"
+        );
+        text.setFont(Font.font("Courier New", 30));
+        text.relocate(MainView.WIDTH * 0.8, MainView.HEIGHT * 0.65);
+        list.addAll(billboard, text);
     }
 
     private static void makeAnimation(double XValueStart, double YValueStart, double XValueEnd, double YValueEnd,
-                                double rotate
+                                      double rotate
             , double height, double width, double time, Image animalImage, String musicSound)
     {
         ImageView animalView = new ImageView(animalImage);
@@ -248,8 +248,8 @@ public class MenuBackground
             animalView.setOnMouseClicked(event -> SoundPlayer.getInstance().play(musicSound));
         }
         list.add(animalView);
-        KeyValue xvalue = new KeyValue(animalView.xProperty(), XValueEnd );
-        KeyValue yvalue = new KeyValue(animalView.yProperty(), YValueEnd );
+        KeyValue xvalue = new KeyValue(animalView.xProperty(), XValueEnd);
+        KeyValue yvalue = new KeyValue(animalView.yProperty(), YValueEnd);
         KeyValue kvRotate = new KeyValue(animalView.rotateProperty(), rotate);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(time), xvalue, yvalue, kvRotate);
         Timeline timeline = new Timeline(keyFrame);

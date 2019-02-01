@@ -71,15 +71,15 @@ public class MainView extends Application
         System.out.println("end");
     }
 
+    public void close()
+    {
+
+    }
+
     private void setScene(Pane pane)
     {
         root.getChildren().clear();
         root.getChildren().add(pane);
-    }
-
-    public void close()
-    {
-
     }
 
     public void goToMap()

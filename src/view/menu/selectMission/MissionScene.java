@@ -38,29 +38,17 @@ public class MissionScene extends Scene {
         build();
     }
 
+
     private void build() {
         root.getChildren().clear();
+        buildBackground();
         setAccount(MenuController.getInstance().getCurrentAccount());
-
-        ImageView cloud = new ImageView(Utility.getImage(AddressConstants.MENU_CLOUD));
-        cloud.setFitWidth(MainView.WIDTH);
-        cloud.setFitHeight(MainView.HEIGHT);
-        cloud.relocate(0,0);
-        root.getChildren().addAll(cloud);
-
-        Image wallpaper = Utility.getImage(AddressConstants.MISSION_SCENE_BACKGROUND);
-        ImageView missionWallpaper = new ImageView(wallpaper);
-        missionWallpaper.setFitWidth(MainView.WIDTH);
-        missionWallpaper.setFitHeight(MainView.HEIGHT);
-        missionWallpaper.relocate(0, 0);
-        root.getChildren().addAll(missionWallpaper);
-
         ArrayList<String> missions = Mission.loadDefaultMissions();
         missions.sort(String::compareTo);
         double XCenter= MainView.WIDTH / 2 - 100;
         double YCenter = MainView.HEIGHT / 2 - 100;
         int radios = 300;
-        double teta = 2 * 3.1415 / missions.size();
+        double teta = 2 * Math.PI / missions.size();
         for (String mission : missions) {
             int i = Integer.parseInt(mission.substring(mission.indexOf('n') + 1));
             Color color = Color.RED;
@@ -70,7 +58,33 @@ public class MissionScene extends Scene {
 
             creatButton(XCenter + radios * Math.cos(teta * i), YCenter + radios * Math.sin(teta * i), color, mission);
         }
+        buildMenuButton(XCenter, YCenter);
+        showProfileInfo();
+    }
 
+    private void showProfileInfo()
+    {
+        ImageView billboard = new ImageView(Utility.getImage(AddressConstants.MENU_BILLBOARD));
+        billboard.setFitHeight(500);
+        billboard.setFitWidth(500);
+        billboard.relocate(900, 300);
+        root.getChildren().addAll(billboard);
+
+        Text text = new Text(
+                account.getName() + '\n'+
+                        "your level : "+
+                        account.getMissionPassed()
+        );
+        text.setFont(Font.font("Courier New", 25));
+        text.relocate(960,530);
+        root.getChildren().addAll(text);
+
+
+        root.getChildren().addAll(MissionInfo.getInstance());
+    }
+
+    private void buildMenuButton(double XCenter, double YCenter)
+    {
         ImageView sun = new ImageView(Utility.getImage(AddressConstants.MENU_SUN));
         sun.setFitHeight(250);
         sun.setFitWidth(250);
@@ -91,31 +105,22 @@ public class MissionScene extends Scene {
         timelineSun.setCycleCount(4);
         timelineSun.setCycleCount(Timeline.INDEFINITE);
         timelineSun.play();
+    }
 
+    private void buildBackground()
+    {
+        ImageView cloud = new ImageView(Utility.getImage(AddressConstants.MENU_CLOUD));
+        cloud.setFitWidth(MainView.WIDTH);
+        cloud.setFitHeight(MainView.HEIGHT);
+        cloud.relocate(0,0);
+        root.getChildren().addAll(cloud);
 
-        ImageView billboard = new ImageView(Utility.getImage(AddressConstants.MENU_BILLBOARD));
-        billboard.setFitHeight(500);
-        billboard.setFitWidth(500);
-        billboard.relocate(900, 300);
-        root.getChildren().addAll(billboard);
-
-        //
-
-        Text text = new Text(
-                account.getName() + '\n'+
-                        "your level : "+
-                        account.getMissionPassed()
-        );
-        text.setFont(Font.font("Courier New", 25));
-        text.relocate(960,530);
-        root.getChildren().addAll(text);
-
-
-        root.getChildren().addAll(MissionInfo.getInstance());
-
-
-
-
+        Image wallpaper = Utility.getImage(AddressConstants.MISSION_SCENE_BACKGROUND);
+        ImageView missionWallpaper = new ImageView(wallpaper);
+        missionWallpaper.setFitWidth(MainView.WIDTH);
+        missionWallpaper.setFitHeight(MainView.HEIGHT);
+        missionWallpaper.relocate(0, 0);
+        root.getChildren().addAll(missionWallpaper);
     }
 
     private void creatButton(double x, double y, Color color, String mission) {
