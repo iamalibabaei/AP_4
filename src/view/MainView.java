@@ -27,7 +27,9 @@ public class MainView extends Application {
     private static MainView instance = new MainView();
     private static Stage mainStage;
     public static final int HEIGHT = (int) Screen.getPrimary().getBounds().getHeight();
-    public static final int WIDTH = (int) HEIGHT * 4 / 3;
+    public static final int WIDTH = HEIGHT * 4 / 3;
+    public static final int OFFSET_X = (WIDTH - HEIGHT) / 2;
+    public static final int OFFSET_Y = 0;
     public Stage getMainStage() {
         return mainStage;
     }
@@ -44,14 +46,11 @@ public class MainView extends Application {
     @Override
     public void start(Stage primaryStage) {
         System.out.println("start");
-        primaryStage.setFullScreen(true);
-        primaryStage.centerOnScreen();
         mainStage = primaryStage;
+        mainStage.setFullScreen(true);
         mainStage.setResizable(true);
-        mainStage.setHeight(WIDTH);
-        mainStage.setWidth(HEIGHT);
         setStageScene(Menu.getInstance());
-        if (mainStage == null) throw new AssertionError();
+        mainStage.show();
         mainStage.setOnCloseRequest(event -> {
             /*
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -66,21 +65,15 @@ public class MainView extends Application {
             Platform.exit();
             System.exit(0);*/
         });
-        mainStage.show();
-        Rectangle2D primScreenBounds = Screen.getPrimary().getBounds();
-        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
         System.out.println("end");
     }
 
 
     private void setStageScene(Scene scene) {
-        if (mainStage == null) throw new AssertionError();
 //        mainStage.setX(WIDTH / 2);
 //        mainStage.setY(0);
         mainStage.setScene(scene);
 //        mainStage.centerOnScreen();
-        mainStage.setFullScreen(true);
     }
 
 
