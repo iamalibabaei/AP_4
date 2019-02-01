@@ -22,10 +22,6 @@ public class Menu extends Scene
     private static Menu instance = new Menu();
     private Group root;
     private ImageView background;
-    private ChoiceBox<String> choiceBox;
-    private TextField password;
-    private Text wrongPass;
-    private Text notChosenAccount;
 
     public Menu()
     {
@@ -55,76 +51,17 @@ public class Menu extends Scene
     private void build()
     {
         root.getChildren().clear();
-        StackPane startGame = makeMenuButton(200, 200, "Start Game", event -> MainView.getInstance().goToMap());
+        StackPane startGame = makeMenuButton(200, 200, "Start Game", event -> GoToMap.getInstance().open());
         StackPane setting = makeMenuButton(200, 280, "Settings", event -> MainView.getInstance().goToSetting());
-        StackPane addNewProfile = makeMenuButton(200, 360,"Add Profile", event -> MainView.getInstance().newPlayer());
         StackPane exit = makeMenuButton(200, 440, "Exit", event -> MainView.getInstance().close());
 
-        //TODO change these
-        choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll(Account.getAllAccounts());
-        choiceBox.relocate(400, 300);
+        root.getChildren().addAll(MenuBackground.getInstance(), startGame, setting, exit, GoToMap.getInstance());
 
-        password = new TextField();
-        password.setPromptText("password");
-        password.relocate(400, 350);
-        root.getChildren().addAll(MenuBackground.getInstance(), startGame, setting, addNewProfile, exit, choiceBox,
-                password);
-
-        wrongPass = new Text("WRONG PASSWORD");
-        wrongPass.setFill(Color.RED);
-        wrongPass.setVisible(false);
-        wrongPass.setFont(Font.font("SWItalt", 20));
-        wrongPass.relocate(400, 250);
-        root.getChildren().addAll(wrongPass);
-
-        notChosenAccount = new Text("CHOOSE A PLAYER");
-        notChosenAccount.setFill(Color.RED);
-        notChosenAccount.setFont(Font.font("SWItalt", 20));
-        notChosenAccount.setVisible(false);
-        notChosenAccount.relocate(400, 250);
-        root.getChildren().addAll(notChosenAccount);
     }
 
     public static Menu getInstance()
     {
         return instance;
-    }
-
-    public void updateChoiceBox()
-    {
-        choiceBox.getItems().addAll(Account.getAllAccounts());
-    }
-
-    public String getAccount()
-    {
-        return choiceBox.getValue();
-    }
-
-    public String getPass()
-    {
-        String pass = password.getText();
-        password.clear();
-        return pass;
-    }
-
-
-    public void showNotChosenAccount()
-    {
-        clearMessages();
-        notChosenAccount.setVisible(true);
-    }
-
-    public void clearMessages()
-    {
-        wrongPass.setVisible(false);
-        notChosenAccount.setVisible(false);
-    }
-
-    public void showWrongPass()
-    {
-        clearMessages();
-        wrongPass.setVisible(true);
     }
 
 }

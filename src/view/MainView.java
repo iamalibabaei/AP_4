@@ -18,7 +18,6 @@ import models.objects.Item;
 import models.objects.animals.Animal;
 import view.gameScene.InGameView;
 import view.menu.Menu;
-import view.menu.newPlayer.NewPlayerScene;
 import view.menu.selectMission.MissionScene;
 
 import java.io.FileNotFoundException;
@@ -78,27 +77,6 @@ public class MainView extends Application {
 
 
     public void goToMap() {
-        Account account = null;
-        if (Menu.getInstance().getAccount() == null) {
-            Menu.getInstance().showNotChosenAccount();
-            return;
-        }
-        try {
-            account = Account.loadJson(Menu.getInstance().getAccount());
-        } catch (FileNotFoundException e) {
-            System.out.println("null");
-            return;
-        }
-
-        String password = Menu.getInstance().getPass();
-        System.out.println(password);
-        System.out.println(account.getPassword());
-        if (!password.equals(account.getPassword())) {
-            Menu.getInstance().showWrongPass();
-            return;
-        }
-        Menu.getInstance().clearMessages();
-        MenuController.getInstance().setCurrentAccount(account);
         MissionScene.getInstance().updateInfo();
         setStageScene(MissionScene.getInstance());
 
@@ -111,10 +89,6 @@ public class MainView extends Application {
 
     public void close() {
 
-    }
-
-    public void newPlayer() {
-        setStageScene(new NewPlayerScene());
     }
 
     public void goToMenu() {

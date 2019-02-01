@@ -68,7 +68,7 @@ public class InGameView extends Scene implements Time
         root.getChildren().addAll(WorkshopView.getInstance());
     }
 
-/*    private void buildWorkshopGraphic() {
+    private void buildWorkshopGraphic() {
         for (int i = 0; i < 6; i++) {
             int place = 0;
             double XValue = MainView.WIDTH, YValue = MainView.HEIGHT;
@@ -116,7 +116,7 @@ public class InGameView extends Scene implements Time
 
         }
     }
-*/
+
     private void emptyWorkshopGraphic() {
         ImageView place1 = new ImageView(Utility.getImage(AddressConstants.PLACES_ROOT + "place1.png"));
         place1.setFitWidth(MainView.WIDTH / 3.2375);
