@@ -1,6 +1,7 @@
 package view.menu;
 
 import controller.MenuController;
+import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import models.account.Account;
 import view.MainView;
 import view.utility.AddressConstants;
@@ -24,7 +26,6 @@ public class ChooseProfile extends Pane {
     private static ChooseProfile instance = new ChooseProfile();
     private ChoiceBox<String> choiceBox;
     TextField name, password;
-    Text choosePlayer;
 
     public static ChooseProfile getInstance() {
         return instance;
@@ -117,23 +118,10 @@ public class ChooseProfile extends Pane {
         backText.setFont(Font.font("SWItalt", 15));
         backText.setFill(Color.WHITE);
         exit.getChildren().addAll(exitButton, backText);
-        exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                clearMessage();
-                setVisible(false);
-            }
-        });
+        exit.setOnMouseClicked(event -> setVisible(false));
         exit.relocate(MainView.WIDTH * 0.05, MainView.HEIGHT * 0.4);
 
         getChildren().addAll(name, password, submit, exit);
-
-        choosePlayer = new Text("choose an account");
-        choosePlayer.setFill(Color.RED);
-        choosePlayer.setFont(Font.font(30));
-        choosePlayer.relocate(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.1);
-        getChildren().addAll(choosePlayer);
-
 
     }
 
@@ -155,7 +143,6 @@ public class ChooseProfile extends Pane {
         Account account = new Account(nameOfPlayer, passwordOfPlayer);
         Account.toJason(account);
 
-        clearMessage();
         setVisible(false);
         MenuController.getInstance().setCurrentAccount(account);
         MainView.getInstance().goToMap();
@@ -175,24 +162,39 @@ public class ChooseProfile extends Pane {
             System.out.println("null goToMap");
             return;
         }
-        clearMessage();
         setVisible(false);
         MenuController.getInstance().setCurrentAccount(account);
         MainView.getInstance().goToMap();
 
     }
 
-    private void clearMessage() {
-        choosePlayer.setVisible(false);
-    }
-
     private void choosePlayerMessage() {
-        choosePlayer.setVisible(true);
+        Text choosePlayer = new Text("choose an account");
+        choosePlayer.setFill(Color.RED);
+        choosePlayer.setFont(Font.font(30));
+        choosePlayer.relocate(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.1);
+        getChildren().addAll(choosePlayer);
+
+        FadeTransition ft = new FadeTransition(Duration.millis(3000), choosePlayer);
+        ft.setFromValue(2.0);
+        ft.setToValue(0.0);
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ft.play();
+            }
+        }.start();
+
+
     }
 
 
     public void open(){
-        clearMessage();
         choiceBox.getItems().clear();
         choiceBox.getItems().addAll(Account.getAllAccounts());
         setVisible(true);
