@@ -16,6 +16,11 @@ public abstract class Transporter extends Viewable implements Upgradable, Time
     private final int[] UPGRADE_COST_LIST;
     private final int UPGRADE_SPEED_BOOST;
     private final int UPGRADE_CAPACITY_INCREASE;
+
+    public boolean isWorking() {
+        return isWorking;
+    }
+
     protected boolean isWorking;
 
     public EnumMap<Item.Type, Integer> getList()

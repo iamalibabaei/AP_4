@@ -1,7 +1,208 @@
 package view.gameScene.helicopter;
 
-import javafx.scene.layout.Pane;
+import controller.InGameController;
+import javafx.event.EventHandler;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import models.exceptions.InsufficientResourcesException;
+import models.exceptions.InvalidArgumentException;
+import models.exceptions.NotEnoughSpaceException;
+import models.objects.Item;
+import models.transportation.Helicopter;
+import models.transportation.Truck;
+import view.MainView;
+import view.gameScene.InGameView;
+import view.utility.AddressConstants;
+import view.utility.Utility;
+
+import java.util.ArrayList;
 
 public class HelicopterView extends Pane {
+    private static HelicopterView instance = new HelicopterView();
+    public static HelicopterView getInstance() {
+        return instance;
+    }
 
+    private HelicopterView() {
+        relocate(0 , 0);
+        setHeight(MainView.HEIGHT);
+        setWidth(MainView.WIDTH);
+        setVisible(false);
+        build();
+    }
+
+    private void build() {
+        wallpaper();
+        setButtons();
+        //setItems();
+        setHelicopterInfo();
+    }
+
+    private void setHelicopterInfo() {
+        int XValue = MainView.WIDTH / 2 - 200, YValue = MainView.HEIGHT / 2 ;//todo fix numbers if needed
+        ArrayList<Item.Type> items = new ArrayList<>();
+        items.add( Item.Type.PLUME);
+        items.add(Item.Type.FLOUR);
+        for (Item.Type item : items) {
+            ImageView itemImage = new ImageView(Utility.getImage(AddressConstants.ITEM_ROOT + item.name().toLowerCase() + ".png"));
+            itemImage.setFitWidth(50);
+            itemImage.setFitHeight(50);
+            itemImage.relocate(XValue, YValue);
+
+            ImageView addToHelicopterImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+            addToHelicopterImage.setFitHeight(100);
+            addToHelicopterImage.setFitWidth(200);
+            Text addToTruckText = new Text("add helicopter");
+            addToTruckText.setFont(Font.font("SWItalt", 15));
+            TextField amount = new TextField();
+            amount.setPromptText("amount");
+            amount.relocate(XValue + 200, YValue);
+
+            StackPane addToTruck = new StackPane();
+            addToTruck.getChildren().addAll(addToHelicopterImage, addToTruckText);
+            addToTruck.setOnMouseClicked(event -> addTohelicopter(item, amount.getText()));
+            addToTruck.relocate(XValue + 150, YValue);
+
+            getChildren().addAll(itemImage, addToTruck, amount);
+            YValue += 100;
+        }
+
+    }
+
+    private void addTohelicopter(Item.Type item, String amountStr) {
+        int amount = 0;
+        try {
+            amount = Integer.parseInt(amountStr);
+        } catch (Exception e) {
+            return;
+        }
+        try {
+            InGameController.getInstance().addToStash("helicopter", item.name(),amount );
+        } catch (NotEnoughSpaceException e) {
+            return;
+        } catch (InvalidArgumentException e) {
+            System.out.println("invallid argument in helocopterView");
+            return;
+        }
+        updateInformation();
+        setVisible(true);
+    }
+
+//    private void setItems() {
+//        EnumMap<Item.Type, Integer>  storedItems=  Warehouse.getInstance().getStoredItems();
+//        int XValue = 30, YValue = 50;
+//        for (Item.Type item : storedItems.keySet()) {
+//            String str = item.name() + "  ---->  " + storedItems.get(item);
+//            Text text = new Text(str);
+//            text.relocate(XValue, YValue);
+//            TextField textField = new TextField();
+//            text.relocate(XValue + 100, YValue);
+//            Button button = new Button("sell");
+//            button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent event) {
+//                    try {
+//                        InGameController.getInstance().addToStash("truck", item.name(), Integer.parseInt(textField.getText()));
+//                    } catch (NotEnoughSpaceException e) {
+//                        MainView.getInstance().showExceptions(e, 100, 100);
+//                    } catch (InvalidArgumentException e) {
+//                        MainView.getInstance().showExceptions(e, 100, 100);
+//                    }
+//                    updateInformation();
+//                    setVisible(true);
+//
+//                }
+//            });
+//            getChildren().addAll(text, textField, button);
+//            YValue += 30;
+//        }
+//    }
+
+    private void setButtons() {
+        ImageView sendTruckImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        sendTruckImage.setFitHeight(100);
+        sendTruckImage.setFitWidth(200);
+
+        Text senTruckText = new Text("send");
+        senTruckText.setFont(Font.font("SWItalt", 15));
+
+        StackPane sendTruck = new StackPane();
+        sendTruck.getChildren().addAll(sendTruckImage, senTruckText);
+        sendTruck.setOnMouseClicked(event -> {
+            try {
+                InGameController.getInstance().sendHelicopter();
+            } catch (InsufficientResourcesException e) {
+                //TODO
+            }
+        });
+        sendTruck.relocate(0, 0);
+        getChildren().addAll(sendTruck);
+
+        ImageView clearStashImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        clearStashImage.setFitHeight(100);
+        clearStashImage.setFitWidth(200);
+
+        Text clearText = new Text("clearStash");
+        clearText.setFont(Font.font("SWItalt", 15));
+
+        StackPane clearStash = new StackPane();
+        clearStash.getChildren().addAll(clearStashImage, clearText);
+        clearStash.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    InGameController.getInstance().clearStash("helicopter");
+                } catch (InvalidArgumentException e) {
+                    System.out.println("invalid Argument in helicopterView");
+                    return;
+                }
+
+                updateInformation();
+                setVisible(true);
+
+            }
+        });
+        clearStash.relocate(0, 100);
+        getChildren().addAll(clearStash);
+
+        ImageView backImage = new ImageView(Utility.getImage(AddressConstants.MENU_BUTTON));
+        backImage.setFitHeight(100);
+        backImage.setFitWidth(200);
+
+        Text backText = new Text("back");
+        backText.setFont(Font.font("SWItalt", 15));
+
+        StackPane back = new StackPane();
+        back.getChildren().addAll(backImage, backText);
+        back.setOnMouseClicked(event -> InGameView.getInstance().closehelicopter());
+        back.relocate(0, 200);
+        getChildren().addAll(back);
+
+    }
+
+    private void wallpaper() {
+        ImageView back = new ImageView(Utility.getImage(AddressConstants.TRUCK_INSIDE));
+        back.setFitWidth(350);
+        back.setFitHeight(600);
+        back.relocate(MainView.WIDTH * 0.3 ,MainView.HEIGHT * 0.2);
+        getChildren().addAll(back);
+
+    }
+
+    public void updateInformation() {
+        getChildren().clear();
+        build();
+    }
+
+    public void openHelicopter(){
+        if (Truck.getInstance().isWorking()) {
+            return;
+        }
+        HelicopterView.getInstance().updateInformation();
+        HelicopterView.getInstance().setVisible(true);
+    }
 }

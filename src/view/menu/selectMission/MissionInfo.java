@@ -48,7 +48,7 @@ public class MissionInfo extends Pane {
         StackPane startGame = new StackPane();
         Text startGameText = new Text("start game");
         startGame.getChildren().addAll(start, startGameText);
-        start.setOnMouseClicked(event -> startGame());
+        startGame.setOnMouseClicked(event -> startGame());
         startGame.relocate(750, 265);
         getChildren().addAll(startGame);
 
@@ -95,8 +95,7 @@ public class MissionInfo extends Pane {
     }
 
     public void startGame() {
-        MenuController.getInstance().setMission(mission);
-        MenuController.getInstance().startGame();
+        MenuController.getInstance().startGame(mission);
     }
 
 

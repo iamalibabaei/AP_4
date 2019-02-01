@@ -28,17 +28,17 @@ public class GameBackground extends Pane implements Time {
     }
 
     private GameBackground() {
+        this.setHeight(MainView.HEIGHT);
+        this.setWidth(MainView.WIDTH);
+        System.out.println("hieghtttt = " + this.getWidth());
         build();
     }
 
     private void build() {
         setBackgroundStuff();
         setBuyAnimalButton();
-//        setWarehouse();
-//        setTruck();
-//        setWell();
         setUnderBar();
-//        setUpperBar();
+        setUpperBar();
     }
 
     private void setUpperBar() {
@@ -87,7 +87,7 @@ public class GameBackground extends Pane implements Time {
 
         StackPane underBarPane = new StackPane();
         underBarPane.getChildren().addAll(imageView);
-        underBarPane.relocate(0, MainView.HEIGHT - imageView.getImage().getHeight() * 0.8);
+        underBarPane.relocate(0, MainView.HEIGHT - imageView.getImage().getHeight() * 0.6);
         this.getChildren().addAll(underBarPane);
 
     }

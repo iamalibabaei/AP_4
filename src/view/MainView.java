@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import models.account.Account;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
+import models.misc.Mission;
 import models.objects.Entity;
 import models.objects.Grass;
 import models.objects.Item;
@@ -75,10 +76,10 @@ public class MainView extends Application {
 
     private void setStageScene(Scene scene) {
         if (mainStage == null) throw new AssertionError();
-        mainStage.setX(0);
-        mainStage.setY(0);
-        mainStage.centerOnScreen();
+//        mainStage.setX(WIDTH / 2);
+//        mainStage.setY(0);
         mainStage.setScene(scene);
+//        mainStage.centerOnScreen();
         mainStage.setFullScreen(true);
     }
 
@@ -128,9 +129,9 @@ public class MainView extends Application {
         setStageScene(Menu.getInstance());
     }
 
-    public void startGame() {
+    public void startGame(Mission mission) {
         setStageScene(InGameView.getInstance());
-        InGameController.getInstance().startGame();
+        InGameController.getInstance().startGame(mission);
     }
 
     public void showExceptions(Exception e, double x, double y) {

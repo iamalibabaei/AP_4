@@ -34,8 +34,11 @@ public class AddressConstants
     public static final String MISSION_SCENE_ICON = MISSION_SCENE + "icon.png";
     public static final String MISSION_SCENE_TAB = MISSION_SCENE + "missionTab.png";
     public static final String NEW_PLAYER = GRAPHICS_ROOT + "newPlayer/back.png";
-        public static final String HELICOPTER_MINI_PICTURE_ROOT = GRAPHICS_ROOT + "UI/Helicopter/";
+    public static final String HELICOPTER_MINI_PICTURE_ROOT = GRAPHICS_ROOT + "UI/Helicopter/";
+    public static final String TRUCK_MINI_PICTURE_ROOT = GRAPHICS_ROOT + "UI/Truck/";
     public static final String PLACES_ROOT = GRAPHICS_ROOT + "UI/places/";
+    public static final String TRUCK_INSIDE = GRAPHICS_ROOT + "truckInSideView.jpg";
+    public static final String ITEM_ROOT = GRAPHICS_ROOT + "item/";
 
 
 }
