@@ -41,5 +41,5 @@ public class AddressConstants
     public static final String ITEM_ROOT = GRAPHICS_ROOT + "item/";
     public static final String GAME_MENU = GRAPHICS_ROOT + "game_menu_1.png";
     public static final String WORKSHOP_ROOT = "res/workshops/";
-    public static final String BUILD_WORKSHOP_ICON = MENU_BUTTON;//TODO change it to bil :)
+    public static final String BUILD_WORKSHOP_ICON = MENU + "bil.png" ;
 }

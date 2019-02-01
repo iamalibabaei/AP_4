@@ -62,7 +62,7 @@ public class InGameView extends Scene implements Time
         warehouseGraphic();
         moneyGraphic();
         truckGraphic();
-//        buildWorkshopGraphic();
+        buildWorkshopGraphic();
         helicopterGraphic();
         root.getChildren().addAll(TruckView.getInstance());
         root.getChildren().addAll(WorkshopView.getInstance());
