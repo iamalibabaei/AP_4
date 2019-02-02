@@ -30,12 +30,12 @@ public class ExitPanel extends Pane {
 
     private void build(){
         buildMenuTemplate();
-        StackPane backButton = Utility.makeMenuButton(MainView.WIDTH * 0.27, MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.3,
+        StackPane backButton = Utility.makeMenuButton(list, MainView.WIDTH * 0.27, MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Back",
                 event -> {
                     setVisible(false);
                 });
-        StackPane exitButton = Utility.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.3,
+        StackPane exitButton = Utility.makeMenuButton(list, MainView.WIDTH * 0.08, MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Exit",
                 event -> {
                     System.exit(0);

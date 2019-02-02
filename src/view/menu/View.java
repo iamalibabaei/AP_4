@@ -24,20 +24,17 @@ public class View extends SceneBuilder
         return instance;
     }
 
-    @Override
     protected void build()
     {
-        StackPane startGame = Utility.makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3,
-                MainView.HEIGHT * 0.3,
-                MainView.HEIGHT * 0.3 / 2, "Start Game",
-                event -> ChooseProfile.getInstance().toggleChooseProfilePane());
-        StackPane setting = Utility.makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5,MainView.HEIGHT * 0.3,
+        StackPane startGame = Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3,MainView.HEIGHT * 0.3,
+                MainView.HEIGHT * 0.3 / 2 ,"Start Game", event -> ChooseProfile.getInstance().toggleChooseProfilePane());
+        StackPane setting = Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5,MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Settings", event -> view.settings.View.getInstance().start());
-        StackPane multiPlayer = Utility.makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4,MainView.HEIGHT * 0.3,
+        StackPane multiPlayer = Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4,MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Multiplayer",
                 event -> MainView.getInstance().multiPlayer());
-        StackPane exit = Utility.makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6, MainView.HEIGHT * 0.3,
-                MainView.HEIGHT * 0.3 / 2, "Exit",
+        StackPane exit = Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6,MainView.HEIGHT * 0.3,
+                MainView.HEIGHT * 0.3 / 2,"Exit",
                 event -> {
                     MainView.getInstance().close();
                     SoundPlayer.getInstance().play(Utility.getSound(SoundAddresses.MENU_COW_SOUND));

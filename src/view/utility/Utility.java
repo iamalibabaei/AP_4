@@ -1,7 +1,9 @@
 package view.utility;
 
 import javafx.animation.FadeTransition;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -86,8 +88,10 @@ public class Utility
         fadeTransition.play();
         fadeTransition.setAutoReverse(true);
     }
-    public static StackPane makeMenuButton(double x, double y, final double width, final double height, String name, EventHandler<? super MouseEvent> value)
+    public static StackPane makeMenuButton(ObservableList<Node> list, double x, double y, final double width, final double height, String name, EventHandler<? super MouseEvent> value)
     {
+
+        list.addAll();
         StackPane pane = new StackPane();
         Text text = new Text(name);
         text.setFont(Font.font("SWItalt", 15));
@@ -116,6 +120,5 @@ public class Utility
         pane.relocate(x, y);
         return pane;
     }
-
 
 }
