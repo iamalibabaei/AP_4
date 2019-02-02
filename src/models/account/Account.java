@@ -25,7 +25,7 @@ public class Account implements Serializable {
         return password;
     }
 
-    public int getMissionPassed() {
+    public int getMissionsPassed() {
         return missionPassed;
     }
 

@@ -17,26 +17,34 @@ import view.utility.SoundPlayer;
 import view.utility.Utility;
 import view.utility.constants.SoundAddresses;
 
-public class View
+public class View extends Pane
 {
-
-    private View()
+    public static View getInstance()
     {
+        return instance;
     }
 
-    public static void build(Group root)
+    private static View instance = new View();
+
+    public View()
+    {
+        setWidth(MainView.WIDTH);
+        setHeight(MainView.HEIGHT);
+        relocate(0,0);
+        build();
+    }
+
+    private void build()
     {
         StackPane startGame = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3, "Start Game",
-                event -> ChooseProfile.toggleChooseProfilePane());
+                event -> ChooseProfile.getInstance().toggleChooseProfilePane());
         StackPane setting = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5, "Settings",
                 event -> MainView.getInstance().goToSetting());
         StackPane multiPlayer = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4, "Multiplayer",
                 event -> multiPlayer());
         StackPane exit = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6, "Exit",
                 event -> MainView.getInstance().close());
-        Pane background = Background.build();
-        Pane chooseProfile = ChooseProfile.build();
-        root.getChildren().addAll(background, startGame, multiPlayer, setting, exit, chooseProfile);
+        getChildren().addAll(Background.getInstance(), startGame, multiPlayer, setting, exit, ChooseProfile.getInstance());
         SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.MENU_MUSIC));
 
     }
@@ -55,11 +63,11 @@ public class View
         button.setFitWidth(width);
         button.setFitHeight(height);
         pane.getChildren().addAll(button, text);
-        button.setOnMouseEntered(event -> {
+        pane.setOnMouseEntered(event -> {
             pane.getChildren().removeAll(button, text);
             pane.getChildren().addAll(buttonMouseOver, text);
         });
-        buttonMouseOver.setOnMouseExited(event -> {
+        pane.setOnMouseExited(event -> {
             pane.getChildren().removeAll(buttonMouseOver, text);
             pane.getChildren().addAll(button, text);
         });
@@ -73,7 +81,7 @@ public class View
         return pane;
     }
 
-    private static void multiPlayer()
+    private void multiPlayer()
     {
         //TODO
     }

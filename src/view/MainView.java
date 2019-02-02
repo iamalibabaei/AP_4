@@ -50,11 +50,6 @@ public class MainView extends Application
         return instance;
     }
 
-    public Stage getMainStage()
-    {
-        return mainStage;
-    }
-
     @Override
     public void start(Stage primaryStage)
     {
@@ -64,7 +59,7 @@ public class MainView extends Application
         mainStage.setFullScreen(true);
         mainStage.setResizable(true);
         mainStage.setScene(mainScene);
-        view.menu.View.build(root);
+        setScene(view.menu.View.getInstance());
         mainStage.show();
         mainStage.setOnCloseRequest(event -> close());
         System.out.println("end");
@@ -83,8 +78,8 @@ public class MainView extends Application
 
     public void goToMap()
     {
-        MissionScene.getInstance().updateInfo();
-        mainStage.setScene(MissionScene.getInstance());
+//        MissionScene.getInstance().updateInfo();
+//        setScene(MissionScene.getInstance());
     }
 
     public void goToSetting()

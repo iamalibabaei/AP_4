@@ -15,23 +15,27 @@ import view.utility.Utility;
 
 import java.io.FileNotFoundException;
 
-public class MissionInfo extends Pane {
-    private static MissionInfo instance = new MissionInfo();
-    private Text text;
-    private Mission mission;
-    public static MissionInfo getInstance() {
+public class MissionInfo extends Pane
+{
+    public static MissionInfo getInstance()
+    {
         return instance;
     }
 
-    public MissionInfo() {
+    private static MissionInfo instance = new MissionInfo();
+    private Text text;
+    private Mission mission;
+
+
+    private MissionInfo() {
         text = new Text();
         ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.MISSION_SCENE_TAB));
-        imageView.setFitHeight(1000);
-        imageView.setFitWidth(1000);
-        imageView.relocate(200, 0);
+        imageView.setFitHeight(1000); // todo fix
+        imageView.setFitWidth(1000); // todo fix
+        imageView.relocate(200, 0); // todo fix
         getChildren().addAll(imageView);
         text.setFont(Font.font("Rage Italic", 25));
-        text.relocate(500, 250);
+        text.relocate(500, 250); // todo fix
         getChildren().addAll(text);
         addButtons();
 

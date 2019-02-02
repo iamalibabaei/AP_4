@@ -12,54 +12,35 @@ import models.exceptions.InvalidArgumentException;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
 import view.MainView;
-import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
+import view.utility.constants.PictureAddresses;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class Background extends Pane implements Time {
+public class Background extends Pane implements Time
+{
     private static Background instance = new Background();
 
-
-    public static Background getInstance() {
-        return instance;
-    }
-
-    private Background() {
-        this.setHeight(MainView.HEIGHT);
-        this.setWidth(MainView.WIDTH);
+    private Background()
+    {
+        setHeight(MainView.HEIGHT);
+        setWidth(MainView.WIDTH);
         System.out.println("hieghtttt = " + this.getWidth());
         build();
     }
 
-    private void build() {
+    private void build()
+    {
         setBackgroundStuff();
         setBuyAnimalButton();
         setUnderBar();
         setUpperBar();
     }
 
-    private void setUpperBar() {
-        Image upperBarImage = null;
-        try {
-            upperBarImage = new Image(new FileInputStream(PictureAddresses.GAME_BACKGROUND_ROOT + "upperBar.png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        ImageView imageView = new ImageView(upperBarImage);
-        imageView.setFitHeight(90);
-
-        StackPane upperBarPane = new StackPane();
-        upperBarPane.getChildren().addAll(imageView);
-        upperBarPane.relocate(MainView.WIDTH - upperBarImage.getWidth(), 0);
-        this.getChildren().addAll(upperBarPane);
-
-    }
-
-    private void setBackgroundStuff() {
+    private void setBackgroundStuff()
+    {
         Image background = null;
         background = Utility.getImage(PictureAddresses.GAME_BACKGROUND_ROOT + "background.png");
 
@@ -73,11 +54,77 @@ public class Background extends Pane implements Time {
         this.getChildren().addAll(pane);
     }
 
-    private void setUnderBar(){
+    private void setBuyAnimalButton()
+    {//TODO change later
+        ArrayList<String> animalButton = new ArrayList<>();
+        animalButton.add("HEN");
+        animalButton.add("SHEEP");
+        animalButton.add("COW");
+        animalButton.add("CAT");
+        animalButton.add("DOG");
+        for (String animalName : animalButton)
+        {
+            Animal.Type type = Animal.Type.valueOf(animalName);
+            Image backImage = null;
+
+            if (type.BUY_COST < InGameController.getInstance().getMoney())
+            {
+                System.out.println(type.BUY_COST);
+                System.out.println(InGameController.getInstance().getMoney());
+                try
+                {
+                    backImage = new Image(new FileInputStream(
+                            PictureAddresses.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "Icon.png"));
+                } catch (FileNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
+            } else
+            {
+                System.out.println(type.BUY_COST);
+                System.out.println(InGameController.getInstance().getMoney());
+                try
+                {
+                    backImage = new Image(new FileInputStream(
+                            PictureAddresses.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "IconGray.png"));
+                } catch (FileNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            ImageView imageView = new ImageView(backImage);
+            imageView.setFitHeight(MainView.HEIGHT / 14);
+            imageView.setFitWidth(MainView.WIDTH / 14);
+
+            StackPane addAnimal = new StackPane();
+            addAnimal.getChildren().addAll(imageView);
+            addAnimal.relocate(20 + animalButton.indexOf(animalName) * MainView.WIDTH / 14, 20);
+            addAnimal.setOnMouseClicked(event -> {
+                try
+                {
+                    InGameController.getInstance().buyAnimal(animalName.toLowerCase());
+                } catch (InsufficientResourcesException e)
+                {
+                    MainView.getInstance().showExceptions(e, 30, 30);
+                } catch (InvalidArgumentException e)
+                {
+                    e.printStackTrace();
+                }
+            });
+            this.getChildren().addAll(addAnimal);
+        }
+
+
+    }
+
+    private void setUnderBar()
+    {
         Image underBarImage = null;
-        try {
+        try
+        {
             underBarImage = new Image(new FileInputStream(PictureAddresses.GAME_BACKGROUND_ROOT + "underBar.png"));
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e)
+        {
             e.printStackTrace();
         }
 
@@ -92,75 +139,55 @@ public class Background extends Pane implements Time {
 
     }
 
-
-    private void setBuyAnimalButton() {//TODO change later
-        ArrayList<String> animalButton = new ArrayList<>();
-        animalButton.add("HEN");
-        animalButton.add("SHEEP");
-        animalButton.add("COW");
-        animalButton.add("CAT");
-        animalButton.add("DOG");
-        for (String animalName : animalButton) {
-            Animal.Type type = Animal.Type.valueOf(animalName);
-            Image backImage = null;
-
-            if (type.BUY_COST < InGameController.getInstance().getMoney()) {
-                System.out.println(type.BUY_COST);
-                System.out.println(InGameController.getInstance().getMoney());
-                try {
-                    backImage = new Image(new FileInputStream(
-                            PictureAddresses.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "Icon.png"));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                System.out.println(type.BUY_COST);
-                System.out.println(InGameController.getInstance().getMoney());
-                try {
-                    backImage = new Image(new FileInputStream(
-                            PictureAddresses.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "IconGray.png"));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-            ImageView imageView = new ImageView(backImage);
-            imageView.setFitHeight(MainView.HEIGHT / 14);
-            imageView.setFitWidth(MainView.WIDTH / 14);
-
-            StackPane addAnimal = new StackPane();            addAnimal.getChildren().addAll(imageView);
-            addAnimal.relocate(20 + animalButton.indexOf(animalName) * MainView.WIDTH / 14, 20);
-            addAnimal.setOnMouseClicked(event -> {
-                try {
-                    InGameController.getInstance().buyAnimal(animalName.toLowerCase());
-                } catch (InsufficientResourcesException e) {
-                    MainView.getInstance().showExceptions(e, 30, 30);
-                } catch (InvalidArgumentException e) {
-                    e.printStackTrace();
-                }
-            });
-            this.getChildren().addAll(addAnimal);
+    private void setUpperBar()
+    {
+        Image upperBarImage = null;
+        try
+        {
+            upperBarImage = new Image(new FileInputStream(PictureAddresses.GAME_BACKGROUND_ROOT + "upperBar.png"));
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
         }
 
+        ImageView imageView = new ImageView(upperBarImage);
+        imageView.setFitHeight(90);
 
+        StackPane upperBarPane = new StackPane();
+        upperBarPane.getChildren().addAll(imageView);
+        upperBarPane.relocate(MainView.WIDTH - upperBarImage.getWidth(), 0);
+        this.getChildren().addAll(upperBarPane);
 
     }
 
+    public static Background getInstance()
+    {
+        return instance;
+    }
+
     @Override
-    public void nextTurn() {
+    public void nextTurn()
+    {
         // if not enough money color of buttons becomes brown
-        for (Node node : getChildren()) {
-            if (node instanceof Text) {
-                try {
-                    if (Integer.parseInt(((Text) node).getText()) > InGameController.getInstance().getMoney()) {
+        for (Node node : getChildren())
+        {
+            if (node instanceof Text)
+            {
+                try
+                {
+                    if (Integer.parseInt(((Text) node).getText()) > InGameController.getInstance().getMoney())
+                    {
                         ((Text) node).setFill(Color.BROWN);
-                    } else {
+                    } else
+                    {
                         ((Text) node).setFill(Color.YELLOW);
                     }
-                } catch (Exception e) {
+                } catch (Exception e)
+                {
                     //nothing really
                 }
             }
         }
     }
+
 }

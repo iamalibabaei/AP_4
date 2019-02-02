@@ -2,6 +2,7 @@ package view.utility;
 
 import javafx.animation.FadeTransition;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -18,6 +19,20 @@ public class Utility
 {
     public static final double ERROR_MESSAGE_MENU_X = MainView.WIDTH * 0.01;
     public static final double ERROR_MESSAGE_MENU_Y = -MainView.HEIGHT * 0.23;
+
+    public static ImageView getImageView(String path)
+    {
+        ImageView img = null;
+        try
+        {
+            img = new ImageView(new Image(path));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return img;
+    }
 
     public static Image getImage(String path)
     {

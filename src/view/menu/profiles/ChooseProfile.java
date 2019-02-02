@@ -19,37 +19,35 @@ import view.utility.constants.PictureAddresses;
 
 import java.io.IOException;
 
-public class ChooseProfile
+public class ChooseProfile extends Pane
 {
-    private static Pane pane;
-    private static ObservableList<Node> list;
-
-    static
-    {
-        pane = new Pane();
-        list = pane.getChildren();
-    }
+    private static ChooseProfile instance = new ChooseProfile();
+    private ObservableList<Node> list;
 
     private ChooseProfile()
     {
+        relocate(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.3);
+        list = getChildren();
+        setVisible(false);
+        build();
     }
 
-    public static Pane build()
+    public static ChooseProfile getInstance()
     {
-        pane.relocate(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.3);
-        pane.setVisible(false);
+        return instance;
+    }
+
+    private void build()
+    {
         buildMenuTemplate();
         buildGetAccounts();
         buildAddNewPlayer();
         StackPane backButton = View.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.4, "Back",
-                event -> pane.setVisible(false));
+                event -> setVisible(false));
         list.addAll(backButton);
-
-        return pane;
-
     }
 
-    private static void buildMenuTemplate()
+    private void buildMenuTemplate()
     {
         ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.GAME_MENU));
         imageView.relocate(0, -MainView.HEIGHT * 0.1);
@@ -58,7 +56,7 @@ public class ChooseProfile
         list.add(imageView);
     }
 
-    private static void buildGetAccounts()
+    private void buildGetAccounts()
     {
         ChoiceBox<String> choiceBox;
         Text text = new Text("Choose Your Account");
@@ -77,7 +75,7 @@ public class ChooseProfile
         list.addAll(choiceBox, startGameButton);
     }
 
-    private static void buildAddNewPlayer()
+    private void buildAddNewPlayer()
     {
         Text newPlayerText = new Text("Or create a new account");
         newPlayerText.setFont(Font.font("SWItalt", 15));
@@ -93,7 +91,7 @@ public class ChooseProfile
         list.addAll(newPlayerText, name, password, submitButton);
     }
 
-    private static void goToMissionView(String name)
+    private void goToMissionView(String name)
     {
         try
         {
@@ -106,7 +104,7 @@ public class ChooseProfile
 
     }
 
-    private static void addNewPlayer(TextField name, PasswordField password)
+    private void addNewPlayer(TextField name, PasswordField password)
     {
         try
         {
@@ -122,9 +120,9 @@ public class ChooseProfile
         }
     }
 
-    public static void toggleChooseProfilePane()
+    public void toggleChooseProfilePane()
     {
-        pane.setVisible(!pane.isVisible());
+        setVisible(!isVisible());
     }
 
 }

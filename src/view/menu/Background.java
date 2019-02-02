@@ -18,22 +18,24 @@ import view.utility.SoundPlayer;
 import view.utility.Utility;
 import view.utility.constants.SoundAddresses;
 
-public class Background
+public class Background extends Pane
 {
-    private static Pane pane;
-    private static ObservableList<Node> list;
+    private static Background instance = new Background();
+    private ObservableList<Node> list;
 
-    static
+    public static Background getInstance()
     {
-        pane = new Pane();
-        list = pane.getChildren();
+        return instance;
     }
+
 
     private Background()
     {
+        list = getChildren();
+        build();
     }
 
-    public static Pane build()
+    private void build()
     {
         buildWhiteBack();
         buildCloud();
@@ -48,10 +50,9 @@ public class Background
         addBird();
         buildFlower();
         buildBillBoard();
-        return pane;
     }
 
-    private static void buildWhiteBack()
+    private void buildWhiteBack()
     {
         ImageView whiteImage = new ImageView(Utility.getImage(PictureAddresses.WHITE_IMAGE));
         whiteImage.setFitWidth(MainView.SCREEN_WIDTH * 4 / 3);
@@ -60,7 +61,7 @@ public class Background
         list.add(whiteImage);
     }
 
-    private static void buildCloud()
+    private void buildCloud()
     {
         ImageView cloud = new ImageView(Utility.getImage(PictureAddresses.MENU_CLOUD));
         cloud.setFitWidth(MainView.SCREEN_WIDTH * 4 / 3);
@@ -69,7 +70,7 @@ public class Background
         list.addAll(cloud);
     }
 
-    private static void buildGrass()
+    private void buildGrass()
     {
         ImageView grass = new ImageView(Utility.getImage(PictureAddresses.MENU_GRASS1));
         grass.setFitWidth(MainView.SCREEN_WIDTH * 4 / 3);
@@ -78,7 +79,7 @@ public class Background
         list.add(grass);
     }
 
-    private static void buildSun()
+    private void buildSun()
     {
         ImageView sun = new ImageView(Utility.getImage(PictureAddresses.MENU_SUN));
         final double width = MainView.HEIGHT / 3;
@@ -97,7 +98,7 @@ public class Background
         list.addAll(sun);
     }
 
-    private static void buildRainbow()
+    private void buildRainbow()
     {
         ImageView rainBow = new ImageView(Utility.getImage(PictureAddresses.MENU_RAINBOW));
         rainBow.setFitHeight(MainView.HEIGHT / 4);
@@ -114,7 +115,7 @@ public class Background
         list.addAll(rainBow, path);
     }
 
-    private static void buildBirds()
+    private void buildBirds()
     {
         ImageView birds = new ImageView(Utility.getImage(PictureAddresses.MENU_BIRDS));
         birds.setFitWidth(MainView.HEIGHT / 4);
@@ -130,7 +131,7 @@ public class Background
         list.addAll(birds, path1);
     }
 
-    private static void buildTree()
+    private void buildTree()
     {
         ImageView tree = new ImageView(Utility.getImage(PictureAddresses.MENU_Tree));
         tree.setFitHeight(MainView.HEIGHT * 0.8);
@@ -139,7 +140,7 @@ public class Background
         list.add(tree);
     }
 
-    private static void addPig()
+    private void addPig()
     {
         double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
@@ -159,7 +160,7 @@ public class Background
                 musicSound);
     }
 
-    private static void addRooster()
+    private void addRooster()
     {
         double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
@@ -177,7 +178,7 @@ public class Background
                 musicSound);
     }
 
-    private static void addCow()
+    private void addCow()
     {
         double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
@@ -195,7 +196,7 @@ public class Background
                 musicSound);
     }
 
-    private static void addBird()
+    private void addBird()
     {
         double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
@@ -215,7 +216,7 @@ public class Background
 
     }
 
-    private static void buildFlower()
+    private void buildFlower()
     {
         ImageView flower = new ImageView(Utility.getImage(PictureAddresses.MENU_FLOWER));
         flower.setFitWidth((double) MainView.WIDTH * 1.5);
@@ -225,7 +226,7 @@ public class Background
         list.add(flower);
     }
 
-    private static void buildBillBoard()
+    private void buildBillBoard()
     {
         ImageView billboard = new ImageView(Utility.getImage(PictureAddresses.MENU_BILLBOARD));
         final double width = MainView.WIDTH / 2;
@@ -241,7 +242,7 @@ public class Background
         list.addAll(billboard, text);
     }
 
-    private static void makeAnimation(double XValueStart, double YValueStart, double XValueEnd, double YValueEnd,
+    private void makeAnimation(double XValueStart, double YValueStart, double XValueEnd, double YValueEnd,
                                       double rotate
             , double height, double width, double time, Image animalImage, String musicSound)
     {
