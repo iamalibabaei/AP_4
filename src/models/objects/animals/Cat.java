@@ -2,14 +2,14 @@ package models.objects.animals;
 
 import controller.InGameController;
 import models.Map;
+import models.Messages;
 import models.buildings.Warehouse;
-import models.exceptions.AlreadyAtMaxLevelException;
-import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Upgradable;
 import models.objects.Entity;
 import models.objects.Item;
 import models.objects.Point;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +41,9 @@ public class Cat extends Animal implements Upgradable
             try
             {
                 InGameController.getInstance().store(item);
-            } catch (NotEnoughSpaceException ignore)
+            } catch (IOException ignore)
             {
-                // nothing happens here!
+                // nothing happens here
             }
         }
     }
@@ -75,18 +75,18 @@ public class Cat extends Animal implements Upgradable
     }
 
     @Override
-    public void upgrade() throws AlreadyAtMaxLevelException
+    public void upgrade() throws IOException
     {
         if (level == MAX_LEVEL)
-            throw new AlreadyAtMaxLevelException();
+            throw new IOException(Messages.UPGRADE_BEYOND_MAX_LEVEL);
         Cat.level++;
     }
 
     @Override
-    public int getUpgradeCost() throws AlreadyAtMaxLevelException
+    public int getUpgradeCost() throws IOException
     {
         if (level == MAX_LEVEL)
-            throw new AlreadyAtMaxLevelException();
+            throw new IOException(Messages.ALREADY_AT_MAX_LEVEL);
         return UPGRADE_COST;
     }
 

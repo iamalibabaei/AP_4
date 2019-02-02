@@ -1,6 +1,7 @@
 package controller;
 
 import models.Map;
+import models.Messages;
 import models.buildings.Warehouse;
 import models.buildings.Well;
 import models.buildings.Workshop;
@@ -17,6 +18,8 @@ import models.transportation.Helicopter;
 import models.transportation.Truck;
 import view.gameScene.View;
 
+import javax.naming.InsufficientResourcesException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,23 +87,24 @@ public class InGameController implements Time
         throw new InvalidArgumentException();
     }
 
-    public boolean withdrawMoney(int cost) {
-        if (money - cost < 0) {
-            return false;
+    public void withdrawMoney(int cost) {
+        if (money < cost)
+        {
+            throw new AssertionError();
         }
         money -= cost;
         View.getInstance().getMoney();
-        return true;
+
     }
 
-    public void pickUp(Point point) throws NotEnoughSpaceException
+    public void pickUp(Point point) throws IOException
     {
         List<Item> nearbyItems = map.getNearbyItems(point);
         List<Item> storedItems = warehouse.store(nearbyItems);
         map.removeItems(storedItems);
     }
 
-    public void store(List<Item> items) throws NotEnoughSpaceException
+    public void store(List<Item> items) throws IOException
     {
         List<Item> storedItems = warehouse.store(items);
         map.removeItems(storedItems);
@@ -111,7 +115,7 @@ public class InGameController implements Time
         map.cage(point);
     }
 
-    public void startWorkshop(String workshopName) throws InsufficientResourcesException, IsWorkingException
+    public void startWorkshop(String workshopName) throws IOException
     {
         for (Workshop workshop : workshops)
         {
@@ -123,45 +127,45 @@ public class InGameController implements Time
         }
     }
 
-    public void upgrade(String parameter) throws AlreadyAtMaxLevelException, InsufficientResourcesException
+    public void upgrade(String parameter) throws IOException
     {
         // todo
     }
 
-    public void refillWell() throws InsufficientResourcesException, IsWorkingException
+    public void refillWell() throws IOException
     {
         int cost = Well.REFILL_COST[well.getLevel()];
         if (money < cost)
         {
-            throw new InsufficientResourcesException();
+            throw new IOException(Messages.NOT_ENOUGH_MONEY);
         }
         withdrawMoney(cost);
         well.issueRefill();
     }
 
-    public void upgradeWell() throws InsufficientResourcesException, AlreadyAtMaxLevelException
+    public void upgradeWell() throws IOException
     {
         int cost = well.getUpgradeCost();
         if (money < cost)
         {
-            throw new InsufficientResourcesException();
+            throw new IOException(Messages.NOT_ENOUGH_MONEY);
         }
         withdrawMoney(cost);
         well.upgrade();
     }
 
-    public void plant(Point point) throws InsufficientResourcesException
+    public void plant(Point point) throws IOException
     {
         well.extractWater();
         map.plant(point);
     }
 
-    public void sendHelicopter() throws InsufficientResourcesException
+    public void sendHelicopter() throws IOException
     {
         int cost = helicopter.computePrice();
         if (money < cost)
         {
-            throw new InsufficientResourcesException();
+            throw new IOException(Messages.NOT_ENOUGH_MONEY);
         }
         withdrawMoney(cost);
         helicopter.go();
@@ -216,8 +220,7 @@ public class InGameController implements Time
         warehouse.remove(truck.getList());
     }
 
-    public void addToStash(String transporterName, String itemName, int count) throws NotEnoughSpaceException,
-            InvalidArgumentException
+    public void addToStash(String transporterName, String itemName, int count) throws IOException
     {
         Item.Type item = Item.Type.NONE;
         for (Item.Type type : Item.Type.values())
@@ -229,7 +232,7 @@ public class InGameController implements Time
             }
         }
         if (item == Item.Type.NONE)
-            throw new InvalidArgumentException();
+            throw new RuntimeException();
         if (helicopter.getName().equals(transporterName))
         {
             helicopter.addToList(item, count);
@@ -238,7 +241,7 @@ public class InGameController implements Time
             truck.addToList(item, count);
         } else
         {
-            throw new InvalidArgumentException();
+            throw new RuntimeException();
         }
     }
 
@@ -246,7 +249,6 @@ public class InGameController implements Time
     public void nextTurn()
     {
         map.nextTurn();
-        well.nextTurn();
         truck.nextTurn();
         helicopter.nextTurn();
         for (Workshop workshop : workshops)

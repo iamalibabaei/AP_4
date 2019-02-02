@@ -5,9 +5,6 @@ import javafx.application.Application;
 import models.Map;
 import models.account.Account;
 import models.buildings.Workshop;
-import models.exceptions.InsufficientResourcesException;
-import models.exceptions.IsWorkingException;
-import models.exceptions.ObjectNotFoundException;
 import models.misc.Mission;
 import models.objects.Item;
 import models.objects.Point;
@@ -29,6 +26,25 @@ public class MenuController
     private InGameController game;
     private Mission mission;
     private Account currentAccount;
+
+
+    public MenuController()
+    {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
 
 
     public static void main(String[] args)
@@ -72,7 +88,7 @@ public class MenuController
         return menuController;
     }
 
-    public void plant(Point point) throws InsufficientResourcesException
+    public void plant(Point point) throws IOException
     {
         if (point.getX() >= Map.WIDTH || point.getX() < 0 || point.getY() >= Map.HEIGHT || point.getY() < 0)
         {
@@ -114,12 +130,12 @@ public class MenuController
 //
 //    }
 
-    public void refillWell() throws IsWorkingException, InsufficientResourcesException
+    public void refillWell() throws IOException
     {
         game.refillWell();
     }
 
-    public void startWorkshop(String workshopName) throws IsWorkingException, InsufficientResourcesException
+    public void startWorkshop(String workshopName) throws IOException
     {
         game.startWorkshop(workshopName);
     }

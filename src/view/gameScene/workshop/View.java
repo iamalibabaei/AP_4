@@ -8,34 +8,34 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import models.buildings.Workshop;
-import models.exceptions.AlreadyAtMaxLevelException;
 import view.MainView;
-import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
+import view.utility.constants.PictureAddresses;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class View extends Pane {
-    private static View instance = new View();
+public class View extends Pane
+{
     private static final int height = 500, width = 500;
+    private static View instance = new View();
     private ArrayList<String> workshops;
     private ChoiceBox<String> choiceBox;
     private int place;
-    public static View getInstance() {
-        return instance;
-    }
 
-    private View() {
+    private View()
+    {
         workshops = Workshop.loadDefaultWorkshops();
         setVisible(false);
-        relocate(MainView.WIDTH/2 - width / 2, MainView.HEIGHT / 2 - height / 2);
+        relocate(MainView.WIDTH / 2 - width / 2, MainView.HEIGHT / 2 - height / 2);
         setHeight(height);
         setWidth(width);
         build();
     }
 
-    private void build() {
+    private void build()
+    {
         ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.GAME_MENU));
         imageView.relocate(0, 0);
         imageView.setFitHeight(400);
@@ -75,43 +75,48 @@ public class View extends Pane {
         getChildren().addAll(exit);
 
 
-
-
     }
 
-    private void buildWorkshop() {
+    private void buildWorkshop()
+    {
         Workshop workshop = null;
-        try {
+        try
+        {
             workshop = Workshop.loadJson(PictureAddresses.WORKSHOP_ROOT + choiceBox.getValue() + ".json");
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e)
+        {
             System.out.println("workshop not found");
             e.printStackTrace();
         }
         int cost = 0;
-        try {
+        try
+        {
             cost = workshop.getUpgradeCost();
-        } catch (AlreadyAtMaxLevelException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
         System.out.println(workshop.name);
-        if (InGameController.getInstance().withdrawMoney(cost)){
-            InGameController.getInstance().addWorkshop(workshop, place);
-            choiceBox.getItems().remove(choiceBox.getValue());
-            close();
-            return;
-        }
-        notEnoughMoney(cost);
+        InGameController.getInstance().withdrawMoney(cost);
+        InGameController.getInstance().addWorkshop(workshop, place);
+        choiceBox.getItems().remove(choiceBox.getValue());
+        close();
     }
 
-    private void notEnoughMoney(int cost) {
-
-    }
-
-    private void close() {
+    private void close()
+    {
         setVisible(false);
     }
-    public void open(int place) {
+
+    public static View getInstance()
+    {
+        return instance;
+    }
+
+    public void open(int place)
+    {
         this.place = place;
         setVisible(true);
     }
+
 }

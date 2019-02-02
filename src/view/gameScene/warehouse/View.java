@@ -9,11 +9,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import models.buildings.Warehouse;
-import models.exceptions.AlreadyAtMaxLevelException;
 import models.objects.Item;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class View extends Pane {
     private static View instance = new View();
@@ -39,30 +39,23 @@ public class View extends Pane {
     private void setButtons() {
         Button exit = new Button("exit");
         exit.relocate(20, 20);
-        exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                view.gameScene.View.getInstance().closeWarehouse();
-            }
-        });
+        exit.setOnMouseClicked(event -> view.gameScene.View.getInstance().closeWarehouse());
         getChildren().addAll(exit);
         //////////////
         Button upgrade = new Button("upgradeWarehouse");
         upgrade.relocate(50, 20);
-        upgrade.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    Warehouse.getInstance().upgrade();
-                } catch (AlreadyAtMaxLevelException e) {
-                    MainView.getInstance().showExceptions(e, MainView.WIDTH/2 - width / 2, MainView.HEIGHT / 2 - height / 2);
-                }
+        upgrade.setOnMouseClicked(event -> {
+            try {
+                Warehouse.getInstance().upgrade();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
             }
         });
         getChildren().addAll(upgrade);
         int XValue = 50, YValue = 50;
         for (Item.Type item : Warehouse.getInstance().getStoredItems().keySet()) {
-            Text text = new Text(item.name() + "---->" + Integer.toString(Warehouse.getInstance().getStoredItems().get(item)));
+            Text text = new Text(item.name() + "---->" + Warehouse.getInstance().getStoredItems().get(item));
             text.relocate(XValue, YValue);
             YValue += 50;
             getChildren().addAll(text);

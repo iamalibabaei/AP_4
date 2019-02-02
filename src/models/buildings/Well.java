@@ -1,89 +1,94 @@
 package models.buildings;
 
+import com.sun.org.apache.regexp.internal.RE;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+import models.Messages;
 import models.Viewable;
-import models.exceptions.AlreadyAtMaxLevelException;
-import models.exceptions.InsufficientResourcesException;
-import models.exceptions.IsWorkingException;
-import models.interfaces.Time;
 import models.interfaces.Upgradable;
+import view.utility.SpriteAnimation;
+import view.utility.Utility;
+import view.utility.constants.PictureAddresses;
+
+import java.io.IOException;
 
 // todo implement well last upgrade (automatic planting)
 
-public class Well extends Viewable implements Upgradable, Time
+public class Well extends Viewable implements Upgradable
 {
     public static final int[] UPGRADE_COST = {250, 500}, REFILL_COST = {19, 17, 15};
     public static final int[] CAPACITY = {5, 7, 10}, REFILL_TIME = {4, 4, 3};
     private static final int MAX_LEVEL = 2;
+    private static Well instance = new Well();
     private int level;
     private boolean isRefilling;
     private int remainingWater;
-    private int remainingTimeToRefill; // only needed when refilling
-
-    private static Well instance = new Well();
-
-    public static Well getInstance() {
-        return instance;
-    }
 
     private Well()
     {
         isRefilling = false;
         level = 0;
+        state = "level" + level;
         remainingWater = CAPACITY[level];
+        for (int i = 0; i < 3; i++)
+        {
+            ImageView imageView = Utility.getImageView(PictureAddresses.WELL_PICTURE_ROOT + level + ".png");
+            SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4, 0, 0,
+                    (int) (imageView.getImage().getWidth() / 4), (int) (imageView.getImage().getHeight() / 4));
+            states.put("level" + level, spriteAnimation);
+            spriteAnimation.setOnFinished(event -> refill());
+            spriteAnimation.setCycleCount(REFILL_TIME[level]);
+        }
     }
 
-    @Override
-    public int getLevel()
+    public static Well getInstance()
     {
-        return level;
+        return instance;
     }
 
-    public void extractWater() throws InsufficientResourcesException
+    public void extractWater() throws IOException
     {
         if (remainingWater == 0)
-            throw new InsufficientResourcesException();
+            throw new IOException(Messages.WELL_EMPTY);
         remainingWater--;
     }
 
-    public void issueRefill() throws IsWorkingException
+    public void issueRefill() throws IOException
     {
         if (isRefilling)
-            throw new IsWorkingException();
+            throw new IOException(Messages.WELL_WORKING);
         isRefilling = true;
-        remainingTimeToRefill = REFILL_TIME[level];
-    }
-
-    @Override
-    public void upgrade() throws AlreadyAtMaxLevelException
-    {
-        if (level == MAX_LEVEL)
-            throw new AlreadyAtMaxLevelException();
-        level++;
-    }
-
-    @Override
-    public int getUpgradeCost() throws AlreadyAtMaxLevelException
-    {
-        if (level == MAX_LEVEL)
-            throw new AlreadyAtMaxLevelException();
-        return UPGRADE_COST[level];
-    }
-
-    @Override
-    public void nextTurn()
-    {
-        if (isRefilling)
-        {
-            remainingTimeToRefill--;
-            if (remainingTimeToRefill == 0)
-                refill();
-        }
+        states.get(Integer.toString(level)).play();
     }
 
     private void refill()
     {
         isRefilling = false;
         remainingWater = CAPACITY[level];
+    }
+
+    @Override
+    public void upgrade() throws IOException
+    {
+        if (level == MAX_LEVEL)
+            throw new IOException(Messages.UPGRADE_BEYOND_MAX_LEVEL);
+        level++;
+        state = "level" + level;
+
+    }
+
+    @Override
+    public int getUpgradeCost() throws IOException
+    {
+        if (level == MAX_LEVEL)
+            throw new IOException(Messages.ALREADY_AT_MAX_LEVEL);
+        return UPGRADE_COST[level];
+    }
+
+    @Override
+    public int getLevel()
+    {
+        return level;
     }
 
 }

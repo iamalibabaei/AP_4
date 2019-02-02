@@ -3,19 +3,19 @@ package models.buildings;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import models.Map;
+import models.Messages;
 import models.Viewable;
-import models.exceptions.AlreadyAtMaxLevelException;
-import models.exceptions.InsufficientResourcesException;
-import models.exceptions.IsWorkingException;
 import models.interfaces.Time;
 import models.interfaces.Upgradable;
 import models.objects.Item;
 import models.objects.Point;
 import view.utility.constants.PictureAddresses;
 
+import javax.naming.InsufficientResourcesException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -88,11 +88,11 @@ public class Workshop extends Viewable implements Upgradable, Time
         return isWorking;
     }
 
-    public void startWorking(int productionFactor) throws IsWorkingException, InsufficientResourcesException
+    public void startWorking(int productionFactor) throws IOException
     {
         if (!isWorking)
         {
-            throw new IsWorkingException();
+            throw new IOException(Messages.WORKSHOP_WORKING);
         }
         this.productionFactor = productionFactor;
         isWorking = true;
@@ -127,22 +127,22 @@ public class Workshop extends Viewable implements Upgradable, Time
     }
 
     @Override
-    public void upgrade() throws AlreadyAtMaxLevelException
+    public void upgrade() throws IOException
     {
         if (level == 4)
         {
-            throw new AlreadyAtMaxLevelException();
+            throw new IOException(Messages.UPGRADE_BEYOND_MAX_LEVEL);
         }
         level++;
         maxProductionFactor++;
     }
 
     @Override
-    public int getUpgradeCost() throws AlreadyAtMaxLevelException
+    public int getUpgradeCost() throws IOException
     {
         if (level == 4)
         {
-            throw new AlreadyAtMaxLevelException();
+            throw new IOException(Messages.ALREADY_AT_MAX_LEVEL);
         }
         return buildCost + 100 * (1 + level);
     }

@@ -11,13 +11,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import models.buildings.Warehouse;
 import models.exceptions.InvalidArgumentException;
-import models.exceptions.NotEnoughSpaceException;
 import models.objects.Item;
 import models.transportation.Truck;
 import view.MainView;
 import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
+import java.io.IOException;
 import java.util.EnumMap;
 
 public class View extends Pane {
@@ -94,11 +94,12 @@ public class View extends Pane {
         }
         try {
             InGameController.getInstance().addToStash("truck", item.name(),amount );
-        } catch (NotEnoughSpaceException e) {
-            return;
-        } catch (InvalidArgumentException e) {
-            System.out.println("invallid argument in truckView");
-            return;
+        } catch (InvalidArgumentException e)
+        {
+            e.printStackTrace();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
         }
         updateInformation();
         setVisible(true);

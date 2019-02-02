@@ -1,4 +1,4 @@
-package view.gameScene.helicopter;
+/*package view.gameScene.helicopter;
 
 import controller.InGameController;
 import javafx.event.EventHandler;
@@ -9,15 +9,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
-import models.exceptions.NotEnoughSpaceException;
 import models.objects.Item;
 import models.transportation.Truck;
 import view.MainView;
 import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class View extends Pane {
@@ -82,11 +81,9 @@ public class View extends Pane {
         }
         try {
             InGameController.getInstance().addToStash("helicopter", item.name(),amount );
-        } catch (NotEnoughSpaceException e) {
-            return;
-        } catch (InvalidArgumentException e) {
-            System.out.println("invallid argument in helocopterView");
-            return;
+        } catch (InvalidArgumentException e)
+        {
+            e.printStackTrace();
         }
         updateInformation();
         setVisible(true);
@@ -137,8 +134,11 @@ public class View extends Pane {
                 InGameController.getInstance().sendHelicopter();
                 view.gameScene.View.getInstance().closehelicopter();
                 view.gameScene.View.getInstance().showHelicopterPath();
-            } catch (InsufficientResourcesException e) {
-                //TODO
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            //TODO
             }
         });
         sendTruck.relocate(0, 0);
@@ -207,4 +207,4 @@ public class View extends Pane {
         view.gameScene.helicopter.View.getInstance().updateInformation();
         view.gameScene.helicopter.View.getInstance().setVisible(true);
     }
-}
+}*/

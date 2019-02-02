@@ -1,9 +1,10 @@
 package models;
 
 import models.buildings.Well;
-import models.exceptions.AlreadyAtMaxLevelException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -20,7 +21,7 @@ class WellTest
     @Test
     void shouldNotUpgradeBeyondLevel2()
     {
-        assertThrows(AlreadyAtMaxLevelException.class,
+        assertThrows(IOException.class,
                 () ->
                 {
                     well.upgrade();

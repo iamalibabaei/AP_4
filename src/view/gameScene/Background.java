@@ -7,7 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import models.exceptions.InsufficientResourcesException;
 import models.exceptions.InvalidArgumentException;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
@@ -15,6 +14,7 @@ import view.MainView;
 import view.utility.Utility;
 import view.utility.constants.PictureAddresses;
 
+import javax.naming.InsufficientResourcesException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ public class Background extends Pane implements Time
                     InGameController.getInstance().buyAnimal(animalName.toLowerCase());
                 } catch (InsufficientResourcesException e)
                 {
-                    MainView.getInstance().showExceptions(e, 30, 30);
+                    e.printStackTrace();
                 } catch (InvalidArgumentException e)
                 {
                     e.printStackTrace();

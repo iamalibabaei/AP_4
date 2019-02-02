@@ -1,36 +1,30 @@
 package view.menu.profiles;
 
 import controller.MenuController;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import models.account.Account;
 import view.MainView;
-import view.menu.View;
+import view.PaneBuilder;
 import view.utility.Utility;
 import view.utility.constants.PictureAddresses;
 
 import java.io.IOException;
 
-public class ChooseProfile extends Pane
+public class ChooseProfile extends PaneBuilder
 {
     private static ChooseProfile instance = new ChooseProfile();
-    private ObservableList<Node> list;
     ChoiceBox<String> choiceBox;
 
     private ChooseProfile()
     {
-        relocate(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.3);
-        list = getChildren();
+        super(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.3);
         setVisible(false);
-        build();
     }
 
     public static ChooseProfile getInstance()
@@ -38,15 +32,17 @@ public class ChooseProfile extends Pane
         return instance;
     }
 
-    private void build()
+    @Override
+    protected void build()
     {
         buildMenuTemplate();
         buildGetAccounts();
         buildAddNewPlayer();
-        StackPane backButton = Utility.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.4, MainView.HEIGHT * 0.3,
-                MainView.HEIGHT * 0.3 / 2,"Back",
+        StackPane backButton = Utility.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.4,
+                MainView.HEIGHT * 0.3,
+                MainView.HEIGHT * 0.3 / 2, "Back",
                 event -> setVisible(false));
-        list.addAll(backButton);
+        childrenList.addAll(backButton);
     }
 
     private void buildMenuTemplate()
@@ -55,7 +51,7 @@ public class ChooseProfile extends Pane
         imageView.relocate(0, -MainView.HEIGHT * 0.1);
         imageView.setFitHeight(2 * MainView.HEIGHT / 3);
         imageView.setFitWidth(MainView.WIDTH * 0.4);
-        list.add(imageView);
+        childrenList.add(imageView);
     }
 
     private void buildGetAccounts()
@@ -63,14 +59,14 @@ public class ChooseProfile extends Pane
         Text text = new Text("Choose Your Account");
         text.setFont(Font.font("Rage Italic", 25));
         text.relocate(MainView.WIDTH * 0.1, 0);
-        list.addAll(text);
+        childrenList.addAll(text);
         choiceBox = new ChoiceBox<>();
         choiceBox.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.1);
         choiceBox.setVisible(true);
         StackPane startGameButton = Utility.makeMenuButton(MainView.WIDTH * 0.125, 20, MainView.HEIGHT * 0.3,
-                MainView.HEIGHT * 0.3 / 2,"Go",
+                MainView.HEIGHT * 0.3 / 2, "Go",
                 event -> goToMissionView());
-        list.addAll(choiceBox, startGameButton);
+        childrenList.addAll(choiceBox, startGameButton);
     }
 
     private void buildAddNewPlayer()
@@ -84,10 +80,11 @@ public class ChooseProfile extends Pane
         PasswordField password = new PasswordField();
         password.setPromptText("Password");
         password.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.25);
-        StackPane submitButton = Utility.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.3, MainView.HEIGHT * 0.3,
-                MainView.HEIGHT * 0.3 / 2,"SUBMIT",
+        StackPane submitButton = Utility.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.3,
+                MainView.HEIGHT * 0.3,
+                MainView.HEIGHT * 0.3 / 2, "SUBMIT",
                 event -> addNewPlayer(name, password));
-        list.addAll(newPlayerText, name, password, submitButton);
+        childrenList.addAll(newPlayerText, name, password, submitButton);
     }
 
     private void goToMissionView()
@@ -95,10 +92,12 @@ public class ChooseProfile extends Pane
         String name = choiceBox.getValue();
         try
         {
+            System.out.println(name);
             MenuController.getInstance().setCurrentAccount(name);
         } catch (IOException e)
         {
-            list.add(Utility.showError(Utility.ERROR_MESSAGE_MENU_X, Utility.ERROR_MESSAGE_MENU_Y, e.getMessage()));
+            childrenList.add(Utility.showError(Utility.ERROR_MESSAGE_MENU_X, Utility.ERROR_MESSAGE_MENU_Y,
+                    e.getMessage()));
             return;
 
         }
@@ -116,7 +115,8 @@ public class ChooseProfile extends Pane
             choiceBox.getItems().addAll(Account.getAllAccounts());
         } catch (IOException e)
         {
-            list.add(Utility.showError(Utility.ERROR_MESSAGE_MENU_X, Utility.ERROR_MESSAGE_MENU_Y, e.getMessage()));
+            childrenList.add(Utility.showError(Utility.ERROR_MESSAGE_MENU_X, Utility.ERROR_MESSAGE_MENU_Y,
+                    e.getMessage()));
         } finally
         {
             name.clear();
@@ -129,6 +129,7 @@ public class ChooseProfile extends Pane
         choiceBox.getItems().clear();
         choiceBox.getItems().addAll(Account.getAllAccounts());
         setVisible(!isVisible());
+
     }
 
 }

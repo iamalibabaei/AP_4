@@ -1,12 +1,12 @@
 package models.transportation;
 
+import models.Messages;
 import models.Viewable;
-import models.exceptions.AlreadyAtMaxLevelException;
-import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Time;
 import models.interfaces.Upgradable;
 import models.objects.Item;
 
+import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -45,11 +45,11 @@ public abstract class Transporter extends Viewable implements Upgradable, Time
         list = new EnumMap<>(Item.Type.class);
     }
 
-    public void addToList(Item.Type itemType, int count) throws NotEnoughSpaceException
+    public void addToList(Item.Type itemType, int count) throws IOException
     {
         if (capacity - usedCapacity() < itemType.OCCUPIED_SPACE * count)
         {
-            throw new NotEnoughSpaceException();
+            throw new IOException(Messages.TRANSPORTER_STASH_FULL);
         }
         if (list.containsKey(itemType))
         {
@@ -85,11 +85,11 @@ public abstract class Transporter extends Viewable implements Upgradable, Time
     }
 
     @Override
-    public void upgrade() throws AlreadyAtMaxLevelException
+    public void upgrade() throws IOException
     {
         if (level == 3)
         {
-            throw new AlreadyAtMaxLevelException();
+            throw new IOException(Messages.UPGRADE_BEYOND_MAX_LEVEL);
         }
         level++;
         timeToArrive -= UPGRADE_SPEED_BOOST;
@@ -97,11 +97,11 @@ public abstract class Transporter extends Viewable implements Upgradable, Time
     }
 
     @Override
-    public int getUpgradeCost() throws AlreadyAtMaxLevelException
+    public int getUpgradeCost() throws IOException
     {
         if (level == 3)
         {
-            throw new AlreadyAtMaxLevelException();
+            throw new IOException(Messages.ALREADY_AT_MAX_LEVEL);
         }
         return UPGRADE_COST_LIST[level];
     }

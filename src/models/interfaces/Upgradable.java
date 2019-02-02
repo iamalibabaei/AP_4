@@ -1,11 +1,12 @@
 package models.interfaces;
 
-import models.exceptions.AlreadyAtMaxLevelException;
+
+import java.io.IOException;
 
 public interface Upgradable
 {
-    void upgrade() throws AlreadyAtMaxLevelException;
-    int getUpgradeCost() throws AlreadyAtMaxLevelException;
+    void upgrade() throws IOException;
+    int getUpgradeCost() throws IOException;
     int getLevel();
 
 }

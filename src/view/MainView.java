@@ -11,8 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import models.account.Account;
-import models.exceptions.InsufficientResourcesException;
-import models.exceptions.IsWorkingException;
 import models.misc.Mission;
 import models.objects.Entity;
 import models.objects.Grass;
@@ -90,6 +88,7 @@ public class MainView extends Application
     public void goToMap()
     {
         mainStage.setScene(MissionScene.getInstance());
+        mainStage.setFullScreen(true);
     }
 
     public void goToMenu()
@@ -101,17 +100,7 @@ public class MainView extends Application
     public void startGame(Mission mission)
     {
         mainStage.setScene(View.getInstance());
-    }
-
-    public void showExceptions(Exception e, double x, double y)
-    {
-        if (e instanceof InsufficientResourcesException)
-        {
-
-        } else if (e instanceof IsWorkingException)
-        {
-
-        }
+        mainStage.setFullScreen(true);
     }
 
     public void addEntityToMap(Entity entity)

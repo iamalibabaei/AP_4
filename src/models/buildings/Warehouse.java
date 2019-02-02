@@ -1,12 +1,16 @@
 package models.buildings;
 
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+import models.Messages;
 import models.Viewable;
-import models.exceptions.AlreadyAtMaxLevelException;
-import models.exceptions.InsufficientResourcesException;
-import models.exceptions.NotEnoughSpaceException;
 import models.interfaces.Upgradable;
 import models.objects.Item;
+import view.utility.SpriteAnimation;
+import view.utility.Utility;
+import view.utility.constants.PictureAddresses;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -34,6 +38,15 @@ public class Warehouse extends Viewable implements Upgradable
         level = 0;
         storedItems = new EnumMap<>(Item.Type.class);
         remainingCapacity = CAPACITY[level];
+        for (int i = 0; i < 4; i++)
+        {
+            ImageView imageView = Utility.getImageView(PictureAddresses.WAREHOUSE_PICTURE_ROOT + level + ".png");
+            SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.INDEFINITE, 1, 1, 0, 0,
+                    (int) imageView.getFitWidth(),
+                    (int) imageView.getFitHeight());
+            states.putIfAbsent("level" + level, spriteAnimation);
+            spriteAnimation.stop();
+        }
     }
 
     public static Warehouse getInstance()
@@ -55,7 +68,7 @@ public class Warehouse extends Viewable implements Upgradable
         }
     }
 
-    public int moveToWorkshop(Map<Item.Type, Integer> base, int maxCoefficient) throws InsufficientResourcesException
+    public int moveToWorkshop(Map<Item.Type, Integer> base, int maxCoefficient) throws IOException
     {
         int maxResourceAvailable = 999;
         for (Map.Entry<Item.Type, Integer> entry : base.entrySet())
@@ -65,7 +78,7 @@ public class Warehouse extends Viewable implements Upgradable
         }
         if (maxResourceAvailable == 0)
         {
-            throw new InsufficientResourcesException();
+            throw new IOException(Messages.NOT_ENOUGH_RESOURCES);
         }
         maxResourceAvailable = Math.min(maxResourceAvailable, maxCoefficient);
         for (Map.Entry<Item.Type, Integer> entry : base.entrySet())
@@ -76,7 +89,7 @@ public class Warehouse extends Viewable implements Upgradable
         return maxResourceAvailable;
     }
 
-    public List<Item> store(List<Item> items) throws NotEnoughSpaceException
+    public List<Item> store(List<Item> items) throws IOException
     {
         boolean noSpaceForOneItem = true;
         List<Item> stored = new ArrayList<>();
@@ -91,27 +104,27 @@ public class Warehouse extends Viewable implements Upgradable
         }
         if (noSpaceForOneItem)
         {
-            throw new NotEnoughSpaceException();
+            throw new IOException(Messages.NOT_ENOUGH_SPACE);
         }
         return stored;
     }
 
     @Override
-    public void upgrade() throws AlreadyAtMaxLevelException
+    public void upgrade() throws IOException
     {
         if (level == MAX_LEVEL)
         {
-            throw new AlreadyAtMaxLevelException();
+            throw new IOException(Messages.UPGRADE_BEYOND_MAX_LEVEL);
         }
         level++;
     }
 
     @Override
-    public int getUpgradeCost() throws AlreadyAtMaxLevelException
+    public int getUpgradeCost() throws IOException
     {
         if (level == MAX_LEVEL)
         {
-            throw new AlreadyAtMaxLevelException();
+            throw new IOException(Messages.ALREADY_AT_MAX_LEVEL);
         }
         return UPGRADE_COST[level];
     }
