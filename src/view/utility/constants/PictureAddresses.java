@@ -25,6 +25,7 @@ public class PictureAddresses
     public static final String MENU_ROOSTER = MENU + "rooster.png";
     public static final String MENU_PIG = MENU + "pig.png";
     public static final String MENU_BUTTON = MENU + "button.png";
+    public static final String MENU_BUTTON_BRIGHT = MENU + "buttonMouseOver.png";
     public static final String WELL_PICTURE_ROOT = GRAPHICS_ROOT + "Service/Well/";
     public static final String MISSION_SCENE = GRAPHICS_ROOT + "missionScene/";
     public static final String MISSION_SCENE_BACKGROUND = MISSION_SCENE + "back.png";

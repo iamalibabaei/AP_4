@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import view.MainView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +16,9 @@ import java.io.FileNotFoundException;
 
 public class Utility
 {
+    public static final double ERROR_MESSAGE_MENU_X = MainView.WIDTH * 0.01;
+    public static final double ERROR_MESSAGE_MENU_Y = -MainView.HEIGHT * 0.23;
+
     public static Image getImage(String path)
     {
         Image image = null;

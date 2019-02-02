@@ -65,10 +65,11 @@ public class ChooseProfile
         text.setFont(Font.font("Rage Italic", 25));
         text.relocate(MainView.WIDTH * 0.1, 0);
         list.addAll(text);
-
         choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll(Account.getAllAccounts());
-        choiceBox.setOnMouseClicked(event -> choiceBox.getItems().addAll(Account.getAllAccounts()));
+        choiceBox.setOnMouseClicked(event -> {
+            choiceBox.getItems().clear();
+            choiceBox.getItems().addAll(Account.getAllAccounts());
+        });
         choiceBox.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.1);
         choiceBox.setVisible(true);
         StackPane startGameButton = View.makeMenuButton(MainView.WIDTH * 0.125, 20, "Go",
@@ -99,7 +100,7 @@ public class ChooseProfile
             MenuController.getInstance().setCurrentAccount(name);
         } catch (IOException e)
         {
-            list.add(Utility.showError(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.1, e.getMessage()));
+            list.add(Utility.showError(Utility.ERROR_MESSAGE_MENU_X, Utility.ERROR_MESSAGE_MENU_Y, e.getMessage()));
         }
         MainView.getInstance().goToMap();
 
@@ -113,7 +114,7 @@ public class ChooseProfile
             // todo show message
         } catch (IOException e)
         {
-            list.add(Utility.showError(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.1, e.getMessage()));
+            list.add(Utility.showError(Utility.ERROR_MESSAGE_MENU_X, Utility.ERROR_MESSAGE_MENU_Y, e.getMessage()));
         } finally
         {
             name.clear();
