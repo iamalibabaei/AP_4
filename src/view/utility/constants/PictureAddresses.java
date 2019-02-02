@@ -6,7 +6,7 @@ public class PictureAddresses
     public static final String MISSIONS_ROOT = "res/missions/";
     public static final String SOUNDS_ROOT =  "res/sounds/interface/";
     public static final String SERVICES_ROOT = GRAPHICS_ROOT + "Service/";
-    public static final String GAME_BACKGROUND_ROOT = GRAPHICS_ROOT + "Background/";
+    public static final String GAME_BACKGROUND_ROOT = GRAPHICS_ROOT + "GameBackground/";
     public static final String ANIMAL_ICONS_ROOT = GAME_BACKGROUND_ROOT + "AnimalIcons/";
     public static final String HELICOPTER_PICTURE_ROOT = SERVICES_ROOT + "Helicopter/";
     public static final String WAREHOUSE_PICTURE_ROOT = GAME_BACKGROUND_ROOT + "Depot/";

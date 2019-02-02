@@ -10,6 +10,7 @@ import models.account.Account;
 import models.misc.Mission;
 import models.objects.Item;
 import models.objects.animals.Animal;
+import view.MainView;
 import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
@@ -30,12 +31,12 @@ public class MissionInfo extends Pane
     private MissionInfo() {
         text = new Text();
         ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.MISSION_SCENE_TAB));
-        imageView.setFitHeight(1000); // todo fix
-        imageView.setFitWidth(1000); // todo fix
-        imageView.relocate(200, 0); // todo fix
+        imageView.setFitHeight(MainView.HEIGHT * 1.2);
+        imageView.setFitWidth(MainView.HEIGHT * 1.2);
+        imageView.relocate(MainView.HEIGHT * 0.1, 0);
         getChildren().addAll(imageView);
         text.setFont(Font.font("Rage Italic", 25));
-        text.relocate(500, 250); // todo fix
+        text.relocate(MainView.HEIGHT * 0.45, MainView.HEIGHT * 0.3);
         getChildren().addAll(text);
         addButtons();
 
@@ -44,25 +45,25 @@ public class MissionInfo extends Pane
 
     private void addButtons() {
         ImageView start = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
-        start.setFitHeight(100);
-        start.setFitWidth(200);
+        start.setFitHeight(MainView.HEIGHT * 0.15);
+        start.setFitWidth(MainView.HEIGHT * 0.3);
         StackPane startGame = new StackPane();
         Text startGameText = new Text("start game");
         startGameText.setFont(Font.font("Rage Italic", 25));
         startGame.getChildren().addAll(start, startGameText);
         startGame.setOnMouseClicked(event -> startGame());
-        startGame.relocate(750, 265);
+        startGame.relocate(MainView.HEIGHT * 0.75, MainView.HEIGHT * 0.3);
         getChildren().addAll(startGame);
 
         ImageView exitButton = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
-        exitButton.setFitHeight(100);
-        exitButton.setFitWidth(200);
+        exitButton.setFitHeight(MainView.HEIGHT * 0.15);
+        exitButton.setFitWidth(MainView.HEIGHT * 0.3);
         StackPane exit = new StackPane();
         Text exitText = new Text("back");
         exitText.setFont(Font.font("Rage Italic", 25));
         exit.getChildren().addAll(exitButton, exitText);
         exit.setOnMouseClicked(event -> setVisible(false));
-        exit.relocate(750, 320);
+        exit.relocate(MainView.HEIGHT * 0.75, MainView.HEIGHT * 0.45);
         getChildren().addAll(exit);
     }
 

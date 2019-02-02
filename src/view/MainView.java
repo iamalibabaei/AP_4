@@ -88,7 +88,6 @@ public class MainView extends Application
     public void startGame(Mission mission)
     {
         mainStage.setScene(View.getInstance());
-        InGameController.getInstance().startGame(mission);
     }
 
     public void showExceptions(Exception e, double x, double y)
