@@ -171,7 +171,6 @@ public class View extends Scene implements Time
         x = MainView.WIDTH - (MainView.WIDTH - place6.getImage().getWidth() * 2 + MainView.WIDTH / 3.4);
         place6Pane.relocate(MainView.WIDTH - place6.getImage().getWidth() * 2 + x
                 , MainView.HEIGHT / 1.6);
-        System.out.println("xxx" + (MainView.WIDTH - place6.getImage().getWidth() * 2 + MainView.WIDTH / 3.4));
         root.getChildren().addAll(place6Pane);
         place6Pane.setOnMouseClicked(event -> openWorkshopChoices(6));
 

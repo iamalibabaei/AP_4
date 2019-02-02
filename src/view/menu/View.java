@@ -41,7 +41,7 @@ public class View extends Scene
         StackPane startGame = Utility.makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3,MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2 ,"Start Game", event -> ChooseProfile.getInstance().toggleChooseProfilePane());
         StackPane setting = Utility.makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5,MainView.HEIGHT * 0.3,
-                MainView.HEIGHT * 0.3 / 2,"Settings", event -> MainView.getInstance().goToSetting());
+                MainView.HEIGHT * 0.3 / 2,"Settings", event -> view.settings.View.getInstance().start());
         StackPane multiPlayer = Utility.makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4,MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Multiplayer",
                 event -> MainView.getInstance().multiPlayer());
@@ -52,8 +52,7 @@ public class View extends Scene
                     SoundPlayer.getInstance().play(Utility.getSound(SoundAddresses.MENU_COW_SOUND));
                 });
         root.getChildren().addAll(Background.getInstance(), startGame, multiPlayer, setting, exit, ChooseProfile.getInstance(),
-                ExitPanel.getInstance(), Panel.getInstance());
-        SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.MENU_MUSIC));
+                ExitPanel.getInstance(), Panel.getInstance(), view.settings.View.getInstance());
 
     }
 

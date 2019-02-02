@@ -27,7 +27,6 @@ public class Background extends Pane implements Time
     {
         setHeight(MainView.HEIGHT);
         setWidth(MainView.WIDTH);
-        System.out.println("hieghtttt = " + this.getWidth());
         build();
     }
 
@@ -69,8 +68,7 @@ public class Background extends Pane implements Time
 
             if (type.BUY_COST < InGameController.getInstance().getMoney())
             {
-                System.out.println(type.BUY_COST);
-                System.out.println(InGameController.getInstance().getMoney());
+
                 try
                 {
                     backImage = new Image(new FileInputStream(
@@ -81,8 +79,6 @@ public class Background extends Pane implements Time
                 }
             } else
             {
-                System.out.println(type.BUY_COST);
-                System.out.println(InGameController.getInstance().getMoney());
                 try
                 {
                     backImage = new Image(new FileInputStream(

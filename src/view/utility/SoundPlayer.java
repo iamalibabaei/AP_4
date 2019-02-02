@@ -8,9 +8,10 @@ import models.objects.Entity;
 public class SoundPlayer {
     private static SoundPlayer soundPlayer = new SoundPlayer();
     private MediaPlayer backgroundMediaPlayer;
-    private MediaPlayer mediaPlayer;
+    private double mediaVolume;
 
     private SoundPlayer() {
+        mediaVolume = 1.0;
     }
 
     public static SoundPlayer getInstance() {
@@ -28,11 +29,21 @@ public class SoundPlayer {
     }
 
     public void play(String sound) {
-        mediaPlayer = new MediaPlayer(new Media(sound));
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(sound));
+        mediaPlayer.setVolume(mediaVolume);
         mediaPlayer.play();
     }
 
     public static void play(Entity entity) {
 
+    }
+
+    public void setBackgroundSoundVolume(double value) {
+        backgroundMediaPlayer.setVolume(value);
+    }
+
+
+    public void setMediaVolume(double mediaVolume) {
+        this.mediaVolume = mediaVolume;
     }
 }

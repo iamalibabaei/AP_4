@@ -33,7 +33,6 @@ public class MapView extends Pane implements Time {
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println((event.getSceneX()- 325) / WIDTH_BASE+"   "+ event.getY() / HEIGHT_BASE);
                 MenuController.getInstance().click((event.getX() - 325) / WIDTH_BASE, event.getY() / HEIGHT_BASE);
             }
         });

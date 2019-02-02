@@ -22,6 +22,9 @@ import view.gameScene.View;
 import view.menu.ExitPanel;
 import view.menu.selectMission.MissionScene;
 import view.multiplayer.Panel;
+import view.utility.SoundPlayer;
+import view.utility.Utility;
+import view.utility.constants.SoundAddresses;
 
 public class MainView extends Application
 {
@@ -62,10 +65,10 @@ public class MainView extends Application
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setResizable(true);
+        SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.MENU_MUSIC));
         mainStage.setScene(view.menu.View.getInstance());
         mainStage.show();
         mainStage.setOnCloseRequest(event -> close());
-        System.out.println("end");
     }
 
     public void close()
@@ -89,12 +92,9 @@ public class MainView extends Application
         mainStage.setScene(MissionScene.getInstance());
     }
 
-    public void goToSetting()
-    {
-    }
-
     public void goToMenu()
     {
+        SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.MENU_MUSIC));
         mainStage.setScene(view.menu.View.getInstance());
     }
 
