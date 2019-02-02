@@ -2,6 +2,7 @@ package view.menu;
 
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -17,8 +18,9 @@ import view.utility.SoundPlayer;
 import view.utility.Utility;
 import view.utility.constants.SoundAddresses;
 
-public class View extends Pane
+public class View extends Scene
 {
+    private Group root;
     public static View getInstance()
     {
         return instance;
@@ -28,9 +30,8 @@ public class View extends Pane
 
     private View()
     {
-        setWidth(MainView.WIDTH);
-        setHeight(MainView.HEIGHT);
-        relocate(0,0);
+        super(new Group(), MainView.WIDTH, MainView.HEIGHT);
+        root = (Group) getRoot();
         build();
     }
 
@@ -44,7 +45,7 @@ public class View extends Pane
                 event -> multiPlayer());
         StackPane exit = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6, "Exit",
                 event -> MainView.getInstance().close());
-        getChildren().addAll(Background.getInstance(), startGame, multiPlayer, setting, exit, ChooseProfile.getInstance(), ExitPanel.getInstance());
+        root.getChildren().addAll(Background.getInstance(), startGame, multiPlayer, setting, exit, ChooseProfile.getInstance(), ExitPanel.getInstance());
         SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.MENU_MUSIC));
 
     }

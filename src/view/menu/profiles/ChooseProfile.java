@@ -109,7 +109,8 @@ public class ChooseProfile extends Pane
         try
         {
             Account.addAccount(name.getText(), password.getText());
-            // todo show message
+            choiceBox.getItems().clear();
+            choiceBox.getItems().addAll(Account.getAllAccounts());
         } catch (IOException e)
         {
             list.add(Utility.showError(Utility.ERROR_MESSAGE_MENU_X, Utility.ERROR_MESSAGE_MENU_Y, e.getMessage()));

@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import models.account.Account;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
 import models.misc.Mission;
@@ -59,8 +60,7 @@ public class MainView extends Application
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setResizable(true);
-        mainStage.setScene(mainScene);
-        setScene(view.menu.View.getInstance());
+        mainStage.setScene(view.menu.View.getInstance());
         mainStage.show();
         mainStage.setOnCloseRequest(event -> close());
         System.out.println("end");
@@ -71,20 +71,9 @@ public class MainView extends Application
         ExitPanel.getInstance().close();
     }
 
-    private void setScene(Pane pane)
-    {
-        System.out.println(root.getChildren().size());
-        root.getChildren().clear();
-        System.out.println(root.getChildren().size());
-        root.getChildren().add(pane);
-        System.out.println(root.getChildren().size());
-        mainStage.show();
-    }
-
     public void goToMap()
     {
-        MissionScene.getInstance().updateInfo(MenuController.getInstance().getCurrentAccount());
-        setScene(MissionScene.getInstance());
+        mainStage.setScene(MissionScene.getInstance());
     }
 
     public void goToSetting()
@@ -93,7 +82,7 @@ public class MainView extends Application
 
     public void goToMenu()
     {
-//        mainStage.setScene(View.getInstance());
+        mainStage.setScene(view.menu.View.getInstance());
     }
 
     public void startGame(Mission mission)

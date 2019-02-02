@@ -1,11 +1,14 @@
 package view.menu.selectMission;
 
+import controller.MenuController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -21,7 +24,7 @@ import view.utility.constants.PictureAddresses;
 
 import java.util.ArrayList;
 
-public class MissionScene extends Pane
+public class MissionScene extends Scene
 {
     public static MissionScene getInstance()
     {
@@ -29,23 +32,28 @@ public class MissionScene extends Pane
     }
 
     private static MissionScene instance = new MissionScene();
-    private static ObservableList<Node> list;
+    private Group root;
+
     private static Account account;
 
     private MissionScene()
     {
-        list = getChildren();
+        super(new Group(), MainView.WIDTH, MainView.HEIGHT);
+        root = (Group) getRoot();
+        build();
+
     }
 
     public void updateInfo(Account account)
     {
         MissionScene.account = account;
-        list.clear();
+        root.getChildren().clear();
         build();
     }
 
     private void build()
     {
+        account = MenuController.getInstance().getCurrentAccount();
         int missionsPassed = account.getMissionsPassed();
         buildBackground();
         ArrayList<String> missions = Mission.loadDefaultMissions();
@@ -75,13 +83,13 @@ public class MissionScene extends Pane
         cloud.setFitWidth(MainView.WIDTH);
         cloud.setFitHeight(MainView.HEIGHT);
         cloud.relocate(0, 0);
-        list.addAll(cloud);
+        root.getChildren().addAll(cloud);
 
         ImageView missionWallpaper = Utility.getImageView(PictureAddresses.MISSION_SCENE_BACKGROUND);
         missionWallpaper.setFitWidth(MainView.WIDTH);
         missionWallpaper.setFitHeight(MainView.HEIGHT);
         missionWallpaper.relocate(0, 0);
-        list.addAll(missionWallpaper);
+        root.getChildren().addAll(missionWallpaper);
     }
 
     private void createButton(double x, double y, Color color, String mission)
@@ -98,7 +106,7 @@ public class MissionScene extends Pane
             stackPane.setOnMouseClicked(event -> MissionInfo.getInstance().showMission(mission, account));
         }
         stackPane.relocate(x, y);
-        list.addAll(stackPane);
+        root.getChildren().addAll(stackPane);
     }
 
     private void buildMenuButton(double XCenter, double YCenter)
@@ -108,7 +116,7 @@ public class MissionScene extends Pane
         sun.setFitWidth(250); // todo fix
         sun.relocate(XCenter - 50, YCenter - 50); // todo fix
         sun.setOnMouseClicked(event -> MainView.getInstance().goToMenu());
-        list.addAll(sun);
+        root.getChildren().addAll(sun);
         //Timeline
         KeyValue kvRotateSun = new KeyValue(sun.rotateProperty(), 180);
         KeyFrame keyFrameSun = new KeyFrame(Duration.millis(2000), kvRotateSun);
@@ -134,7 +142,7 @@ public class MissionScene extends Pane
         );
         text.setFont(Font.font("Courier New", 25));
         text.relocate(960, 530); // todo fix
-        list.addAll(billboard, text, MissionInfo.getInstance());
+        root.getChildren().addAll(billboard, text, MissionInfo.getInstance());
     }
 
     private void runGame(String text)
