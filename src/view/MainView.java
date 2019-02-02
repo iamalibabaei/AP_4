@@ -21,6 +21,7 @@ import models.objects.animals.Animal;
 import view.gameScene.View;
 import view.menu.ExitPanel;
 import view.menu.selectMission.MissionScene;
+import view.multiplayer.Panel;
 
 public class MainView extends Application
 {
@@ -57,6 +58,7 @@ public class MainView extends Application
     {
 
         System.out.println("start");
+        primaryStage.setFullScreenExitHint("");
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setResizable(true);
@@ -69,6 +71,17 @@ public class MainView extends Application
     public void close()
     {
         ExitPanel.getInstance().close();
+    }
+
+    public void multiPlayer()
+    {
+        Panel.getInstance().start();
+    }
+
+    private void setScene(Pane pane)
+    {
+        root.getChildren().clear();
+        root.getChildren().add(pane);
     }
 
     public void goToMap()

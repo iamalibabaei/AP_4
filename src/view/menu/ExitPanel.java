@@ -19,7 +19,6 @@ public class ExitPanel extends Pane {
 
     private ExitPanel(){
         relocate(MainView.WIDTH * 0.3, MainView.HEIGHT * 0.4);
-
         setVisible(false);
         list = getChildren();
         build();
@@ -31,11 +30,13 @@ public class ExitPanel extends Pane {
 
     private void build(){
         buildMenuTemplate();
-        StackPane exitButton = View.makeMenuButton(MainView.WIDTH * 0.27, MainView.HEIGHT * 0.05, "Back",
+        StackPane backButton = Utility.makeMenuButton(MainView.WIDTH * 0.27, MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.3,
+                MainView.HEIGHT * 0.3 / 2,"Back",
                 event -> {
                     setVisible(false);
                 });
-        StackPane backButton = View.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.05, "Exit",
+        StackPane exitButton = Utility.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.3,
+                MainView.HEIGHT * 0.3 / 2,"Exit",
                 event -> {
                     System.exit(0);
                 });

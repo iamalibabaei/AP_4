@@ -1,8 +1,12 @@
 package view.utility;
 
 import javafx.animation.FadeTransition;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -10,6 +14,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import view.MainView;
+import view.utility.constants.PictureAddresses;
+import view.utility.constants.SoundAddresses;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -71,5 +77,45 @@ public class Utility
         }).start();
         return error;
     }
+
+
+    public static void fade(Duration duration, Node node){
+        FadeTransition fadeTransition = new FadeTransition(duration, node);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.play();
+        fadeTransition.setAutoReverse(true);
+    }
+    public static StackPane makeMenuButton(double x, double y, final double width, final double height, String name, EventHandler<? super MouseEvent> value)
+    {
+        StackPane pane = new StackPane();
+        Text text = new Text(name);
+        text.setFont(Font.font("SWItalt", 15));
+        text.setFill(Color.WHITE);
+        ImageView button = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
+        ImageView buttonMouseOver = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON_BRIGHT));
+        buttonMouseOver.setFitWidth(width);
+        buttonMouseOver.setFitHeight(height);
+        button.setFitWidth(width);
+        button.setFitHeight(height);
+        pane.getChildren().addAll(button, text);
+        pane.setOnMouseEntered(event -> {
+            pane.getChildren().removeAll(button, text);
+            pane.getChildren().addAll(buttonMouseOver, text);
+        });
+        pane.setOnMouseExited(event -> {
+            pane.getChildren().removeAll(buttonMouseOver, text);
+            pane.getChildren().addAll(button, text);
+        });
+        MediaPlayer sound = Utility.getPlayer(SoundAddresses.BUTTON_CLICK_SOUND);
+        sound.setOnEndOfMedia(sound::stop);
+        pane.setOnMouseClicked(event -> {
+            sound.play();
+            value.handle(event);
+        });
+        pane.relocate(x, y);
+        return pane;
+    }
+
 
 }

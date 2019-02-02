@@ -43,7 +43,8 @@ public class ChooseProfile extends Pane
         buildMenuTemplate();
         buildGetAccounts();
         buildAddNewPlayer();
-        StackPane backButton = View.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.4, "Back",
+        StackPane backButton = Utility.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.4, MainView.HEIGHT * 0.3,
+                MainView.HEIGHT * 0.3 / 2,"Back",
                 event -> setVisible(false));
         list.addAll(backButton);
     }
@@ -66,7 +67,8 @@ public class ChooseProfile extends Pane
         choiceBox = new ChoiceBox<>();
         choiceBox.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.1);
         choiceBox.setVisible(true);
-        StackPane startGameButton = View.makeMenuButton(MainView.WIDTH * 0.125, 20, "Go",
+        StackPane startGameButton = Utility.makeMenuButton(MainView.WIDTH * 0.125, 20, MainView.HEIGHT * 0.3,
+                MainView.HEIGHT * 0.3 / 2,"Go",
                 event -> goToMissionView());
         list.addAll(choiceBox, startGameButton);
     }
@@ -82,7 +84,8 @@ public class ChooseProfile extends Pane
         PasswordField password = new PasswordField();
         password.setPromptText("Password");
         password.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.25);
-        StackPane submitButton = View.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.3, "SUBMIT",
+        StackPane submitButton = Utility.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.3, MainView.HEIGHT * 0.3,
+                MainView.HEIGHT * 0.3 / 2,"SUBMIT",
                 event -> addNewPlayer(name, password));
         list.addAll(newPlayerText, name, password, submitButton);
     }
