@@ -26,7 +26,7 @@ public class View extends Pane
 
     private static View instance = new View();
 
-    public View()
+    private View()
     {
         setWidth(MainView.WIDTH);
         setHeight(MainView.HEIGHT);

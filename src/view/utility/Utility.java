@@ -22,16 +22,7 @@ public class Utility
 
     public static ImageView getImageView(String path)
     {
-        ImageView img = null;
-        try
-        {
-            img = new ImageView(new Image(path));
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return img;
+        return new ImageView(Utility.getImage(path));
     }
 
     public static Image getImage(String path)

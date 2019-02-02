@@ -29,7 +29,7 @@ public class MenuController
     private InGameController game;
     private Mission mission;
     private Account currentAccount;
-    private ArrayList<Account> accounts;
+
 
     public static void main(String[] args)
     {
@@ -269,16 +269,6 @@ public class MenuController
         return currentAccount;
     }
 
-    private Account getAccount(String name)
-    {
-        Account ret = null;
-        for (Account account : accounts)
-        {
-            if (account.getName().equals(name))
-                ret = account;
-        }
-        return ret;
-    }
 
     public void setCurrentAccount(Account account)
     {
@@ -295,7 +285,7 @@ public class MenuController
         {
             throw new IOException("There is no such account");
         }
-        currentAccount = getAccount(name);
+        currentAccount = Account.loadJson(name);
     }
 
 }

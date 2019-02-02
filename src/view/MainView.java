@@ -73,14 +73,18 @@ public class MainView extends Application
 
     private void setScene(Pane pane)
     {
+        System.out.println(root.getChildren().size());
         root.getChildren().clear();
+        System.out.println(root.getChildren().size());
         root.getChildren().add(pane);
+        System.out.println(root.getChildren().size());
+        mainStage.show();
     }
 
     public void goToMap()
     {
-//        MissionScene.getInstance().updateInfo();
-//        setScene(MissionScene.getInstance());
+        MissionScene.getInstance().updateInfo(MenuController.getInstance().getCurrentAccount());
+        setScene(MissionScene.getInstance());
     }
 
     public void goToSetting()

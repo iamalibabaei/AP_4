@@ -96,7 +96,10 @@ public class ChooseProfile extends Pane
         } catch (IOException e)
         {
             list.add(Utility.showError(Utility.ERROR_MESSAGE_MENU_X, Utility.ERROR_MESSAGE_MENU_Y, e.getMessage()));
+            return;
+
         }
+        setVisible(false);
         MainView.getInstance().goToMap();
 
     }

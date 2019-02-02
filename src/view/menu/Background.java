@@ -63,7 +63,8 @@ public class Background extends Pane
 
     private void buildCloud()
     {
-        ImageView cloud = new ImageView(Utility.getImage(PictureAddresses.MENU_CLOUD));
+        //ImageView cloud = new ImageView(Utility.getImage(PictureAddresses.MENU_CLOUD));
+        ImageView cloud = Utility.getImageView(PictureAddresses.MENU_CLOUD);
         cloud.setFitWidth(MainView.SCREEN_WIDTH * 4 / 3);
         cloud.setFitHeight(MainView.SCREEN_HEIGHT);
         cloud.relocate(-MainView.WIDTH / 3, 0);
