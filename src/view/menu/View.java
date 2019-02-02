@@ -10,7 +10,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import view.MainView;
 import view.menu.profiles.ChooseProfile;
 import view.utility.constants.PictureAddresses;
@@ -28,7 +27,7 @@ public class View
     public static void build(Group root)
     {
         StackPane startGame = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3, "Start Game",
-                event -> ChooseProfile.open());
+                event -> ChooseProfile.toggleChooseProfilePane());
         StackPane setting = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5, "Settings",
                 event -> MainView.getInstance().goToSetting());
         StackPane multiPlayer = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4, "Multiplayer",

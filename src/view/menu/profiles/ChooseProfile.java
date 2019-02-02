@@ -122,9 +122,9 @@ public class ChooseProfile
         }
     }
 
-    public static void open()
+    public static void toggleChooseProfilePane()
     {
-        pane.setVisible(true);
+        pane.setVisible(!pane.isVisible());
     }
 
 }
