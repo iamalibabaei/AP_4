@@ -6,10 +6,12 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -62,8 +64,21 @@ public class View extends SceneBuilder implements Time
         truckGraphic();
         buildWorkshopGraphic();
         helicopterGraphic();
+        gameMenuButton();
         childrenList.addAll(view.gameScene.truck.View.getInstance());
         childrenList.addAll(view.gameScene.workshop.View.getInstance());
+        childrenList.addAll(GameMenu.getInstance());
+    }
+
+    private void gameMenuButton() {
+        StackPane stackPane = Utility.makeMenuButton(- MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9, MainView.HEIGHT * 0.2, MainView.HEIGHT * 0.1
+                , "MENU", new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        GameMenu.getInstance().play();
+                    }
+                });
+        childrenList.addAll(stackPane);
     }
 
     private void wellGraphic()

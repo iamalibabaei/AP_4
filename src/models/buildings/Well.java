@@ -1,6 +1,5 @@
 package models.buildings;
 
-import com.sun.org.apache.regexp.internal.RE;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import models.Messages;
