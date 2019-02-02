@@ -41,7 +41,19 @@ public class Account implements Serializable {
         return yaGson.fromJson(json, Account.class);
     }
 
-    public static void toJason(Account account) {
+    public static void addAccount(String name, String password) throws IOException
+    {
+        if (getAllAccounts().contains(name))
+        {
+            throw new IOException("This name is already taken");
+        }
+        if (password.isEmpty() || name.isEmpty()){
+            throw new IOException("You didn't choose any username or password");
+        }
+        toJson(new Account(name, password));
+    }
+
+    public static void toJson(Account account) {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter("res/users/" + account.name + ".json");

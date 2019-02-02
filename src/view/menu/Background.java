@@ -16,12 +16,18 @@ import view.MainView;
 import view.utility.constants.PictureAddresses;
 import view.utility.SoundPlayer;
 import view.utility.Utility;
-import view.utility.constants.MusicAddresses;
+import view.utility.constants.SoundAddresses;
 
 public class Background
 {
-    private static Pane pane = new Pane();
-    private static ObservableList<Node> list = pane.getChildren();
+    private static Pane pane;
+    private static ObservableList<Node> list;
+
+    static
+    {
+        pane = new Pane();
+        list = pane.getChildren();
+    }
 
     private Background()
     {
@@ -157,7 +163,7 @@ public class Background
     {
         double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
-        String musicSound = Utility.getSound(MusicAddresses.MENU_ROOSTER_SOUND);
+        String musicSound = Utility.getSound(SoundAddresses.MENU_ROOSTER_SOUND);
         animalImage = Utility.getImage(PictureAddresses.MENU_ROOSTER);
         height = MainView.HEIGHT / 3;
         width = MainView.HEIGHT / 3;
@@ -175,7 +181,7 @@ public class Background
     {
         double XValueStart, YValueStart, XValueEnd, YValueEnd, rotate, height, width, time;
         Image animalImage;
-        String musicSound = Utility.getSound(MusicAddresses.MENU_COW_SOUND);
+        String musicSound = Utility.getSound(SoundAddresses.MENU_COW_SOUND);
         animalImage = Utility.getImage(PictureAddresses.MENU_COW);
         height = MainView.HEIGHT / 4;
         width = 2 * MainView.HEIGHT / 4;

@@ -1,179 +1,129 @@
 package view.menu.profiles;
 
 import controller.MenuController;
-import javafx.animation.FadeTransition;
-import javafx.scene.control.*;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import models.account.Account;
 import view.MainView;
-import view.utility.constants.PictureAddresses;
+import view.menu.View;
 import view.utility.Utility;
+import view.utility.constants.PictureAddresses;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public class ChooseProfile extends Pane {
-    private static ChooseProfile instance = new ChooseProfile();
-    private ChoiceBox<String> choiceBox;
-    TextField name;
-    PasswordField password;
+public class ChooseProfile
+{
+    private static Pane pane;
+    private static ObservableList<Node> list;
 
-    public static ChooseProfile getInstance() {
-        return instance;
+    static
+    {
+        pane = new Pane();
+        list = pane.getChildren();
     }
 
-    private ChooseProfile() {
-        relocate(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.3);
-        setVisible(false);
-        build();
+    private ChooseProfile()
+    {
     }
 
-    private void build() {
-        final double width = MainView.HEIGHT * 0.3, height = width / 2;
+    public static Pane build()
+    {
+        pane.relocate(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.3);
+        pane.setVisible(false);
+        buildMenuTemplate();
+        buildGetAccounts();
+        buildAddNewPlayer();
+        StackPane backButton = View.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.4, "Back",
+                event -> pane.setVisible(false));
+        list.addAll(backButton);
+
+        return pane;
+
+    }
+
+    private static void buildMenuTemplate()
+    {
         ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.GAME_MENU));
-        imageView.relocate(0, - MainView.HEIGHT * 0.1);
+        imageView.relocate(0, -MainView.HEIGHT * 0.1);
         imageView.setFitHeight(2 * MainView.HEIGHT / 3);
         imageView.setFitWidth(MainView.WIDTH * 0.4);
-        getChildren().addAll(imageView);
+        list.add(imageView);
+    }
 
-        Text text = new Text("choose your account");
+    private static void buildGetAccounts()
+    {
+        ChoiceBox<String> choiceBox;
+        Text text = new Text("Choose Your Account");
         text.setFont(Font.font("Rage Italic", 25));
         text.relocate(MainView.WIDTH * 0.1, 0);
-        getChildren().addAll(text);
+        list.addAll(text);
 
         choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll(Account.getAllAccounts());
+        choiceBox.setOnMouseClicked(event -> choiceBox.getItems().addAll(Account.getAllAccounts()));
         choiceBox.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.1);
+        choiceBox.setVisible(true);
+        StackPane startGameButton = View.makeMenuButton(MainView.WIDTH * 0.125, 20, "Go",
+                event -> goToMissionView(choiceBox.getValue()));
+        list.addAll(choiceBox, startGameButton);
+    }
 
-        ImageView button = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
-        button.setFitWidth(width);
-        button.setFitHeight(height);
-        StackPane goButton = new StackPane();
-        Text goText = new Text("GO");
-        goText.setFont(Font.font("SWItalt", 15));
-        goText.setFill(Color.WHITE);
-        goButton.getChildren().addAll(button, goText);
-        goButton.setOnMouseClicked(event -> go());
-        goButton.relocate(MainView.WIDTH * 0.125, 20);
-        getChildren().addAll(goButton, choiceBox);
-
-
-        //////new player
-        Text newPlayerText = new Text("or create a new account");
+    private static void buildAddNewPlayer()
+    {
+        Text newPlayerText = new Text("Or create a new account");
         newPlayerText.setFont(Font.font("SWItalt", 15));
         newPlayerText.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.15);
-        getChildren().addAll(newPlayerText);
-        name = new TextField();
-        name.setPromptText("name");
+        TextField name = new TextField();
+        name.setPromptText("Name");
         name.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.2);
-
-        password = new PasswordField();
-        password.setPromptText("password");
+        PasswordField password = new PasswordField();
+        password.setPromptText("Password");
         password.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.25);
-
-        ImageView submitButtin = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
-        submitButtin.setFitWidth(width);
-        submitButtin.setFitHeight(height);
-        StackPane submit = new StackPane();
-        Text submitText = new Text("SUBMIT");
-        submitText.setFont(Font.font("SWItalt", 15));
-        submitText.setFill(Color.WHITE);
-        submit.getChildren().addAll(submitButtin, submitText);
-        submit.setOnMouseClicked(event -> addNewPlayer());
-        submit.relocate(MainView.WIDTH * 0.05, MainView.HEIGHT * 0.3);
-
-        ImageView exitButton = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
-        exitButton.setFitWidth(width);
-        exitButton.setFitHeight(height);
-        StackPane exit = new StackPane();
-        Text backText = new Text("Back");
-        backText.setFont(Font.font("SWItalt", 15));
-        backText.setFill(Color.WHITE);
-        exit.getChildren().addAll(exitButton, backText);
-        exit.setOnMouseClicked(event -> setVisible(false));
-        exit.relocate(MainView.WIDTH * 0.05, MainView.HEIGHT * 0.4);
-
-        getChildren().addAll(name, password, submit, exit);
-
+        StackPane submitButton = View.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.3, "SUBMIT",
+                event -> addNewPlayer(name, password));
+        list.addAll(newPlayerText, name, password, submitButton);
     }
 
-    private void addNewPlayer() {
-        String nameOfPlayer = name.getText();
-        if (Account.getAllAccounts().contains(nameOfPlayer)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "this name is already taken");
-            alert.show();
-            return;
+    private static void goToMissionView(String name)
+    {
+        try
+        {
+            MenuController.getInstance().setCurrentAccount(name);
+        } catch (IOException e)
+        {
+            list.add(Utility.showError(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.1, e.getMessage()));
         }
-        String passwordOfPlayer = password.getText();
-        name.clear();
-        password.clear();
-        if (passwordOfPlayer.equals("") && nameOfPlayer.equals("")){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "you didn't choose any name or password");
-            alert.show();
-            return;
-        }
-        Account account = new Account(nameOfPlayer, passwordOfPlayer);
-        Account.toJason(account);
-
-        setVisible(false);
-        MenuController.getInstance().setCurrentAccount(account);
         MainView.getInstance().goToMap();
 
     }
 
-    private void go() {
-        if (choiceBox.getValue() == null) {
-            choosePlayerMessage();
-            return;
+    private static void addNewPlayer(TextField name, PasswordField password)
+    {
+        try
+        {
+            Account.addAccount(name.getText(), password.getText());
+            // todo show message
+        } catch (IOException e)
+        {
+            list.add(Utility.showError(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.1, e.getMessage()));
+        } finally
+        {
+            name.clear();
+            password.clear();
         }
-        Account account = null;
-
-        try {
-            account = Account.loadJson(choiceBox.getValue());
-        } catch (FileNotFoundException e) {
-            System.out.println("null goToMap");
-            return;
-        }
-        setVisible(false);
-        MenuController.getInstance().setCurrentAccount(account);
-        MainView.getInstance().goToMap();
-
     }
 
-    private void choosePlayerMessage() {
-        Text choosePlayer = new Text("choose an account");
-        choosePlayer.setFill(Color.RED);
-        choosePlayer.setFont(Font.font(30));
-        choosePlayer.relocate(MainView.WIDTH * 0.4, MainView.HEIGHT * 0.1);
-        getChildren().addAll(choosePlayer);
-
-        FadeTransition ft = new FadeTransition(Duration.millis(3000), choosePlayer);
-        ft.setFromValue(2.0);
-        ft.setToValue(0.0);
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                ft.play();
-            }
-        }.start();
-
-
+    public static void open()
+    {
+        pane.setVisible(true);
     }
 
-
-    public void open(){
-        choiceBox.getItems().clear();
-        choiceBox.getItems().addAll(Account.getAllAccounts());
-        setVisible(true);
-    }
 }

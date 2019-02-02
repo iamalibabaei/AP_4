@@ -7,6 +7,7 @@ import models.account.Account;
 import models.buildings.Workshop;
 import models.exceptions.InsufficientResourcesException;
 import models.exceptions.IsWorkingException;
+import models.exceptions.ObjectNotFoundException;
 import models.misc.Mission;
 import models.objects.Item;
 import models.objects.Point;
@@ -161,6 +162,8 @@ public class MenuController
 //        }
 //    }
 
+
+
     public void saveGame(String gamePath) throws IOException
     {
 
@@ -266,9 +269,33 @@ public class MenuController
         return currentAccount;
     }
 
-    public void setCurrentAccount(Account currentAccount)
+    private Account getAccount(String name)
     {
-        this.currentAccount = currentAccount;
+        Account ret = null;
+        for (Account account : accounts)
+        {
+            if (account.getName().equals(name))
+                ret = account;
+        }
+        return ret;
+    }
+
+    public void setCurrentAccount(Account account)
+    {
+        currentAccount = account;
+    }
+
+    public void setCurrentAccount(String name) throws IOException
+    {
+        if (name == null || name.isEmpty())
+        {
+            throw new IOException("Please choose an account");
+        }
+        if (!Account.getAllAccounts().contains(name))
+        {
+            throw new IOException("There is no such account");
+        }
+        currentAccount = getAccount(name);
     }
 
 }
