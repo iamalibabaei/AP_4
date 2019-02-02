@@ -23,6 +23,7 @@ public class ChooseProfile extends Pane
 {
     private static ChooseProfile instance = new ChooseProfile();
     private ObservableList<Node> list;
+    ChoiceBox<String> choiceBox;
 
     private ChooseProfile()
     {
@@ -58,20 +59,15 @@ public class ChooseProfile extends Pane
 
     private void buildGetAccounts()
     {
-        ChoiceBox<String> choiceBox;
         Text text = new Text("Choose Your Account");
         text.setFont(Font.font("Rage Italic", 25));
         text.relocate(MainView.WIDTH * 0.1, 0);
         list.addAll(text);
         choiceBox = new ChoiceBox<>();
-        choiceBox.setOnMouseClicked(event -> {
-            choiceBox.getItems().clear();
-            choiceBox.getItems().addAll(Account.getAllAccounts());
-        });
         choiceBox.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.1);
         choiceBox.setVisible(true);
         StackPane startGameButton = View.makeMenuButton(MainView.WIDTH * 0.125, 20, "Go",
-                event -> goToMissionView(choiceBox.getValue()));
+                event -> goToMissionView());
         list.addAll(choiceBox, startGameButton);
     }
 
@@ -91,8 +87,9 @@ public class ChooseProfile extends Pane
         list.addAll(newPlayerText, name, password, submitButton);
     }
 
-    private void goToMissionView(String name)
+    private void goToMissionView()
     {
+        String name = choiceBox.getValue();
         try
         {
             MenuController.getInstance().setCurrentAccount(name);
@@ -122,6 +119,8 @@ public class ChooseProfile extends Pane
 
     public void toggleChooseProfilePane()
     {
+        choiceBox.getItems().clear();
+        choiceBox.getItems().addAll(Account.getAllAccounts());
         setVisible(!isVisible());
     }
 
