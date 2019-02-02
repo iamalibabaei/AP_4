@@ -5,9 +5,13 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import view.MainView;
 import view.utility.Utility;
 import view.utility.constants.PictureAddresses;
+
 
 public class ExitPanel extends Pane {
     private static ExitPanel instance = new ExitPanel();
@@ -27,11 +31,11 @@ public class ExitPanel extends Pane {
 
     private void build(){
         buildMenuTemplate();
-        StackPane exitButton = View.makeMenuButton(MainView.WIDTH * 0.3, 0, "Back",
+        StackPane exitButton = View.makeMenuButton(MainView.WIDTH * 0.27, MainView.HEIGHT * 0.05, "Back",
                 event -> {
                     setVisible(false);
                 });
-        StackPane backButton = View.makeMenuButton(MainView.WIDTH * 0.08, 0, "exit",
+        StackPane backButton = View.makeMenuButton(MainView.WIDTH * 0.08, MainView.HEIGHT * 0.05, "Exit",
                 event -> {
                     System.exit(0);
                 });
@@ -44,7 +48,11 @@ public class ExitPanel extends Pane {
         imageView.relocate(0, -MainView.HEIGHT * 0.1);
         imageView.setFitHeight(MainView.HEIGHT * 0.3);
         imageView.setFitWidth(MainView.WIDTH * 0.6);
-        list.add(imageView);
+        Text text = new Text("Are you sure?");
+        text.setFont(Font.font("SWItalt", 45));
+        text.setFill(Color.RED);
+        text.relocate(MainView.WIDTH * 0.20, -MainView.WIDTH * 0.05);
+        list.addAll(imageView, text);
     }
     public void close()
     {
