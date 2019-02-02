@@ -18,6 +18,7 @@ import models.objects.Grass;
 import models.objects.Item;
 import models.objects.animals.Animal;
 import view.gameScene.View;
+import view.menu.ExitPanel;
 import view.menu.selectMission.MissionScene;
 
 public class MainView extends Application
@@ -67,7 +68,7 @@ public class MainView extends Application
 
     public void close()
     {
-
+        ExitPanel.getInstance().close();
     }
 
     private void setScene(Pane pane)

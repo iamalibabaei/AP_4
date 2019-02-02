@@ -44,7 +44,7 @@ public class View extends Pane
                 event -> multiPlayer());
         StackPane exit = makeMenuButton(MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6, "Exit",
                 event -> MainView.getInstance().close());
-        getChildren().addAll(Background.getInstance(), startGame, multiPlayer, setting, exit, ChooseProfile.getInstance());
+        getChildren().addAll(Background.getInstance(), startGame, multiPlayer, setting, exit, ChooseProfile.getInstance(), ExitPanel.getInstance());
         SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.MENU_MUSIC));
 
     }
