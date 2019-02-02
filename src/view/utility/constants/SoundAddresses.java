@@ -8,5 +8,6 @@ public class SoundAddresses
     public static final String MENU_ROOSTER_SOUND = PictureAddresses.SOUNDS_ROOT + "roosterMenuSound.wav";
     public static final String MENU_COW_SOUND = PictureAddresses.SOUNDS_ROOT + "cowMenuSound.wav";
     public static final String BUTTON_CLICK_SOUND = INTERFACE_ROOT + "buttonClick.wav";
+    public static final String DEFAULT_INGAME_MUSIC = MUSICS_ROOT + "defaultGameMusic.mp3";
 
 }

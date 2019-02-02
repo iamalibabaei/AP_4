@@ -11,7 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import view.MainView;
-import view.utility.MenuUtility;
+//import view.utility.MenuUtility;
 import view.utility.Utility;
 import view.utility.constants.PictureAddresses;
 
@@ -45,7 +45,7 @@ public class Panel extends Pane {
 
     private void buildMenuTemplate() {
 
-        Pane mainPane = new MenuUtility("MultiPlayer Panel");
+//        Pane mainPane = new MenuUtility("MultiPlayer Panel");
 
         ImageView hostButton = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         ImageView hostButtonFade = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON_BRIGHT));
@@ -59,7 +59,7 @@ public class Panel extends Pane {
         hostButtonFade.setFitHeight(MainView.HEIGHT * 0.1);
         pane.relocate(MainView.WIDTH * 0.17, MainView.HEIGHT * 0.15);
         pane.getChildren().addAll(hostButton, hostButtonText);
-        mainPane.getChildren().addAll(pane);
+//        mainPane.getChildren().addAll(pane);
 
         pane.setOnMouseEntered(event -> {
             pane.getChildren().removeAll(hostButton, hostButtonText);

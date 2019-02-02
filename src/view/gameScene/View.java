@@ -27,9 +27,11 @@ import models.transportation.Helicopter;
 import models.transportation.Truck;
 import view.MainView;
 import view.SceneBuilder;
+import view.utility.SoundPlayer;
 import view.utility.SpriteAnimation;
 import view.utility.Utility;
 import view.utility.constants.PictureAddresses;
+import view.utility.constants.SoundAddresses;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -68,10 +70,12 @@ public class View extends SceneBuilder implements Time
         childrenList.addAll(view.gameScene.truck.View.getInstance());
         childrenList.addAll(view.gameScene.workshop.View.getInstance());
         childrenList.addAll(GameMenu.getInstance());
+        SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.DEFAULT_INGAME_MUSIC));
     }
 
     private void gameMenuButton() {
-        StackPane stackPane = Utility.makeMenuButton(- MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9, MainView.HEIGHT * 0.2, MainView.HEIGHT * 0.1
+        StackPane stackPane = Utility.makeMenuButton(childrenList, - MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9,
+                MainView.HEIGHT * 0.2, MainView.HEIGHT * 0.1
                 , "MENU", new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {

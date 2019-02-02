@@ -25,7 +25,8 @@ public class GameMenu extends Pane {
 
     private void build() {
         buildMenuTemplate();
-        StackPane backButton = Utility.makeMenuButton(MainView.WIDTH * 0.3,MainView.HEIGHT * 0.35, MainView.WIDTH * 0.1,
+        StackPane backButton = Utility.makeMenuButton(list, MainView.WIDTH * 0.3,MainView.HEIGHT * 0.35,
+                MainView.WIDTH * 0.1,
                 MainView.HEIGHT * 0.125,"Back",
                 event -> {
                     setVisible(false);
