@@ -58,9 +58,9 @@ public class MissionScene extends Scene
         buildBackground();
         ArrayList<String> missions = Mission.loadDefaultMissions();
         missions.sort(String::compareTo);
-        double XCenter = MainView.WIDTH / 2 - 100; // todo fix
-        double YCenter = MainView.HEIGHT / 2 - 100; // todo fix
-        double radius = 300; // todo fix
+        double XCenter = MainView.WIDTH / 2  - MainView.WIDTH * 0.1;
+        double YCenter = MainView.HEIGHT / 2 - MainView.HEIGHT * 0.1;
+        double radius = MainView.WIDTH * 0.3;
         double teta = 2 * Math.PI / missions.size();
         for (String mission : missions)
         {
@@ -96,8 +96,9 @@ public class MissionScene extends Scene
     {
         StackPane stackPane = new StackPane();
         ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.MISSION_SCENE_ICON));
-        imageView.setFitWidth(150); // todo fix
-        imageView.setFitHeight(150); // todo fix
+        final double length = MainView.HEIGHT * 0.2;
+        imageView.setFitWidth(length);
+        imageView.setFitHeight(length);
         Text text = new Text(mission);
         text.setFill(color);
         stackPane.getChildren().addAll(imageView, text);
@@ -112,9 +113,9 @@ public class MissionScene extends Scene
     private void buildMenuButton(double XCenter, double YCenter)
     {
         ImageView sun = new ImageView(Utility.getImage(PictureAddresses.MENU_SUN));
-        sun.setFitHeight(250); // todo fix
-        sun.setFitWidth(250); // todo fix
-        sun.relocate(XCenter - 50, YCenter - 50); // todo fix
+        sun.setFitHeight(MainView.HEIGHT * 0.3);
+        sun.setFitWidth(MainView.HEIGHT * 0.3);
+        sun.relocate(XCenter - MainView.WIDTH * 0.05, YCenter -MainView.WIDTH * 0.05);
         sun.setOnMouseClicked(event -> MainView.getInstance().goToMenu());
         root.getChildren().addAll(sun);
         //Timeline
@@ -131,17 +132,17 @@ public class MissionScene extends Scene
     private void showProfileInfo()
     {
         ImageView billboard = Utility.getImageView(PictureAddresses.MENU_BILLBOARD);
-        billboard.setFitHeight(500); // todo fix
-        billboard.setFitWidth(500); // todo fix
-        billboard.relocate(900, 300); // todo fix
+        billboard.setFitHeight(MainView.HEIGHT * 0.5);
+        billboard.setFitWidth(MainView.HEIGHT * 0.5);
+        billboard.relocate(MainView.HEIGHT , MainView.HEIGHT * 0.5);
 
         Text text = new Text(
                 account.getName() + '\n' +
                         "Your Level: " +
                         account.getMissionsPassed()
         );
-        text.setFont(Font.font("Courier New", 25));
-        text.relocate(960, 530); // todo fix
+        text.setFont(Font.font("Courier New", 23));
+        text.relocate(MainView.HEIGHT * 1.05, MainView.HEIGHT * 0.715);
         root.getChildren().addAll(billboard, text, MissionInfo.getInstance());
     }
 
