@@ -3,7 +3,7 @@ package models.buildings;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import models.Map;
-import models.Messages;
+import models.exceptions.Messages;
 import models.Viewable;
 import models.interfaces.Time;
 import models.interfaces.Upgradable;
@@ -11,7 +11,6 @@ import models.objects.Item;
 import models.objects.Point;
 import view.utility.constants.PictureAddresses;
 
-import javax.naming.InsufficientResourcesException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -37,6 +36,12 @@ public class Workshop extends Viewable implements Upgradable, Time
     private int maxProductionFactor;
     private boolean isWorking;
     private Map map;
+
+    @Override
+    protected void loadAnimation()
+    {
+
+    }
 
     @Override
     public String getName()

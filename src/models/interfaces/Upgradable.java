@@ -5,8 +5,8 @@ import java.io.IOException;
 
 public interface Upgradable
 {
-    void upgrade() throws IOException;
-    int getUpgradeCost() throws IOException;
+    void upgrade() throws Exception;
+    int getUpgradeCost() throws Exception;
     int getLevel();
 
 }

@@ -93,8 +93,12 @@ public class MainView extends Application
 
     public void goToMenu()
     {
-        SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.MENU_MUSIC));
+        if (!SoundPlayer.getInstance().getCurrentPlayingSound().equals(Utility.getSound(SoundAddresses.MENU_MUSIC)))
+        {
+            SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.MENU_MUSIC));
+        }
         mainStage.setScene(view.menu.View.getInstance());
+        mainStage.setFullScreen(true);
     }
 
     public void startGame(Mission mission)

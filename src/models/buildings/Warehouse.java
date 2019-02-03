@@ -2,8 +2,8 @@ package models.buildings;
 
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import models.Messages;
 import models.Viewable;
+import models.exceptions.Messages;
 import models.interfaces.Upgradable;
 import models.objects.Item;
 import view.utility.SpriteAnimation;
@@ -11,26 +11,28 @@ import view.utility.Utility;
 import view.utility.constants.PictureAddresses;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // todo add all feature for truck
 
 public class Warehouse extends Viewable implements Upgradable
 {
-    public static final String NAME = "warehouse";
     public static final int[] CAPACITY = {50, 150, 300, 600}, UPGRADE_COST = {200, 250, 300};
     private static final int MAX_LEVEL = 3;
     private static Warehouse instance = new Warehouse();
-    private int level;
-    private int remainingCapacity;
+    private static HashMap<String, ImageView> states;
 
-    public EnumMap<Item.Type, Integer> getStoredItems() {
-        return storedItems;
+    static
+    {
+        states = new HashMap<>();
+        for (int i = 0; i < 4; i++)
+        {
+            states.put("level" + i, Utility.getImageView(PictureAddresses.WAREHOUSE_PICTURE_ROOT + i + ".png"));
+        }
     }
 
+    private int level;
+    private int remainingCapacity;
     private EnumMap<Item.Type, Integer> storedItems;
 
     private Warehouse()
@@ -38,20 +40,17 @@ public class Warehouse extends Viewable implements Upgradable
         level = 0;
         storedItems = new EnumMap<>(Item.Type.class);
         remainingCapacity = CAPACITY[level];
-        for (int i = 0; i < 4; i++)
-        {
-            ImageView imageView = Utility.getImageView(PictureAddresses.WAREHOUSE_PICTURE_ROOT + level + ".png");
-            SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.INDEFINITE, 1, 1, 0, 0,
-                    (int) imageView.getFitWidth(),
-                    (int) imageView.getFitHeight());
-            states.putIfAbsent("level" + level, spriteAnimation);
-            spriteAnimation.stop();
-        }
+        state = "level" + level;
     }
 
     public static Warehouse getInstance()
     {
         return instance;
+    }
+
+    public EnumMap<Item.Type, Integer> getStoredItems()
+    {
+        return storedItems;
     }
 
     public int getRemainingCapacity()
@@ -117,6 +116,7 @@ public class Warehouse extends Viewable implements Upgradable
             throw new IOException(Messages.UPGRADE_BEYOND_MAX_LEVEL);
         }
         level++;
+        state = "level" + level;
     }
 
     @Override
@@ -130,8 +130,18 @@ public class Warehouse extends Viewable implements Upgradable
     }
 
     @Override
-    public int getLevel() {
+    public int getLevel()
+    {
         return level;
+    }
+
+    @Override
+    protected void loadAnimation()
+    {
+        spriteAnimation = new SpriteAnimation(states.get(state), Duration.INDEFINITE, 1, 1, 0, 0,
+                (int) states.get(state).getFitWidth(),
+                (int) states.get(state).getFitHeight());
+        spriteAnimation.stop();
     }
 
 }

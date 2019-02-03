@@ -1,4 +1,4 @@
-package models;
+package models.exceptions;
 
 public class Messages
 {
@@ -11,4 +11,5 @@ public class Messages
     public static final String NOT_ENOUGH_SPACE = "There's not enough space in warehouse";
     public static final String NOT_ENOUGH_RESOURCES = "There are not enough resources in warehouse";
     public static final String TRANSPORTER_STASH_FULL = "There's not enough space in the stash";
+
 }

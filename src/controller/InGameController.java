@@ -1,7 +1,7 @@
 package controller;
 
 import models.Map;
-import models.Messages;
+import models.exceptions.Messages;
 import models.buildings.Warehouse;
 import models.buildings.Well;
 import models.buildings.Workshop;
@@ -132,7 +132,7 @@ public class InGameController implements Time
         // todo
     }
 
-    public void refillWell() throws IOException
+    public void refillWell() throws Exception
     {
         int cost = Well.REFILL_COST[well.getLevel()];
         if (money < cost)
@@ -143,7 +143,7 @@ public class InGameController implements Time
         well.issueRefill();
     }
 
-    public void upgradeWell() throws IOException
+    public void upgradeWell() throws Exception
     {
         int cost = well.getUpgradeCost();
         if (money < cost)
@@ -154,7 +154,7 @@ public class InGameController implements Time
         well.upgrade();
     }
 
-    public void plant(Point point) throws IOException
+    public void plant(Point point) throws Exception
     {
         well.extractWater();
         map.plant(point);

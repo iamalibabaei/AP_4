@@ -25,4 +25,10 @@ public class Grass extends Entity
         return grass;
     }
 
+    @Override
+    protected void loadAnimation()
+    {
+
+    }
+
 }

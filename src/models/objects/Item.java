@@ -13,6 +13,12 @@ public class Item extends Entity
         text = new Text(type.name());
     }
 
+    @Override
+    protected void loadAnimation()
+    {
+
+    }
+
     public enum Type
     {
         EGG(1, 20, 10), MILK(10, 2000, 1000),

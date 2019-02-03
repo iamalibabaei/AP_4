@@ -63,4 +63,11 @@ public class Helicopter extends Transporter
     public int getLevel() {
         return level;
     }
+
+    @Override
+    protected void loadAnimation()
+    {
+
+    }
+
 }

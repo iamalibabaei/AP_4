@@ -63,5 +63,12 @@ public class Truck extends Transporter
     public int getLevel() {
         return level;
     }
+
+    @Override
+    protected void loadAnimation()
+    {
+
+    }
+
 }
 

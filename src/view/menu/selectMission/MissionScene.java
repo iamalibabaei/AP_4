@@ -26,7 +26,7 @@ public class MissionScene extends SceneBuilder
     private static Account account;
     private MissionScene()
     {
-        super(MainView.WIDTH, MainView.HEIGHT);
+        super(MainView.SCREEN_WIDTH, MainView.SCREEN_HEIGHT);
     }
 
     public static MissionScene getInstance()
@@ -52,7 +52,7 @@ public class MissionScene extends SceneBuilder
         double XCenter = MainView.WIDTH / 2 - MainView.WIDTH * 0.1;
         double YCenter = MainView.HEIGHT / 2 - MainView.HEIGHT * 0.1;
         double radius = MainView.WIDTH * 0.3;
-        double teta = 2 * Math.PI / missions.size();
+        double theta = 2 * Math.PI / missions.size();
         for (String mission : missions)
         {
             int i = Integer.parseInt(mission.substring(mission.indexOf('n') + 1));
@@ -61,7 +61,7 @@ public class MissionScene extends SceneBuilder
             {
                 color = Color.GREEN;
             }
-            createButton(XCenter + radius * StrictMath.cos(teta * i), YCenter + radius * StrictMath.sin(teta * i),
+            createButton(XCenter + radius * StrictMath.cos(theta * i), YCenter + radius * StrictMath.sin(theta * i),
                     color, mission);
         }
         buildMenuButton(XCenter, YCenter);
@@ -71,14 +71,14 @@ public class MissionScene extends SceneBuilder
     private void buildBackground()
     {
         ImageView cloud = Utility.getImageView(PictureAddresses.MENU_CLOUD);
-        cloud.setFitWidth(MainView.WIDTH);
-        cloud.setFitHeight(MainView.HEIGHT);
+        cloud.setFitWidth(MainView.SCREEN_WIDTH);
+        cloud.setFitHeight(MainView.SCREEN_HEIGHT);
         cloud.relocate(0, 0);
         childrenList.addAll(cloud);
 
         ImageView missionWallpaper = Utility.getImageView(PictureAddresses.MISSION_SCENE_BACKGROUND);
-        missionWallpaper.setFitWidth(MainView.WIDTH);
-        missionWallpaper.setFitHeight(MainView.HEIGHT);
+        missionWallpaper.setFitWidth(MainView.SCREEN_WIDTH);
+        missionWallpaper.setFitHeight(MainView.SCREEN_HEIGHT);
         missionWallpaper.relocate(0, 0);
         childrenList.addAll(missionWallpaper);
     }

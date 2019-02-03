@@ -69,4 +69,10 @@ public class DomesticAnimal extends Animal
         }
     }
 
+    @Override
+    protected void loadAnimation()
+    {
+
+    }
+
 }

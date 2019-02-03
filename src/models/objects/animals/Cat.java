@@ -2,7 +2,7 @@ package models.objects.animals;
 
 import controller.InGameController;
 import models.Map;
-import models.Messages;
+import models.exceptions.Messages;
 import models.buildings.Warehouse;
 import models.interfaces.Upgradable;
 import models.objects.Entity;
@@ -88,6 +88,12 @@ public class Cat extends Animal implements Upgradable
         if (level == MAX_LEVEL)
             throw new IOException(Messages.ALREADY_AT_MAX_LEVEL);
         return UPGRADE_COST;
+    }
+
+    @Override
+    protected void loadAnimation()
+    {
+
     }
 
 }

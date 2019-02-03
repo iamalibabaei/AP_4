@@ -46,6 +46,12 @@ public class WildAnimal extends Animal
         }
     }
 
+    @Override
+    protected void loadAnimation()
+    {
+
+    }
+
     public enum State
     {
         NOT_CAGED, HARDLY_CAGED, AVERAGELY_CAGED, ALMOST_CAGED, CAGED

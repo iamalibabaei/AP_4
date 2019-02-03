@@ -1,6 +1,6 @@
 package models.transportation;
 
-import models.Messages;
+import models.exceptions.Messages;
 import models.Viewable;
 import models.interfaces.Time;
 import models.interfaces.Upgradable;

@@ -2,14 +2,14 @@ package models.buildings;
 
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import models.Messages;
+import models.exceptions.Messages;
 import models.Viewable;
 import models.interfaces.Upgradable;
 import view.utility.SpriteAnimation;
 import view.utility.Utility;
 import view.utility.constants.PictureAddresses;
 
-import java.io.IOException;
+import java.util.HashMap;
 
 // todo implement well last upgrade (automatic planting)
 
@@ -18,10 +18,22 @@ public class Well extends Viewable implements Upgradable
     public static final int[] UPGRADE_COST = {250, 500}, REFILL_COST = {19, 17, 15};
     public static final int[] CAPACITY = {5, 7, 10}, REFILL_TIME = {4, 4, 3};
     private static final int MAX_LEVEL = 2;
+    private static final HashMap<String, ImageView> states;
     private static Well instance = new Well();
+
+    static
+    {
+        states = new HashMap<>();
+        for (int i = 0; i < 3; i++)
+        {
+            states.put("level" + i, Utility.getImageView(PictureAddresses.WELL_PICTURE_ROOT + i + ".png"));
+        }
+    }
+
     private int level;
     private boolean isRefilling;
     private int remainingWater;
+
 
     private Well()
     {
@@ -29,15 +41,6 @@ public class Well extends Viewable implements Upgradable
         level = 0;
         state = "level" + level;
         remainingWater = CAPACITY[level];
-        for (int i = 0; i < 3; i++)
-        {
-            ImageView imageView = Utility.getImageView(PictureAddresses.WELL_PICTURE_ROOT + level + ".png");
-            SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4, 0, 0,
-                    (int) (imageView.getImage().getWidth() / 4), (int) (imageView.getImage().getHeight() / 4));
-            states.put("level" + level, spriteAnimation);
-            spriteAnimation.setOnFinished(event -> refill());
-            spriteAnimation.setCycleCount(REFILL_TIME[level]);
-        }
     }
 
     public static Well getInstance()
@@ -45,42 +48,35 @@ public class Well extends Viewable implements Upgradable
         return instance;
     }
 
-    public void extractWater() throws IOException
+    public void extractWater() throws Exception
     {
         if (remainingWater == 0)
-            throw new IOException(Messages.WELL_EMPTY);
+            throw new Exception(Messages.WELL_EMPTY);
         remainingWater--;
     }
 
-    public void issueRefill() throws IOException
+    public void issueRefill() throws Exception
     {
         if (isRefilling)
-            throw new IOException(Messages.WELL_WORKING);
+            throw new Exception(Messages.WELL_WORKING);
         isRefilling = true;
-        states.get(Integer.toString(level)).play();
-    }
-
-    private void refill()
-    {
-        isRefilling = false;
-        remainingWater = CAPACITY[level];
     }
 
     @Override
-    public void upgrade() throws IOException
+    public void upgrade() throws Exception
     {
         if (level == MAX_LEVEL)
-            throw new IOException(Messages.UPGRADE_BEYOND_MAX_LEVEL);
+            throw new Exception(Messages.UPGRADE_BEYOND_MAX_LEVEL);
         level++;
         state = "level" + level;
-
+        loadAnimation();
     }
 
     @Override
-    public int getUpgradeCost() throws IOException
+    public int getUpgradeCost() throws Exception
     {
         if (level == MAX_LEVEL)
-            throw new IOException(Messages.ALREADY_AT_MAX_LEVEL);
+            throw new Exception(Messages.ALREADY_AT_MAX_LEVEL);
         return UPGRADE_COST[level];
     }
 
@@ -88,6 +84,22 @@ public class Well extends Viewable implements Upgradable
     public int getLevel()
     {
         return level;
+    }
+
+    @Override
+    protected void loadAnimation()
+    {
+        spriteAnimation = new SpriteAnimation(states.get(state), Duration.millis(1250), 16, 4, 0, 0,
+                (int) (states.get(state).getImage().getWidth() / 4),
+                (int) (states.get(state).getImage().getHeight() / 4));
+        spriteAnimation.setCycleCount(REFILL_TIME[level]);
+        spriteAnimation.setOnFinished(event -> refill());
+    }
+
+    private void refill()
+    {
+        isRefilling = false;
+        remainingWater = CAPACITY[level];
     }
 
 }

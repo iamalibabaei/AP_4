@@ -109,7 +109,8 @@ public class View extends SceneBuilder implements Time
                 try
                 {
                     MenuController.getInstance().refillWell();
-                } catch (IOException e)
+                }
+                catch (Exception e)
                 {
                     e.printStackTrace();
                 }

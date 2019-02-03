@@ -53,7 +53,6 @@ public class Utility
 
     public static String getSound(String path)
     {
-
         String media = new File(path).toURI().toString();
         return media;
     }

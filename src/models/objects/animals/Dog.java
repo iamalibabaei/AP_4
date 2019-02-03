@@ -35,4 +35,10 @@ public class Dog extends Animal
         }
     }
 
+    @Override
+    protected void loadAnimation()
+    {
+
+    }
+
 }

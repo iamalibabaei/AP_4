@@ -9,13 +9,11 @@ import java.util.HashMap;
 public abstract class Viewable
 {
     protected Text text;//TODO shape will be spriteAnimation
-    protected HashMap<String, SpriteAnimation> states;
     protected String state;
+    protected SpriteAnimation spriteAnimation;
 
-    protected Viewable()
-    {
-        states = new HashMap<>();
-    }
+    protected abstract void loadAnimation();
+
 
     public String getName()
     {

@@ -88,7 +88,7 @@ public class MenuController
         return menuController;
     }
 
-    public void plant(Point point) throws IOException
+    public void plant(Point point) throws Exception
     {
         if (point.getX() >= Map.WIDTH || point.getX() < 0 || point.getY() >= Map.HEIGHT || point.getY() < 0)
         {
@@ -130,7 +130,7 @@ public class MenuController
 //
 //    }
 
-    public void refillWell() throws IOException
+    public void refillWell() throws Exception
     {
         game.refillWell();
     }
