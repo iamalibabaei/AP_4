@@ -60,7 +60,7 @@ public class ChooseProfile extends PaneBuilder
         text.relocate(MainView.WIDTH * 0.1, 0);
         childrenList.addAll(text);
         choiceBox = new ChoiceBox<>();
-        choiceBox.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.1);
+        choiceBox.relocate(MainView.WIDTH * 0.075, MainView.HEIGHT * 0.1);
         choiceBox.setVisible(true);
         Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.125, 20, MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Go",
