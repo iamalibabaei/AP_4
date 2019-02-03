@@ -286,14 +286,14 @@ public class MenuController
 
         }
         Map.getInstance().addGrass(new Grass(new Point(x, y)));
-//        Map.getInstance().addGrass(new Grass(new Point(x + 40, y)));
-//        Map.getInstance().addGrass(new Grass(new Point(x, y + 25)));
-//        Map.getInstance().addGrass(new Grass(new Point(x - 40, y)));
-//        Map.getInstance().addGrass(new Grass(new Point(x, y - 40)));
-//        Map.getInstance().addGrass(new Grass(new Point(x + 40, y + 25)));
-//        Map.getInstance().addGrass(new Grass(new Point(x + 40, y - 25)));
-//        Map.getInstance().addGrass(new Grass(new Point(x - 40, y - 25)));
-//        Map.getInstance().addGrass(new Grass(new Point(x - 40, y + 25)));
+        Map.getInstance().addGrass(new Grass(new Point(x + 2, y)));
+        Map.getInstance().addGrass(new Grass(new Point(x, y + 2)));
+        Map.getInstance().addGrass(new Grass(new Point(x - 4, y)));
+        Map.getInstance().addGrass(new Grass(new Point(x, y - 4)));
+        Map.getInstance().addGrass(new Grass(new Point(x + 4, y + 2)));
+        Map.getInstance().addGrass(new Grass(new Point(x + 4, y - 2)));
+        Map.getInstance().addGrass(new Grass(new Point(x - 4, y - 2)));
+        Map.getInstance().addGrass(new Grass(new Point(x - 4, y + 2)));
 
 
 

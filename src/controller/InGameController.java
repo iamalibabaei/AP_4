@@ -288,12 +288,12 @@ public class InGameController implements Time
 
     public void loadMission(){
         moneyDeposit(mission.getMoneyAtBeginning());
-        for (Animal.Type animal : mission.getAnimalObjectives().keySet()) {
-            for (int i = 0; i < mission.getAnimalAtBeginning().get(animal); i++) {
-                System.out.println(animal.name());
-                Map.getInstance().addAnimal(animal);
-            }
-        }
+//        for (Animal.Type animal : mission.getAnimalObjectives().keySet()) {
+//            for (int i = 0; i < mission.getAnimalAtBeginning().get(animal); i++) {
+//                System.out.println(animal.name());
+//                Map.getInstance().addAnimal(animal);
+//            }
+//        }
         InGameController.getInstance().moneyDeposit(mission.getMoneyAtBeginning());
     }
 

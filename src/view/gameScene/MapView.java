@@ -103,7 +103,6 @@ public class MapView extends Pane implements Time {
         double x = entity.getCoordinates().getX() * WIDTH_BASE - MainView.HEIGHT * 0.05;
         double y = entity.getCoordinates().getY() * HEIGHT_BASE - MainView.HEIGHT * 0.05;
         if (entity instanceof Grass) {
-            System.out.println("sss" + entity.getCoordinates().getX());
             ImageView imageView = entity.getImageView();
             imageView.setViewport(new Rectangle2D(0, 0, imageView.getImage().getWidth() / 4,
                     imageView.getImage().getHeight() / 4));
@@ -115,7 +114,6 @@ public class MapView extends Pane implements Time {
         }
 
         if (entity instanceof Animal) {
-            getChildren().addAll(entity.getImageView());
             int coulmn = 0, row = 0;
             Animal.Type type = ((Animal) entity).type;
             if (type == Animal.Type.HEN) {
@@ -141,11 +139,21 @@ public class MapView extends Pane implements Time {
                     row = 6;
                 }
             }
-            entity.getImageView().relocate(x, y);
+//            System.out.println("animal " + ((Animal) entity).type + " Xtarget " + );
+            ImageView imageView = entity.getImageView();
+            imageView.setViewport(new Rectangle2D(0, 0, imageView.getImage().getWidth() / coulmn,
+                    imageView.getImage().getHeight() / row));
+            imageView.relocate(x, y);
             SpriteAnimation s = new SpriteAnimation(entity.getImageView(), Duration.INDEFINITE, row * coulmn,
                     coulmn, 0, 0,(int)(entity.getImageView().getImage().getWidth() / coulmn), (int)(entity.getImageView().getImage().getHeight() / row));
+            System.out.println("before stop");
             s.stop();
+            System.out.println("before play");
+            s.setCycleCount(100000);
             s.play();
+            System.out.println("after play");
+
+            getChildren().addAll(entity.getImageView());
         }
 
     }

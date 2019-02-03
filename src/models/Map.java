@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Map implements Time
 {
-    public static final double WIDTH = MainView.WIDTH * 0.5, HEIGHT = MainView.HEIGHT * 0.5;
+    public static final double WIDTH = 30, HEIGHT = 30;
     private static Map instance = new Map();
     private List<Animal> animals;
     private List<Grass> grasses;
