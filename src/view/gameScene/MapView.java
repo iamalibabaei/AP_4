@@ -1,16 +1,10 @@
 package view.gameScene;
 
 import controller.MenuController;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -18,20 +12,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import models.Map;
 import models.Viewable;
 import models.interfaces.Time;
 import models.objects.Entity;
 import models.objects.Grass;
-import models.objects.Point;
 import models.objects.animals.Animal;
-import models.objects.animals.DomesticAnimal;
-import models.objects.animals.Cat;
 import view.MainView;
-import view.PaneBuilder;
 import view.utility.SpriteAnimation;
-
-import java.io.File;
 
 import java.util.ArrayList;
 
@@ -144,16 +131,16 @@ public class MapView extends Pane implements Time {
             imageView.setViewport(new Rectangle2D(0, 0, imageView.getImage().getWidth() / coulmn,
                     imageView.getImage().getHeight() / row));
             imageView.relocate(x, y);
-            SpriteAnimation s = new SpriteAnimation(entity.getImageView(), Duration.INDEFINITE, row * coulmn,
+            getChildren().addAll(entity.getImageView());
+            SpriteAnimation s = new SpriteAnimation(entity.getImageView(), Duration.millis(1000), row * coulmn,
                     coulmn, 0, 0,(int)(entity.getImageView().getImage().getWidth() / coulmn), (int)(entity.getImageView().getImage().getHeight() / row));
+
             System.out.println("before stop");
             s.stop();
             System.out.println("before play");
             s.setCycleCount(100000);
             s.play();
             System.out.println("after play");
-
-            getChildren().addAll(entity.getImageView());
         }
 
     }
