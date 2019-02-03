@@ -1,6 +1,7 @@
 package controller;
 
 import com.gilecode.yagson.YaGson;
+import javafx.animation.AnimationTimer;
 import models.Map;
 import models.account.Account;
 import models.buildings.Warehouse;
@@ -35,7 +36,7 @@ public class InGameController implements Time
 {
     public static final double COLLISION_RADIUS = 2.0;
     private static InGameController instance = new InGameController();
-    private final int FPS = 60, SECOND_PER_FRAME = 1000 / FPS;
+    private final int FPS = 60, MILI_SECOND_PER_FRAME = 1000 / FPS;
     private Integer money;
     private Map map;
     private Warehouse warehouse;
@@ -46,6 +47,7 @@ public class InGameController implements Time
     private Mission mission;
     private ArrayList<String> availableWorkshops;
     private Account account;
+    private AnimationTimer timer;
 
     public static boolean loadGame(Mission mission, Account account) throws Exception
     {
@@ -74,6 +76,36 @@ public class InGameController implements Time
         truck = Truck.getInstance();
         helicopter = Helicopter.getInstance();
         money = 0;
+        timer = new AnimationTimer() {
+            private long lastTime = 0;
+            private double time = 0;
+            private long second = 1000000000;
+            private long nextTurnTime;
+            @Override
+            public void handle(long now) {
+                if (lastTime == 0)
+                    lastTime = now;
+                if (now > lastTime + (second)) {
+                    lastTime = now;
+                    time += 1;
+                }
+
+                if (nextTurnTime == 0) {
+                    nextTurnTime = now;
+                }
+
+                if (now > nextTurnTime + MILI_SECOND_PER_FRAME) {
+                    nextTurnTime = now;
+                    nextTurn();
+                    //View.getInstance().nextTurn(); TODO fix
+
+                }
+            }
+        };
+    }
+
+    public static InGameController getInstance() {
+        return instance;
     }
 
     public void buyAnimal(Animal.Type type)
@@ -244,6 +276,7 @@ public class InGameController implements Time
     @Override
     public void nextTurn()
     {
+        System.out.println("nextTurn");
         map.nextTurn();
         truck.nextTurn();
         helicopter.nextTurn();
@@ -253,34 +286,28 @@ public class InGameController implements Time
         }
     }
 
-    public void startGame(Mission mission)
-    {
-        this.mission = mission;
-        loadMission();
-        //TODO loop for next turn
-    }
-
-    public void loadMission()
-    {
+    public void loadMission(){
         moneyDeposit(mission.getMoneyAtBeginning());
-        for (Animal.Type animal : mission.getAnimalAtBeginning().keySet())
-        {
-            for (int i = 0; i < mission.getAnimalAtBeginning().get(animal); i++)
-            {
-                //TODO add animal to map
+        for (Animal.Type animal : mission.getAnimalObjectives().keySet()) {
+            for (int i = 0; i < mission.getAnimalAtBeginning().get(animal); i++) {
+                System.out.println(animal.name());
+                Map.getInstance().addAnimal(animal);
             }
         }
         InGameController.getInstance().moneyDeposit(mission.getMoneyAtBeginning());
     }
 
-    public void moneyDeposit(Integer money)
-    {
-        this.money += money;
+    public void moneyDeposit(int amount) {
+        money += amount;
     }
 
-    public static InGameController getInstance()
-    {
-        return instance;
+    public void startGame(Mission mission) {
+        this.mission = mission;
+        map = Map.getInstance();
+
+        loadMission();
+        timer.start();
+
     }
 
     private boolean isAccomplished()
@@ -365,6 +392,7 @@ public class InGameController implements Time
     }
 
     public void saveAndQuit() {
+        timer.stop();
         FileWriter fileWriter = null;
         try
         {
@@ -382,10 +410,10 @@ public class InGameController implements Time
 
 
     public void pauseGame(){
-        //todo make
+        timer.stop();
     }
     public void resumeGame() {
-        //todo make
+        timer.start();
     }
 
     public void setAccount(Account account) {

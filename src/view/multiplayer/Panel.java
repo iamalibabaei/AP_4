@@ -71,9 +71,6 @@ public class Panel extends Pane {
             pane.getChildren().addAll(hostButton, hostButtonText);
         });
 
-
-
-
         StackPane pane2 = new StackPane();
         ImageView clientButton = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
         ImageView clientButtonFade = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON_BRIGHT));

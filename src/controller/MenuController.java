@@ -65,7 +65,8 @@ public class MenuController
         boolean dog = false, cat = false;
         HashMap<Animal.Type, Integer> animalAtBeginning = new HashMap<>();
         animalAtBeginning.put(Animal.Type.HEN, 5);
-        String name = "mission9";
+        animalAtBeginning.put(Animal.Type.SHEEP, 1);
+        String name = "mission1";
 
 
         Mission mission = new Mission(name, moneyObjective, animalObjectives, ItemObjective, false, false,

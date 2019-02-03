@@ -44,6 +44,9 @@ public abstract class Animal extends Entity implements Time
     //if (target == null) randomWalk
     public void move()
     {
+        if (target == null) {
+            target = Point.randomPoint(Map.WIDTH, Map.HEIGHT);
+        }
         Point direction = new Point(target.getX() - getCoordinates().getX(),
                 target.getY() - getCoordinates().getY());
         direction.normalize();

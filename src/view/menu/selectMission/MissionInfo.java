@@ -38,6 +38,10 @@ public class MissionInfo extends Pane
         setVisible(false);
     }
 
+    public static MissionInfo getInstance() {
+        return instance;
+    }
+
     private void addButtons()
     {
         Utility.makeMenuButton(getChildren(), MainView.WIDTH * 0.6, MainView.HEIGHT * 0.3, MainView.WIDTH * 0.2,
@@ -64,13 +68,7 @@ public class MissionInfo extends Pane
         MenuController.getInstance().startGame(mission);
     }
 
-    public static MissionInfo getInstance()
-    {
-        return instance;
-    }
-
-    public void showMission(String str, Account account)
-    {
+    public void showMission(String str, Account account) {
         MenuController.getInstance().setCurrentAccount(account);
         InGameController.getInstance();
         InGameController.getInstance().setAccount(account);
