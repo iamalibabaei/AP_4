@@ -24,12 +24,11 @@ import view.utility.constants.JsonAddresses;
 import view.utility.constants.PictureAddresses;
 
 import javax.naming.InsufficientResourcesException;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 // todo you have to buy helicopter in the beginning
 // todo multiple trucks and helicopters
@@ -49,6 +48,22 @@ public class InGameController implements Time
     private ArrayList<String> availableWorkshops;
     private final int FPS = 60, SECOND_PER_FRAME = 1000 / FPS;
     private Account account;
+
+    public static boolean loadGame(Mission mission, Account account) {
+        YaGson yaGson = new YaGson();
+        FileReader fileReader = null;
+        try {
+            fileReader = new FileReader(JsonAddresses.SAVE_GAME_ROOT + mission.getName() + '@' + account.getName()+".json");
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+        Scanner scanner = new Scanner(fileReader);
+        String json = scanner.nextLine();
+        InGameController game = yaGson.fromJson(json, InGameController.class);
+        instance = game;
+        MainView.getInstance().startGame(mission);
+        return true;
+    }
 
     public void moneyDeposit(Integer money) {
         this.money += money;

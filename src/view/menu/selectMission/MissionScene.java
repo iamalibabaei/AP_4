@@ -24,6 +24,11 @@ public class MissionScene extends SceneBuilder
 {
     private static MissionScene instance = new MissionScene();
     private static Account account;
+
+    public static Account getAccount() {
+        return account;
+    }
+
     private MissionScene()
     {
         super(MainView.SCREEN_WIDTH, MainView.SCREEN_HEIGHT);

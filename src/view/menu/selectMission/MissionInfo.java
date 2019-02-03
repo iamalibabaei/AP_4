@@ -45,10 +45,18 @@ public class MissionInfo extends Pane
     }
 
     private void addButtons() {
-        Utility.makeMenuButton(getChildren(), MainView.WIDTH * 0.75, MainView.HEIGHT * 0.3, MainView.WIDTH * 0.05,
-                MainView.HEIGHT * 0.3, "Start Game", event -> startGame());
-        Utility.makeMenuButton(getChildren(), MainView.WIDTH * 0.75, MainView.HEIGHT * 0.4, MainView.WIDTH * 0.05,
-                MainView.HEIGHT * 0.3, "Back", event -> setVisible(false));
+        Utility.makeMenuButton(getChildren(), MainView.WIDTH * 0.6, MainView.HEIGHT * 0.3, MainView.WIDTH * 0.2,
+                MainView.HEIGHT * 0.15, "Start Game", event -> startGame());
+        Utility.makeMenuButton(getChildren(), MainView.WIDTH * 0.6, MainView.HEIGHT * 0.4, MainView.WIDTH * 0.2,
+                MainView.HEIGHT * 0.15, "LoadGame", event -> {
+            if (!InGameController.loadGame(mission, MissionScene.getAccount())) {
+                String errorMessage = "you don't have a saved game for this mission";
+                getChildren().addAll(Utility.showError(MainView.HEIGHT * 0.4, MainView.HEIGHT * 0.3,errorMessage));
+            }
+
+                });
+        Utility.makeMenuButton(getChildren(), MainView.WIDTH * 0.6, MainView.HEIGHT * 0.5, MainView.WIDTH * 0.2,
+                MainView.HEIGHT * 0.15, "Back", event -> setVisible(false));
     }
 
 
