@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 public class Mission
 {
+    private String name;
     public static final String DEFAULT_MISSION_PATH = "res/missions";
     private int moneyObjective;
     private HashMap<Animal.Type, Integer> animalObjectives;
@@ -30,9 +31,10 @@ public class Mission
     }
 
 
-    public Mission(int money, HashMap<Animal.Type, Integer> animalObjectives,
+    public Mission(String name, int money, HashMap<Animal.Type, Integer> animalObjectives,
                    HashMap<Item.Type, Integer> itemObjective, boolean dog, boolean cat, HashMap<Animal.Type, Integer> animalAtBeginning, int moneyAtBeginning)
     {
+        this.name = name;
         moneyObjective = money;
         this.animalObjectives = animalObjectives;
         ItemObjective = itemObjective;
@@ -93,4 +95,7 @@ public class Mission
         return usersName;
     }
 
+    public String getName() {
+        return name;
+    }
 }

@@ -1,11 +1,13 @@
 package view.gameScene;
 
+import controller.InGameController;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import view.MainView;
+import view.settings.View;
 import view.utility.Utility;
 import view.utility.constants.PictureAddresses;
 
@@ -43,8 +45,16 @@ public class GameMenu extends Pane {
 
 
 
-        //Utility.makeMenuButton()
+        Utility.makeMenuButton(list, MainView.HEIGHT * 0.225, MainView.HEIGHT * 0.1, MainView.WIDTH * 0.15,
+                MainView.HEIGHT * 0.125, "Resume", event -> setVisible(false));
 
+        Utility.makeMenuButton(list, MainView.HEIGHT * 0.225, MainView.HEIGHT * 0.2, MainView.WIDTH * 0.15,
+                MainView.HEIGHT * 0.125, "Setting", event -> View.getInstance().start());
+        Utility.makeMenuButton(list, MainView.HEIGHT * 0.225, MainView.HEIGHT * 0.3, MainView.WIDTH * 0.15,
+                MainView.HEIGHT * 0.125, "Save&Quit", event -> {
+            setVisible(false);
+            InGameController.getInstance().saveAndQuit();
+                });
     }
 
     public void play() {

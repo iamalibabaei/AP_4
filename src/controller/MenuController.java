@@ -65,14 +65,15 @@ public class MenuController
         boolean dog = false, cat = false;
         HashMap<Animal.Type, Integer> animalAtBeginning = new HashMap<>();
         animalAtBeginning.put(Animal.Type.HEN, 5);
+        String name = "mission9";
 
 
-        Mission mission = new Mission(moneyObjective, animalObjectives, ItemObjective, false, false,
+        Mission mission = new Mission(name, moneyObjective, animalObjectives, ItemObjective, false, false,
                 animalAtBeginning, moneyAtBeginning);
         FileWriter fileWriter = null;
         try
         {
-            fileWriter = new FileWriter("res/missions/mission1.json");
+            fileWriter = new FileWriter("res/missions/" + name + ".json");
         } catch (IOException e)
         {
             e.printStackTrace();

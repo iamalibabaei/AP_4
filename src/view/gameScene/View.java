@@ -70,6 +70,7 @@ public class View extends SceneBuilder implements Time
         childrenList.addAll(view.gameScene.truck.View.getInstance());
         childrenList.addAll(view.gameScene.workshop.View.getInstance());
         childrenList.addAll(GameMenu.getInstance());
+        childrenList.addAll(view.settings.View.getInstance());
         SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.DEFAULT_INGAME_MUSIC));
     }
 

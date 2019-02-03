@@ -1,5 +1,6 @@
 package view.menu.selectMission;
 
+import controller.InGameController;
 import controller.MenuController;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -53,6 +54,8 @@ public class MissionInfo extends Pane
 
     public void showMission(String str, Account account) {
         MenuController.getInstance().setCurrentAccount(account);
+        InGameController.getInstance();
+        InGameController.getInstance().setAccount(account);
         Mission mission = null;
         try {
             mission = Mission.loadJson(JsonAddresses.MISSIONS_ROOT + str + ".json");

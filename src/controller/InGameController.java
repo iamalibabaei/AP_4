@@ -1,6 +1,8 @@
 package controller;
 
+import com.gilecode.yagson.YaGson;
 import models.Map;
+import models.account.Account;
 import models.exceptions.Messages;
 import models.buildings.Warehouse;
 import models.buildings.Well;
@@ -16,11 +18,16 @@ import models.objects.animals.Dog;
 import models.objects.animals.DomesticAnimal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
+import view.MainView;
 import view.gameScene.View;
+import view.utility.constants.JsonAddresses;
+import view.utility.constants.PictureAddresses;
 
 import javax.naming.InsufficientResourcesException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,6 +48,7 @@ public class InGameController implements Time
     private Mission mission;
     private ArrayList<String> availableWorkshops;
     private final int FPS = 60, SECOND_PER_FRAME = 1000 / FPS;
+    private Account account;
 
     public void moneyDeposit(Integer money) {
         this.money += money;
@@ -346,5 +354,33 @@ public class InGameController implements Time
 
     public ArrayList<String> getAvailableWorkshops() {
         return availableWorkshops;
+    }
+
+    public void saveAndQuit() {
+        FileWriter fileWriter = null;
+        try
+        {
+            fileWriter = new FileWriter(JsonAddresses.SAVE_GAME_ROOT + mission.getName() + '@' + account.getName()+".json");
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        YaGson yaGson = new YaGson();
+        Formatter formatter = new Formatter(fileWriter);
+        formatter.format(yaGson.toJson(this));
+        formatter.flush();
+        MainView.getInstance().goToMenu();
+    }
+
+
+    public void pauseGame(){
+        //todo make
+    }
+    public void resumeGame() {
+        //todo make
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
