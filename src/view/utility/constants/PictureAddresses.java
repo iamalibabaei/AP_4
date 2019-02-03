@@ -42,6 +42,7 @@ public class PictureAddresses
     public static final String WORKSHOP_ROOT = "res/workshops/";
     public static final String BUILD_WORKSHOP_ICON = MENU + "bil.png";
     public static final String WHITE_IMAGE = GRAPHICS_ROOT + "white-image.png";
+    public static final String WORKSHOP_PICTURE_ROOT = GRAPHICS_ROOT + "Workshops/";
 
 }
 

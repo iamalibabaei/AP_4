@@ -17,10 +17,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import models.buildings.Warehouse;
 import models.buildings.Well;
-import models.interfaces.Time;
-import models.objects.Grass;
-import models.objects.Point;
-import models.objects.animals.Animal;
+import models.buildings.Workshop;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
 import view.MainView;
@@ -34,7 +31,7 @@ import view.utility.constants.SoundAddresses;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class View extends SceneBuilder implements Time
+public class View extends SceneBuilder
 {
     private static View instance = new View();
     private Text money;
@@ -69,6 +66,17 @@ public class View extends SceneBuilder implements Time
         childrenList.addAll(GameMenu.getInstance());
         childrenList.addAll(view.settings.View.getInstance());
         SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.DEFAULT_INGAME_MUSIC));
+    }
+
+    private void gameMenuButton()
+    {
+        Utility.makeMenuButton(childrenList, -MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9,
+                MainView.HEIGHT * 0.2, MainView.HEIGHT * 0.1
+                , "MENU", event -> {
+                    InGameController.getInstance().pauseGame();
+                    GameMenu.getInstance().play();
+                });
+
     }
 
     private void wellGraphic()
@@ -180,23 +188,23 @@ public class View extends SceneBuilder implements Time
             {
                 case 0:
                     place = 1;
-                    XValue *= 0.2;
+                    XValue *= 0.15;
                     YValue *= 0.3;
                     break;
                 case 1:
                     place = 2;
-                    XValue *= 0.2;
+                    XValue *= 0.15;
                     YValue *= 0.5;
                     break;
                 case 2:
                     place = 3;
-                    XValue *= 0.2;
-                    YValue *= 0.65;
+                    XValue *= 0.15;
+                    YValue *= 0.68;
                     break;
                 case 3:
                     place = 4;
-                    XValue *= 0.85;
-                    YValue *= 0.3;
+                    XValue *= 0.8;
+                    YValue *= 0.28;
                     break;
                 case 4:
                     place = 5;
@@ -206,7 +214,7 @@ public class View extends SceneBuilder implements Time
                 case 5:
                     place = 6;
                     XValue *= 0.85;
-                    YValue *= 0.65;
+                    YValue *= 0.70;
                     break;
 
             }
@@ -216,9 +224,8 @@ public class View extends SceneBuilder implements Time
             imageView.relocate(XValue, YValue);
             int finalPlace = place;
             imageView.setOnMouseClicked(event -> view.gameScene.workshop.View.getInstance().open(finalPlace));
-            childrenList.addAll(imageView);
-
-
+            childrenList.add(finalPlace, imageView);
+//            childrenList.
         }
     }
 
@@ -239,17 +246,6 @@ public class View extends SceneBuilder implements Time
 
     }
 
-    private void gameMenuButton()
-    {
-        Utility.makeMenuButton(childrenList, -MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9,
-                MainView.HEIGHT * 0.2, MainView.HEIGHT * 0.1
-                , "MENU", event -> {
-                    InGameController.getInstance().pauseGame();
-                    GameMenu.getInstance().play();
-                });
-
-    }
-
     private void openWarehouse()
     {
         view.gameScene.warehouse.View.getInstance().UpdateInformation();
@@ -263,50 +259,147 @@ public class View extends SceneBuilder implements Time
 //        view.gameScene.helicopter.View.getInstance().setVisible(true);
     }
 
-    public void drawWorkshop(int place, String workshop)
-    {//string hamun workshop.name hast
-        switch (place)
-        {
-            case 1:
-            {
+//    private void removeBuildIcon(int place){
+//        childrenList.remove(place);
+//    }
 
+    public void drawWorkshop(int place, Workshop workshop) {//string hamun workshop.name hast
+        switch (place){
+            case 1:{
+                ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.WORKSHOP_PICTURE_ROOT + workshop.name + "/" +workshop.getLevel() +".png"));
+                imageView.relocate(MainView.WIDTH * 0.07    , MainView.HEIGHT * 0.18);
+                imageView.setFitHeight(MainView.HEIGHT / 5);
+                imageView.setFitWidth(MainView.WIDTH / 7);
+                imageView.setScaleX(-1);
+                if (workshop.name.equals("eggPowderPlant"))  imageView.setScaleX(1);
+
+                childrenList.remove(place);
+                childrenList.add(place, imageView);
+
+                System.out.println(PictureAddresses.WORKSHOP_ROOT + workshop.name    + "/" +workshop.getLevel() +".png");
+                SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4,
+                        0, 0, (int) (imageView.getImage().getWidth() / 4),
+                        (int) imageView.getImage().getHeight() / 4);
+                spriteAnimation.stop();
+
+                imageView.setOnMouseClicked(event -> workWorkshop(workshop, spriteAnimation));
                 break;
             }
-            case 2:
-            {
+            case 2:{
+                ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.WORKSHOP_PICTURE_ROOT  + workshop.name + "/" +workshop.getLevel() +".png"));
+                imageView.relocate(MainView.WIDTH * 0.07    , MainView.HEIGHT * 0.40);
+                imageView.setFitHeight(MainView.HEIGHT / 5);
+                imageView.setFitWidth(MainView.WIDTH / 7);
+                imageView.setScaleX(-1);
+                if (workshop.name.equals("eggPowderPlant"))  imageView.setScaleX(1);
 
+                childrenList.remove(place);
+                childrenList.add(place, imageView);
+
+                System.out.println(PictureAddresses.WORKSHOP_ROOT + workshop.name    + "/" +workshop.getLevel() +".png");
+                SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4,
+                        0, 0, (int) (imageView.getImage().getWidth() / 4),
+                        (int) imageView.getImage().getHeight() / 4);
+                spriteAnimation.stop();
+
+                imageView.setOnMouseClicked(event -> {
+                    workWorkshop(workshop, spriteAnimation);
+                });
                 break;
             }
-            case 3:
-            {
+            case 3:{
 
+                ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.WORKSHOP_PICTURE_ROOT  + workshop.name + "/" +workshop.getLevel() +".png"));
+                imageView.relocate(MainView.WIDTH * 0.05, MainView.HEIGHT * 0.65);
+                imageView.setFitHeight(MainView.HEIGHT / 5);
+                imageView.setFitWidth(MainView.WIDTH / 7);
+                imageView.setScaleX(-1);
+                if (workshop.name.equals("eggPowderPlant"))  imageView.setScaleX(1);
+                childrenList.remove(place);
+                childrenList.add(place, imageView);
+//                removeBuildIcon(place);
+                System.out.println("before anim");
+                System.out.println(PictureAddresses.WORKSHOP_ROOT + workshop.name + "/" +workshop.getLevel() +".png");
+                SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4,
+                        0, 0, (int) (imageView.getImage().getWidth() / 4),
+                        (int) imageView.getImage().getHeight() / 4);
+                spriteAnimation.stop();
+                System.out.println("after anim");
+                imageView.setOnMouseClicked(event -> {
+                    workWorkshop(workshop, spriteAnimation);
+                });
                 break;
             }
-            case 4:
-            {
+            case 4:{
 
+                ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.WORKSHOP_PICTURE_ROOT  + workshop.name + "/" +workshop.getLevel() +".png"));
+                imageView.relocate(MainView.WIDTH * 0.73, MainView.HEIGHT * 0.17);
+                imageView.setFitHeight(MainView.HEIGHT / 5);
+                imageView.setFitWidth(MainView.WIDTH / 7);
+                imageView.setScaleX(1);
+                if (workshop.name.equals("eggPowderPlant"))  imageView.setScaleX(-1);
+                childrenList.remove(place);
+                childrenList.add(place, imageView);
+//                removeBuildIcon(place);
+                System.out.println("before anim");
+                System.out.println(PictureAddresses.WORKSHOP_ROOT + workshop.name + "/" +workshop.getLevel() +".png");
+                SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4,
+                        0, 0, (int) (imageView.getImage().getWidth() / 4),
+                        (int) imageView.getImage().getHeight() / 4);
+                spriteAnimation.stop();
+                imageView.setOnMouseClicked(event -> {
+                    workWorkshop(workshop, spriteAnimation);
+
+                });
                 break;
             }
-            case 5:
-            {
+            case 5:{
 
+                ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.WORKSHOP_PICTURE_ROOT  + workshop.name + "/" +workshop.getLevel() +".png"));
+                imageView.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT * 0.4);
+                imageView.setFitHeight(MainView.HEIGHT / 5);
+                imageView.setFitWidth(MainView.WIDTH / 7);
+                imageView.setScaleX(1);
+                if (workshop.name.equals("eggPowderPlant"))  imageView.setScaleX(-1);
+                childrenList.remove(place);
+                childrenList.add(place, imageView);
+//                removeBuildIcon(place);
+                System.out.println("before anim");
+                System.out.println(PictureAddresses.WORKSHOP_ROOT + workshop.name + "/" +workshop.getLevel() +".png");
+                SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4,
+                        0, 0, (int) (imageView.getImage().getWidth() / 4),
+                        (int) imageView.getImage().getHeight() / 4);
+                spriteAnimation.stop();
+                imageView.setOnMouseClicked(event -> {
+                    workWorkshop(workshop, spriteAnimation);
+                });
                 break;
             }
-            case 6:
-            {
+            case 6:{
 
+                ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.WORKSHOP_PICTURE_ROOT  + workshop.name + "/" +workshop.getLevel() +".png"));
+                imageView.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT * 0.6);
+                imageView.setFitHeight(MainView.HEIGHT / 5);
+                imageView.setFitWidth(MainView.WIDTH / 7);
+                imageView.setScaleX(1);
+                if (workshop.name.equals("eggPowderPlant"))  imageView.setScaleX(-1);
+                childrenList.remove(place);
+                childrenList.add(place, imageView);
+//                removeBuildIcon(place);
+                System.out.println("before anim");
+                System.out.println(PictureAddresses.WORKSHOP_ROOT + workshop.name + "/" +workshop.getLevel() +".png");
+                SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4,
+                        0, 0, (int) (imageView.getImage().getWidth() / 4),
+                        (int) imageView.getImage().getHeight() / 4);
+                spriteAnimation.stop();
+                imageView.setOnMouseClicked(event -> {
+                    workWorkshop(workshop, spriteAnimation);
+                });
                 break;
             }
         }
     }
 
-    @Override
-    public void nextTurn()
-    {
-        getMoney();
-        MapView.getInstance().nextTurn();
-        Background.getInstance().nextTurn();
-    }
 
     public void getMoney()
     {
@@ -369,9 +462,7 @@ public class View extends SceneBuilder implements Time
 
             animation.setCycleCount(1);
             animation.play();
-            animation.setOnFinished(event1 -> {
-                childrenList.removeAll(truckView);
-            });
+            animation.setOnFinished(event1 -> childrenList.removeAll(truckView));
         });
 
     }
@@ -417,4 +508,16 @@ public class View extends SceneBuilder implements Time
 
     }
 
+    private void workWorkshop(Workshop workshop, SpriteAnimation spriteAnimation)
+    {
+        if (!workshop.isWorking()){
+            try {
+                InGameController.getInstance().startWorkshop(workshop.name);
+            } catch (Exception e) {
+                Utility.showError(MainView.WIDTH / 2, MainView.HEIGHT / 2, e.getMessage());
+            }
+            spriteAnimation.setCycleCount(5);
+            spriteAnimation.play();
+        }
+    }
 }

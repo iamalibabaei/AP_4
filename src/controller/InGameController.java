@@ -3,7 +3,6 @@ package controller;
 import com.gilecode.yagson.YaGson;
 import models.Map;
 import models.account.Account;
-import models.exceptions.Messages;
 import models.buildings.Warehouse;
 import models.buildings.Well;
 import models.buildings.Workshop;
@@ -22,9 +21,7 @@ import models.transportation.Truck;
 import view.MainView;
 import view.gameScene.View;
 import view.utility.constants.JsonAddresses;
-import view.utility.constants.PictureAddresses;
 
-import javax.naming.InsufficientResourcesException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -173,7 +170,7 @@ public class InGameController implements Time
     public void addWorkshop(Workshop workshop, int place)
     {
         workshops.add(workshop);
-        View.getInstance().drawWorkshop(place, workshop.name);
+        View.getInstance().drawWorkshop(place, workshop);
     }
 
     public void clearStash(String transporterName) throws InvalidArgumentException
