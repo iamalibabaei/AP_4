@@ -119,7 +119,7 @@ public class InGameController implements Time
     {
         if (money < cost)
         {
-            throw new AssertionError();
+            return;
         }
         money -= cost;
         View.getInstance().getMoney();

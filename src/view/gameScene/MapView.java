@@ -5,195 +5,147 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import models.Map;
 import models.Viewable;
 import models.interfaces.Time;
 import models.objects.Entity;
+import models.objects.Grass;
 import models.objects.Point;
 import models.objects.animals.Animal;
 import models.objects.animals.DomesticAnimal;
+import models.objects.animals.Cat;
 import view.MainView;
 import view.PaneBuilder;
 import view.utility.SpriteAnimation;
 
 import java.io.File;
 
-public class MapView extends PaneBuilder implements Time
-{
-    private static final double OFFSET_X = MainView.WIDTH * 0.25;
-    private static final double OFFSET_Y = MainView.HEIGHT * 0.3;
+import java.util.ArrayList;
+
+public class MapView extends Pane implements Time {
     private static MapView instance = new MapView();
-
-    private MapView()
-    {
-        super(OFFSET_X, OFFSET_Y, Map.WIDTH, Map.HEIGHT);
-        setOnMouseClicked(event -> MenuController.getInstance().click(event.getX() - OFFSET_X,
-                event.getY() - OFFSET_Y));
-        // 200, 180 | 1/4, 3/10
-        // 600, 480 | 3/4, 8/10
-        // 800, 600
-    }
-
-    public static MapView getInstance()
-    {
+    public static final double WIDTH_BASE = 17.0, HEIGHT_BASE = 12.76;
+    private ArrayList<Text> entitiesInMap;
+    public static MapView getInstance() {
         return instance;
     }
 
+    private MapView() {
+        entitiesInMap = new ArrayList<>();
+        this.setWidth(MainView.WIDTH * 0.5);
+        this.setHeight(MainView.HEIGHT * 0.5);
+        this.relocate(MainView.HEIGHT * 0.3, MainView.HEIGHT * 0.3);
+
+
+
+
+        build();
+        setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double x = event.getX() / WIDTH_BASE, y = event.getY() / HEIGHT_BASE;
+                if (0 <= x && x < 30.0 && y < 30.0 && 0 <= y) {
+                    System.out.println(x+"   "+ y);
+                    MenuController.getInstance().click((event.getX() - 325) / WIDTH_BASE, event.getY() / HEIGHT_BASE);
+                }
+            }
+        });
+    }
+
     @Override
-    protected void build()
-    {
-        // todo
+    public ObservableList<Node> getChildren() {
+        return super.getChildren();
+    }
+
+    private void build() {
+        // shows corner of map
+        Rectangle rectangle1 = new Rectangle(10, 10);
+        rectangle1.setFill(Color.BLUE);
+        rectangle1.relocate(0,0);
+
+        Rectangle rectangle2 = new Rectangle(10, 10);
+        rectangle2.setFill(Color.BLUE);
+        rectangle2.relocate(this.getWidth() - 10,this.getHeight()- 10);
+
+        Rectangle rectangle3 = new Rectangle(10, 10);
+        rectangle3.setFill(Color.BLUE);
+        rectangle3.relocate(0,this.getHeight()- 10);
+
+        Rectangle rectangle4 = new Rectangle(10, 10);
+        rectangle4.setFill(Color.BLUE);
+        rectangle4.relocate(this.getWidth() - 10,0);
+
+        getChildren().addAll(rectangle1, rectangle2, rectangle3, rectangle4);
     }
 
 
 
+
+    @Override
+    public void nextTurn() {
+
+    }
 
     public void addEntity(Entity entity) {
+        double x = entity.getCoordinates().getX() * WIDTH_BASE + MainView.HEIGHT * 0.4 ;
+        double y = entity.getCoordinates().getY() * HEIGHT_BASE - MainView.HEIGHT * 0.05;
+        if (entity instanceof Grass) {
+            ImageView imageView = entity.getImageView();
+            imageView.setViewport(new Rectangle2D(0, 0, imageView.getImage().getWidth() / 4,
+                    imageView.getImage().getHeight() / 4));
+            imageView.relocate(x, y);
 
-        childrenList.addAll(entity.getImageView());
+            this.getChildren().addAll(imageView);
+
+
+        }
 
         if (entity instanceof Animal) {
-            int column = 0, row = 0;
+            getChildren().addAll(entity.getImageView());
+            int coulmn = 0, row = 0;
             Animal.Type type = ((Animal) entity).type;
             if (type == Animal.Type.HEN) {
-                column = 5;
+                coulmn = 5;
                 row = 5;
-            }else if (type == Animal.Type.SHEEP) {
-                column = 4;
+            } else if (type == Animal.Type.SHEEP) {
+                coulmn = 4;
                 row = 6;
             }else if (type == Animal.Type.LION) {
-                column = 6;
+                coulmn = 6;
                 row = 4;
-            }else if (type == Animal.Type.BEAR) {
-                column = 6;
-                row = 4;
-            }else if (type == Animal.Type.COW) {
-                column = 3;
+            } else if (type == Animal.Type.COW) {
+                coulmn = 3;
                 row = 8;
-            }else if (type == Animal.Type.DOG) {
-                column = 6;
+            } else if (type == Animal.Type.DOG) {
+                coulmn = 6;
                 row = 4;
-            }else if (type == Animal.Type.CAT) {
-                if (entity.getState() == Viewable.stateKind.LEFT){
-                    column = 4;
+            } else if (type == Animal.Type.CAT) {
+                coulmn = 6;
+                row = 4;
+                if (entity.getState() == Viewable.stateKind.LEFT) {
+                    coulmn = 4;
                     row = 6;
                 }
-                column = 6;
-                row = 4;
             }
-            relocate(entity.getCoordinates().getX(), entity.getCoordinates().getY());
-            SpriteAnimation spriteAnimation = new SpriteAnimation(entity.getImageView(), Duration.INDEFINITE,
-                    column * row, column, 0, 0, (int) (entity.getImageView().getImage().getWidth() / column),
-                    (int)(entity.getImageView().getImage().getHeight() / row));
-            spriteAnimation.stop();
-            spriteAnimation.play();
-        }
-    }
-
-    @Override
-    public void nextTurn()
-    {
-        for(Animal animal :  Map.getInstance().getAnimals()) {
-            double endX = animal.getTarget().getX() - animal.getCoordinates().getX();
-            double endY = animal.getTarget().getY() - animal.getCoordinates().getY();
-            if (endX + endY < 0.3) animal.setArrived(true);
-            animal.updateImageView();
-            System.out.println("state " + animal.getState() + " animal " + animal.getName());
-            System.out.println("direct " + animal.getCoordinates().getX() + " " + animal.getCoordinates().getY());
-            System.out.println("target " + animal.getTarget().getX() + " " + animal.getTarget().getY());
-            KeyValue xForGoing = new KeyValue(animal.getImageView().xProperty(), endX);
-            KeyValue yForGoing = new KeyValue(animal.getImageView().yProperty(), endY);
-            KeyFrame going = new KeyFrame(Duration.millis(2000), xForGoing, yForGoing);
-            Timeline timeLineGoing = new Timeline(going);
-            timeLineGoing.setOnFinished(event -> {
-
-            });
-            timeLineGoing.getKeyFrames().addAll(going);
-            timeLineGoing.play();
+            entity.getImageView().relocate(x, y);
+            SpriteAnimation s = new SpriteAnimation(entity.getImageView(), Duration.INDEFINITE, row * coulmn,
+                    coulmn, 0, 0,(int)(entity.getImageView().getImage().getWidth() / coulmn), (int)(entity.getImageView().getImage().getHeight() / row));
+            s.stop();
+            s.play();
         }
 
     }
-
-/*
-    public void ShowChickenMoving(int xcell1, int yCell1, int xCell2, int yCell2) {
-        int speed = 3;
-        int duration = (int) (((2000000000) - (speed * 15881818)) / 1000000);
-        File chickenFile = null;
-        Image chickenImage = null;
-        ImageView chickenView = null;
-        Animation chickenAnimation = null;
-        final ImageView[] chickenArrayView = new ImageView[1];
-        if (xcell1 == xCell2 & yCell1 == yCell2) {
-            ;
-        } else {
-            if (xcell1 == xCell2) {
-                if (yCell1 > yCell2) {
-                    chickenFile = new File("Data\\Textures\\Animals\\Africa\\GuineaFowl\\up.png");
-                    chickenImage = new Image(chickenFile.toURI().toString());
-                    chickenView = new ImageView(chickenImage);
-                    chickenAnimation = new SpriteAnimation(chickenView, Duration.millis(duration), 24, 5, 0, 0, 64, 84);
-                    chickenView.setViewport(new Rectangle2D(0, 0, 64, 84));
-                } else {
-                    chickenFile = new File("Data\\Textures\\Animals\\Africa\\GuineaFowl\\down.png");
-                    chickenImage = new Image(chickenFile.toURI().toString());
-                    chickenView = new ImageView(chickenImage);
-                    chickenAnimation = new SpriteAnimation(chickenView, Duration.millis(duration), 24, 5, 0, 0, 66, 72);
-                    chickenView.setViewport(new Rectangle2D(0, 0, 66, 72));
-                }
-            } else if (yCell1 == yCell2) {
-                chickenFile = new File("Data\\Textures\\Animals\\Africa\\GuineaFowl\\left.png");
-                chickenImage = new Image(chickenFile.toURI().toString());
-                chickenView = new ImageView(chickenImage);
-                chickenAnimation = new SpriteAnimation(chickenView, Duration.millis(duration), 24, 5, 0, 0, 80, 74);
-                chickenView.setViewport(new Rectangle2D(0, 0, 80, 74));
-                if (xcell1 < xCell2) {
-                    chickenView.setScaleX(-1);
-                }
-            } else if (yCell2 > yCell1) {
-                chickenFile = new File("res/graphicAssets/Animals/Africa/cow/death.png");
-                chickenImage = new Image(chickenFile.toURI().toString());
-                chickenView = new ImageView(chickenImage);
-                chickenAnimation = new SpriteAnimation(chickenView, Duration.millis(duration), 24, 5, 0, 0, 70, 72);
-                chickenView.setViewport(new Rectangle2D(0, 0, 70, 72));
-                if (xcell1 < xCell2) {
-                    chickenView.setScaleX(-1);
-                }
-            } else if (yCell1 > yCell2) {
-                chickenFile = new File("res/graphicAssets/Animals/Africa/cow/death.png");
-                chickenImage = new Image(chickenFile.toURI().toString());
-                chickenView = new ImageView(chickenImage);
-                chickenAnimation = new SpriteAnimation(chickenView, Duration.millis(duration), 24, 5, 0, 0, 68, 80);
-                chickenView.setViewport(new Rectangle2D(0, 0, 68, 80));
-                if (xcell1 < xCell2) {
-                    chickenView.setScaleX(-1);
-                }
-            }
-            int[] position1 = getPositionByCellPosition(xcell1, yCell1);
-            int[] position2 = getPositionByCellPosition(xCell2, yCell2);
-            int x1Position = position1[0] - 30;
-            int y1Position = position1[1] - 30;
-            int x2Position = position2[0] - 30;
-            int y2Position = position2[1] - 30;
-            chickenView.relocate(x1Position, y1Position);
-            this.getChildren().addAll(chickenView);
-            chickenArrayView[0] = chickenView;
-
-            KeyValue xChicken = new KeyValue(chickenView.xProperty(), x2Position - x1Position);
-            KeyValue yChicken = new KeyValue(chickenView.yProperty(), y2Position - y1Position);
-            KeyFrame xChickenFrame = new KeyFrame(Duration.millis(duration), xChicken, yChicken);
-            Timeline chickenTimeLine = new Timeline(xChickenFrame);
-            chickenTimeLine.setOnFinished(event -> this.getChildren().removeAll(chickenArrayView[0]));
-            chickenAnimation.play();
-            chickenTimeLine.play();
-        }
-    }
-*/
 }
