@@ -6,12 +6,12 @@ import models.Multiplayer.Packet.Handleable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class getDataRunnable<T extends NetworkNode> implements Runnable
+public class GetDataRunnable<T extends NetworkNode> implements Runnable
 {
     private ObjectInputStream inputStream;
     private T listener;
 
-    public getDataRunnable(ObjectInputStream inputStream, T listener)
+    public GetDataRunnable(ObjectInputStream inputStream, T listener)
     {
         this.inputStream = inputStream;
         this.listener = listener;

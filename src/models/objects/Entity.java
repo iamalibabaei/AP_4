@@ -15,11 +15,6 @@ public abstract class Entity extends Viewable
         exists = true;
     }
 
-    public Text getText()
-    {
-        return text;
-    }
-
     public boolean collidesWith(Entity entity)
     {
         return coordinates.distanceFrom(entity.coordinates) <= InGameController.COLLISION_RADIUS;
