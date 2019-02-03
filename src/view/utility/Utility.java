@@ -90,7 +90,6 @@ public class Utility
     public static void makeMenuButton(ObservableList<Node> list, double x, double y, final double width, final double height, String name, EventHandler<? super MouseEvent> value)
     {
 
-        list.addAll();
         StackPane pane = new StackPane();
         Text text = new Text(name);
         text.setFont(Font.font("SWItalt", 15));

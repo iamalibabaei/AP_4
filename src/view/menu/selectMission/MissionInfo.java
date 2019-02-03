@@ -44,27 +44,10 @@ public class MissionInfo extends Pane
     }
 
     private void addButtons() {
-        ImageView start = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
-        start.setFitHeight(MainView.HEIGHT * 0.15);
-        start.setFitWidth(MainView.HEIGHT * 0.3);
-        StackPane startGame = new StackPane();
-        Text startGameText = new Text("start game");
-        startGameText.setFont(Font.font("Rage Italic", 25));
-        startGame.getChildren().addAll(start, startGameText);
-        startGame.setOnMouseClicked(event -> startGame());
-        startGame.relocate(MainView.HEIGHT * 0.75, MainView.HEIGHT * 0.3);
-        getChildren().addAll(startGame);
-
-        ImageView exitButton = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
-        exitButton.setFitHeight(MainView.HEIGHT * 0.15);
-        exitButton.setFitWidth(MainView.HEIGHT * 0.3);
-        StackPane exit = new StackPane();
-        Text exitText = new Text("back");
-        exitText.setFont(Font.font("Rage Italic", 25));
-        exit.getChildren().addAll(exitButton, exitText);
-        exit.setOnMouseClicked(event -> setVisible(false));
-        exit.relocate(MainView.HEIGHT * 0.75, MainView.HEIGHT * 0.45);
-        getChildren().addAll(exit);
+        Utility.makeMenuButton(getChildren(), MainView.WIDTH * 0.75, MainView.HEIGHT * 0.3, MainView.WIDTH * 0.05,
+                MainView.HEIGHT * 0.3, "Start Game", event -> startGame());
+        Utility.makeMenuButton(getChildren(), MainView.WIDTH * 0.75, MainView.HEIGHT * 0.4, MainView.WIDTH * 0.05,
+                MainView.HEIGHT * 0.3, "Back", event -> setVisible(false));
     }
 
 
