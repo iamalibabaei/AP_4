@@ -119,5 +119,37 @@ public class Utility
         list.addAll(pane);
         return pane;
     }
+    public static StackPane makeMenuButton(ObservableList<Node> list, double x, double y, final double width, final double height, String name)
+    {
+
+        StackPane pane = new StackPane();
+        Text text = new Text(name);
+        text.setFont(Font.font("SWItalt", 15));
+        text.setFill(Color.WHITE);
+        ImageView button = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
+        ImageView buttonMouseOver = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON_BRIGHT));
+        buttonMouseOver.setFitWidth(width);
+        buttonMouseOver.setFitHeight(height);
+        button.setFitWidth(width);
+        button.setFitHeight(height);
+        pane.getChildren().addAll(button, text);
+        pane.setOnMouseEntered(event -> {
+            pane.getChildren().removeAll(button, text);
+            pane.getChildren().addAll(buttonMouseOver, text);
+        });
+        pane.setOnMouseExited(event -> {
+            pane.getChildren().removeAll(buttonMouseOver, text);
+            pane.getChildren().addAll(button, text);
+        });
+//        MediaPlayer sound = Utility.getPlayer(SoundAddresses.BUTTON_CLICK_SOUND);
+//        sound.setOnEndOfMedia(sound::stop);
+//        pane.setOnMouseClicked(event -> {
+//            sound.play();
+//            value.handle(event);
+//        });
+        pane.relocate(x, y);
+        list.addAll(pane);
+        return pane;
+    }
 
 }

@@ -193,6 +193,7 @@ public class View extends PaneBuilder {
         back.setFitHeight(600);
         back.relocate(MainView.WIDTH * 0.3 ,MainView.HEIGHT * 0.2);
         getChildren().addAll(back);
+
     }
 
     public void updateInformation() {
