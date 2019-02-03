@@ -276,7 +276,6 @@ public class InGameController implements Time
     @Override
     public void nextTurn()
     {
-        System.out.println("nextTurn");
         map.nextTurn();
         truck.nextTurn();
         helicopter.nextTurn();
