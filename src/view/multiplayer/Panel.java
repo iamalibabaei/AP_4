@@ -1,7 +1,6 @@
 package view.multiplayer;
 
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -12,7 +11,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import view.MainView;
 //import view.utility.MenuUtility;
@@ -28,6 +26,7 @@ public class Panel extends Pane {
 
     private static Panel instance = new Panel();
     private ObservableList<Node> list;
+    private TextArea chatText = new TextArea();
 
     private Panel(){
         relocate(MainView.WIDTH * 0.375, MainView.HEIGHT * 0.25);
@@ -172,7 +171,6 @@ public class Panel extends Pane {
             ipText.relocate(MainView.WIDTH * 0.2, -MainView.WIDTH * 0.15);
             Text ipTextField = new Text(localhost.getHostAddress());
             ipTextField.relocate(MainView.WIDTH * 0.32, -MainView.WIDTH * 0.15);
-            TextArea chatText = new TextArea();
             chatText.relocate(MainView.WIDTH * 0.2, -MainView.WIDTH * 0.1);
             chatText.setMaxWidth(MainView.WIDTH * 0.28);
             chatText.setDisable(true);
@@ -203,7 +201,7 @@ public class Panel extends Pane {
 
             TableColumn username = new TableColumn("username");
             String user = "salam";
-            table.getItems().addAll(user    );
+            table.getItems().addAll(user);
             table.getColumns().addAll(username);
             final VBox vbox = new VBox();
 //            vbox.setSpacing(5);
@@ -217,6 +215,10 @@ public class Panel extends Pane {
 
 
         });
+    }
+    public TextArea getMessage(String message){
+        chatText.setText(message);
+        return chatText;
     }
     public void start()
     {
