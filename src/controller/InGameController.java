@@ -20,6 +20,7 @@ import models.objects.animals.DomesticAnimal;
 import models.transportation.Helicopter;
 import models.transportation.Truck;
 import view.MainView;
+import view.gameScene.MapView;
 import view.gameScene.View;
 import view.utility.constants.JsonAddresses;
 
@@ -97,7 +98,7 @@ public class InGameController implements Time
                 if (now > nextTurnTime + MILI_SECOND_PER_FRAME) {
                     nextTurnTime = now;
                     nextTurn();
-                    //View.getInstance().nextTurn(); TODO fix
+                    MapView.getInstance().nextTurn();
 
                 }
             }

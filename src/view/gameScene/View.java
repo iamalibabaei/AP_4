@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import models.Map;
 import models.buildings.Warehouse;
 import models.buildings.Well;
 import models.buildings.Workshop;
@@ -51,6 +52,7 @@ public class View extends SceneBuilder
     protected void build()
     {
         childrenList.addAll(Background.getInstance());
+        childrenList.addAll(MapView.getInstance());
         wellGraphic();
         warehouseGraphic();
         moneyGraphic();

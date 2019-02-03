@@ -1,10 +1,12 @@
 package models.objects.animals;
 
+import javafx.scene.image.ImageView;
 import models.interfaces.Time;
 import models.objects.Entity;
 import models.objects.Grass;
 import models.objects.Item;
 import models.objects.Point;
+import view.utility.Utility;
 
 public class DomesticAnimal extends Animal
 {
@@ -17,6 +19,34 @@ public class DomesticAnimal extends Animal
         super(point, type);
         saturationRate = MAX_SATURATION_RATE / 2;
         isHungry = true;
+        updateImageView();
+    }
+
+    @Override
+    protected void buildHashmap() {
+        String str = null;
+        if (type == Type.SHEEP) {
+            str = "Sheep";
+        } else if (type == Type.HEN) {
+            str = "GuineaFowl";
+        } else if (type == Type.COW) {
+            str = "Cow";
+        }
+        converter.put(stateKind.DIE,  Utility.getImageView("res/graphicAssets/Animals/Africa/" + str + "/death.png"));
+        converter.put(stateKind.DOWN, Utility.getImageView("res/graphicAssets/Animals/Africa/" + str + "/down.png"));
+        converter.put(stateKind.DOWN_LEFT, Utility.getImageView("res/graphicAssets/Animals/Africa/" + str + "/down_left.png"));
+        ImageView imageView = Utility.getImageView("res/graphicAssets/Animals/Africa/" + str + "/down_left.png");
+        imageView.setScaleX(-1);
+        converter.put(stateKind.DOWN_RIGHT, imageView);
+        imageView = Utility.getImageView("res/graphicAssets/Animals/Africa/"+str +"/left.png");
+        imageView.setScaleX(-1);
+        converter.put(stateKind.RIGHT, imageView);
+        imageView = Utility.getImageView("res/graphicAssets/Animals/Africa/"+str + "/up_left.png");
+        converter.put(stateKind.UP_LEFT, imageView);
+        imageView.setScaleX(-1);
+        converter.put(stateKind.UP_RIGHT, imageView);
+        converter.put(stateKind.UP, Utility.getImageView("res/graphicAssets/Animals/Africa/"+ str +"/up.png"));
+        converter.put(stateKind.LEFT, Utility.getImageView("res/graphicAssets/Animals/Africa/" + str+"/left.png"));
     }
 
     @Override
@@ -25,6 +55,7 @@ public class DomesticAnimal extends Animal
         if (isHungry && entity instanceof Grass)
         {
             ((Grass) entity).eatGrass();
+            state = stateKind.EAT;
         }
     }
 
@@ -74,5 +105,6 @@ public class DomesticAnimal extends Animal
     {
 
     }
+
 
 }

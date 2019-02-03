@@ -1,6 +1,7 @@
 package models.objects.animals;
 
 import controller.InGameController;
+import javafx.scene.image.ImageView;
 import models.Map;
 import models.exceptions.Messages;
 import models.buildings.Warehouse;
@@ -8,6 +9,7 @@ import models.interfaces.Upgradable;
 import models.objects.Entity;
 import models.objects.Item;
 import models.objects.Point;
+import view.utility.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,8 +27,29 @@ public class Cat extends Animal implements Upgradable
     public Cat(Point point, Animal.Type type)
     {
         super(point, type);
+        updateImageView();
         warehouse = Warehouse.getInstance();
     }
+
+    @Override
+    protected void buildHashmap() {
+        converter.put(stateKind.DIE,  Utility.getImageView("res/graphicAssets/Animals/Africa/Cat/down.png"));
+        converter.put(stateKind.DOWN, Utility.getImageView("res/graphicAssets/Animals/Africa/Cat/down.png"));
+        converter.put(stateKind.DOWN_LEFT, Utility.getImageView("res/graphicAssets/Animals/Africa/Cat/down_left.png"));
+        ImageView imageView = Utility.getImageView("res/graphicAssets/Animals/Africa/Cat/down_left.png");
+        imageView.setScaleX(-1);
+        converter.put(stateKind.DOWN_RIGHT, imageView);
+        imageView = Utility.getImageView("res/graphicAssets/Animals/Africa/Cat/left.png");
+        imageView.setScaleX(-1);
+        converter.put(stateKind.RIGHT, imageView);
+        imageView = Utility.getImageView("res/graphicAssets/Animals/Africa/Cat/up_left.png");
+        converter.put(stateKind.UP_LEFT, imageView);
+        imageView.setScaleX(-1);
+        converter.put(stateKind.UP_RIGHT, imageView);
+        converter.put(stateKind.UP, Utility.getImageView("res/graphicAssets/Animals/Africa/Cat/up.png"));
+        converter.put(stateKind.LEFT, Utility.getImageView("res/graphicAssets/Animals/Africa/Cat/left.png"));
+    }
+
     @Override
     public int getLevel(){
         return level;
@@ -95,5 +118,6 @@ public class Cat extends Animal implements Upgradable
     {
 
     }
+
 
 }

@@ -1,6 +1,7 @@
 package models.objects;
 
 import javafx.scene.text.Text;
+import view.utility.Utility;
 
 public class Item extends Entity
 {
@@ -17,6 +18,11 @@ public class Item extends Entity
     protected void loadAnimation()
     {
 
+    }
+
+    @Override
+    public void updateImageView() {
+        imageView = Utility.getImageView("res/graphicAssets/item/"+ this.type.name()+".png");
     }
 
     public enum Type

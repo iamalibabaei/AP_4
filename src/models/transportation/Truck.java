@@ -22,6 +22,7 @@ public class Truck extends Transporter
     {
         super(SELLER_UPGRADE_COST_LIST, SELLER_UPGRADE_SPEED_BOOST, SELLER_UPGRADE_CAPACITY, BASE_TIME_TO_ARRIVE,
                 BASE_CAPACITY);
+        name = "truck";
     }
 
     public static Truck getInstance()
@@ -64,11 +65,6 @@ public class Truck extends Transporter
         return level;
     }
 
-    @Override
-    protected void loadAnimation()
-    {
-
-    }
 
 }
 

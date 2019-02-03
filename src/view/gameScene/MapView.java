@@ -1,13 +1,17 @@
 package view.gameScene;
 
 import controller.MenuController;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import models.Map;
 import models.interfaces.Time;
+import models.objects.Entity;
 import models.objects.animals.Animal;
 import view.MainView;
 import view.PaneBuilder;
+import view.utility.SpriteAnimation;
 
 public class MapView extends PaneBuilder implements Time
 {
@@ -36,12 +40,29 @@ public class MapView extends PaneBuilder implements Time
         // todo
     }
 
+
+
+
+    public void addEntity(Entity entity) {
+
+        SpriteAnimation animal = new SpriteAnimation(entity.getImageView(), Duration.millis(500), 24, 6,
+                0, 0, (int) (entity.getImageView().getImage().getWidth() / 6),(int) (entity.getImageView().getImage().getHeight() / 4) );
+        animal.play();
+        childrenList.addAll(entity.getImageView());
+
+    }
+
     @Override
     public void nextTurn()
     {
-        childrenList.clear();
-        Iterable<Animal> animals = Map.getInstance().getAnimals();
-        // todo
+//        for(Animal animal :  Map.getInstance().getAnimals()) {
+////            if (animal.getImageView() == null) {
+////                continue;
+////            }
+//            ImageView imageView = animal.getImageView();
+//            imageView.relocate(animal.getCoordinates().getX()+ MapView.OFFSET_X, animal.getCoordinates().getY() + MapView.OFFSET_Y);
+//        }
+
     }
 
 }

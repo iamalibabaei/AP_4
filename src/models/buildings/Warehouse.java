@@ -15,7 +15,7 @@ import java.util.*;
 
 // todo add all feature for truck
 
-public class Warehouse extends Viewable implements Upgradable
+public class Warehouse implements Upgradable
 {
     public static final int[] CAPACITY = {50, 150, 300, 600}, UPGRADE_COST = {200, 250, 300};
     private static final int MAX_LEVEL = 3;
@@ -40,7 +40,6 @@ public class Warehouse extends Viewable implements Upgradable
         level = 0;
         storedItems = new EnumMap<>(Item.Type.class);
         remainingCapacity = CAPACITY[level];
-        state = "level" + level;
     }
 
     public static Warehouse getInstance()
@@ -116,7 +115,6 @@ public class Warehouse extends Viewable implements Upgradable
             throw new IOException(Messages.UPGRADE_BEYOND_MAX_LEVEL);
         }
         level++;
-        state = "level" + level;
     }
 
     @Override
@@ -133,15 +131,6 @@ public class Warehouse extends Viewable implements Upgradable
     public int getLevel()
     {
         return level;
-    }
-
-    @Override
-    protected void loadAnimation()
-    {
-        spriteAnimation = new SpriteAnimation(states.get(state), Duration.INDEFINITE, 1, 1, 0, 0,
-                (int) states.get(state).getFitWidth(),
-                (int) states.get(state).getFitHeight());
-        spriteAnimation.stop();
     }
 
 }

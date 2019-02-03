@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Workshop extends Viewable implements Upgradable, Time
+public class Workshop implements Upgradable, Time
 {
     private static final int[] PRODUCTION_TIME = {15, 14, 13, 11, 8};
     private final Point outputPlace;
@@ -37,13 +37,7 @@ public class Workshop extends Viewable implements Upgradable, Time
     private boolean isWorking;
     private Map map;
 
-    @Override
-    protected void loadAnimation()
-    {
 
-    }
-
-    @Override
     public String getName()
     {
         return name;

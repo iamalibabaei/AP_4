@@ -11,8 +11,13 @@ import java.util.EnumMap;
 import java.util.Map;
 
 
-public abstract class Transporter extends Viewable implements Upgradable, Time
+public abstract class Transporter implements Upgradable, Time
 {
+    public String getName() {
+        return name;
+    }
+
+    protected String name;
     private final int[] UPGRADE_COST_LIST;
     private final int UPGRADE_SPEED_BOOST;
     private final int UPGRADE_CAPACITY_INCREASE;

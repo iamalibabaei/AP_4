@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 // todo implement well last upgrade (automatic planting)
 
-public class Well extends Viewable implements Upgradable
+public class Well implements Upgradable
 {
     public static final int[] UPGRADE_COST = {250, 500}, REFILL_COST = {19, 17, 15};
     public static final int[] CAPACITY = {5, 7, 10}, REFILL_TIME = {4, 4, 3};
@@ -39,7 +39,6 @@ public class Well extends Viewable implements Upgradable
     {
         isRefilling = false;
         level = 0;
-        state = "level" + level;
         remainingWater = CAPACITY[level];
     }
 
@@ -68,8 +67,6 @@ public class Well extends Viewable implements Upgradable
         if (level == MAX_LEVEL)
             throw new Exception(Messages.UPGRADE_BEYOND_MAX_LEVEL);
         level++;
-        state = "level" + level;
-        loadAnimation();
     }
 
     @Override
@@ -86,15 +83,6 @@ public class Well extends Viewable implements Upgradable
         return level;
     }
 
-    @Override
-    protected void loadAnimation()
-    {
-        spriteAnimation = new SpriteAnimation(states.get(state), Duration.millis(1250), 16, 4, 0, 0,
-                (int) (states.get(state).getImage().getWidth() / 4),
-                (int) (states.get(state).getImage().getHeight() / 4));
-        spriteAnimation.setCycleCount(REFILL_TIME[level]);
-        spriteAnimation.setOnFinished(event -> refill());
-    }
 
     private void refill()
     {

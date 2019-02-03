@@ -20,6 +20,7 @@ public class Helicopter extends Transporter
         super(BUYER_UPGRADE_COST_LIST, BUYER_UPGRADE_SPEED_BOOST, BUYER_UPGRADE_CAPACITY, BASE_TIME_TO_ARRIVE,
                 BASE_CAPACITY);
         map = Map.getInstance();
+        name = "helicopter";
     }
 
     public static Helicopter getInstance()
@@ -62,12 +63,6 @@ public class Helicopter extends Transporter
     @Override
     public int getLevel() {
         return level;
-    }
-
-    @Override
-    protected void loadAnimation()
-    {
-
     }
 
 }

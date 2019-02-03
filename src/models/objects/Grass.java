@@ -2,6 +2,7 @@ package models.objects;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import view.utility.Utility;
 
 public class Grass extends Entity
 {
@@ -29,6 +30,11 @@ public class Grass extends Entity
     protected void loadAnimation()
     {
 
+    }
+
+    @Override
+    public void updateImageView() {
+        imageView = Utility.getImageView("res/graphicAssets/Grass/grass1.png");
     }
 
 }

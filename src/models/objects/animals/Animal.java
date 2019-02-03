@@ -1,10 +1,16 @@
 package models.objects.animals;
 
+import javafx.scene.image.ImageView;
 import models.Map;
+import models.Viewable;
 import models.interfaces.Time;
 import models.objects.Entity;
 import models.objects.Item;
 import models.objects.Point;
+import view.gameScene.View;
+
+
+import java.util.HashMap;
 
 public abstract class Animal extends Entity implements Time
 {
@@ -12,14 +18,21 @@ public abstract class Animal extends Entity implements Time
     public final Animal.Type type;
     protected Map map;
     protected Point target;
+    protected HashMap<stateKind, ImageView> converter;
 
     Animal(Point point, Animal.Type type)
     {
         super(point);
+        state = stateKind.LEFT;
         target = null;
         map = Map.getInstance();
         this.type = type;
+        converter = new HashMap<>();
+        buildHashmap();
     }
+
+    protected abstract void buildHashmap();
+
 
     @Override
     public String getName()
@@ -34,6 +47,12 @@ public abstract class Animal extends Entity implements Time
     {
         setTarget();
         move();
+    }
+
+
+    @Override
+    public void updateImageView() {
+        imageView = converter.get(state);
     }
 
     public void setTarget() // default move is random
@@ -52,6 +71,26 @@ public abstract class Animal extends Entity implements Time
         direction.normalize();
         getCoordinates().setX(getCoordinates().getX() + direction.getX() * Animal.SPEED);
         getCoordinates().setY(getCoordinates().getY() + direction.getY() * Animal.SPEED);
+
+        double teta = Math.asin(direction.getX() / direction.getY());
+        if (-0.5 < teta  && teta< 0.5) {
+            state = stateKind.RIGHT;
+        } else if (0.5 < teta  && teta< 1.6) {
+            state = stateKind.UP_RIGHT;
+        } else if (1.6 < teta  && teta< 2.0) {
+            state = stateKind.UP;
+        } else if (2.0 < teta  && teta< 2.16) {
+            state = stateKind.UP_LEFT;
+        } else if (2.16 < teta  && teta< 3.6) {
+            state = stateKind.LEFT;
+        } else if (3.6 < teta  && teta< 4.16) {
+            state = stateKind.DOWN_LEFT;
+        } else if (4.16 < teta  && teta< 5.2) {
+            state = stateKind.DOWN;
+        } else if (5.2 < teta  && teta< 5.7) {
+            state = stateKind.DOWN_RIGHT;
+        }
+
     }
 
     public enum Type

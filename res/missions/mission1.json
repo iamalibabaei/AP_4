@@ -1,1 +1,1 @@
-{"@type":"models.misc.Mission","@val":{"name":"mission1","moneyObjective":4000,"animalObjectives":{"HEN":10,"SHEEP":2},"ItemObjective":{"EGG":10},"dog":false,"cat":false,"animalAtBeginning":{"HEN":5,"SHEEP":1},"moneyAtBeginning":2000}}
+{"@type":"models.misc.Mission","@val":{"name":"mission1","moneyObjective":4000,"animalObjectives":{"HEN":10,"SHEEP":2},"ItemObjective":{"EGG":10},"dog":false,"cat":false,"animalAtBeginning":{"HEN":1},"moneyAtBeginning":2000}}

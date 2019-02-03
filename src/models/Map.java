@@ -7,6 +7,7 @@ import models.objects.Item;
 import models.objects.Point;
 import models.objects.animals.*;
 import view.MainView;
+import view.gameScene.MapView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -89,6 +90,7 @@ public class Map implements Time
         moveAnimals();
         handleCollisions();
         removeDeadEntities();
+
     }
 
     private void moveAnimals()
@@ -124,7 +126,24 @@ public class Map implements Time
                     collider.collide(grass);
                 }
             }
+
         }
+
+        for (Animal animal : animals)
+        {
+          animal.updateImageView();
+        }
+        for (Item item : items)
+        {
+            item.updateImageView();
+        }
+        for (Grass grass : grasses)
+        {
+            grass.updateImageView();
+        }
+
+
+
     }
 
     private void removeDeadEntities()
@@ -155,24 +174,26 @@ public class Map implements Time
     public void addAnimal(Animal.Type type)
     {
         Point coordinates = Point.randomPoint(WIDTH, HEIGHT);
+        Animal animal = null;
         switch (type)
         {
             case CAT:
-                animals.add(new Cat(coordinates, type));
+                animals.add(animal = new Cat(coordinates, type));
                 break;
             case DOG:
-                animals.add(new Dog(coordinates, type));
+                animals.add(animal = new Dog(coordinates, type));
                 break;
             case SHEEP:
-                animals.add(new DomesticAnimal(coordinates, type));
+                animals.add(animal = new DomesticAnimal(coordinates, type));
                 break;
             case HEN:
-                animals.add(new DomesticAnimal(coordinates, type));
+                animals.add(animal = new DomesticAnimal(coordinates, type));
                 break;
             case COW:
-                animals.add(new DomesticAnimal(coordinates, type));
+                animals.add(animal = new DomesticAnimal(coordinates, type));
                 break;
         }
+        MapView.getInstance().addEntity(animal);
     }
 
     public List<Item> getNearbyItems(Point point)
@@ -191,6 +212,7 @@ public class Map implements Time
     public void addItem(Item item)
     {
         items.add(item);
+        MapView.getInstance().addEntity(item);
     }
 
     public void addGrass(Grass grass)
