@@ -6,6 +6,7 @@ import models.Map;
 import models.account.Account;
 import models.buildings.Workshop;
 import models.misc.Mission;
+import models.objects.Grass;
 import models.objects.Item;
 import models.objects.Point;
 import models.objects.animals.Animal;
@@ -279,7 +280,23 @@ public class MenuController
 
     public void click(double x, double y)
     {
-        // todo
+        try {
+            InGameController.getInstance().pickUp(new Point(x, y));
+        } catch (IOException e) {
+
+        }
+        Map.getInstance().addGrass(new Grass(new Point(x, y)));
+        Map.getInstance().addGrass(new Grass(new Point(x + 40, y)));
+        Map.getInstance().addGrass(new Grass(new Point(x, y + 25)));
+        Map.getInstance().addGrass(new Grass(new Point(x - 40, y)));
+        Map.getInstance().addGrass(new Grass(new Point(x, y - 40)));
+        Map.getInstance().addGrass(new Grass(new Point(x + 40, y + 25)));
+        Map.getInstance().addGrass(new Grass(new Point(x + 40, y - 25)));
+        Map.getInstance().addGrass(new Grass(new Point(x - 40, y - 25)));
+        Map.getInstance().addGrass(new Grass(new Point(x - 40, y + 25)));
+
+
+
     }
 
     public Account getCurrentAccount()

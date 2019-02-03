@@ -47,7 +47,7 @@ public class View extends SceneBuilder {
     @Override
     protected void build() {
         childrenList.addAll(Background.getInstance());
-        childrenList.addAll(MapView.getInstance());
+        childrenList.addAll(MapView .getInstance());
         wellGraphic();
         warehouseGraphic();
         moneyGraphic();
@@ -92,16 +92,24 @@ public class View extends SceneBuilder {
             if (isWorking[0]) {
                 isWorking[0] = false;
                 try {
-                    MenuController.getInstance().refillWell();
+                    Well.getInstance().issueRefill();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    childrenList.addAll(Utility.showError(50, 100, "not enough money"));
+                    return;
                 }
                 wellSpriteAnimation.setCycleCount(Well.getInstance().REFILL_TIME[Well.getInstance().getLevel()]);
                 wellSpriteAnimation.playFromStart();
                 wellSpriteAnimation.setOnFinished(event1 -> {
                     wellSpriteAnimation.stop();
                     isWorking[0] = true;
+                    try {
+                        MenuController.getInstance().refillWell();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 });
+
+
             }
         });
     }

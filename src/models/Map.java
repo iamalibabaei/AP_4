@@ -1,6 +1,7 @@
 package models;
 
 import controller.InGameController;
+import models.buildings.Well;
 import models.interfaces.Time;
 import models.objects.Grass;
 import models.objects.Item;
@@ -217,7 +218,13 @@ public class Map implements Time
 
     public void addGrass(Grass grass)
     {
+        try {
+            Well.getInstance().extractWater();
+        } catch (Exception e) {
+            return;
+        }
         grasses.add(grass);
+        MapView.getInstance().addEntity(grass);
     }
 
 }
