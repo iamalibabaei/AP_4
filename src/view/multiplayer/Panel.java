@@ -34,12 +34,12 @@ public class Panel extends Pane {
 
     private void build(){
         buildMenuTemplate();
-        StackPane backButton = Utility.makeMenuButton(list, MainView.WIDTH * 0.37,MainView.HEIGHT * 0.22, MainView.HEIGHT * 0.2,
+        Utility.makeMenuButton(list, MainView.WIDTH * 0.37,MainView.HEIGHT * 0.22, MainView.HEIGHT * 0.2,
                 MainView.HEIGHT * 0.1,"Back",
                 event -> {
                     setVisible(false);
-                });
-        list.addAll(backButton);
+        });
+
 
     }
 

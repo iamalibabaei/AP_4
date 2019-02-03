@@ -74,15 +74,15 @@ public class View extends SceneBuilder implements Time
     }
 
     private void gameMenuButton() {
-        StackPane stackPane = Utility.makeMenuButton(childrenList, - MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9,
+        Utility.makeMenuButton(childrenList, - MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9,
                 MainView.HEIGHT * 0.2, MainView.HEIGHT * 0.1
                 , "MENU", new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         GameMenu.getInstance().play();
                     }
-                });
-        childrenList.addAll(stackPane);
+        });
+
     }
 
     private void wellGraphic()

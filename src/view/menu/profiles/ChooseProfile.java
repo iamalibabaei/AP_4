@@ -38,10 +38,10 @@ public class ChooseProfile extends PaneBuilder
         buildMenuTemplate();
         buildGetAccounts();
         buildAddNewPlayer();
-        StackPane backButton = Utility.makeMenuButton(childrenList, MainView.WIDTH * 0.08, MainView.HEIGHT * 0.4, MainView.HEIGHT * 0.3,
+        Utility.makeMenuButton(childrenList, MainView.WIDTH * 0.08, MainView.HEIGHT * 0.4, MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Back",
                 event -> setVisible(false));
-        childrenList.addAll(backButton);
+
     }
 
     private void buildMenuTemplate()
@@ -62,10 +62,10 @@ public class ChooseProfile extends PaneBuilder
         choiceBox = new ChoiceBox<>();
         choiceBox.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.1);
         choiceBox.setVisible(true);
-        StackPane startGameButton = Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.125, 20, MainView.HEIGHT * 0.3,
+        Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.125, 20, MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Go",
                 event -> goToMissionView());
-        childrenList.addAll(choiceBox, startGameButton);
+        childrenList.addAll(choiceBox);
     }
 
     private void buildAddNewPlayer()
@@ -79,10 +79,10 @@ public class ChooseProfile extends PaneBuilder
         PasswordField password = new PasswordField();
         password.setPromptText("Password");
         password.relocate(MainView.WIDTH * 0.1, MainView.HEIGHT * 0.25);
-        StackPane submitButton = Utility.makeMenuButton(childrenList, MainView.WIDTH * 0.08, MainView.HEIGHT * 0.3, MainView.HEIGHT * 0.3,
+        Utility.makeMenuButton(childrenList, MainView.WIDTH * 0.08, MainView.HEIGHT * 0.3, MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"SUBMIT",
                 event -> addNewPlayer(name, password));
-        childrenList.addAll(newPlayerText, name, password, submitButton);
+        childrenList.addAll(newPlayerText, name, password);
     }
 
     private void goToMissionView()

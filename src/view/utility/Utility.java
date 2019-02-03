@@ -87,7 +87,7 @@ public class Utility
         fadeTransition.play();
         fadeTransition.setAutoReverse(true);
     }
-    public static StackPane makeMenuButton(ObservableList<Node> list, double x, double y, final double width, final double height, String name, EventHandler<? super MouseEvent> value)
+    public static void makeMenuButton(ObservableList<Node> list, double x, double y, final double width, final double height, String name, EventHandler<? super MouseEvent> value)
     {
 
         list.addAll();
@@ -117,7 +117,7 @@ public class Utility
             value.handle(event);
         });
         pane.relocate(x, y);
-        return pane;
+        list.addAll(pane);
     }
 
 }

@@ -26,21 +26,22 @@ public class View extends SceneBuilder
 
     protected void build()
     {
-        StackPane startGame = Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3,MainView.HEIGHT * 0.3,
+        childrenList.addAll(Background.getInstance());
+        Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.3,MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2 ,"Start Game", event -> ChooseProfile.getInstance().toggleChooseProfilePane());
-        StackPane setting = Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5,MainView.HEIGHT * 0.3,
+        Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.5,MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Settings", event -> view.settings.View.getInstance().start());
-        StackPane multiPlayer = Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4,MainView.HEIGHT * 0.3,
+        Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.4,MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Multiplayer",
                 event -> MainView.getInstance().multiPlayer());
-        StackPane exit = Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6,MainView.HEIGHT * 0.3,
+        Utility.makeMenuButton(childrenList,MainView.WIDTH * 0.25, MainView.HEIGHT * 0.6,MainView.HEIGHT * 0.3,
                 MainView.HEIGHT * 0.3 / 2,"Exit",
                 event -> {
                     MainView.getInstance().close();
                     SoundPlayer.getInstance().play(Utility.getSound(SoundAddresses.MENU_COW_SOUND));
                 });
         SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.MENU_MUSIC));
-        childrenList.addAll(Background.getInstance(), startGame, multiPlayer, setting, exit, ChooseProfile.getInstance(),
+        childrenList.addAll(ChooseProfile.getInstance(),
                 ExitPanel.getInstance(), Panel.getInstance(), view.settings.View.getInstance());
 
     }
