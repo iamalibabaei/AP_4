@@ -52,6 +52,8 @@ public class MissionInfo extends Pane
             if (!InGameController.loadGame(mission, MissionScene.getAccount())) {
                 String errorMessage = "you don't have a saved game for this mission";
                 getChildren().addAll(Utility.showError(MainView.HEIGHT * 0.4, MainView.HEIGHT * 0.3,errorMessage));
+            } else {
+                setVisible(false);
             }
 
                 });
@@ -92,6 +94,7 @@ public class MissionInfo extends Pane
     }
 
     public void startGame() {
+        setVisible(false);
         MenuController.getInstance().startGame(mission);
     }
 

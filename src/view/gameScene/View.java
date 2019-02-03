@@ -77,7 +77,10 @@ public class View extends SceneBuilder implements Time
     private void gameMenuButton() {
         Utility.makeMenuButton(childrenList, - MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9,
                 MainView.HEIGHT * 0.2, MainView.HEIGHT * 0.1
-                , "MENU", event -> GameMenu.getInstance().play());
+                , "MENU", event -> {
+            InGameController.getInstance().pauseGame();
+                    GameMenu.getInstance().play();
+                });
 
     }
 

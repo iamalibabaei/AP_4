@@ -27,13 +27,6 @@ public class GameMenu extends Pane {
 
     private void build() {
         buildMenuTemplate();
-        Utility.makeMenuButton(list, MainView.WIDTH * 0.3,MainView.HEIGHT * 0.35,
-                MainView.WIDTH * 0.1,
-                MainView.HEIGHT * 0.125,"Back",
-                event -> {
-                    setVisible(false);
-                });
-
     }
 
     private void buildMenuTemplate() {
@@ -46,7 +39,10 @@ public class GameMenu extends Pane {
 
 
         Utility.makeMenuButton(list, MainView.HEIGHT * 0.225, MainView.HEIGHT * 0.1, MainView.WIDTH * 0.15,
-                MainView.HEIGHT * 0.125, "Resume", event -> setVisible(false));
+                MainView.HEIGHT * 0.125, "Resume", event -> {
+                    InGameController.getInstance().resumeGame();
+                    setVisible(false);
+                });
 
         Utility.makeMenuButton(list, MainView.HEIGHT * 0.225, MainView.HEIGHT * 0.2, MainView.WIDTH * 0.15,
                 MainView.HEIGHT * 0.125, "Setting", event -> View.getInstance().start());
