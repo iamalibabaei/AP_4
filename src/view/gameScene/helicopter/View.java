@@ -15,6 +15,7 @@ import models.exceptions.InvalidArgumentException;
 import models.objects.Item;
 import models.transportation.Truck;
 import view.MainView;
+import view.PaneBuilder;
 import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
@@ -22,21 +23,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
-public class View extends Pane {
+public class View extends PaneBuilder {
     private static View instance = new View();
     public static View getInstance() {
         return instance;
     }
 
     private View() {
-        relocate(0 , 0);
-        setHeight(MainView.HEIGHT);
-        setWidth(MainView.WIDTH);
+        super(0, 0, MainView.WIDTH, MainView.HEIGHT);
         setVisible(false);
         build();
     }
 
-    private void build() {
+
+    protected void build() {
         wallpaper();
         setButtons();
         setItems();

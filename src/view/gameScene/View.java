@@ -58,7 +58,7 @@ public class View extends SceneBuilder
         buildWorkshopGraphic();
         helicopterGraphic();
         gameMenuButton();
-        childrenList.addAll(view.gameScene.truck.View.getInstance());
+        childrenList.addAll(view.gameScene.truck.View.getInstance(), view.gameScene.helicopter.View.getInstance());
         childrenList.addAll(view.gameScene.workshop.View.getInstance());
         childrenList.addAll(GameMenu.getInstance());
         childrenList.addAll(view.settings.View.getInstance());
