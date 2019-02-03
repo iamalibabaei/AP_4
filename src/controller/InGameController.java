@@ -7,7 +7,8 @@ import models.exceptions.Messages;
 import models.buildings.Warehouse;
 import models.buildings.Well;
 import models.buildings.Workshop;
-import models.exceptions.*;
+import models.exceptions.InvalidArgumentException;
+import models.exceptions.Messages;
 import models.interfaces.Time;
 import models.misc.Mission;
 import models.objects.Item;
@@ -37,6 +38,7 @@ public class InGameController implements Time
 {
     public static final double COLLISION_RADIUS = 2.0;
     private static InGameController instance = new InGameController();
+    private final int FPS = 60, SECOND_PER_FRAME = 1000 / FPS;
     private Integer money;
     private Map map;
     private Warehouse warehouse;
@@ -46,16 +48,16 @@ public class InGameController implements Time
     private List<Workshop> workshops;
     private Mission mission;
     private ArrayList<String> availableWorkshops;
-    private final int FPS = 60, SECOND_PER_FRAME = 1000 / FPS;
     private Account account;
 
-    public static boolean loadGame(Mission mission, Account account) {
+    public static boolean loadGame(Mission mission, Account account) throws Exception
+    {
         YaGson yaGson = new YaGson();
         FileReader fileReader = null;
         try {
             fileReader = new FileReader(JsonAddresses.SAVE_GAME_ROOT + mission.getName() + '@' + account.getName()+".json");
         } catch (FileNotFoundException e) {
-            return false;
+            throw new Exception(Messages.SAVED_GAME_NOT_FOUND);
         }
         Scanner scanner = new Scanner(fileReader);
         String json = scanner.nextLine();
@@ -64,11 +66,6 @@ public class InGameController implements Time
         MainView.getInstance().startGame(mission);
         return true;
     }
-
-    public void moneyDeposit(Integer money) {
-        this.money += money;
-    }
-
 
     private InGameController()
     {
@@ -82,35 +79,14 @@ public class InGameController implements Time
         money = 0;
     }
 
-    public static InGameController getInstance()
+    public void buyAnimal(Animal.Type type)
     {
-        return instance;
+        map.addAnimal(type);
+        withdrawMoney(type.BUY_COST);
     }
 
-    public Integer getMoney()
+    public void withdrawMoney(int cost)
     {
-        return money;
-    }
-
-    public void buyAnimal(String name) throws InvalidArgumentException, InsufficientResourcesException
-    {
-        for (Animal.Type type : Animal.Type.values())
-        {
-            if (name.equals(type.toString().toLowerCase()))
-            {
-                if (money < type.BUY_COST)
-                {
-                    throw new InsufficientResourcesException();
-                }
-                map.addAnimal(type);
-                withdrawMoney(type.BUY_COST);
-                return;
-            }
-        }
-        throw new InvalidArgumentException();
-    }
-
-    public void withdrawMoney(int cost) {
         if (money < cost)
         {
             throw new AssertionError();
@@ -280,21 +256,34 @@ public class InGameController implements Time
         }
     }
 
-    public void loadMission(){
+    public void startGame(Mission mission)
+    {
+        this.mission = mission;
+        loadMission();
+        //TODO loop for next turn
+    }
+
+    public void loadMission()
+    {
         moneyDeposit(mission.getMoneyAtBeginning());
-        for (Animal.Type animal : mission.getAnimalAtBeginning().keySet()) {
-            for (int i = 0; i < mission.getAnimalAtBeginning().get(animal); i++) {
+        for (Animal.Type animal : mission.getAnimalAtBeginning().keySet())
+        {
+            for (int i = 0; i < mission.getAnimalAtBeginning().get(animal); i++)
+            {
                 //TODO add animal to map
             }
         }
         InGameController.getInstance().moneyDeposit(mission.getMoneyAtBeginning());
     }
 
-    public void startGame(Mission mission) {
-        this.mission = mission;
+    public void moneyDeposit(Integer money)
+    {
+        this.money += money;
+    }
 
-        loadMission();
-        //TODO loop for next turn
+    public static InGameController getInstance()
+    {
+        return instance;
     }
 
     private boolean isAccomplished()
@@ -326,6 +315,11 @@ public class InGameController implements Time
 
         }
         return checkAccomplishment(gameMoney, animalCurrentState, itemCurrentState, hasCat, hasDog);
+    }
+
+    public Integer getMoney()
+    {
+        return money;
     }
 
     private boolean checkAccomplishment(int money, HashMap<DomesticAnimal.Type, Integer> animalCurrentState,
@@ -363,11 +357,13 @@ public class InGameController implements Time
         return !mission.isCat() || hasCat;
     }
 
-    public void setMission(Mission mission) {
+    public void setMission(Mission mission)
+    {
         this.mission = mission;
     }
 
-    public ArrayList<String> getAvailableWorkshops() {
+    public ArrayList<String> getAvailableWorkshops()
+    {
         return availableWorkshops;
     }
 
@@ -398,4 +394,5 @@ public class InGameController implements Time
     public void setAccount(Account account) {
         this.account = account;
     }
+
 }

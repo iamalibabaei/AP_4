@@ -278,7 +278,7 @@ public class MenuController
 
     public void click(double x, double y)
     {
-
+        // todo
     }
 
     public Account getCurrentAccount()

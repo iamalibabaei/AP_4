@@ -47,8 +47,8 @@ public class GameMenu extends Pane {
         Utility.makeMenuButton(list, MainView.HEIGHT * 0.225, MainView.HEIGHT * 0.2, MainView.WIDTH * 0.15,
                 MainView.HEIGHT * 0.125, "Setting", event -> View.getInstance().start());
         Utility.makeMenuButton(list, MainView.HEIGHT * 0.225, MainView.HEIGHT * 0.3, MainView.WIDTH * 0.15,
-                MainView.HEIGHT * 0.125, "Save&Quit", event -> {
-            setVisible(false);
+                MainView.HEIGHT * 0.125, "Save & Quit", event -> {
+                    setVisible(false);
             InGameController.getInstance().saveAndQuit();
                 });
     }

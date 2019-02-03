@@ -11,5 +11,6 @@ public class Messages
     public static final String NOT_ENOUGH_SPACE = "There's not enough space in warehouse";
     public static final String NOT_ENOUGH_RESOURCES = "There are not enough resources in warehouse";
     public static final String TRANSPORTER_STASH_FULL = "There's not enough space in the stash";
+    public static final String SAVED_GAME_NOT_FOUND = "You don't have saved ame for this mission";
 
 }

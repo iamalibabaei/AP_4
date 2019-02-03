@@ -5,6 +5,8 @@ public class PictureAddresses
     public static final String GRAPHICS_ROOT = "res/graphicAssets/";
     public static final String SERVICES_ROOT = GRAPHICS_ROOT + "Service/";
     public static final String GAME_BACKGROUND_ROOT = GRAPHICS_ROOT + "GameBackground/";
+    public static final String GAME_UNDER_BAR = GAME_BACKGROUND_ROOT + "underBar.png";
+    public static final String GAME_UPPER_BAR = GAME_BACKGROUND_ROOT + "upperBar.png";
     public static final String GAME_BACKGROUND = GAME_BACKGROUND_ROOT + "background.png";
     public static final String ANIMAL_ICONS_ROOT = GAME_BACKGROUND_ROOT + "AnimalIcons/";
     public static final String HELICOPTER_PICTURE_ROOT = SERVICES_ROOT + "Helicopter/";
@@ -38,7 +40,7 @@ public class PictureAddresses
     public static final String ITEM_ROOT = GRAPHICS_ROOT + "item/";
     public static final String GAME_MENU = GRAPHICS_ROOT + "game_menu_1.png";
     public static final String WORKSHOP_ROOT = "res/workshops/";
-    public static final String BUILD_WORKSHOP_ICON = MENU + "bil.png" ;
+    public static final String BUILD_WORKSHOP_ICON = MENU + "bil.png";
     public static final String WHITE_IMAGE = GRAPHICS_ROOT + "white-image.png";
 
 }

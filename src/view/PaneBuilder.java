@@ -8,6 +8,13 @@ public abstract class PaneBuilder extends Pane
 {
     protected ObservableList<Node> childrenList;
 
+    protected PaneBuilder(double x, double y, double width, double height)
+    {
+        this(x, y);
+        setWidth(width);
+        setHeight(height);
+    }
+
     protected PaneBuilder(double x, double y)
     {
         relocate(x, y);

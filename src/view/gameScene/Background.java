@@ -2,12 +2,10 @@ package view.gameScene;
 
 import controller.InGameController;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import models.exceptions.InvalidArgumentException;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
 import view.MainView;
@@ -15,12 +13,7 @@ import view.PaneBuilder;
 import view.utility.Utility;
 import view.utility.constants.PictureAddresses;
 
-import javax.naming.InsufficientResourcesException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-
-public class Background extends PaneBuilder implements Time
+public class Background extends PaneBuilder
 {
     private static Background instance = new Background();
 
@@ -29,13 +22,18 @@ public class Background extends PaneBuilder implements Time
         super(0, 0);
     }
 
+    public static Background getInstance()
+    {
+        return instance;
+    }
+
     @Override
     protected void build()
     {
         setBackgroundStuff();
-//        setBuyAnimalButton();
-//        setUnderBar();
-//        setUpperBar();
+        updateBuyAnimalButtons();
+        setUnderBar();
+        setUpperBar();
     }
 
     private void setBackgroundStuff()
@@ -46,137 +44,55 @@ public class Background extends PaneBuilder implements Time
         childrenList.addAll(background);
     }
 
-    private void setBuyAnimalButton()
-    {//TODO change later
-        ArrayList<String> animalButton = new ArrayList<>();
-        animalButton.add("HEN");
-        animalButton.add("SHEEP");
-        animalButton.add("COW");
-        animalButton.add("CAT");
-        animalButton.add("DOG");
-        for (String animalName : animalButton)
+    private void updateBuyAnimalButtons()
+    {
+        for (Animal.Type type : Animal.Type.values())
         {
-            Animal.Type type = Animal.Type.valueOf(animalName);
-            Image backImage = null;
-
-            if (type.BUY_COST < InGameController.getInstance().getMoney())
+            if (type.BUY_COST != -1)
             {
+                ImageView backImage = null;
+                if (type.BUY_COST < InGameController.getInstance().getMoney())
+                {
+                    backImage = Utility.getImageView(PictureAddresses.ANIMAL_ICONS_ROOT + type.getName() + "Icon.png");
+                } else
+                {
+                    backImage = Utility.getImageView((PictureAddresses.ANIMAL_ICONS_ROOT + type.getName() + "IconGray" +
+                            ".png"));
+                }
+                backImage.setFitHeight(MainView.HEIGHT / 14);
+                backImage.setFitWidth(MainView.WIDTH / 14);
 
-                try
-                {
-                    backImage = new Image(new FileInputStream(
-                            PictureAddresses.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "Icon.png"));
-                } catch (FileNotFoundException e)
-                {
-                    e.printStackTrace();
-                }
-            } else
-            {
-                try
-                {
-                    backImage = new Image(new FileInputStream(
-                            PictureAddresses.ANIMAL_ICONS_ROOT + type.toString().toLowerCase() + "IconGray.png"));
-                } catch (FileNotFoundException e)
-                {
-                    e.printStackTrace();
-                }
+                StackPane addAnimal = new StackPane();
+                addAnimal.getChildren().addAll(backImage);
+                addAnimal.relocate(20 + type.ordinal() * MainView.WIDTH / 14, 20);
+                addAnimal.setOnMouseClicked(event -> {
+                    InGameController.getInstance().buyAnimal(type);
+                });
+                childrenList.addAll(addAnimal);
             }
-            ImageView imageView = new ImageView(backImage);
-            imageView.setFitHeight(MainView.HEIGHT / 14);
-            imageView.setFitWidth(MainView.WIDTH / 14);
-
-            StackPane addAnimal = new StackPane();
-            addAnimal.getChildren().addAll(imageView);
-            addAnimal.relocate(20 + animalButton.indexOf(animalName) * MainView.WIDTH / 14, 20);
-            addAnimal.setOnMouseClicked(event -> {
-                try
-                {
-                    InGameController.getInstance().buyAnimal(animalName.toLowerCase());
-                } catch (InsufficientResourcesException e)
-                {
-                    e.printStackTrace();
-                } catch (InvalidArgumentException e)
-                {
-                    e.printStackTrace();
-                }
-            });
-            this.getChildren().addAll(addAnimal);
         }
-
 
     }
 
     private void setUnderBar()
     {
-        Image underBarImage = null;
-        try
-        {
-            underBarImage = new Image(new FileInputStream(PictureAddresses.GAME_BACKGROUND_ROOT + "underBar.png"));
-        } catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
-        ImageView imageView = new ImageView(underBarImage);
+        ImageView imageView = Utility.getImageView(PictureAddresses.GAME_UNDER_BAR);
         imageView.setFitWidth(MainView.WIDTH);
         imageView.setFitHeight(MainView.HEIGHT / 7.7);
-
         StackPane underBarPane = new StackPane();
         underBarPane.getChildren().addAll(imageView);
-        underBarPane.relocate(0, MainView.HEIGHT - imageView.getImage().getHeight() * 0.6);
-        this.getChildren().addAll(underBarPane);
+        underBarPane.relocate(0, MainView.HEIGHT - imageView.getImage().getHeight() * 0.525);
+        childrenList.addAll(underBarPane);
 
     }
 
     private void setUpperBar()
     {
-        Image upperBarImage = null;
-        try
-        {
-            upperBarImage = new Image(new FileInputStream(PictureAddresses.GAME_BACKGROUND_ROOT + "upperBar.png"));
-        } catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
-        ImageView imageView = new ImageView(upperBarImage);
-        imageView.setFitHeight(90);
-
-        StackPane upperBarPane = new StackPane();
-        upperBarPane.getChildren().addAll(imageView);
-        upperBarPane.relocate(MainView.WIDTH - upperBarImage.getWidth(), 0);
-        this.getChildren().addAll(upperBarPane);
-
-    }
-
-    public static Background getInstance()
-    {
-        return instance;
-    }
-
-    @Override
-    public void nextTurn()
-    {
-        // if not enough money color of buttons becomes brown
-        for (Node node : getChildren())
-        {
-            if (node instanceof Text)
-            {
-                try
-                {
-                    if (Integer.parseInt(((Text) node).getText()) > InGameController.getInstance().getMoney())
-                    {
-                        ((Text) node).setFill(Color.BROWN);
-                    } else
-                    {
-                        ((Text) node).setFill(Color.YELLOW);
-                    }
-                } catch (Exception e)
-                {
-                    //nothing really
-                }
-            }
-        }
+        ImageView imageView = Utility.getImageView(PictureAddresses.GAME_UPPER_BAR);
+        imageView.setFitWidth(MainView.WIDTH / 2.8);
+        imageView.setFitHeight(MainView.HEIGHT / 7);
+        imageView.relocate(MainView.WIDTH - imageView.getFitWidth(), 0);
+        childrenList.addAll(imageView);
     }
 
 }

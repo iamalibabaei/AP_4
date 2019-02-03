@@ -53,10 +53,9 @@ public abstract class Animal extends Entity implements Time
 
     public enum Type
     {
-        CAT( 2500, Item.Type.NONE), DOG(2600, Item.Type.NONE),
-        LION(-1, Item.Type.NONE), BEAR(-1, Item.Type.NONE),
-        SHEEP(1000, Item.Type.FABRIC), HEN(100, Item.Type.EGG),
-        COW(10000, Item.Type.MILK);
+        HEN(100, Item.Type.EGG), SHEEP(1000, Item.Type.FABRIC), COW(10000, Item.Type.MILK),
+        CAT(2500, Item.Type.NONE), DOG(2600, Item.Type.NONE),
+        LION(-1, Item.Type.NONE), BEAR(-1, Item.Type.NONE);
 
         public final int BUY_COST;
         public final Item.Type PRODUCT;
@@ -65,6 +64,11 @@ public abstract class Animal extends Entity implements Time
         {
             this.BUY_COST = BUY_COST;
             this.PRODUCT = PRODUCT;
+        }
+
+        public String getName()
+        {
+            return toString().toLowerCase();
         }
 
     }

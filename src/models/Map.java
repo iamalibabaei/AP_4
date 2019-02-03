@@ -6,6 +6,7 @@ import models.objects.Grass;
 import models.objects.Item;
 import models.objects.Point;
 import models.objects.animals.*;
+import view.MainView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class Map implements Time
 {
-    public static final double WIDTH = 30.0, HEIGHT = 30.0;
+    public static final double WIDTH = MainView.WIDTH * 0.5, HEIGHT = MainView.HEIGHT * 0.5;
     private static Map instance = new Map();
     private List<Animal> animals;
     private List<Grass> grasses;

@@ -34,14 +34,9 @@ public class MainView extends Application
     public static final double OFFSET_Y = 0;
     private static MainView instance = new MainView();
     private static Stage mainStage;
-    private Scene mainScene;
-    private Group root;
 
     public MainView()
     {
-        mainScene = new Scene(new Group(), SCREEN_WIDTH, SCREEN_HEIGHT, Color.BLACK);
-        root = (Group) mainScene.getRoot();
-        root.relocate(OFFSET_X, OFFSET_Y);
     }
 
     private static MenuController getController()
@@ -79,12 +74,6 @@ public class MainView extends Application
         Panel.getInstance().start();
     }
 
-    private void setScene(Pane pane)
-    {
-        root.getChildren().clear();
-        root.getChildren().add(pane);
-    }
-
     public void goToMap()
     {
         mainStage.setScene(MissionScene.getInstance());
@@ -105,20 +94,6 @@ public class MainView extends Application
     {
         mainStage.setScene(View.getInstance());
         mainStage.setFullScreen(true);
-    }
-
-    public void addEntityToMap(Entity entity)
-    {
-        if (entity instanceof Animal)
-        {
-            View.getInstance().addAnimal((Animal) entity, entity.getCoordinates());
-        } else if (entity instanceof Grass)
-        {
-            View.getInstance().addGrass((Grass) entity, entity.getCoordinates());
-        } else if (entity instanceof Item)
-        {
-            //View.getInstance().addItem((Item) entity, entity.getCoordinates());
-        }
     }
 
 }

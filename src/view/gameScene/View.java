@@ -6,12 +6,10 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -35,7 +33,6 @@ import view.utility.constants.SoundAddresses;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class View extends SceneBuilder implements Time
 {
@@ -56,10 +53,10 @@ public class View extends SceneBuilder implements Time
     @Override
     protected void build()
     {
-        childrenList.clear();
-        childrenList.addAll(Background.getInstance(), MapView.getInstance(),
-                view.gameScene.warehouse.View.getInstance());
-        emptyWorkshopGraphic();
+        childrenList.addAll(Background.getInstance());
+//        childrenList.addAll(Background.getInstance(), MapView.getInstance(),
+//                view.gameScene.warehouse.View.getInstance());
+//        emptyWorkshopGraphic();
         wellGraphic();
         warehouseGraphic();
         moneyGraphic();
@@ -72,16 +69,6 @@ public class View extends SceneBuilder implements Time
         childrenList.addAll(GameMenu.getInstance());
         childrenList.addAll(view.settings.View.getInstance());
         SoundPlayer.getInstance().playBackground(Utility.getSound(SoundAddresses.DEFAULT_INGAME_MUSIC));
-    }
-
-    private void gameMenuButton() {
-        Utility.makeMenuButton(childrenList, - MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9,
-                MainView.HEIGHT * 0.2, MainView.HEIGHT * 0.1
-                , "MENU", event -> {
-            InGameController.getInstance().pauseGame();
-                    GameMenu.getInstance().play();
-                });
-
     }
 
     private void wellGraphic()
@@ -108,8 +95,7 @@ public class View extends SceneBuilder implements Time
                 try
                 {
                     MenuController.getInstance().refillWell();
-                }
-                catch (Exception e)
+                } catch (Exception e)
                 {
                     e.printStackTrace();
                 }
@@ -194,33 +180,33 @@ public class View extends SceneBuilder implements Time
             {
                 case 0:
                     place = 1;
-                    XValue = XValue * 0.2;
-                    YValue = YValue * 0.3;
+                    XValue *= 0.2;
+                    YValue *= 0.3;
                     break;
                 case 1:
                     place = 2;
-                    XValue = XValue * 0.2;
-                    YValue = YValue * 0.5;
+                    XValue *= 0.2;
+                    YValue *= 0.5;
                     break;
                 case 2:
                     place = 3;
-                    XValue = XValue * 0.2;
-                    YValue = YValue * 0.65;
+                    XValue *= 0.2;
+                    YValue *= 0.65;
                     break;
                 case 3:
                     place = 4;
-                    XValue = XValue * 0.85;
-                    YValue = YValue * 0.3;
+                    XValue *= 0.85;
+                    YValue *= 0.3;
                     break;
                 case 4:
                     place = 5;
-                    XValue = XValue * 0.85;
-                    YValue = YValue * 0.5;
+                    XValue *= 0.85;
+                    YValue *= 0.5;
                     break;
                 case 5:
                     place = 6;
-                    XValue = XValue * 0.85;
-                    YValue = YValue * 0.65;
+                    XValue *= 0.85;
+                    YValue *= 0.65;
                     break;
 
             }
@@ -253,6 +239,17 @@ public class View extends SceneBuilder implements Time
 
     }
 
+    private void gameMenuButton()
+    {
+        Utility.makeMenuButton(childrenList, -MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9,
+                MainView.HEIGHT * 0.2, MainView.HEIGHT * 0.1
+                , "MENU", event -> {
+                    InGameController.getInstance().pauseGame();
+                    GameMenu.getInstance().play();
+                });
+
+    }
+
     private void openWarehouse()
     {
         view.gameScene.warehouse.View.getInstance().UpdateInformation();
@@ -264,73 +261,6 @@ public class View extends SceneBuilder implements Time
     {
 //        view.gameScene.helicopter.View.getInstance().updateInformation();
 //        view.gameScene.helicopter.View.getInstance().setVisible(true);
-    }
-
-    private void emptyWorkshopGraphic()
-    {
-        ImageView place1 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place1.png"));
-        place1.setFitWidth(MainView.WIDTH / 3.2375);
-        place1.setFitHeight(MainView.HEIGHT / 5);
-        StackPane place1Pane = new StackPane();
-        place1Pane.getChildren().addAll(place1);
-        place1Pane.relocate(MainView.WIDTH / 18, MainView.HEIGHT / 4.6);
-        childrenList.addAll(place1Pane);
-        place1Pane.setOnMouseClicked(event -> openWorkshopChoices(1));
-
-        ImageView place2 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place2.png"));
-        place2.setFitWidth(MainView.WIDTH / 4.2);
-        place2.setFitHeight(MainView.HEIGHT / 4.7);
-        StackPane place2Pane = new StackPane();
-        place2Pane.getChildren().addAll(place2);
-        place2Pane.relocate(0, MainView.HEIGHT / 2.4);
-        childrenList.addAll(place2Pane);
-        place2Pane.setOnMouseClicked(event -> openWorkshopChoices(2));
-
-        ImageView place3 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place3.png"));
-        place3.setFitWidth(MainView.WIDTH / 3.1);
-        place3.setFitHeight(MainView.HEIGHT / 4.5);
-        StackPane place3Pane = new StackPane();
-        place3Pane.getChildren().addAll(place3);
-        place3Pane.relocate(0, MainView.HEIGHT / 1.6);
-        childrenList.addAll(place3Pane);
-        place3Pane.setOnMouseClicked(event -> openWorkshopChoices(3));
-
-        ImageView place4 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place4.png"));
-        place4.setFitWidth(MainView.WIDTH / 3.3);
-        place4.setFitHeight(MainView.HEIGHT / 4.5);
-        StackPane place4Pane = new StackPane();
-        place4Pane.getChildren().addAll(place4);
-        double x = MainView.WIDTH - (MainView.WIDTH - place4.getImage().getWidth() * 2 + MainView.WIDTH / 3.3);
-        place4Pane.relocate(MainView.WIDTH - place4.getImage().getWidth() * 2 + x, MainView.HEIGHT / 4.8);
-        childrenList.addAll(place4Pane);
-        place4Pane.setOnMouseClicked(event -> openWorkshopChoices(4));
-
-        ImageView place5 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place5.png"));
-        place5.setFitWidth(MainView.WIDTH / 3.4);
-        place5.setFitHeight(MainView.HEIGHT / 4.7);
-        StackPane place5Pane = new StackPane();
-        place5Pane.getChildren().addAll(place5);
-        x = MainView.WIDTH - (MainView.WIDTH - place5.getImage().getWidth() * 2 + MainView.WIDTH / 3.4);
-        place5Pane.relocate(MainView.WIDTH - place5.getImage().getWidth() * 2 + x, MainView.HEIGHT / 2.4);
-        childrenList.addAll(place5Pane);
-        place5Pane.setOnMouseClicked(event -> openWorkshopChoices(5));
-
-        ImageView place6 = new ImageView(Utility.getImage(PictureAddresses.PLACES_ROOT + "place6.png"));
-        place6.setFitWidth(MainView.WIDTH / 3.4);
-        place6.setFitHeight(MainView.HEIGHT / 4.5);
-        StackPane place6Pane = new StackPane();
-        place6Pane.getChildren().addAll(place6);
-        x = MainView.WIDTH - (MainView.WIDTH - place6.getImage().getWidth() * 2 + MainView.WIDTH / 3.4);
-        place6Pane.relocate(MainView.WIDTH - place6.getImage().getWidth() * 2 + x
-                , MainView.HEIGHT / 1.6);
-        childrenList.addAll(place6Pane);
-        place6Pane.setOnMouseClicked(event -> openWorkshopChoices(6));
-
-    }
-
-    private void openWorkshopChoices(int place)
-    {
-
     }
 
     public void drawWorkshop(int place, String workshop)
@@ -381,20 +311,6 @@ public class View extends SceneBuilder implements Time
     public void getMoney()
     {
         money.setText(Integer.toString(InGameController.getInstance().getMoney()));
-    }
-
-    public void addAnimal(Animal animal, Point location)
-    {
-        Text text = animal.getText();
-        text.relocate((location.getX() + 325) * MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
-        MapView.getInstance().getChildren().addAll(text);
-    }
-
-    public void addGrass(Grass entity, Point location)
-    {
-        Text text = entity.getText();
-        text.relocate((location.getX() + 325) * MapView.WIDTH_BASE, location.getY() * MapView.HEIGHT_BASE);
-        MapView.getInstance().getChildren().addAll(text);
     }
 
     public void closehelicopter()
