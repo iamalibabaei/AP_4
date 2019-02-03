@@ -2,6 +2,8 @@ package view.gameScene.truck;
 
 import controller.InGameController;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -14,30 +16,29 @@ import models.exceptions.InvalidArgumentException;
 import models.objects.Item;
 import models.transportation.Truck;
 import view.MainView;
+import view.PaneBuilder;
 import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
 import java.io.IOException;
 import java.util.EnumMap;
 
-public class View extends Pane {
+public class View extends PaneBuilder {
     private static View instance = new View();
     public static View getInstance() {
         return instance;
     }
 
     private View() {
-        relocate(0 , 0);
-        setHeight(MainView.HEIGHT);
-        setWidth(MainView.WIDTH);
+        super(0, 0, MainView.WIDTH, MainView.HEIGHT);
         setVisible(false);
         build();
     }
 
-    private void build() {
+    protected void build() {
         wallpaper();
         setButtons();
-        //setItems();
+        setItems();
         setTruckInfo();
     }
 
@@ -76,13 +77,6 @@ public class View extends Pane {
 
         }
 
-
-
-
-
-
-
-
     }
 
     private void addToTruck(Item.Type item, String amountStr) {
@@ -105,35 +99,33 @@ public class View extends Pane {
         setVisible(true);
     }
 
-//    private void setItems() {
-//        EnumMap<Item.Type, Integer>  storedItems=  Warehouse.getInstance().getStoredItems();
-//        int XValue = 30, YValue = 50;
-//        for (Item.Type item : storedItems.keySet()) {
-//            String str = item.name() + "  ---->  " + storedItems.get(item);
-//            Text text = new Text(str);
-//            text.relocate(XValue, YValue);
-//            TextField textField = new TextField();
-//            text.relocate(XValue + 100, YValue);
-//            Button button = new Button("sell");
-//            button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent event) {
-//                    try {
-//                        InGameController.getInstance().addToStash("truck", item.name(), Integer.parseInt(textField.getText()));
-//                    } catch (NotEnoughSpaceException e) {
-//                        MainView.getInstance().showExceptions(e, 100, 100);
-//                    } catch (InvalidArgumentException e) {
-//                        MainView.getInstance().showExceptions(e, 100, 100);
-//                    }
-//                    updateInformation();
-//                    setVisible(true);
-//
-//                }
-//            });
-//            getChildren().addAll(text, textField, button);
-//            YValue += 30;
-//        }
-//    }
+    private void setItems() {
+        EnumMap<Item.Type, Integer>  storedItems=  Warehouse.getInstance().getStoredItems();
+        int XValue = 30, YValue = 50;
+        for (Item.Type item : storedItems.keySet()) {
+            String str = item.name() + "  ---->  " + storedItems.get(item);
+            Text text = new Text(str);
+            text.relocate(XValue, YValue);
+            TextField textField = new TextField();
+            text.relocate(XValue + 100, YValue);
+            Button button = new Button("sell");
+            button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        InGameController.getInstance().addToStash("truck", item.name(), Integer.parseInt(textField.getText()));
+                    } catch (Exception e) {
+                        Utility.showError(100, 100, e.getMessage());
+                    }
+                    updateInformation();
+                    setVisible(true);
+
+                }
+            });
+            getChildren().addAll(text, textField, button);
+            YValue += 30;
+        }
+    }
 
     private void setButtons() {
         ImageView sendTruckImage = new ImageView(Utility.getImage(PictureAddresses.MENU_BUTTON));
@@ -149,6 +141,8 @@ public class View extends Pane {
             InGameController.getInstance().sendTruck();
             view.gameScene.View.getInstance().closeTruck();
             view.gameScene.View.getInstance().showTruckPath();
+            childrenList.remove(view.gameScene.View.getInstance().truckGraphic());
+//            view.gameScene.View.getInstance().truckGraphic();
         });
         sendTruck.relocate(0, 0);
         getChildren().addAll(sendTruck);
@@ -162,20 +156,17 @@ public class View extends Pane {
 
         StackPane clearStash = new StackPane();
         clearStash.getChildren().addAll(clearStashImage, clearText);
-        clearStash.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    InGameController.getInstance().clearStash("truck");
-                } catch (InvalidArgumentException e) {
-                    System.out.println("invalid Argument in truckView");
-                    return;
-                }
-
-                updateInformation();
-                setVisible(true);
-
+        clearStash.setOnMouseClicked(event -> {
+            try {
+                InGameController.getInstance().clearStash("truck");
+            } catch (InvalidArgumentException e) {
+                System.out.println("invalid Argument in truckView");
+                return;
             }
+
+            updateInformation();
+            setVisible(true);
+
         });
         clearStash.relocate(0, 100);
         getChildren().addAll(clearStash);

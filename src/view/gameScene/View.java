@@ -51,13 +51,10 @@ public class View extends SceneBuilder
     protected void build()
     {
         childrenList.addAll(Background.getInstance());
-//        childrenList.addAll(Background.getInstance(), MapView.getInstance(),
-//                view.gameScene.warehouse.View.getInstance());
-//        emptyWorkshopGraphic();
         wellGraphic();
         warehouseGraphic();
         moneyGraphic();
-        truckGraphic();
+        childrenList.addAll(truckGraphic());
         buildWorkshopGraphic();
         helicopterGraphic();
         gameMenuButton();
@@ -161,7 +158,7 @@ public class View extends SceneBuilder
         childrenList.addAll(pane, moneyImageview);
     }
 
-    private void truckGraphic()
+    public StackPane truckGraphic()
     {
 
         ImageView imageView =
@@ -172,9 +169,11 @@ public class View extends SceneBuilder
         truckPane.getChildren().addAll(imageView);
         truckPane.relocate(MainView.WIDTH / 2 - imageView.getImage().getWidth() * 3.7,
                 MainView.HEIGHT - imageView.getImage().getHeight() * 1.9);
-        childrenList.addAll(truckPane);
-        truckPane.setOnMouseClicked(event -> view.gameScene.truck.View.getInstance().openTruck());
-
+//        childrenList.addAll(truckPane);
+        truckPane.setOnMouseClicked(event -> {
+            view.gameScene.truck.View.getInstance().openTruck();
+        });
+        return truckPane;
 
     }
 
@@ -225,7 +224,6 @@ public class View extends SceneBuilder
             int finalPlace = place;
             imageView.setOnMouseClicked(event -> view.gameScene.workshop.View.getInstance().open(finalPlace));
             childrenList.add(finalPlace, imageView);
-//            childrenList.
         }
     }
 
@@ -242,7 +240,6 @@ public class View extends SceneBuilder
                 MainView.HEIGHT - imageView.getImage().getHeight() * 1.6);
         childrenList.addAll(helicopterPane);
         helicopterPane.setOnMouseClicked(event -> openHelicopter());
-//        childrenList.addAll(view.gameScene.helicopter.View.getInstance());
 
     }
 
@@ -255,13 +252,9 @@ public class View extends SceneBuilder
 
     private void openHelicopter()
     {
-//        view.gameScene.helicopter.View.getInstance().updateInformation();
-//        view.gameScene.helicopter.View.getInstance().setVisible(true);
+        view.gameScene.helicopter.View.getInstance().updateInformation();
+        view.gameScene.helicopter.View.getInstance().setVisible(true);
     }
-
-//    private void removeBuildIcon(int place){
-//        childrenList.remove(place);
-//    }
 
     public void drawWorkshop(int place, Workshop workshop) {//string hamun workshop.name hast
         switch (place){
@@ -317,7 +310,6 @@ public class View extends SceneBuilder
                 if (workshop.name.equals("eggPowderPlant"))  imageView.setScaleX(1);
                 childrenList.remove(place);
                 childrenList.add(place, imageView);
-//                removeBuildIcon(place);
                 System.out.println("before anim");
                 System.out.println(PictureAddresses.WORKSHOP_ROOT + workshop.name + "/" +workshop.getLevel() +".png");
                 SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4,
@@ -340,7 +332,6 @@ public class View extends SceneBuilder
                 if (workshop.name.equals("eggPowderPlant"))  imageView.setScaleX(-1);
                 childrenList.remove(place);
                 childrenList.add(place, imageView);
-//                removeBuildIcon(place);
                 System.out.println("before anim");
                 System.out.println(PictureAddresses.WORKSHOP_ROOT + workshop.name + "/" +workshop.getLevel() +".png");
                 SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4,
@@ -356,14 +347,13 @@ public class View extends SceneBuilder
             case 5:{
 
                 ImageView imageView = new ImageView(Utility.getImage(PictureAddresses.WORKSHOP_PICTURE_ROOT  + workshop.name + "/" +workshop.getLevel() +".png"));
-                imageView.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT * 0.4);
+                imageView.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT * 0.37);
                 imageView.setFitHeight(MainView.HEIGHT / 5);
                 imageView.setFitWidth(MainView.WIDTH / 7);
                 imageView.setScaleX(1);
                 if (workshop.name.equals("eggPowderPlant"))  imageView.setScaleX(-1);
                 childrenList.remove(place);
                 childrenList.add(place, imageView);
-//                removeBuildIcon(place);
                 System.out.println("before anim");
                 System.out.println(PictureAddresses.WORKSHOP_ROOT + workshop.name + "/" +workshop.getLevel() +".png");
                 SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4,
@@ -385,7 +375,6 @@ public class View extends SceneBuilder
                 if (workshop.name.equals("eggPowderPlant"))  imageView.setScaleX(-1);
                 childrenList.remove(place);
                 childrenList.add(place, imageView);
-//                removeBuildIcon(place);
                 System.out.println("before anim");
                 System.out.println(PictureAddresses.WORKSHOP_ROOT + workshop.name + "/" +workshop.getLevel() +".png");
                 SpriteAnimation spriteAnimation = new SpriteAnimation(imageView, Duration.millis(1250), 16, 4,
@@ -408,7 +397,7 @@ public class View extends SceneBuilder
 
     public void closehelicopter()
     {
-//        view.gameScene.helicopter.View.getInstance().setVisible(false);
+        view.gameScene.helicopter.View.getInstance().setVisible(false);
     }
 
     public void closeTruck()
@@ -424,7 +413,7 @@ public class View extends SceneBuilder
 
     public void closeWarehouse()
     {
-        //childrenList.remove(View.getInstance());
+        childrenList.remove(View.getInstance());
         view.gameScene.warehouse.View.getInstance().setVisible(false);
     }
 
@@ -435,7 +424,7 @@ public class View extends SceneBuilder
         truckView.setViewport(new Rectangle2D(0, 0, 48, 48));
         truckView.setFitWidth(MainView.WIDTH / 20);
         truckView.setFitHeight(MainView.HEIGHT / 20);
-        truckView.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT / 35);
+        truckView.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT / 12);
         truckView.setScaleX(-1);
         childrenList.addAll(truckView);
         double end = MainView.WIDTH - MainView.WIDTH * 0.75 - 48;
@@ -450,7 +439,7 @@ public class View extends SceneBuilder
         animation.play();
         animation.setOnFinished(event -> {
             childrenList.removeAll(truckView);
-            truckView.relocate(MainView.WIDTH - 48, MainView.HEIGHT / 35);
+            truckView.relocate(MainView.WIDTH - 48, MainView.HEIGHT / 12);
             truckView.setScaleX(1);
             childrenList.addAll(truckView);
             KeyValue xForGoing1 = new KeyValue(truckView.xProperty(), -MainView.WIDTH / 75);
@@ -469,30 +458,30 @@ public class View extends SceneBuilder
 
     public void showHelicopterPath()
     {
-        ImageView helicopterkView =
+        ImageView helicopterView =
                 new ImageView(Utility.getImage(PictureAddresses.HELICOPTER_MINI_PICTURE_ROOT + Truck.getInstance().getLevel() + "_mini.png"));
-        helicopterkView.setViewport(new Rectangle2D(0, 0, 48, 48));
-        helicopterkView.setFitWidth(MainView.WIDTH / 20);
-        helicopterkView.setFitHeight(MainView.HEIGHT / 20);
-        helicopterkView.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT / 150);
-        helicopterkView.setScaleX(1);
-        childrenList.addAll(helicopterkView);
+        helicopterView.setViewport(new Rectangle2D(0, 0, 48, 48));
+        helicopterView.setFitWidth(MainView.WIDTH / 20);
+        helicopterView.setFitHeight(MainView.HEIGHT / 20);
+        helicopterView.relocate(MainView.WIDTH * 0.75, MainView.HEIGHT / 150);
+        helicopterView.setScaleX(1);
+        childrenList.addAll(helicopterView);
         double end = MainView.WIDTH - MainView.WIDTH * 0.75 - 48;
-        KeyValue xForGoing = new KeyValue(helicopterkView.xProperty(), end);
+        KeyValue xForGoing = new KeyValue(helicopterView.xProperty(), end);
         KeyFrame going = new KeyFrame(Duration.millis(2000), xForGoing);
         Timeline timeLineGoing = new Timeline(going);
         timeLineGoing.getKeyFrames().addAll(going);
         timeLineGoing.play();
-        Animation animation = new SpriteAnimation(helicopterkView, Duration.millis(2000), 6, 3, 0, 0,
-                (int) (helicopterkView.getImage().getWidth() / 3), (int) (helicopterkView.getImage().getHeight() / 2));
+        Animation animation = new SpriteAnimation(helicopterView, Duration.millis(2000), 6, 3, 0, 0,
+                (int) (helicopterView.getImage().getWidth() / 3), (int) (helicopterView.getImage().getHeight() / 2));
         animation.setCycleCount(1);
         animation.play();
         animation.setOnFinished(event -> {
-            childrenList.removeAll(helicopterkView);
-            helicopterkView.relocate(MainView.WIDTH - 48, MainView.HEIGHT / 150);
-            helicopterkView.setScaleX(-1);
-            childrenList.addAll(helicopterkView);
-            KeyValue xForGoing1 = new KeyValue(helicopterkView.xProperty(), -MainView.WIDTH / 75);
+            childrenList.removeAll(helicopterView);
+            helicopterView.relocate(MainView.WIDTH - 48, MainView.HEIGHT / 150);
+            helicopterView.setScaleX(-1);
+            childrenList.addAll(helicopterView);
+            KeyValue xForGoing1 = new KeyValue(helicopterView.xProperty(), -MainView.WIDTH / 75);
 
             KeyFrame going1 = new KeyFrame(Duration.millis(2000), xForGoing1);
             Timeline timeLineGoing1 = new Timeline(going1);
@@ -502,7 +491,7 @@ public class View extends SceneBuilder
             animation.setCycleCount(1);
             animation.play();
             animation.setOnFinished(event1 -> {
-                childrenList.removeAll(helicopterkView);
+                childrenList.removeAll(helicopterView);
             });
         });
 
