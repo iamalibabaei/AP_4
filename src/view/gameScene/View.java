@@ -44,7 +44,7 @@ public class View extends SceneBuilder implements Time
 
     private View()
     {
-        super(MainView.WIDTH, MainView.HEIGHT);
+        super(MainView.WIDTH, MainView.HEIGHT, Color.BLACK);
         getRoot().relocate(MainView.OFFSET_X, MainView.OFFSET_Y);
     }
 
@@ -59,7 +59,7 @@ public class View extends SceneBuilder implements Time
         childrenList.clear();
         childrenList.addAll(Background.getInstance(), MapView.getInstance(),
                 view.gameScene.warehouse.View.getInstance());
-//        emptyWorkshopGraphic();
+        emptyWorkshopGraphic();
         wellGraphic();
         warehouseGraphic();
         moneyGraphic();
@@ -76,12 +76,7 @@ public class View extends SceneBuilder implements Time
     private void gameMenuButton() {
         Utility.makeMenuButton(childrenList, - MainView.HEIGHT * 0.05, MainView.HEIGHT * 0.9,
                 MainView.HEIGHT * 0.2, MainView.HEIGHT * 0.1
-                , "MENU", new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        GameMenu.getInstance().play();
-                    }
-        });
+                , "MENU", event -> GameMenu.getInstance().play());
 
     }
 

@@ -3,7 +3,6 @@ package view.menu.selectMission;
 import controller.MenuController;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import models.account.Account;
@@ -11,6 +10,7 @@ import models.misc.Mission;
 import models.objects.Item;
 import models.objects.animals.Animal;
 import view.MainView;
+import view.utility.constants.JsonAddresses;
 import view.utility.constants.PictureAddresses;
 import view.utility.Utility;
 
@@ -55,7 +55,7 @@ public class MissionInfo extends Pane
         MenuController.getInstance().setCurrentAccount(account);
         Mission mission = null;
         try {
-            mission = Mission.loadJson(PictureAddresses.MISSIONS_ROOT + str + ".json");
+            mission = Mission.loadJson(JsonAddresses.MISSIONS_ROOT + str + ".json");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

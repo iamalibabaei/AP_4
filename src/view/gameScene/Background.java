@@ -11,6 +11,7 @@ import models.exceptions.InvalidArgumentException;
 import models.interfaces.Time;
 import models.objects.animals.Animal;
 import view.MainView;
+import view.PaneBuilder;
 import view.utility.Utility;
 import view.utility.constants.PictureAddresses;
 
@@ -19,38 +20,30 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class Background extends Pane implements Time
+public class Background extends PaneBuilder implements Time
 {
     private static Background instance = new Background();
 
     private Background()
     {
-        setHeight(MainView.HEIGHT);
-        setWidth(MainView.WIDTH);
-        build();
+        super(0, 0);
     }
 
-    private void build()
+    @Override
+    protected void build()
     {
         setBackgroundStuff();
-        setBuyAnimalButton();
-        setUnderBar();
-        setUpperBar();
+//        setBuyAnimalButton();
+//        setUnderBar();
+//        setUpperBar();
     }
 
     private void setBackgroundStuff()
     {
-        Image background = null;
-        background = Utility.getImage(PictureAddresses.GAME_BACKGROUND_ROOT + "background.png");
-
-        BackgroundSize backgroundSize = new BackgroundSize(MainView.WIDTH, MainView.HEIGHT, false,
-                false, false, false);
-        BackgroundImage backgroundImage = new BackgroundImage(background, BackgroundRepeat.REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
-        Pane pane = new Pane();
-        pane.setMinSize(MainView.WIDTH * 2, MainView.HEIGHT);
-        pane.setBackground(new javafx.scene.layout.Background(backgroundImage));
-        this.getChildren().addAll(pane);
+        ImageView background = Utility.getImageView(PictureAddresses.GAME_BACKGROUND);
+        background.setFitWidth(MainView.WIDTH);
+        background.setFitHeight(MainView.HEIGHT);
+        childrenList.addAll(background);
     }
 
     private void setBuyAnimalButton()
