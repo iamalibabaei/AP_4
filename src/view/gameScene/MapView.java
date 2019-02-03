@@ -59,7 +59,7 @@ public class MapView extends Pane implements Time {
                 double x = event.getX() / WIDTH_BASE, y = event.getY() / HEIGHT_BASE;
                 if (0 <= x && x < 30.0 && y < 30.0 && 0 <= y) {
                     System.out.println(x+"   "+ y);
-                    MenuController.getInstance().click((event.getX() - 325) / WIDTH_BASE, event.getY() / HEIGHT_BASE);
+                    MenuController.getInstance().click((event.getX()) / WIDTH_BASE, event.getY() / HEIGHT_BASE);
                 }
             }
         });
@@ -100,9 +100,10 @@ public class MapView extends Pane implements Time {
     }
 
     public void addEntity(Entity entity) {
-        double x = entity.getCoordinates().getX() * WIDTH_BASE + MainView.HEIGHT * 0.4 ;
+        double x = entity.getCoordinates().getX() * WIDTH_BASE - MainView.HEIGHT * 0.05;
         double y = entity.getCoordinates().getY() * HEIGHT_BASE - MainView.HEIGHT * 0.05;
         if (entity instanceof Grass) {
+            System.out.println("sss" + entity.getCoordinates().getX());
             ImageView imageView = entity.getImageView();
             imageView.setViewport(new Rectangle2D(0, 0, imageView.getImage().getWidth() / 4,
                     imageView.getImage().getHeight() / 4));
