@@ -14,6 +14,7 @@ public class Grass extends Entity
         super(point);
         grass = MAX_GRASS;
         text = new Text("grass");
+        updateImageView();
     }
 
     public void eatGrass()

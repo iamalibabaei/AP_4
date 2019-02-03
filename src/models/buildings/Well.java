@@ -56,9 +56,7 @@ public class Well implements Upgradable
 
     public void issueRefill() throws Exception
     {
-        if (isRefilling)
-            throw new Exception(Messages.WELL_WORKING);
-        isRefilling = true;
+        remainingWater = CAPACITY[level];
     }
 
     @Override
