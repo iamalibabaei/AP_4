@@ -18,6 +18,12 @@ public abstract class Animal extends Entity implements Time
     public final Animal.Type type;
     protected Map map;
     protected Point target;
+    private boolean isArrived = false;
+
+    public Point getTarget() {
+        return target;
+    }
+
     protected HashMap<stateKind, ImageView> converter;
 
     Animal(Point point, Animal.Type type)
@@ -57,7 +63,9 @@ public abstract class Animal extends Entity implements Time
 
     public void setTarget() // default move is random
     {
-        target = Point.randomPoint(Map.WIDTH, Map.HEIGHT);
+        if (isArrived) {
+            target = Point.randomPoint(Map.WIDTH, Map.HEIGHT);
+        }
     }
 
     //if (target == null) randomWalk
@@ -115,4 +123,11 @@ public abstract class Animal extends Entity implements Time
 
     }
 
+    public boolean isArrived() {
+        return isArrived;
+    }
+
+    public void setArrived(boolean arrived) {
+        isArrived = arrived;
+    }
 }
