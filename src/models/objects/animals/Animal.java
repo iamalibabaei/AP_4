@@ -80,23 +80,32 @@ public abstract class Animal extends Entity implements Time
         getCoordinates().setX(getCoordinates().getX() + direction.getX() * Animal.SPEED);
         getCoordinates().setY(getCoordinates().getY() + direction.getY() * Animal.SPEED);
 
-        double teta = Math.asin(direction.getX() / direction.getY());
-        if (-0.5 < teta  && teta< 0.5) {
-            state = stateKind.RIGHT;
-        } else if (0.5 < teta  && teta< 1.6) {
-            state = stateKind.UP_RIGHT;
-        } else if (1.6 < teta  && teta< 2.0) {
-            state = stateKind.UP;
-        } else if (2.0 < teta  && teta< 2.16) {
-            state = stateKind.UP_LEFT;
-        } else if (2.16 < teta  && teta< 3.6) {
-            state = stateKind.LEFT;
-        } else if (3.6 < teta  && teta< 4.16) {
-            state = stateKind.DOWN_LEFT;
-        } else if (4.16 < teta  && teta< 5.2) {
-            state = stateKind.DOWN;
-        } else if (5.2 < teta  && teta< 5.7) {
-            state = stateKind.DOWN_RIGHT;
+        double teta = Math.toDegrees(Math.atan(direction.getY() / direction.getX()));
+        System.out.println("teta: " + teta);
+        if (-22.5 <= teta  && teta< 22.5) {
+            if (direction.getX() > 0) {
+                state = stateKind.RIGHT;
+            } else {
+                state = stateKind.LEFT;
+            }
+        } else if (22.5 <= teta  && teta < 67.5) {
+            if (direction.getX() > 0) {
+                state = stateKind.UP_RIGHT;
+            }else {
+                state = stateKind.DOWN_LEFT;
+            }
+        } else if (67.5 <= teta  || teta <= -67.5) {
+            if (direction.getX() > 0) {
+                state = stateKind.UP;
+            }else {
+                state = stateKind.DOWN;
+            }
+        } else if (-67.5 < teta && teta < -22.5) {
+            if (direction.getX() > 0) {
+                state = stateKind.DOWN_RIGHT;
+            } else {
+                state = stateKind.UP_LEFT;
+            }
         }
 
     }
