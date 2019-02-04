@@ -1,4 +1,4 @@
-package models.Multiplayer.Packet;
+package models.Multiplayer.Packets;
 
 import models.Multiplayer.Node.NetworkNode;
 

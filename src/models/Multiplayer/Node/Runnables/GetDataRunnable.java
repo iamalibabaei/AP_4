@@ -1,7 +1,7 @@
 package models.Multiplayer.Node.Runnables;
 
 import models.Multiplayer.Node.NetworkNode;
-import models.Multiplayer.Packet.Handleable;
+import models.Multiplayer.Packets.Handleable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

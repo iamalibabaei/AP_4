@@ -1,7 +1,7 @@
-package models.Multiplayer.Packet.ServerPackets;
+package models.Multiplayer.Packets.ServerPackets;
 
 import models.Multiplayer.Node.Server;
-import models.Multiplayer.Packet.Handleable;
+import models.Multiplayer.Packets.Handleable;
 
 public class Auction implements Handleable<Server>
 {

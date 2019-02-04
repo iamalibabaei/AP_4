@@ -1,7 +1,7 @@
-package models.Multiplayer.Packet.ClientPackets;
+package models.Multiplayer.Packets.ClientPackets;
 
 import models.Multiplayer.Node.Client;
-import models.Multiplayer.Packet.Handleable;
+import models.Multiplayer.Packets.Handleable;
 
 public class SeeLeaderboard implements Handleable<Client>
 {
