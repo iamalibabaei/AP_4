@@ -73,6 +73,10 @@ public class MapView extends Pane implements Time {
         Rectangle rectangle4 = new Rectangle(10, 10);
         rectangle4.setFill(Color.BLUE);
         rectangle4.relocate(this.getWidth() - 10,0);
+        rectangle1.setVisible(false);
+        rectangle2.setVisible(false);
+        rectangle3.setVisible(false);
+        rectangle4.setVisible(false);
 
         getChildren().addAll(rectangle1, rectangle2, rectangle3, rectangle4);
     }

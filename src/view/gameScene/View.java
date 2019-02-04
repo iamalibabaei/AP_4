@@ -115,25 +115,25 @@ public class View extends SceneBuilder {
     }
 
     private void warehouseGraphic() {
-//        Image warehouseImage = null;
-//        try {
-//            warehouseImage = new Image(new FileInputStream(
-//                    PictureAddresses.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        ImageView imageView = new ImageView(warehouseImage);
-//        imageView.setFitHeight(MainView.HEIGHT / 5);
-//        imageView.setFitWidth(MainView.WIDTH / 5);
-//        StackPane warehousePane = new StackPane();
-//        warehousePane.getChildren().addAll(imageView);
-//        warehousePane.relocate((MainView.WIDTH - warehouseImage.getWidth()) * 0.4,
-//                MainView.HEIGHT - 1.55 * warehouseImage.getHeight());
-//        childrenList.addAll(warehousePane);
-//        warehousePane.setOnMouseClicked(event -> openWarehouse());
-//
-//
+        Image warehouseImage = null;
+        try {
+            warehouseImage = new Image(new FileInputStream(
+                    PictureAddresses.WAREHOUSE_PICTURE_ROOT + Warehouse.getInstance().getLevel() + ".png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ImageView imageView = new ImageView(warehouseImage);
+        imageView.setFitHeight(MainView.HEIGHT / 5);
+        imageView.setFitWidth(MainView.WIDTH / 5);
+        StackPane warehousePane = new StackPane();
+        warehousePane.getChildren().addAll(imageView);
+        warehousePane.relocate((MainView.WIDTH - warehouseImage.getWidth()) * 0.4,
+                MainView.HEIGHT - 1.55 * warehouseImage.getHeight());
+        childrenList.addAll(warehousePane);
+        warehousePane.setOnMouseClicked(event -> openWarehouse());
+
+
     }
 
     private void moneyGraphic() {
@@ -221,17 +221,17 @@ public class View extends SceneBuilder {
     }
 
     private void helicopterGraphic() {
-//
-//        ImageView imageView =
-//                new ImageView(Utility.getImage(PictureAddresses.HELICOPTER_PICTURE_ROOT + Helicopter.getInstance().getLevel() + ".png"));
-//        imageView.setFitWidth(MainView.WIDTH / 4.5);
-//        imageView.setFitHeight(MainView.HEIGHT / 4.5);
-//        StackPane helicopterPane = new StackPane();
-//        helicopterPane.getChildren().addAll(imageView);
-//        helicopterPane.relocate(MainView.WIDTH / 2 + imageView.getImage().getWidth() * 0.5,
-//                MainView.HEIGHT - imageView.getImage().getHeight() * 1.6);
-//        childrenList.addAll(helicopterPane);
-//        helicopterPane.setOnMouseClicked(event -> openHelicopter());
+
+        ImageView imageView =
+                new ImageView(Utility.getImage(PictureAddresses.HELICOPTER_PICTURE_ROOT + Helicopter.getInstance().getLevel() + ".png"));
+        imageView.setFitWidth(MainView.WIDTH / 4.5);
+        imageView.setFitHeight(MainView.HEIGHT / 4.5);
+        StackPane helicopterPane = new StackPane();
+        helicopterPane.getChildren().addAll(imageView);
+        helicopterPane.relocate(MainView.WIDTH / 2 + imageView.getImage().getWidth() * 0.5,
+                MainView.HEIGHT - imageView.getImage().getHeight() * 1.6);
+        childrenList.addAll(helicopterPane);
+        helicopterPane.setOnMouseClicked(event -> openHelicopter());
 
     }
 
