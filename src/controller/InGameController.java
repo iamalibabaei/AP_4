@@ -49,6 +49,7 @@ public class InGameController implements Time
     private ArrayList<String> availableWorkshops;
     private Account account;
     private AnimationTimer timer;
+    private double speedBase = FPS * 5000;
 
     public static boolean loadGame(Mission mission, Account account) throws Exception
     {
@@ -95,7 +96,8 @@ public class InGameController implements Time
                     nextTurnTime = now;
                 }
 
-                if (now > nextTurnTime + MILI_SECOND_PER_FRAME) {
+                if (now > nextTurnTime + second) {
+                    System.out.println("next turn");
                     nextTurnTime = now;
                     nextTurn();
                     MapView.getInstance().nextTurn();

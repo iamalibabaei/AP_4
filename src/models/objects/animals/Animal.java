@@ -108,6 +108,10 @@ public abstract class Animal extends Entity implements Time
             }
         }
 
+
+        if (direction.getY() == 0 && direction.getX() == 0) {
+            state = stateKind.EAT;
+        }
     }
 
     public enum Type
