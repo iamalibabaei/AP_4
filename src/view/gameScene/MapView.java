@@ -40,14 +40,11 @@ public class MapView extends Pane implements Time {
 
 
         build();
-        setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                double x = event.getX() / WIDTH_BASE, y = event.getY() / HEIGHT_BASE;
-                if (0 <= x && x < 30.0 && y < 30.0 && 0 <= y) {
-                    System.out.println(x+"   "+ y);
-                    MenuController.getInstance().click((event.getX()) / WIDTH_BASE, event.getY() / HEIGHT_BASE);
-                }
+        setOnMouseClicked(event -> {
+            double x = event.getX() / WIDTH_BASE, y = event.getY() / HEIGHT_BASE;
+            if (0 <= x && x < 30.0 && y < 30.0 && 0 <= y) {
+                System.out.println(x+"   "+ y);
+                MenuController.getInstance().click((event.getX()) / WIDTH_BASE, event.getY() / HEIGHT_BASE);
             }
         });
     }
@@ -126,7 +123,6 @@ public class MapView extends Pane implements Time {
                     row = 6;
                 }
             }
-//            System.out.println("animal " + ((Animal) entity).type + " Xtarget " + );
             ImageView imageView = entity.getImageView();
             imageView.setViewport(new Rectangle2D(0, 0, imageView.getImage().getWidth() / coulmn,
                     imageView.getImage().getHeight() / row));
