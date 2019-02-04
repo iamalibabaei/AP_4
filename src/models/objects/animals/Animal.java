@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public abstract class Animal extends Entity implements Time
 {
-    private static final int SPEED = 5;
+    private static final int SPEED = 2;
     public final Animal.Type type;
     protected Map map;
     protected Point target;

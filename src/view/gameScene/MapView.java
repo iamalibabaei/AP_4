@@ -83,6 +83,21 @@ public class MapView extends Pane implements Time {
     @Override
     public void nextTurn() {
         getChildren().clear();
+        this.setWidth(MainView.WIDTH * 0.5);
+        this.setHeight(MainView.HEIGHT * 0.5);
+        this.relocate(MainView.HEIGHT * 0.3, MainView.HEIGHT * 0.3);
+
+        build();
+
+        setOnMouseClicked(event -> {
+            double x = event.getX() / WIDTH_BASE, y = event.getY() / HEIGHT_BASE;
+            if (0 <= x && x < 30.0 && y < 30.0 && 0 <= y) {
+                System.out.println(x+"   "+ y);
+                MenuController.getInstance().click((event.getX()) / WIDTH_BASE, event.getY() / HEIGHT_BASE);
+            }
+        });
+
+
         for (Animal animal: Map.getInstance().getAnimals()) {
             double x = animal.getCoordinates().getX() * WIDTH_BASE - MainView.HEIGHT * 0.05;
             double y = animal.getCoordinates().getY() * HEIGHT_BASE - MainView.HEIGHT * 0.05;
@@ -92,8 +107,15 @@ public class MapView extends Pane implements Time {
                 coulmn = 5;
                 row = 5;
             } else if (type == Animal.Type.SHEEP) {
-                coulmn = 5;
-                row = 5;
+                Viewable.stateKind state =animal.getState();
+                coulmn = 4;
+                row = 6;
+                if(state == Viewable.stateKind.DIE || state == Viewable.stateKind.DOWN ||
+                        state == Viewable.stateKind.DOWN_LEFT || state == Viewable.stateKind.DOWN_RIGHT ||
+                        state == Viewable.stateKind.EAT){
+                    coulmn = 6;
+                    row = 4;
+                }
             }else if (type == Animal.Type.LION) {
                 coulmn = 6;
                 row = 4;
@@ -116,6 +138,11 @@ public class MapView extends Pane implements Time {
             ImageView imageView = animal.getImageView();
 //            imageView.setViewport(new Rectangle2D(0, 0, imageView.getImage().getWidth() / coulmn,
 //                    imageView.getImage().getHeight() / row));
+            if (animal.getImageView() == null) {
+                animal.setState(Viewable.stateKind.EAT);
+                animal.updateImageView();
+                imageView = animal.getImageView();
+            }
             imageView.relocate(x, y);
             getChildren().addAll(animal.getImageView());
             SpriteAnimation s = new SpriteAnimation(animal.getImageView(), Duration.millis(1000), row * coulmn,
@@ -149,8 +176,6 @@ public class MapView extends Pane implements Time {
             double x = grass.getCoordinates().getX() * WIDTH_BASE - MainView.HEIGHT * 0.05;
             double y = grass.getCoordinates().getY() * HEIGHT_BASE - MainView.HEIGHT * 0.05;
             ImageView imageView = grass.getImageView();
-            imageView.setViewport(new Rectangle2D(0, 0, imageView.getImage().getWidth() / 4,
-                    imageView.getImage().getHeight() / 4));
             imageView.relocate(x, y);
 
             this.getChildren().addAll(imageView);

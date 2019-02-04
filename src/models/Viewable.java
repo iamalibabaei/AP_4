@@ -27,6 +27,7 @@ public abstract class Viewable
     protected abstract void loadAnimation();
 
     public ImageView getImageView(){
+
         return imageView;
     }
 

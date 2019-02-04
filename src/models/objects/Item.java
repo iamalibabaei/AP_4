@@ -33,7 +33,7 @@ public class Item extends Entity
         CAGED_GRIZZLY(7, -1, 80), FLOUR(2, 20, 10),
         SEWING(3, 300, 150), FABRIC(6, 400, 300),
         PLUME(2, 200, 100), FLOURY_CAKE(6, 400, 200),
-        CARNIVAL_DRESS(8, 1400, 1300), HEN(1, -1, 100),
+        CARNIVAL_DRESS(8, 1400, 1300),
         SHEEP(5, -1, 1000), COW(5, -1, 10000),
         NONE(-1, -1, -1);
 
