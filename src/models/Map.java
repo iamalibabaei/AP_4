@@ -28,6 +28,7 @@ public class Map implements Time
         animals = new ArrayList<>();
         grasses = new ArrayList<>();
         items = new ArrayList<>();
+        items.add(new Item(new Point(15, 15), Item.Type.HEN));
     }
 
     public static Map getInstance()

@@ -17,7 +17,7 @@ public class Dog extends Animal
 
     @Override
     protected void buildHashmap() {
-        converter.put(stateKind.DIE,  Utility.getImageView("res/res/graphicAssets/Animals/Africa/Dog/down.png"));
+        converter.put(stateKind.DIE,  Utility.getImageView("res/graphicAssets/Animals/Africa/Dog/down.png"));
         converter.put(stateKind.DOWN, Utility.getImageView("res/graphicAssets/Animals/Africa/Dog/down.png"));
         converter.put(stateKind.DOWN_LEFT, Utility.getImageView("res/graphicAssets/Animals/Africa/Dog/down_left.png"));
         ImageView imageView = Utility.getImageView("res/graphicAssets/Animals/Africa/Dog/down_left.png");
